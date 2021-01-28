@@ -19,21 +19,69 @@ public class SimpleJumpController {
 
 	}
 	
-	@GetMapping("/liaohp")
+	@GetMapping("/liaoIndex")
 	public String fashiHomePage() {
 		return "index.html";
 	}
 	
-	@GetMapping("/liaoshop")
+	@GetMapping("/liaoShop")
 	public String fashiShopPage() {
 		return "shop.html";
 	}
 	
-	@GetMapping("/liaoproduct")
+	@GetMapping("/liaoProduct")
 	public String productPage() {
 		return "product.html";
 	}
 	
+	@GetMapping("/liaoBlog")
+	public String blogPage() {
+		return "blog";
+	}
+	
+	@GetMapping("/liaoBlogDetails")
+	public String blogDetailsPage() {
+		return "blog-details";
+	}
+	
+	@GetMapping("/liaoCheckOut")
+	public String checkOutPage() {
+		return "check-out";
+	}
+	
+	@GetMapping("/liaoContact")
+	public String contactPage() {
+		return "contact";
+	}
+	
+	@GetMapping("/liaoFaq")
+	public String faqPage() {
+		return "faq";
+	}
 
+	@GetMapping("/liaoLogin")
+	public String loginPage() {
+		return "login"; 
+	}
+	
+	@GetMapping("/liaoMain")
+	public String mainPage() {
+		return "main";
+	}
+	
+	@GetMapping("/liaoRegister")
+	public String registerPage() {
+		return "register";
+	}
+	
+	@GetMapping("/liaoShoppingCart")
+	public String shoppingCartPage() {
+		return "shopping-cart";
+	}
+	
+	@GetMapping("/liaoUploader")
+	public String uploaderPage() {
+		return "uploader";
+	}
 }
 

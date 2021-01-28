@@ -13,11 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class SimpleJumpController {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
 	
 	@GetMapping("/liaohp")
 	public String fashiHomePage() {
@@ -32,6 +27,11 @@ public class SimpleJumpController {
 	@GetMapping("/liaoproduct")
 	public String productPage() {
 		return "product.html";
+	}
+	
+	@GetMapping("/contact")
+	public String contactPage() {
+		return "contact";
 	}
 	
 

@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+    <script src="js/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
@@ -561,8 +563,26 @@
                                                     </div>
                                                     <h5>Roy Banks <span>27 Aug 2019</span></h5>
                                                     <div class="at-reply">Nice !</div>
-                                                </div>
+                                                </div>                                      
                                             </div>
+                                            
+                                              <div class="co-item">
+                                                <div class="avatar-pic">
+                                                    <img src="img/product-single/ab.png" alt="">
+                                                </div>
+                                                <div class="avatar-text">
+                                                    <div class="at-rating">
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star"></i>
+                                                        <i class="fa fa-star-o"></i>
+                                                    </div>
+                                                    <h5>Ab Lin <span>33 Aug 2021</span></h5>
+                                                    <div class="at-reply" id="show_leave_msg"></div>
+                                                </div>                                      
+                                            </div>
+                                            
                                         </div>
                                         <div class="personal-rating">
                                             <h6>Your Ratind</h6>
@@ -576,21 +596,47 @@
                                         </div>
                                         <div class="leave-comment">
                                             <h4>Leave A Comment</h4>
-                                            <form action="#" class="comment-form">
+                                            <div class="comment-form">
                                                 <div class="row">
                                                     <div class="col-lg-6">
-                                                        <input type="text" placeholder="Name">
+                                                        <input type="text" placeholder="Name" id="leave_name">
                                                     </div>
                                                     <div class="col-lg-6">
-                                                        <input type="text" placeholder="Email">
+                                                        
                                                     </div>
                                                     <div class="col-lg-12">
-                                                        <textarea placeholder="Messages"></textarea>
-                                                        <button type="submit" class="site-btn">Send message</button>
+                                                        <textarea placeholder="Messages" id="leave_content"></textarea>
+                                                        <button type="button" class="site-btn" id="send_msg">Send message</button>
                                                     </div>
                                                 </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                        </div>                                     
+                                        
+                                        <script>
+                            			$("#send_msg").click(function() {
+                            				var leave_name = $("#leave_name").val();
+                            				var leave_content = $("#leave_content").val();
+                            				var send_leave_msg = {
+                            					USER_NAMES : leave_name,
+                            					MSG_CONTENT : leave_content
+                            				}
+                            				$.ajax({
+                            					url : "http://localhost:8080/Vintage/api/leaveMsg/msgAdd",
+                            					method : "POST",
+                            					dataType : "json",
+                            					contentType : "application/json; charset=UTF-8",
+                            					data : JSON.stringify(send_leave_msg),
+                            					success : function(data) {
+                            						console.log(data);
+                            						$("#show_leave_msg").html(data);
+                            					},
+                            					error : function(jqXHR, textStatus, errorThrown) {
+                            						console.log(textStatus);
+                            					},
+                            				});
+                            			});
+                            		</script>
+     
                                     </div>
                                 </div>
                             </div>
@@ -826,7 +872,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <!-- Footer Section End -->
 
     <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
+    
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
     <script src="js/jquery.countdown.min.js"></script>

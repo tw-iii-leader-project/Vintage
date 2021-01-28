@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
-public class Vintage {
+public class SimpleJumpController {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -34,25 +34,6 @@ public class Vintage {
 		return "product.html";
 	}
 	
-	
-//	@GetMapping("/index")
-//	public String hello() {
-//	 return "uploader";	
-//	}
-//	
-//	@PostMapping("/upload")
-//	public ResponseEntity<?>handleFileUpload(@RequestParam("file")MultipartFile file){
-//		String filemName = file.getOriginalFilename();
-//		try {
-//			file.transferTo(new File("C:\\project\\ogani-master\\img\\categories\\"+ filemName));
-//		} catch (IllegalStateException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		} catch (Exception e) {
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-//		}
-//		 return ResponseEntity.ok("File uploaded successfully!!");
-//	}
 
 }
 

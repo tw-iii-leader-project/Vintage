@@ -10,4 +10,6 @@ public class VintageApplication {
 		SpringApplication.run(VintageApplication.class, args);
 	}
 
+	//測試測試新開一個分支
+	
 }

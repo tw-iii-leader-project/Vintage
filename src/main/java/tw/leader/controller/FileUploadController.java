@@ -14,11 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class FileUploadController {
 
-	@GetMapping("/index")
-	public String hello() {
-		return "uploader";
-	}
-
 	@PostMapping("/upload")
 	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
 		String filemName = file.getOriginalFilename();

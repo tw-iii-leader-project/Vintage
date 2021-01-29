@@ -21,6 +21,11 @@ public class SimpleJumpController {
 		return "blog";
 	}
 	
+	@GetMapping("/contact")
+	public String contactPage() {
+		return "contact";
+	}
+	
 	@GetMapping("/blogDetails")
 	public String blogDetailsPage() {
 		return "blogDetails";

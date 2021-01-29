@@ -6,25 +6,56 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class SimpleJumpController {
 	
-	@GetMapping("/liaohp")
-	public String fashiHomePage() {
-		return "index.html";
+	@GetMapping("/index")
+	public String homePage() {
+		return "index";
 	}
 	
-	@GetMapping("/liaoshop")
-	public String fashiShopPage() {
-		return "shop.html";
+	@GetMapping("/shop")
+	public String shopPage() {
+		return "shop";
 	}
 	
-	@GetMapping("/liaoproduct")
+	@GetMapping("/blog")
+	public String blogPage() {
+		return "blog";
+	}
+	
+	@GetMapping("/blogDetails")
+	public String blogDetailsPage() {
+		return "blogDetails";
+	}
+	
+	@GetMapping("/shoppingCart")
+	public String shoppingCartPage() {
+		return "shoppingCart";
+	}
+	
+	@GetMapping("/checkout")
+	public String checkoutPage() {
+		return "checkout";
+	}
+	
+	@GetMapping("/faq")
+	public String faqPage() {
+		return "faq";
+	}
+	
+	@GetMapping("/register")
+	public String registerPage() {
+		return "register";
+	}
+	
+	@GetMapping("/Login")
+	public String loginPage() {
+		return "Login";
+	}
+	
+	@GetMapping("/product")
 	public String productPage() {
-		return "product.html";
+		return "product";
 	}
 	
-	@GetMapping("/contact")
-	public String contactPage() {
-		return "contact";
-	}
 	
 
 }

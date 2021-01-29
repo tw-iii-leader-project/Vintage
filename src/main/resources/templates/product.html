@@ -687,16 +687,35 @@
                       </div>
                       <div class="personal-rating">
                         <h6>Your Ratind</h6>
-                        <div class="rating">
-                          <i class="fa fa-star-o" id="star1"></i>
-                          <i class="fa fa-star-o" id="star2"></i>
-                          <i class="fa fa-star-o" id="star3"></i>
+                        <div class="rating" id="starLv">
+                          <i class="fa fa-star" id="star1"></i>
+                          <i class="fa fa-star" id="star2"></i>
+                          <i class="fa fa-star" id="star3"></i>
                           <i class="fa fa-star-o" id="star4"></i>
                           <i class="fa fa-star-o" id="star5"></i>
                         </div>
                       </div>
 
-                      <script></script>
+                      <script>
+                          var lv ="";
+                          switch($("#star"+lv).click()){
+                            case "1":    
+                                $("#starLv").html(`<i class="fa fa-star" id="star1"></i>
+                                                <i class="fa fa-star-o" id="star2"></i>
+                                                <i class="fa fa-star-o" id="star3"></i>
+                                                <i class="fa fa-star-o" id="star4"></i>
+                                                <i class="fa fa-star-o" id="star5"></i>`);
+                                break;
+                            case "2":    
+                                $("#starLv").html(`<i class="fa fa-star" id="star1"></i>
+                                                <i class="fa fa-star" id="star2"></i>
+                                                <i class="fa fa-star-o" id="star3"></i>
+                                                <i class="fa fa-star-o" id="star4"></i>
+                                                <i class="fa fa-star-o" id="star5"></i>`);
+                                break;
+                          }
+
+                      </script>
 
                       <div class="leave-comment">
                         <h4>Leave A Comment</h4>
@@ -728,6 +747,7 @@
                       </div>
 
                       <script>
+                          //留言及時顯示
                         $("#send_msg").click(function () {
                           var leave_name = $("#leave_name").val();
                           var leave_content = $("#leave_content").val();

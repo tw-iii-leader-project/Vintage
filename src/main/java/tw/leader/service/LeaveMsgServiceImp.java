@@ -18,11 +18,24 @@ public class LeaveMsgServiceImp implements LeaveMsgService {
 	@Autowired
 	private LeaveMsgRepository leaveMsgRepository;
 
+	/**
+	 * 新增留言實作
+	 * */
 	@Override
 	public MsgAddResp magAdd(MsgAddReq req) {
 		leaveMsgRepository.save(setLeaveMsgEntity(req)); // 存進資料庫
 		return setMsgAddResp(setLeaveMsgEntity(req)); // 回傳封裝成JSON的資料
 	}
+	
+	/**
+	 * 商品留言顯示
+	 * */
+	
+	
+	
+	
+	
+	
 	
 	/**
 	 * 前端JSON接到的資料從ApplyMemberReq存到MemberEntity

@@ -12,4 +12,11 @@ public interface LeaveMsgService {
 	 * */
 	public MsgAddResp magAdd(MsgAddReq req);
 	
+	/**
+	 *顯示商品留言 
+	 * 
+	 * @param 
+	 * @return
+	 * */
+	
 }

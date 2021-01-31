@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8">
@@ -28,52 +28,94 @@
 <script src="js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
     	$(function(){
-//    		$("#allAction").click(function(e){
-//    			e.preventDefault();
-    			$.ajax({
-        			url:"panProductSelectData",
-        			type:"POST",
-        			dataType:"json",
-        			contentType:"application/json;charset=utf-8;",
-        			success:function(response){
-        				console.log(response);
-        				$.each(response,function(i,v){
-        					$(".container #productMainRow #productMain #productList #productRow").append(
-        					`<div class="col-lg-4 col-sm-6">
-                             	<div class="product-item">
-                                	<div class="pi-pic">
-                                    	<img src="img/products/${v.p_img}" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
-                                            <ul>
-                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                            </ul>
-                                    </div>
-                                    <div class="pi-text">
-                                    	<div class="catagory-name">${v.p_main}</div>
-                                            <a href="#">
-                                                <h5>${v.p_name}</h5>
-                                            </a>
-                                            <div class="product-price">
-                                                ${v.price}
-                                            </div>
-                                    </div>
+            // 網頁載入時顯示全部
+    		$.ajax({
+                async:true, //非同步
+        		url:"panProductSelectData",
+        		type:"POST",
+        		dataType:"json",
+        		contentType:"application/json;charset=utf-8;",
+        		success:function(response){
+        			console.log(response);
+        			$.each(response,function(i,v){
+        				$(".container #productMainRow #productMain #productList #productRow").append(
+        				`<div class="col-lg-4 col-sm-6">
+                         	<div class="product-item">
+                            	<div class="pi-pic">
+                                	<img src="img/products/${v.p_img}" alt="">
+                                        <div class="icon">
+                                            <i class="icon_heart_alt"></i>
+                                        </div>
+                                        <ul>
+                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                            <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        </ul>
                                 </div>
-                            </div>`
-        					);
-        				})
-        			},
-        			error:function(msg){
-        				alert("ajax異常:"+msg);
-        			}
-        		});
-//    		});
-    		
-//    		$(".container #productMainRow #productMain #productList #productRow").html("1234");
+                                <div class="pi-text">
+                                	<div class="catagory-name">${v.p_main}</div>
+                                        <a href="panProductPage?id=${v.p_id}">
+                                            <h5>${v.p_name}</h5>
+                                        </a>
+                                        <div class="product-price">
+                                            ${v.price}
+                                        </div>
+                                </div>
+                            </div>
+                        </div>`
+        				);
+        			})
+        		},
+        		error:function(msg){
+        			alert("ajax異常:"+msg);
+        		}
+            });
+            
+            // 網頁載入時顯示全部 fetch測試
+            // fetch("panProductSelectData",{
+            //     method:"POST",
+            //     headers:{
+            //         "contentType":"application/json;charset=utf-8"
+            //     }
+            // })
+            // .then(function(response){
+            //     return response.json();
+            // })
+            // .catch()
+            // .then(function(array){
+            //     $.each(array,function(i,v){
+            //         $(".container #productMainRow #productMain #productList #productRow").append(
+        	// 			`<div class="col-lg-4 col-sm-6">
+            //              	<div class="product-item">
+            //                 	<div class="pi-pic">
+            //                     	<img src="img/products/${v.p_img}" alt="">
+            //                             <div class="icon">
+            //                                 <i class="icon_heart_alt"></i>
+            //                             </div>
+            //                             <ul>
+            //                                 <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+            //                                 <li class="quick-view"><a href="#">+ Quick View</a></li>
+            //                                 <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+            //                             </ul>
+            //                     </div>
+            //                     <div class="pi-text">
+            //                     	<div class="catagory-name">${v.p_main}</div>
+            //                             <a href="#">
+            //                                 <h5>${v.p_name}</h5>
+            //                             </a>
+            //                             <div class="product-price">
+            //                                 ${v.price}
+            //                             </div>
+            //                     </div>
+            //                 </div>
+            //             </div>`
+        	// 		);
+            //     });
+            // });
 
+            
+
+            // 使用者點擊分類標籤時，作類別搜尋
 			$(".testActive a").click(function(e){
 				e.preventDefault();
 				$(".container #productMainRow #productMain #productList #productRow").html("");
@@ -98,13 +140,13 @@
 	                                        </div>
 	                                        <ul>
 	                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-	                                            <li class="quick-view"><a href="#">+ Quick View</a></li>
+	                                            <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
 	                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
 	                                        </ul>
 	                                </div>
 	                                <div class="pi-text">
 	                                	<div class="catagory-name">${v.p_main}</div>
-	                                        <a href="#">
+	                                        <a href="panProductPage?id=${v.p_id}">
 	                                            <h5>${v.p_name}</h5>
 	                                        </a>
 	                                        <div class="product-price">
@@ -121,6 +163,67 @@
 	    			}
 				});
     		});
+            
+            // 使用者利用搜尋欄作搜尋
+			$("#textSelectFormSearch").click(function(e){
+                e.preventDefault();
+                var inputText = $("#textSelectFormInput").val();
+                if(inputText == ""){}
+                else{
+                    $(".container #productMainRow #productMain #productList #productRow").html("");
+                    var textInputJson = {"p_name":inputText};
+                    $.ajax({
+                        url:"panProductSelectByName",
+                        type:"POST",
+                        dataType:"json",
+                        data:JSON.stringify(textInputJson),
+                        contentType:"application/json;charset=utf-8;",
+                        success:function(response){
+                            console.log(response);
+                            if(response == ""){
+                                $(".container #productMainRow #productMain #productList #productRow").append(
+                                    `<div>
+                                        <img src="img/data-Not-found/dataNotFound.jpeg">
+                                        <h4>沒有找到你要的東西啦 இдஇ</h4>
+                                    </div>`
+                                );
+                                console.log("查無資料!");
+                            }
+                            $.each(response,function(i,v){
+                                $(".container #productMainRow #productMain #productList #productRow").append(
+	    		    			`<div class="col-lg-4 col-sm-6">
+	                             	<div class="product-item">
+	                                	<div class="pi-pic">
+	                                    	<img src="img/products/${v.p_img}" alt="">
+	                                            <div class="icon">
+	                                                <i class="icon_heart_alt"></i>
+	                                            </div>
+	                                            <ul>
+	                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+	                                                <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+	                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+	                                            </ul>
+	                                    </div>
+	                                    <div class="pi-text">
+	                                    	<div class="catagory-name">${v.p_main}</div>
+	                                            <a href="panProductPage?id=${v.p_id}">
+	                                                <h5>${v.p_name}</h5>
+	                                            </a>
+	                                            <div class="product-price">
+	                                                ${v.price}
+	                                            </div>
+	                                    </div>
+	                                </div>
+	                            </div>`
+	    		    			);
+                            });
+                        },
+                        error:function(msg){
+                            alert("ajax異常:"+msg);
+                        }
+                    });
+                }
+            });
     	});
     </script>
 </head>
@@ -130,7 +233,7 @@
     <div id="preloder">
         <div class="loader"></div>
     </div>
-
+    <a href="panProductPageTest?id=1001" id="testShark">test</a>
     <!-- Header Section Begin -->
     <header class="header-section">
         <div class="header-top">
@@ -178,8 +281,8 @@
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
                             <form action="#" class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
+                                <input type="text" placeholder="What do you need?" id="textSelectFormInput">
+                                <button type="button" id="textSelectFormSearch"><i class="ti-search"></i></button>
                             </form>
                         </div>
                     </div>
@@ -268,7 +371,7 @@
                                 <li><a href="#">Kid's</a></li>
                             </ul>
                         </li>
-                        <li><a href="liaoIndex">Blog</a></li>
+                        <li><a href="liaoBlog">Blog</a></li>
                         <li><a href="liaoContact">Contact</a></li>
                         <li><a href="#">Pages</a>
                             <ul class="dropdown">

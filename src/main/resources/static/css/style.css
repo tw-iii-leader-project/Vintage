@@ -1170,7 +1170,11 @@ ol {
 }
 
 .product-item .pi-pic img {
-	min-width: 100%;
+	/* min-width: 100%; */
+	max-width: 270px;
+	max-height: 303px;
+	min-width: 270px;
+	min-height: 303px;
 }
 
 .product-item .pi-pic .sale {

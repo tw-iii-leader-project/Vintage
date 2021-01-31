@@ -24,4 +24,12 @@ public interface ProductSelectDao extends JpaRepository<Product,Integer> {
 	// 查詢名稱  select * from Product where p_name like '%手工%';
 	@Query(value="select * from Product where p_name like %?1%",nativeQuery = true)
 	List<Product> selectName(String p_name);
+	
+	// 查詢商品全部資料
+	@Query(value="select * from Product where p_id = ?1",nativeQuery = true)
+	List<Product> selectById(int p_id);
+	
+	@Query(value="select distinct p_main from Product where user_acc = ?1",nativeQuery = true)
+	List<Product> selectMainByName(String user_acc);
+	//select distinct p_main from Product where user_acc = 'GawrGura';
 }

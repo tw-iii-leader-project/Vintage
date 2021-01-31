@@ -23,7 +23,7 @@ public class FileUploadController {
 	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
 		String filemName = file.getOriginalFilename();
 		try {
-			file.transferTo(new File("C:\\fucku\\" + filemName));
+			file.transferTo(new File("C:\\SpringBoot\\eclipse\\Workspace\\Git\\VintageTest\\src\\main\\resources\\static\\img\\products\\" + filemName));
 		} catch (IllegalStateException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

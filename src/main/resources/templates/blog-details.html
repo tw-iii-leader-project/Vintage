@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -22,9 +22,33 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            var userName = $("#secretUserName").html();
+            var userProductData = {"userName":userName};
+            $.ajax({
+                url:"panSelectMainByName",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userProductData),
+                success:function(response){
+                    $.each(response,function(i,v){
+                        $("#userProductMain").append(
+                            `<li>${v.p_main}</li>`
+                        );
+                    });
+                },
+                error:function(msg){}
+            });
+        });
+    </script>
 </head>
 
 <body>
+    <span id="secretUserName" th:text="${secretUserName}" style="display: none;"></span>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -196,11 +220,11 @@
                 <div class="col-lg-12">
                     <div class="blog-details-inner">
                         <div class="blog-detail-title">
+                            <div class="blog-large-pic">
+                                <img src="img/blog/blog-detail.jpg" alt="">
+                            </div>
                             <h2>The Personality Trait That Makes People Happier</h2>
                             <p>travel <span>- May 19, 2019</span></p>
-                        </div>
-                        <div class="blog-large-pic">
-                            <img src="img/blog/blog-detail.jpg" alt="">
                         </div>
                         <div class="blog-detail-desc">
                             <p>psum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
@@ -235,6 +259,102 @@
                             consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
                             aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                             ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
+                        <div class="col-lg-12">
+                            <div class="filter-control">
+                                <ul id="userProductMain">
+                                    <li class="active">ALL</li>
+                                </ul>
+                            </div>
+                            <div class="product-slider owl-carousel">
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        <img src="img/products/women-1.jpg" alt="">
+                                        <div class="sale">Sale</div>
+                                        <div class="icon">
+                                            <i class="icon_heart_alt"></i>
+                                        </div>
+                                        <ul>
+                                            <li class="w-icon active"><a href="#"><i
+                                                    class="icon_bag_alt"></i></a></li>
+                                            <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="pi-text">
+                                        <div class="catagory-name">Coat</div>
+                                        <a href="#">
+                                            <h5>Pure Pineapple</h5>
+                                        </a>
+                                        <div class="product-price">
+                                            $14.00 <span>$35.00</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        <img src="img/products/women-2.jpg" alt="">
+                                        <div class="icon">
+                                            <i class="icon_heart_alt"></i>
+                                        </div>
+                                        <ul>
+                                            <li class="w-icon active"><a href="#"><i
+                                                    class="icon_bag_alt"></i></a></li>
+                                            <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="pi-text">
+                                        <div class="catagory-name">Shoes</div>
+                                        <a href="#">
+                                            <h5>Guangzhou sweater</h5>
+                                        </a>
+                                        <div class="product-price">$13.00</div>
+                                    </div>
+                                </div>
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        <img src="img/products/women-3.jpg" alt="">
+                                        <div class="icon">
+                                            <i class="icon_heart_alt"></i>
+                                        </div>
+                                        <ul>
+                                            <li class="w-icon active"><a href="#"><i
+                                                    class="icon_bag_alt"></i></a></li>
+                                            <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="pi-text">
+                                        <div class="catagory-name">Towel</div>
+                                        <a href="#">
+                                            <h5>Pure Pineapple</h5>
+                                        </a>
+                                        <div class="product-price">$34.00</div>
+                                    </div>
+                                </div>
+                                <div class="product-item">
+                                    <div class="pi-pic">
+                                        <img src="img/products/women-4.jpg" alt="">
+                                        <div class="icon">
+                                            <i class="icon_heart_alt"></i>
+                                        </div>
+                                        <ul>
+                                            <li class="w-icon active"><a href="#"><i
+                                                    class="icon_bag_alt"></i></a></li>
+                                            <li class="quick-view"><a href="#">+ Quick View</a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="pi-text">
+                                        <div class="catagory-name">Towel</div>
+                                        <a href="#">
+                                            <h5>Converse Shoes</h5>
+                                        </a>
+                                        <div class="product-price">$34.00</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="tag-share">
                             <div class="details-tag">
                                 <ul>

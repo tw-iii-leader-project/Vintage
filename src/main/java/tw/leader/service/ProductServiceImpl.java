@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tw.leader.dao.ProductSelectDao;
@@ -52,11 +53,30 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public String getProductByName(String p_name) throws Exception {
+		System.out.println(p_name);
 		List<Product> pList = pSDao.selectName(p_name);
 		String pJson = objectMapper.writeValueAsString(pList);
 		System.out.println(pJson);
 		String response = pJson;
 		return response;
+	}
+	
+	@Override
+	public String getProductById(int p_id) throws Exception {
+		System.out.println(p_id);
+		List<Product> pList = pSDao.selectById(p_id);
+		String pJson = objectMapper.writeValueAsString(pList);
+		System.out.println(pJson);
+		String response = pJson;
+		return response;
+	}
+	
+	@Override
+	public String getMainByUserName(String user_acc) throws Exception {
+		System.out.println(user_acc+"3");
+		List<Product> mList = pSDao.selectMainByName(user_acc);
+		String mJson = objectMapper.writeValueAsString(mList);
+		return mJson;
 	}
 	
 	//ProductReq 轉 ProductEntity

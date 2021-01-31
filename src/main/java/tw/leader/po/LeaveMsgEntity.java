@@ -29,6 +29,14 @@ public class LeaveMsgEntity implements Serializable{
 	@NotNull
 	private String userName;
 	
+	@Column(name="USER_PIC")
+	@NotNull
+	private String userPic;
+	
+	@Column(name="PRODUCT_ID")
+	@NotNull
+	private Long productId;
+	
 	@Column(name="MSG_CONTENT")
 	@NotNull
 	private String msgContent;
@@ -36,4 +44,9 @@ public class LeaveMsgEntity implements Serializable{
 	@Column(name="LEAVE_TIME")
 	@NotNull
 	private Timestamp leaveTime;
+	
+	@Column(name="STAR_LV")
+	@NotNull
+	private Integer starLv;
+	
 }

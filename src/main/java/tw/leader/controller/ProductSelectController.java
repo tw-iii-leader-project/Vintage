@@ -51,11 +51,11 @@ public class ProductSelectController {
 		return "product";
 	}
 	
-	@GetMapping(value="/panUserPage")
-	public String userJumPage(@RequestParam String userName,Model m) {
-		m.addAttribute("secretUserName",userName);
-		return "blog-details";
-	}
+//	@GetMapping(value="/panUserPage")
+//	public String userJumPage(@RequestParam String userName,Model m) {
+//		m.addAttribute("secretUserName",userName);
+//		return "blog-details";
+//	}
 
 	@PostMapping(value="/panProductDetailSelect")
 	@ResponseBody
@@ -72,10 +72,17 @@ public class ProductSelectController {
 //		return pService.getMainByUserName(title,user_acc);
 //	}
 	
+	@GetMapping(value="/panUserPage")
+	public String userJumPage(@RequestParam String userName,Model m) {
+		m.addAttribute("secretUserName",userName);
+		return "test";
+	}
+	
 	@PostMapping(value="/panSelectMainByName")
 	@ResponseBody
 	public String selectProductByName(@RequestBody ProductResp userName) throws Exception {
 		String user_acc = userName.getUser_acc();
 		return pService.getMainByUserName(user_acc);
 	}
+	
 }

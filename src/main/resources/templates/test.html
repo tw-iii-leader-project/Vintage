@@ -8,28 +8,51 @@
 	$(function(){
 		// var t = parseInt($("#test").html());
 		// alert(typeof(t));
-		var t = parseInt($("#test").html());
-		var testJson = {"p_id":t};
+		// var t = parseInt($("#test").html());
+		// var testJson = {"p_id":t};
+		// $.ajax({
+		// 	url:"panProductDetailSelect",
+		// 	type:"POST",
+		// 	dataType:"json",
+		// 	contentType:"application/json;charset=utf-8",
+		// 	data:JSON.stringify(testJson),
+		// 	success:function(response){
+		// 		$.each(response,function(i,v){
+		// 			$("#detailsTest1").append(
+		// 				`<div>${v.p_name}</div>
+		// 				<div>${v.price}</div>`
+		// 			);
+		// 			$("#detailsTest2").append(
+		// 				`<div>${v.p_name}</div>
+		// 				<div>${v.p_main}</div>`
+		// 			);
+		// 		});
+		// 	},
+		// 	error:function(){}
+		// });
+		var userName = $("#secretUserName").html();
+		var userData = {"user_acc":userName};
+		alert(userName);
 		$.ajax({
-			url:"panProductDetailSelect",
+			async:true,
+			url:"panSelectMainByName",
 			type:"POST",
 			dataType:"json",
 			contentType:"application/json;charset=utf-8",
-			data:JSON.stringify(testJson),
+			data:JSON.stringify(userData),
 			success:function(response){
 				$.each(response,function(i,v){
-					$("#detailsTest1").append(
-						`<div>${v.p_name}</div>
-						<div>${v.price}</div>`
-					);
-					$("#detailsTest2").append(
-						`<div>${v.p_name}</div>
-						<div>${v.p_main}</div>`
+					$("#userProductMain").append(
+						`<li class="${v.p_main}">${v.p_main}</li>`
 					);
 				});
+				
 			},
-			error:function(){}
+			error:function(msg){
+				console.log(msg);
+			}
 		});
+
 	});
 
 </script>
@@ -37,8 +60,14 @@
 </head>
 <body>
 	<h1><span id="test" th:text="'ID:'+${secretProductId}"></span> love GawrGura!!!</h1>
+	<span id="secretUserName" th:text="${secretUserName}"></span>
 	<img src="https://img.4gamers.com.tw/ckfinder/images/ALIEN/2021-1/maxresd213efault.jpg?versionId=Kmz4sadnKzhhuFKgyTuOes3KgyKq8eCZ">
 	<div id="detailsTest1"></div>
-	<div id="detailsTest2" style="border: 2px solid red;"></div>
+	<div id="detailsTest2" style="border: 2px solid red;">
+		<ul id="userProductMain">
+			<li class="active">Clothings</li>
+
+		</ul>
+	</div>
 </body>
 </html>

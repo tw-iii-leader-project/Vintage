@@ -48,6 +48,9 @@ public class LeaveMsgServiceImp implements LeaveMsgService {
 		leaveMsgEntity.setUserName(req.getUserName());
 		leaveMsgEntity.setMsgContent(req.getMsgContent());
 		leaveMsgEntity.setLeaveTime(Timestamp.valueOf(LocalDateTime.now()));
+		leaveMsgEntity.setUserPic(req.getUserPic());
+		leaveMsgEntity.setProductId(req.getProductId());
+		leaveMsgEntity.setStarLv(req.getStarLv());
 		return leaveMsgEntity;
 	}
 
@@ -63,6 +66,8 @@ public class LeaveMsgServiceImp implements LeaveMsgService {
 		msgAddResp.setUserName(leaveMsgEntity.getUserName());
 		msgAddResp.setMsgContent(leaveMsgEntity.getMsgContent());
 		msgAddResp.setLeaveTime(leaveMsgEntity.getLeaveTime());
+		msgAddResp.setUserPic(leaveMsgEntity.getUserPic());
+		msgAddResp.setStarLv(leaveMsgEntity.getStarLv());
 		return msgAddResp;
 	}
 

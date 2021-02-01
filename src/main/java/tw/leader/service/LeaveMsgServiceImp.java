@@ -2,6 +2,7 @@ package tw.leader.service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,8 @@ import tw.leader.dao.LeaveMsgRepository;
 import tw.leader.po.LeaveMsgEntity;
 import tw.leader.vo.MsgAddReq;
 import tw.leader.vo.MsgAddResp;
+import tw.leader.vo.ShowPorductLeaveMsgReq;
+import tw.leader.vo.ShowPorductLeaveMsgResp;
 
 @Service
 public class LeaveMsgServiceImp implements LeaveMsgService {
@@ -28,20 +31,10 @@ public class LeaveMsgServiceImp implements LeaveMsgService {
 	}
 	
 	/**
-	 * 商品留言顯示
-	 * */
-	
-	
-	
-	
-	
-	
-	
-	/**
 	 * 前端JSON接到的資料從ApplyMemberReq存到MemberEntity
 	 * 
 	 * @param req
-	 * @return
+	 * @return leaveMsgEntity
 	 */
 	private LeaveMsgEntity setLeaveMsgEntity(MsgAddReq req) {
 		LeaveMsgEntity leaveMsgEntity = new LeaveMsgEntity();
@@ -58,7 +51,7 @@ public class LeaveMsgServiceImp implements LeaveMsgService {
 	 * 把資料從LeaveMsgEntity存到MsgAddResp
 	 * 
 	 * @param memberEntity
-	 * @return
+	 * @return msgAddResp
 	 * 
 	 */
 	private MsgAddResp setMsgAddResp(LeaveMsgEntity leaveMsgEntity) {
@@ -70,5 +63,22 @@ public class LeaveMsgServiceImp implements LeaveMsgService {
 		msgAddResp.setStarLv(leaveMsgEntity.getStarLv());
 		return msgAddResp;
 	}
+	
+	/**
+	 * 定位商品ID撈出該商品所有留言
+	 * 
+	 * @param productId
+	 * @return listShowPorductLeaveMsgResp
+	 * 
+	 * */
+
+	@Override
+	public ShowPorductLeaveMsgResp showLeaveMsg(ShowPorductLeaveMsgReq productId) {
+		List<LeaveMsgEntity> listLeaveMsgEntity = leaveMsgRepository.findByProductId(productId.getProductId());
+		ShowPorductLeaveMsgResp listShowPorductLeaveMsgResp = new ShowPorductLeaveMsgResp();
+		listShowPorductLeaveMsgResp.setLeaveMsgList(listLeaveMsgEntity);
+		return listShowPorductLeaveMsgResp;
+	}
+	
 
 }

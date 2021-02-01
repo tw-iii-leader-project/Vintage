@@ -2,6 +2,8 @@ package tw.leader.service;
 
 import tw.leader.vo.MsgAddReq;
 import tw.leader.vo.MsgAddResp;
+import tw.leader.vo.ShowPorductLeaveMsgReq;
+import tw.leader.vo.ShowPorductLeaveMsgResp;
 
 public interface LeaveMsgService {
 	/**
@@ -13,10 +15,10 @@ public interface LeaveMsgService {
 	public MsgAddResp magAdd(MsgAddReq req);
 	
 	/**
-	 *顯示商品留言 
+	 *載入頁面時顯示該商品留言 
 	 * 
-	 * @param 
+	 * @param req
 	 * @return
 	 * */
-	
+	public ShowPorductLeaveMsgResp showLeaveMsg(ShowPorductLeaveMsgReq productId);
 }

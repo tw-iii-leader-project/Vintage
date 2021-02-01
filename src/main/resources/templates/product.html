@@ -75,15 +75,19 @@
         }
         
         //頁面載入時show該商品的所有留言
-        var product_id = 123;
+        var product_id = 12345;
+        var product_id_data = {"PRODUCT_ID":product_id}
         $.ajax({
-          url: "http://localhost:8080/Vintage/api/leaveMsg/msgShow",
+          url: "http://localhost:8080/Vintage/api/leaveMsg/showLeaveMsg",
           method: "POST",
           dataType: "json",
           contentType: "application/json; charset=UTF-8",
-          data: JSON.stringify(send_leave_msg),
+          data: JSON.stringify(product_id_data),
           success: function (respones) {
-            $.each(respones, function (i, v) {
+            //show不出來
+            var reqList = JSON.parse(respones);
+            console.log(reqList);
+            $.each(reqList, function (i, v) {
               $("#show_leave_mag").append(`<div class="co-item">
                                     <div class="avatar-pic">
                                     <img src="img/product-single/${

@@ -13,4 +13,6 @@ public interface ProductService {
 	public String getProductById(int p_id) throws Exception;
 	
 	public String getMainByUserName(String user_acc) throws Exception;
+
+//	public String getMainByUserName(String title, String user_acc) throws Exception;
 }

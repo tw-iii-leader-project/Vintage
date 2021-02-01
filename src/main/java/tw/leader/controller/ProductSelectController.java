@@ -4,10 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -55,19 +53,10 @@ public class ProductSelectController {
 	
 	@GetMapping(value="/panUserPage")
 	public String userJumPage(@RequestParam String userName,Model m) {
-		System.out.println(userName+"1");
 		m.addAttribute("secretUserName",userName);
 		return "blog-details";
 	}
-	
-	@PostMapping(value="/panSelectMainByName")
-	@ResponseBody
-	public String selectMainByName(@RequestBody ProductResp userName) throws Exception {
-		String user_acc = userName.getUser_acc();
-		System.out.println(user_acc+"2");
-		return pService.getMainByUserName(user_acc);
-	}
-	
+
 	@PostMapping(value="/panProductDetailSelect")
 	@ResponseBody
 	public String productSelectById(@RequestBody ProductResp id) throws Exception {
@@ -75,4 +64,18 @@ public class ProductSelectController {
 		return pService.getProductById(p_id);
 	}
 	
+//	@PostMapping(value="/panSelectMainByName")
+//	@ResponseBody
+//	public String selectMainByName(@RequestBody ProductResp userName) throws Exception {
+//		String user_acc = userName.getUser_acc();
+//		String title = "p_id";
+//		return pService.getMainByUserName(title,user_acc);
+//	}
+	
+	@PostMapping(value="/panSelectMainByName")
+	@ResponseBody
+	public String selectProductByName(@RequestBody ProductResp userName) throws Exception {
+		String user_acc = userName.getUser_acc();
+		return pService.getMainByUserName(user_acc);
+	}
 }

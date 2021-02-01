@@ -15,7 +15,7 @@ public interface ProductSelectDao extends JpaRepository<Product,Integer> {
 		
 	//查詢大項
 	@Query(value="select u from Product u where u.p_main = ?1")
-	public List<Product> findByMain(String p_main);
+	List<Product> findByMain(String p_main);
 	
 	//查詢大項 + 小項
 	@Query(value="select * from Product where p_main = ?1 and p_detail = ?2",nativeQuery = true)
@@ -29,7 +29,11 @@ public interface ProductSelectDao extends JpaRepository<Product,Integer> {
 	@Query(value="select * from Product where p_id = ?1",nativeQuery = true)
 	List<Product> selectById(int p_id);
 	
-	@Query(value="select distinct p_main from Product where user_acc = ?1",nativeQuery = true)
+	@Query(value="select * from Product where user_acc = ?1",nativeQuery = true)
 	List<Product> selectMainByName(String user_acc);
+	
+//	@Query(value="select ?1 from Product where user_acc = ?2",nativeQuery = true)
+//	List<Product> selectMainByName(String title ,String user_acc);
 	//select distinct p_main from Product where user_acc = 'GawrGura';
+	
 }

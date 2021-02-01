@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tw.leader.dao.ProductSelectDao;
@@ -73,9 +72,9 @@ public class ProductServiceImpl implements ProductService {
 	
 	@Override
 	public String getMainByUserName(String user_acc) throws Exception {
-		System.out.println(user_acc+"3");
 		List<Product> mList = pSDao.selectMainByName(user_acc);
 		String mJson = objectMapper.writeValueAsString(mList);
+		System.out.println(mJson);
 		return mJson;
 	}
 	

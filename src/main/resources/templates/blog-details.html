@@ -27,7 +27,7 @@
     <script type="text/javascript">
         $(function(){
             var userName = $("#secretUserName").html();
-            var userProductData = {"userName":userName};
+            var userProductData = {"user_acc":userName};
             $.ajax({
                 url:"panSelectMainByName",
                 type:"POST",
@@ -41,7 +41,9 @@
                         );
                     });
                 },
-                error:function(msg){}
+                error:function(msg){
+                    alert("ajax異常:"+msg);
+                }
             });
         });
     </script>

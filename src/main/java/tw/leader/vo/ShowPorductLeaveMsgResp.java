@@ -11,7 +11,7 @@ import tw.leader.po.LeaveMsgEntity;
 public class ShowPorductLeaveMsgResp {
 	
 	
-	@JsonProperty(value="LeaveMsgList")
+	@JsonProperty(value="leaveMsgList")
 	private List<LeaveMsgEntity> leaveMsgList;
 
 }

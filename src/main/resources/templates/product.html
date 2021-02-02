@@ -73,10 +73,10 @@
           }
           return star_lv_icon;
         }
-        
+
         //頁面載入時show該商品的所有留言
-        var product_id = 12345;
-        var product_id_data = {"PRODUCT_ID":product_id}
+        var product_id = 12345; //取得商品的ID值
+        var product_id_data = { PRODUCT_ID: product_id }; //存成JSON物件
         $.ajax({
           url: "http://localhost:8080/Vintage/api/leaveMsg/showLeaveMsg",
           method: "POST",
@@ -84,29 +84,26 @@
           contentType: "application/json; charset=UTF-8",
           data: JSON.stringify(product_id_data),
           success: function (respones) {
-            //show不出來
-            var reqList = JSON.parse(respones);
-            console.log(reqList);
-            $.each(reqList, function (i, v) {
-              $("#show_leave_mag").append(`<div class="co-item">
-                                    <div class="avatar-pic">
-                                    <img src="img/product-single/${
-                                      v.USER_PIC
-                                    }" alt="">
-                                    </div>
-                                        <div class="avatar-text">
-                                            <div class="at-rating">
-                                              ${show_star_icon(v.STAR_LV)}
-                                            </div>
-                                            <h5>${
-                                              v.USER_NAMES
-                                            }<span>${v.LEAVE_TIME}</span></h5>
-                                            <div class="at-reply">${
-                                              v.MSG_CONTENT
-                                            }</div>
-                                        </div>                                      
-                                </div>`);
-            });
+            //把respones的巢狀JSON物件存成array
+            var responesList = [respones];
+            //雙層foreach出來
+            $.each(responesList, function(index, item){
+              $.each(item.leaveMsgList,function(i,v){
+                $("#show_leave_mag").append(
+                  `<div class="co-item">
+                      <div class="avatar-pic">
+                        <img src="img/product-single/${v.userPic}" alt="">
+                          </div>
+                            <div class="avatar-text">
+                               <div class="at-rating">
+                                  ${show_star_icon(v.starLv)}
+                                </div>
+                                  <h5>${v.userName}<span>${v.leaveTime}</span></h5>
+                            <div class="at-reply">${v.msgContent}</div>
+                        </div>                                      
+                    </div>`)
+              });
+            });         
           },
           error: function (jqXHR, textStatus, errorThrown) {
             console.log(textStatus);
@@ -781,7 +778,6 @@
 
                       <script>
                         //改變星數並付值
-
                         $("#star1")
                           .click(function () {
                             $("#star1").attr("class", "fa fa-star ");
@@ -832,7 +828,7 @@
                           })
                           .val(5);
 
-                        //顯示星數
+                        //顯示星數的方法
                         function show_star_icon(star_lv_sel) {
                           var star_lv_icon = "";
                           switch (star_lv_sel) {
@@ -875,7 +871,7 @@
                           return star_lv_icon;
                         }
 
-                        //判斷點選星數並傳入對應的值
+                        //判斷點選星數並傳入對應的值並回傳 star_lv_ele
                         var star_lv_ele = "";
                         $("#star1, #star2, #star3, #star4, #star5").click(
                           function () {
@@ -900,11 +896,11 @@
 
                         //傳送留言資料到後端
                         $("#send_msg").click(function () {
-                          var leave_name = $("#leave_name").val();
+                          var leave_name = $("#leave_name").val();    //從會員登入取值
                           var leave_content = $("#leave_content").val();
                           var star_lv_sel = $(star_lv_ele).val();
-                          var product_id = 12345;
-                          var user_pic = "ab.png";
+                          var product_id = 12345;     //從商品載入取值
+                          var user_pic = "ab.png";    //從會員登入取值
                           var send_leave_msg = {
                             USER_NAMES: leave_name,
                             MSG_CONTENT: leave_content,

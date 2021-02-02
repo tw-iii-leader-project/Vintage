@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
 
@@ -41,6 +43,7 @@ public class LeaveMsgEntity implements Serializable{
 	@NotNull
 	private String msgContent;
 	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	@Column(name="LEAVE_TIME")
 	@NotNull
 	private Timestamp leaveTime;

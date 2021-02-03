@@ -2,6 +2,8 @@ package tw.leader.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -29,11 +31,29 @@ public interface ProductSelectDao extends JpaRepository<Product,Integer> {
 	@Query(value="select * from Product where p_id = ?1",nativeQuery = true)
 	List<Product> selectById(int p_id);
 	
-	@Query(value="select * from Product where user_acc = ?1",nativeQuery = true)
+	// 查詢賣家全部商品
+	@Query(value="select * from Product where user_acc = ?1 order by p_main",nativeQuery = true)
 	List<Product> selectMainByName(String user_acc);
+	// select * from product where user_acc = 'gawrgura' order by p_main;
 	
-//	@Query(value="select ?1 from Product where user_acc = ?2",nativeQuery = true)
-//	List<Product> selectMainByName(String title ,String user_acc);
-	//select distinct p_main from Product where user_acc = 'GawrGura';
+	// 查詢賣家分類商品
+	@Query(value="select * from product where p_main = ?1 and user_acc = ?2",nativeQuery = true)
+	List<Product> selectProductByMainAndName(String p_main,String user_acc);
+	//select * from product where p_main = '玩具' and user_acc = 'gawrgura';
+	
+	
+	
+	/*------------------------------------------------------
+	 *  Test Dao*/
+	
+	@Query(value="select * from Product where user_acc = ?1 order by p_main",nativeQuery = true)
+	Page<Product> selectProductPageByName(String user_acc,Pageable pageable);
+	
+	
+	
+	
+	
+	
+	
 	
 }

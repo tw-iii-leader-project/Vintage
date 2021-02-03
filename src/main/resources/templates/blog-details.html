@@ -27,23 +27,156 @@
     <script type="text/javascript">
         $(function(){
             var userName = $("#secretUserName").html();
-            var userProductData = {"user_acc":userName};
-            $.ajax({
-                url:"panSelectMainByName",
-                type:"POST",
-                dataType:"json",
-                contentType:"application/json;charset=utf-8",
-                data:JSON.stringify(userProductData),
-                success:function(response){
-                    $.each(response,function(i,v){
-                        $("#userProductMain").append(
-                            `<li>${v.p_main}</li>`
-                        );
+		    var userData = {"user_acc":userName};
+		    $.ajax({
+			    async:true,
+			    url:"panSelectMainByName",
+			    type:"POST",
+			    dataType:"json",
+			    contentType:"application/json;charset=utf-8",
+			    data:JSON.stringify(userData),
+			    success:function(response){
+                    var tMain = [];
+				    $.each(response,function(i,v){
+                        tMain.push(`${v.p_main}`);
                     });
-                },
-                error:function(msg){
-                    alert("ajax異常:"+msg);
-                }
+                    alert(tMain);
+                    nMain = $.uniqueSort(tMain);
+                    alert(nMain);
+		            $.each(nMain,function(i,v){
+					    $("#filterControl ul").append(
+					    	`<li class="productMainLi">${v}</li>`
+					    );
+                    });
+				    $.each(response,function(i,v){	
+                        $("#productList #productRow").append(
+                            `<div class="col-lg-3 col-sm-6">
+                         	    <div class="product-item">
+                                	<div class="pi-pic">
+                                    	<img src="img/products/${v.p_img}" alt="">
+                                            <div class="icon">
+                                                <i class="icon_heart_alt"></i>
+                                            </div>
+                                            <ul>
+                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                            </ul>
+                                    </div>
+                                    <div class="pi-text">
+                                    	<div class="catagory-name">${v.p_main}</div>
+                                        <a href="panProductPage?id=${v.p_id}">
+                                            <h5>${v.p_name}</h5>
+                                        </a>
+                                        <div class="product-price">
+                                            ${v.price}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`  
+                        );
+				    });
+			    },
+			    error:function(msg){
+			    	console.log(msg);
+			    }
+            });
+            $("#filterControl ul").on("click",".productMainLi",function(){
+                $("#filterControl ul li").removeClass("active");
+                $(this).addClass("active");
+                $("#productList #productRow").html("");
+                var userMainValue = $(this).html();
+                var userName = $("#secretUserName").html();
+                var userData = {"p_main":userMainValue,"user_acc":userName};
+                $.ajax({
+                    async:true,
+                    url:"panSelectProductByMainAndName",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(response){
+                        $.each(response,function(i,v){
+                            $("#productList #productRow").append(
+                                `<div class="col-lg-3 col-sm-6">
+                         	        <div class="product-item">
+                                    	<div class="pi-pic">
+                                        	<img src="img/products/${v.p_img}" alt="">
+                                                <div class="icon">
+                                                    <i class="icon_heart_alt"></i>
+                                                </div>
+                                                <ul>
+                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                </ul>
+                                        </div>
+                                        <div class="pi-text">
+                                        	<div class="catagory-name">${v.p_main}</div>
+                                            <a href="panProductPage?id=${v.p_id}">
+                                                <h5>${v.p_name}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${v.price}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>` 
+                            );
+                        });
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            });
+            $("#userProductAll").click(function(){
+                $("#filterControl ul li").removeClass("active");
+                $(this).addClass("active");
+                $("#productList #productRow").html("");
+                var userName = $("#secretUserName").html();
+		        var userData = {"user_acc":userName};
+		        $.ajax({
+			        async:true,
+			        url:"panSelectMainByName",
+			        type:"POST",
+			        dataType:"json",
+			        contentType:"application/json;charset=utf-8",
+			        data:JSON.stringify(userData),
+			        success:function(response){
+                        $.each(response,function(i,v){	
+                            $("#productList #productRow").append(
+                                `<div class="col-lg-3 col-sm-6">
+                             	    <div class="product-item">
+                                    	<div class="pi-pic">
+                                        	<img src="img/products/${v.p_img}" alt="">
+                                                <div class="icon">
+                                                    <i class="icon_heart_alt"></i>
+                                                </div>
+                                                <ul>
+                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                </ul>
+                                        </div>
+                                        <div class="pi-text">
+                                        	<div class="catagory-name">${v.p_main}</div>
+                                            <a href="panProductPage?id=${v.p_id}">
+                                                <h5>${v.p_name}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${v.price}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`  
+                            );
+				        });
+			        },
+			        error:function(msg){
+			        	console.log(msg);
+			        }
+                });
             });
         });
     </script>
@@ -261,102 +394,36 @@
                             consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
                             aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
                             ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
-                        <div class="col-lg-12">
-                            <div class="filter-control">
-                                <ul id="userProductMain">
-                                    <li class="active">ALL</li>
-                                </ul>
-                            </div>
-                            <div class="product-slider owl-carousel">
-                                <div class="product-item">
-                                    <div class="pi-pic">
-                                        <img src="img/products/women-1.jpg" alt="">
-                                        <div class="sale">Sale</div>
-                                        <div class="icon">
-                                            <i class="icon_heart_alt"></i>
-                                        </div>
-                                        <ul>
-                                            <li class="w-icon active"><a href="#"><i
-                                                    class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="pi-text">
-                                        <div class="catagory-name">Coat</div>
-                                        <a href="#">
-                                            <h5>Pure Pineapple</h5>
-                                        </a>
-                                        <div class="product-price">
-                                            $14.00 <span>$35.00</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="product-item">
-                                    <div class="pi-pic">
-                                        <img src="img/products/women-2.jpg" alt="">
-                                        <div class="icon">
-                                            <i class="icon_heart_alt"></i>
-                                        </div>
-                                        <ul>
-                                            <li class="w-icon active"><a href="#"><i
-                                                    class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="pi-text">
-                                        <div class="catagory-name">Shoes</div>
-                                        <a href="#">
-                                            <h5>Guangzhou sweater</h5>
-                                        </a>
-                                        <div class="product-price">$13.00</div>
-                                    </div>
-                                </div>
-                                <div class="product-item">
-                                    <div class="pi-pic">
-                                        <img src="img/products/women-3.jpg" alt="">
-                                        <div class="icon">
-                                            <i class="icon_heart_alt"></i>
-                                        </div>
-                                        <ul>
-                                            <li class="w-icon active"><a href="#"><i
-                                                    class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="pi-text">
-                                        <div class="catagory-name">Towel</div>
-                                        <a href="#">
-                                            <h5>Pure Pineapple</h5>
-                                        </a>
-                                        <div class="product-price">$34.00</div>
-                                    </div>
-                                </div>
-                                <div class="product-item">
-                                    <div class="pi-pic">
-                                        <img src="img/products/women-4.jpg" alt="">
-                                        <div class="icon">
-                                            <i class="icon_heart_alt"></i>
-                                        </div>
-                                        <ul>
-                                            <li class="w-icon active"><a href="#"><i
-                                                    class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="#">+ Quick View</a></li>
-                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                        </ul>
-                                    </div>
-                                    <div class="pi-text">
-                                        <div class="catagory-name">Towel</div>
-                                        <a href="#">
-                                            <h5>Converse Shoes</h5>
-                                        </a>
-                                        <div class="product-price">$34.00</div>
-                                    </div>
-                                </div>
-                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="product-shop spad">
+        <div class="container">
+            <div class="row" id="productMainRow">
+                <div class="col-lg-12 order-1 order-lg-2">
+                    <h3>更多此賣家作品</h3>
+                    <div class="filter-control" id="filterControl">
+                        <ul>
+                            <li class="active" id="userProductAll">ALL</li>
+                            <!-- add product main Here -->
+                        </ul>
+                    </div>
+                    <div class="product-list" id="productList">
+                        <div class="row" id="productRow">
+                            <!-- productBox Here -->
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>    
+    <section class="blog-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="blog-details-inner">
                         <div class="tag-share">
                             <div class="details-tag">
                                 <ul>

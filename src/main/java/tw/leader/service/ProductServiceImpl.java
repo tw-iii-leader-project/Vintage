@@ -3,8 +3,12 @@ package tw.leader.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tw.leader.dao.ProductSelectDao;
@@ -21,6 +25,9 @@ public class ProductServiceImpl implements ProductService {
 	@Autowired
 	private ObjectMapper objectMapper ;
 	
+	/*
+	 * *** shop頁面***載入時，查詢顯示全部資料 
+	 * */
 	@Override
 	public String getProductAll() throws Exception{
 		List<Product> pList = pSDao.selectAll();
@@ -31,6 +38,9 @@ public class ProductServiceImpl implements ProductService {
 		return response;
 	}
 	
+	/*
+	 * *** Vintage全部頁面***Header區分類查詢
+	 *  */
 	@Override
 	public String getProductByMain(String p_main) throws Exception{
 		System.out.println(p_main);
@@ -41,15 +51,21 @@ public class ProductServiceImpl implements ProductService {
 		 return response;
 	}
 	
-	@Override
-	public String getProductByMainAndDetail(String p_main,String p_detail) throws Exception {
-		List<Product> pList = pSDao.selectMainAndDetail(p_main, p_detail);
-		String pJson = objectMapper.writeValueAsString(pList);
-		System.out.println(pJson);
-		String response = pJson;
-		return response;
-	}
+	/*
+	 * *** shop頁面***利用大項與細項類別查詢(待擴充!!!)
+	 *  */
+//	@Override
+//	public String getProductByMainAndDetail(String p_main,String p_detail) throws Exception {
+//		List<Product> pList = pSDao.selectMainAndDetail(p_main, p_detail);
+//		String pJson = objectMapper.writeValueAsString(pList);
+//		System.out.println(pJson);
+//		String response = pJson;
+//		return response;
+//	}
 	
+	/*
+	 * *** Vintage所有頁面***使用商品名稱查詢商品
+	 *  */
 	@Override
 	public String getProductByName(String p_name) throws Exception {
 		System.out.println(p_name);
@@ -60,6 +76,9 @@ public class ProductServiceImpl implements ProductService {
 		return response;
 	}
 	
+	/*
+	 * *** product-details頁面***查詢單件商品的所有資料 
+	 * */
 	@Override
 	public String getProductById(int p_id) throws Exception {
 		System.out.println(p_id);
@@ -70,6 +89,9 @@ public class ProductServiceImpl implements ProductService {
 		return response;
 	}
 	
+	/*
+	 * ***userPage賣家頁面***查詢出此賣家的所有商品
+	 * */
 	@Override
 	public String getMainByUserName(String user_acc) throws Exception {
 		List<Product> mList = pSDao.selectMainByName(user_acc);
@@ -77,6 +99,31 @@ public class ProductServiceImpl implements ProductService {
 		System.out.println(mJson);
 		return mJson;
 	}
+	
+	/*
+	 * ***userPage賣家頁面***利用類別查詢出此賣家的所有商品
+	 * */
+	@Override
+	public String getProductByMainAndName(String p_main,String user_acc) throws Exception {
+		List<Product> pList = pSDao.selectProductByMainAndName(p_main, user_acc);
+		String pJson = objectMapper.writeValueAsString(pList);
+		String response = pJson;
+		return response;
+	}
+	
+	
+	
+	
+	/*
+	 * -----------------------------------------------------------
+	 * 		Test class
+	 * */
+	
+//	public String getTestProductByName(String user_acc,int pageNum) {
+//		int pageSize = 4;
+//		Pageable pageable = new PageRequest(pageNum -1, pageSize, );
+//	}
+	
 	
 	//ProductReq 轉 ProductEntity
 	private Product setProductEntity(ProductReq req) {

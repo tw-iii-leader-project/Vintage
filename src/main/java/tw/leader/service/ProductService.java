@@ -6,7 +6,7 @@ public interface ProductService {
 	
 	public String getProductByMain(String p_main) throws Exception;
 	
-	public String getProductByMainAndDetail(String p_main,String p_detail) throws Exception;
+//	public String getProductByMainAndDetail(String p_main,String p_detail) throws Exception;
 	
 	public String getProductByName(String p_name) throws Exception;
 	
@@ -14,5 +14,5 @@ public interface ProductService {
 	
 	public String getMainByUserName(String user_acc) throws Exception;
 
-//	public String getMainByUserName(String title, String user_acc) throws Exception;
+	public String getProductByMainAndName(String p_main,String user_acc) throws Exception;
 }

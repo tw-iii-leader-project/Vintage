@@ -30,7 +30,32 @@
 		    var userData = {"user_acc":userName};
 		    $.ajax({
 			    async:true,
-			    url:"panSelectMainByName",
+			    url:"panFindProductPage",
+			    type:"POST",
+			    dataType:"json",
+			    contentType:"application/json;charset=utf-8",
+			    data:JSON.stringify(userData),
+                success:function(pageData){
+                    $.each(pageData,function(i,v){
+                        var pages = parseInt(v.totalPages);
+                        for(n=1;n<=pages;n++){
+                            $("#pageBox ul").append(
+                                `<li>${n}</li>`
+                            );
+                        };
+                        $("#totalElements").append(
+                            `<span>${v.totalElements}</span>`
+                        );
+                    });
+                    $("#pageBox ul li").first().addClass("active");
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+		    $.ajax({
+			    async:true,
+			    url:"panSelectMainByUserName",
 			    type:"POST",
 			    dataType:"json",
 			    contentType:"application/json;charset=utf-8",
@@ -75,7 +100,8 @@
                                 </div>
                             </div>`  
                         );
-				    });
+                    });
+                    console.log(response);
 			    },
 			    error:function(msg){
 			    	console.log(msg);
@@ -413,6 +439,14 @@
                     <div class="product-list" id="productList">
                         <div class="row" id="productRow">
                             <!-- productBox Here -->
+                        </div>
+                    </div>
+                    <div class="filter-control" id="pageBox">
+                        <ul>
+
+                        </ul>
+                        <div id="totalElements">
+
                         </div>
                     </div>
                 </div>

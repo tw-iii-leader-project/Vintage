@@ -41,19 +41,28 @@ public interface ProductSelectDao extends JpaRepository<Product,Integer> {
 	List<Product> selectProductByMainAndName(String p_main,String user_acc);
 	//select * from product where p_main = '玩具' and user_acc = 'gawrgura';
 	
+	// 查詢出商品總數
+	@Query(value="select count(*) from Product where user_acc = ?1",nativeQuery = true)
+	int selectProductTotal(String user_acc);
+	// select count(*) from Product where user_acc = 'GawrGura';
+	
+	// 查詢出賣家全部商品
+	@Query(value="select * from Product where user_acc = ?1 order by p_main offset (?2)*8  rows fetch next 8 rows only",nativeQuery = true)
+	List<Product> selectProductByUserName(String user_acc,int page);
+	
 	
 	
 	/*------------------------------------------------------
 	 *  Test Dao*/
 	
-	@Query(value="select * from Product where user_acc = ?1 order by p_main",nativeQuery = true)
+	@Query(value="select * from Product where user_acc = ?1",nativeQuery = true)
 	Page<Product> selectProductPageByName(String user_acc,Pageable pageable);
 	
+	@Query(value="select * from Product where user_acc = ?1 order by p_main offset (?2)*3  rows fetch next 3 rows only",nativeQuery = true)
+	List<Product> testSelectProductByUser(String user_acc,int page);
+	// select * from Product where user_acc = 'GawrGura' order by p_id offset (1)*3  rows fetch next 3 rows only;
 	
-	
-	
-	
-	
+
 	
 	
 }

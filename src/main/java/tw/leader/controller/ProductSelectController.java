@@ -1,13 +1,22 @@
 package tw.leader.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tw.leader.service.ProductService;
 import tw.leader.vo.ProductResp;
@@ -21,6 +30,8 @@ public class ProductSelectController {
 
 	@Autowired
 	private ProductService pService;
+	@Autowired
+	private ObjectMapper objectMapper ;
 	
 	/*
 	 * ***所有頁面皆可呼叫***查詢全部商品
@@ -82,11 +93,11 @@ public class ProductSelectController {
 	/*
 	 * ***userPage頁面載入時呼叫***載入此賣家的所有商品
 	 * */
-	@PostMapping(value="/panSelectMainByName")
+	@PostMapping(value="/panSelectMainByUserName")
 	@ResponseBody
-	public String selectProductByName(@RequestBody ProductResp userName) throws Exception {
+	public String selectProductByUserName(@RequestBody ProductResp userName) throws Exception {
 		String user_acc = userName.getUser_acc();
-		return pService.getMainByUserName(user_acc);
+		return pService.getProductTotal(user_acc);
 	}
 	
 	/*
@@ -100,6 +111,13 @@ public class ProductSelectController {
 		return pService.getProductByMainAndName(p_main, user_acc);
 	}
 	
+	@PostMapping(value="/panFindProductPage")
+	@ResponseBody
+	public String selectProductByName(@RequestBody ProductResp userData) throws Exception {
+		String user_acc = userData.getUser_acc();
+		return pService.getPageMessages(user_acc);
+	}
+	
 	
 	
 	/*-------------------------------------------------------------
@@ -108,6 +126,24 @@ public class ProductSelectController {
 	@GetMapping(value="/panTestPage")
 	public String testUserJumPage() {
 		return "test";
+	}
+	
+	@PostMapping(value="/panTestJsonData")
+	@ResponseBody
+	public String panTestJsonData() throws Exception {
+		List<Map<String,String>> tList = new ArrayList<>();
+		Map<String,String> tMap1 = new HashMap<>();
+		Map<String,String> tMap2 = new HashMap<>();
+		tMap1.put("name", "GawrGura");
+		tMap1.put("msg","AAAAAAAAAAAAAAA");
+		tList.add(tMap1);
+		tMap2.put("name", "Ina");
+		tMap2.put("msg","inaina~i~na~");
+		tList.add(tMap2);
+		System.out.println(tList);
+		String tJson = objectMapper.writeValueAsString(tList);
+		System.out.println(tJson);
+		return tJson;
 	}
 	
 //	@GetMapping(value="/panProductPageTest")
@@ -123,12 +159,23 @@ public class ProductSelectController {
 //		return "test";
 //	}
 	
-	@PostMapping(value="/panTestSelectMainByName")
-	@ResponseBody
-	public String testSelectProductByName(@RequestBody ProductResp userName) throws Exception {
-		String user_acc = userName.getUser_acc();
-		return pService.getMainByUserName(user_acc);
-	}
+//	@PostMapping(value="/panTestSelectMainByName")
+//	@ResponseBody
+//	public String testSelectProductByName(@RequestBody ProductResp userName) throws Exception {
+//		String user_acc = userName.getUser_acc();
+//		return pService.getMainByUserName(user_acc);
+//	}
+	
+//	@GetMapping(value="/panTestSelectProductAll")
+//	public String testSelectProductAll() throws Exception {
+//		int page = 0;
+//		int pageSize = 8;
+//		String user_acc = "GawrGura";
+//		System.out.println(page+pageSize+user_acc);
+//		String pJson = pService.getPageMessages(user_acc,pageSize,page);
+//		System.out.println(pJson);
+//		return "test";
+//	}
 	
 	
 	

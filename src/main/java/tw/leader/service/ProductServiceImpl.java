@@ -1,8 +1,12 @@
 package tw.leader.service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -12,6 +16,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tw.leader.dao.ProductSelectDao;
+import tw.leader.dao.ProductSelectPageDao;
 import tw.leader.po.Product;
 import tw.leader.vo.ProductReq;
 import tw.leader.vo.ProductResp;
@@ -22,6 +27,8 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductSelectDao pSDao;
+	@Autowired
+	private ProductSelectPageDao pSPDao;
 	@Autowired
 	private ObjectMapper objectMapper ;
 	
@@ -93,8 +100,10 @@ public class ProductServiceImpl implements ProductService {
 	 * ***userPage賣家頁面***查詢出此賣家的所有商品
 	 * */
 	@Override
-	public String getMainByUserName(String user_acc) throws Exception {
-		List<Product> mList = pSDao.selectMainByName(user_acc);
+	public String getProductTotal(String user_acc) throws Exception {
+		int page = 0;
+		List<Product> mList = pSDao.selectProductByUserName(user_acc,page);
+		System.out.println(mList);
 		String mJson = objectMapper.writeValueAsString(mList);
 		System.out.println(mJson);
 		return mJson;
@@ -124,6 +133,29 @@ public class ProductServiceImpl implements ProductService {
 //		Pageable pageable = new PageRequest(pageNum -1, pageSize, );
 //	}
 	
+	/*
+	 ***取得商品總數與總頁數
+	 * */
+	@Override
+	public String getPageMessages(String user_acc) throws Exception {
+		int total = pSDao.selectProductTotal(user_acc);
+		int pages = total/8;
+		if((total%8) != 0) {
+			pages += 1;
+		};
+		List<Map<String,String>> pageData = new ArrayList<>();
+		Map<String,String> totalElements = new HashMap<>();
+		Map<String,String> totalPages = new HashMap<>();
+		totalElements.put("totalElements",Integer.toString(total));
+		totalPages.put("totalPages",Integer.toString(pages));
+		pageData.add(totalElements);
+		pageData.add(totalPages);
+		
+		String pJson = objectMapper.writeValueAsString(pageData);
+		System.out.println(pJson);
+		return pJson;
+		
+	}
 	
 	//ProductReq 轉 ProductEntity
 	private Product setProductEntity(ProductReq req) {
@@ -157,6 +189,7 @@ public class ProductServiceImpl implements ProductService {
 		pResp.setUser_acc(pBean.getUser_acc());
 		return pResp;
 	}
+
 	
 }
 

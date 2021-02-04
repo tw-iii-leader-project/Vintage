@@ -76,6 +76,27 @@
 		// alert(t);
 		// var t2 = $.uniqueSort(t);
 		// alert(t2);
+		
+		$("#jsonDataTest").click(function(){
+			$.ajax({
+				url:"panTestJsonData",
+				type:"POST",
+				dataType:"json",
+				contentType:"application/json;charset=utf-8",
+				success:function(response){
+					$.each(response,function(i,v){
+						$("#jsonDataBox").append(
+							`<div>${v.name}</div>
+							<div>${v.msg}</div>`
+						);
+					});
+					
+				},
+				error:function(msg){
+					console.log(msg);
+				}
+			});
+		});
 	});
 
 
@@ -97,8 +118,15 @@
 		<ul>
 			<li class="action">ALL</li>
 		</ul>
-		
-		
+	</div>
+	<a href="panTestSelectProductAll">testPageSelect</a>
+	<div>
+		<div>jsonDataHere</div>
+		<button id="jsonDataTest">GO</button>
+		<div id="jsonDataBox"></div>
+		<div>
+			
+		</div>
 	</div>
 </body>
 </html>

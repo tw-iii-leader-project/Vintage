@@ -91,13 +91,40 @@ public class ProductSelectController {
 	}
 	
 	/*
-	 * ***userPage頁面載入時呼叫***載入此賣家的所有商品
+	 * ***userPage頁面載入時呼叫***載入此賣家所有商品分類
 	 * */
 	@PostMapping(value="/panSelectMainByUserName")
 	@ResponseBody
+	public String selectProductMainByUserName(@RequestBody ProductResp userName) throws Exception {
+		String user_acc = userName.getUser_acc();
+		return pService.getProductMainByUserName(user_acc);
+	}
+	
+	/*
+	 * ***userPage頁面載入時呼叫***載入此賣家的所有商品
+	 * */
+	@PostMapping(value="/panSelectProductByUserName")
+	@ResponseBody
 	public String selectProductByUserName(@RequestBody ProductResp userName) throws Exception {
 		String user_acc = userName.getUser_acc();
-		return pService.getProductTotal(user_acc);
+		return pService.getProductTotalLoad(user_acc);
+	}
+	
+	/*
+	 * ***userPage頁面呼叫***換頁查詢此賣家所有商品
+	 * */
+	@PostMapping(value="/panSelectProductByUserName.page")
+	@ResponseBody
+	public String selectProductByUserNameP(@RequestBody Map<String,String> pMap) throws Exception {
+		String user_acc = null;
+		int page = 0;
+		if(pMap.containsKey("user_acc")) {
+			user_acc = pMap.get("user_acc");
+		}
+		if(pMap.containsKey("page")) {
+			page = Integer.parseInt(pMap.get("page"));
+		}
+		return pService.getProductTotal(user_acc, page);
 	}
 	
 	/*
@@ -106,16 +133,47 @@ public class ProductSelectController {
 	@PostMapping(value="/panSelectProductByMainAndName")
 	@ResponseBody
 	public String selectProductByMainAndName(@RequestBody ProductResp userData) throws Exception {
-		String p_main = userData.getP_main();
 		String user_acc = userData.getUser_acc();
-		return pService.getProductByMainAndName(p_main, user_acc);
+		String p_main = userData.getP_main();
+		return pService.getProductByMainAndName(user_acc,p_main);
 	}
 	
+	@PostMapping(value="/panSelectProductByMainAndName.page")
+	public String selectProductByMainAndNameP(@RequestBody Map<String,String> pMap) throws Exception {
+		String user_acc = null;
+		String p_main = null;
+		int page = 0;
+		if(pMap.containsKey("user_acc")) {
+			user_acc = pMap.get("user_acc");
+		}
+		if(pMap.containsKey("p_main")) {
+			p_main = pMap.get("p_main");
+		}
+		if(pMap.containsKey("page")) {
+			page = Integer.parseInt(pMap.get("page"));
+		}
+		
+		return pService.getProductByMainAndNameP(user_acc, p_main, page);
+	}
+	/*
+	 * ***userPage頁面呼叫***查詢此賣家所有商品之頁面資訊
+	 * */
 	@PostMapping(value="/panFindProductPage")
 	@ResponseBody
 	public String selectProductByName(@RequestBody ProductResp userData) throws Exception {
 		String user_acc = userData.getUser_acc();
 		return pService.getPageMessages(user_acc);
+	}
+	
+	/*
+	 * ***userPage頁面呼叫***查詢賣家分類商品之頁面資訊
+	 * */
+	@PostMapping(value="/panFindProductMainPage")
+	@ResponseBody
+	public String selectProductPageByMainAndName(@RequestBody ProductResp userData) throws Exception {
+		String user_acc = userData.getUser_acc();
+		String p_main = userData.getP_main();
+		return pService.getPageMessageByMain(user_acc, p_main);
 	}
 	
 	

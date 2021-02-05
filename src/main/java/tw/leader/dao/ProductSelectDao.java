@@ -36,19 +36,25 @@ public interface ProductSelectDao extends JpaRepository<Product,Integer> {
 	List<Product> selectMainByName(String user_acc);
 	// select * from product where user_acc = 'gawrgura' order by p_main;
 	
-	// 查詢賣家分類商品
-	@Query(value="select * from product where p_main = ?1 and user_acc = ?2",nativeQuery = true)
-	List<Product> selectProductByMainAndName(String p_main,String user_acc);
-	//select * from product where p_main = '玩具' and user_acc = 'gawrgura';
 	
 	// 查詢出商品總數
 	@Query(value="select count(*) from Product where user_acc = ?1",nativeQuery = true)
 	int selectProductTotal(String user_acc);
 	// select count(*) from Product where user_acc = 'GawrGura';
 	
+	// 查詢出分類商品總數
+	@Query(value="select count(*) from Product where user_acc = ?1 and p_main = ?2",nativeQuery = true)
+	int selectProductTotalByMain(String user_acc,String p_main);
+	
 	// 查詢出賣家全部商品
 	@Query(value="select * from Product where user_acc = ?1 order by p_main offset (?2)*8  rows fetch next 8 rows only",nativeQuery = true)
 	List<Product> selectProductByUserName(String user_acc,int page);
+	
+	// 查詢賣家分類商品
+	@Query(value="select * from product where user_acc = ?1 and p_main = ?2 order by p_main offset (?3)*8 rows fetch next 8 rows only",nativeQuery = true)
+	List<Product> selectProductByMainAndName(String user_acc,String p_main,int page);
+	//select * from product where p_main = '玩具' and user_acc = 'gawrgura';
+	
 	
 	
 	

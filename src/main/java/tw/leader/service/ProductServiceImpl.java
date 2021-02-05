@@ -97,41 +97,64 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	/*
+	 * ***userPage賣家頁面***查詢此賣家所有商品類別
+	 * */
+	@Override
+	public String getProductMainByUserName(String user_acc) throws Exception {
+		List<Product> mList = pSDao.selectMainByName(user_acc);
+		String pJson = objectMapper.writeValueAsString(mList);
+		return pJson;
+	}
+	
+	/*
 	 * ***userPage賣家頁面***查詢出此賣家的所有商品
 	 * */
 	@Override
-	public String getProductTotal(String user_acc) throws Exception {
+	public String getProductTotalLoad(String user_acc) throws Exception {
 		int page = 0;
-		List<Product> mList = pSDao.selectProductByUserName(user_acc,page);
-		System.out.println(mList);
-		String mJson = objectMapper.writeValueAsString(mList);
-		System.out.println(mJson);
-		return mJson;
+		List<Product> pList = pSDao.selectProductByUserName(user_acc,page);
+		System.out.println(pList);
+		String pJson = objectMapper.writeValueAsString(pList);
+		System.out.println(pJson);
+		return pJson;
 	}
+	
+	/*
+	 * ***userPage賣家頁面***查詢此賣家所有商品+分頁查詢
+	 * */
+	@Override
+	public String getProductTotal(String user_acc,int page) throws Exception {
+		int rPage = page-1;
+		List<Product> pList = pSDao.selectProductByUserName(user_acc,rPage);
+		System.out.println(pList);
+		String pJson = objectMapper.writeValueAsString(pList);
+		System.out.println(pJson);
+		return pJson;
+	}
+	
 	
 	/*
 	 * ***userPage賣家頁面***利用類別查詢出此賣家的所有商品
 	 * */
 	@Override
-	public String getProductByMainAndName(String p_main,String user_acc) throws Exception {
-		List<Product> pList = pSDao.selectProductByMainAndName(p_main, user_acc);
+	public String getProductByMainAndName(String user_acc,String p_main) throws Exception {
+		int page = 0;
+		List<Product> pList = pSDao.selectProductByMainAndName(user_acc,p_main,page);
 		String pJson = objectMapper.writeValueAsString(pList);
 		String response = pJson;
 		return response;
 	}
 	
-	
-	
-	
 	/*
-	 * -----------------------------------------------------------
-	 * 		Test class
+	 * ***userPage賣家頁面***利用類別查詢出此賣家的所有商品+分頁查詢
 	 * */
-	
-//	public String getTestProductByName(String user_acc,int pageNum) {
-//		int pageSize = 4;
-//		Pageable pageable = new PageRequest(pageNum -1, pageSize, );
-//	}
+	public String getProductByMainAndNameP(String user_acc,String p_main,int page) throws Exception {
+		int rPage = page-1;
+		List<Product> pList = pSDao.selectProductByMainAndName(user_acc,p_main,rPage);
+		String pJson = objectMapper.writeValueAsString(pList);
+		String response = pJson;
+		return response;
+	}
 	
 	/*
 	 ***取得商品總數與總頁數
@@ -156,6 +179,40 @@ public class ProductServiceImpl implements ProductService {
 		return pJson;
 		
 	}
+	
+	/*
+	 * ***取得分類商品總數與頁數
+	 * */
+	public String getPageMessageByMain(String user_acc,String p_main) throws Exception {
+		int total = pSDao.selectProductTotalByMain(user_acc,p_main);
+		int pages = total/8;
+		if((total%8) != 0) {
+			pages += 1;
+		};
+		List<Map<String,String>> pageData = new ArrayList<>();
+		Map<String,String> totalElements = new HashMap<>();
+		Map<String,String> totalPages = new HashMap<>();
+		totalElements.put("totalElements",Integer.toString(total));
+		totalPages.put("totalPages",Integer.toString(pages));
+		pageData.add(totalElements);
+		pageData.add(totalPages);
+		
+		String pJson = objectMapper.writeValueAsString(pageData);
+		System.out.println(pJson);
+		return pJson;
+	}
+	
+	
+	/*
+	 * -----------------------------------------------------------
+	 * 		Test class
+	 * */
+	
+//	public String getTestProductByName(String user_acc,int pageNum) {
+//		int pageSize = 4;
+//		Pageable pageable = new PageRequest(pageNum -1, pageSize, );
+//	}
+	
 	
 	//ProductReq 轉 ProductEntity
 	private Product setProductEntity(ProductReq req) {

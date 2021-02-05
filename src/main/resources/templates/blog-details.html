@@ -65,15 +65,26 @@
 				    $.each(response,function(i,v){
                         tMain.push(`${v.p_main}`);
                     });
-                    alert(tMain);
                     nMain = $.uniqueSort(tMain);
-                    alert(nMain);
 		            $.each(nMain,function(i,v){
 					    $("#filterControl ul").append(
 					    	`<li class="productMainLi">${v}</li>`
 					    );
                     });
-				    $.each(response,function(i,v){	
+			    },
+			    error:function(msg){
+			    	console.log(msg);
+			    }
+            });
+            $.ajax({
+                async:true,
+                url:"panSelectProductByUserName",
+                type:"POST",
+                dataType:"json",
+			    contentType:"application/json;charset=utf-8",
+			    data:JSON.stringify(userData),
+                success:function(response){
+                    $.each(response,function(i,v){	
                         $("#productList #productRow").append(
                             `<div class="col-lg-3 col-sm-6">
                          	    <div class="product-item">
@@ -101,19 +112,95 @@
                             </div>`  
                         );
                     });
-                    console.log(response);
-			    },
-			    error:function(msg){
-			    	console.log(msg);
-			    }
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
             });
+            $("#pageBox ul").on("click","li",function(){
+                $("#pageBox ul li").removeClass("active");
+                $(this).addClass("active");
+                $("#productList #productRow").html("");
+                var pageNum = $(this).html();
+                var userAndPage = {"user_acc":userName,"page":pageNum};
+                $.ajax({
+                    async:true,
+                    url:"panSelectProductByUserName.page",
+                    type:"POST",
+                    dataType:"json",
+			        contentType:"application/json;charset=utf-8",
+			        data:JSON.stringify(userAndPage),
+                    success:function(response){
+                        $.each(response,function(i,v){	
+                            $("#productList #productRow").append(
+                                `<div class="col-lg-3 col-sm-6">
+                             	    <div class="product-item">
+                                    	<div class="pi-pic">
+                                        	<img src="img/products/${v.p_img}" alt="">
+                                                <div class="icon">
+                                                    <i class="icon_heart_alt"></i>
+                                                </div>
+                                                <ul>
+                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                </ul>
+                                        </div>
+                                        <div class="pi-text">
+                                        	<div class="catagory-name">${v.p_main}</div>
+                                            <a href="panProductPage?id=${v.p_id}">
+                                                <h5>${v.p_name}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${v.price}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`  
+                            );
+                        });
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            });
+
+            var userMainValue = null;
             $("#filterControl ul").on("click",".productMainLi",function(){
                 $("#filterControl ul li").removeClass("active");
                 $(this).addClass("active");
                 $("#productList #productRow").html("");
-                var userMainValue = $(this).html();
+                $("#pageBox ul").html("");
+                $("#totalElements").html("");
+                userMainValue = $(this).html();
                 var userName = $("#secretUserName").html();
                 var userData = {"p_main":userMainValue,"user_acc":userName};
+                $.ajax({
+			        async:true,
+			        url:"panFindProductMainPage",
+			        type:"POST",
+			        dataType:"json",
+			        contentType:"application/json;charset=utf-8",
+			        data:JSON.stringify(userData),
+                    success:function(pageData){
+                        $.each(pageData,function(i,v){
+                            var pages = parseInt(v.totalPages);
+                            for(n=1;n<=pages;n++){
+                                $("#pageBox ul").append(
+                                    `<li class="productMainPage">${n}</li>`
+                                );
+                            };
+                            $("#totalElements").append(
+                                `<span>${v.totalElements}</span>`
+                            );
+                        });
+                        $("#pageBox ul li").first().addClass("active");
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
                 $.ajax({
                     async:true,
                     url:"panSelectProductByMainAndName",
@@ -121,6 +208,54 @@
                     dataType:"json",
                     contentType:"application/json;charset=utf-8",
                     data:JSON.stringify(userData),
+                    success:function(response){
+                        $.each(response,function(i,v){
+                            $("#productList #productRow").append(
+                                `<div class="col-lg-3 col-sm-6">
+                         	        <div class="product-item">
+                                    	<div class="pi-pic">
+                                        	<img src="img/products/${v.p_img}" alt="">
+                                                <div class="icon">
+                                                    <i class="icon_heart_alt"></i>
+                                                </div>
+                                                <ul>
+                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                </ul>
+                                        </div>
+                                        <div class="pi-text">
+                                        	<div class="catagory-name">${v.p_main}</div>
+                                            <a href="panProductPage?id=${v.p_id}">
+                                                <h5>${v.p_name}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${v.price}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>` 
+                            );
+                        });
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            });
+            $("#pageBox ul").on("click",".productMainPage",function(){
+                $("#pageBox ul li").removeClass("active");
+                $(this).addClass("active");
+                $("#productList #productRow").html("");
+                var pageNum = $(this).html();
+                var userAndPage = {"p_main":userMainValue,"user_acc":userName,"page":pageNum};
+                $.ajax({
+                    async:true,
+                    url:"panSelectProductByMainAndName.page",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userAndPage),
                     success:function(response){
                         $.each(response,function(i,v){
                             $("#productList #productRow").append(

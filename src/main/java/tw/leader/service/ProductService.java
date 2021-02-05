@@ -16,9 +16,17 @@ public interface ProductService {
 	
 	public String getProductById(int p_id) throws Exception;
 
-	public String getProductByMainAndName(String p_main,String user_acc) throws Exception;
+	public String getProductByMainAndName(String user_acc,String p_main) throws Exception;
 
 	public String getPageMessages(String user_acc) throws Exception;
 	
-	public String getProductTotal(String user_acc) throws Exception;
+	public String getPageMessageByMain(String user_acc,String p_main) throws Exception;
+	
+	public String getProductTotalLoad(String user_acc) throws Exception;
+
+	public String getProductMainByUserName(String user_acc) throws Exception;
+	
+	public String getProductTotal(String user_acc,int page) throws Exception;
+	
+	public String getProductByMainAndNameP(String user_acc,String p_main,int page) throws Exception;
 }

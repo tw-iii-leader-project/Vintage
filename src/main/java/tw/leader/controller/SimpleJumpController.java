@@ -11,67 +11,67 @@ public class SimpleJumpController {
 
 	}
 	
-	@GetMapping("/liaoIndex")
+	@GetMapping("/index")
 	public String fashiHomePage() {
 		return "index.html";
 	}
 	
-	@GetMapping("/liaoShop")
+	@GetMapping("/shop")
 	public String fashiShopPage() {
 		return "shop.html";
 	}
 	
-	@GetMapping("/liaoProduct")
+	@GetMapping("/product")
 	public String productPage() {
 		return "product.html";
 	}
 	
-	@GetMapping("/liaoBlog")
+	@GetMapping("/blog")
 	public String blogPage() {
 		return "blog";
 	}
 	
-	@GetMapping("/liaoBlogDetails")
+	@GetMapping("/blogDetails")
 	public String blogDetailsPage() {
 		return "blog-details";
 	}
 	
-	@GetMapping("/liaoCheckOut")
+	@GetMapping("/checkOut")
 	public String checkOutPage() {
 		return "check-out";
 	}
 	
-	@GetMapping("/liaoContact")
+	@GetMapping("/contact")
 	public String contactPage() {
 		return "contact";
 	}
 	
-	@GetMapping("/liaoFaq")
+	@GetMapping("/faq")
 	public String faqPage() {
 		return "faq";
 	}
 
-	@GetMapping("/liaoLogin")
+	@GetMapping("/login")
 	public String loginPage() {
 		return "login"; 
 	}
 	
-	@GetMapping("/liaoMain")
+	@GetMapping("/main")
 	public String mainPage() {
 		return "main";
 	}
 	
-	@GetMapping("/liaoRegister")
+	@GetMapping("/register")
 	public String registerPage() {
 		return "register";
 	}
 	
-	@GetMapping("/liaoShoppingCart")
+	@GetMapping("/shoppingCart")
 	public String shoppingCartPage() {
 		return "shopping-cart";
 	}
 	
-	@GetMapping("/liaoUploader")
+	@GetMapping("/uploader")
 	public String uploaderPage() {
 		return "uploader";
 	}

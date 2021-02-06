@@ -6,9 +6,11 @@ import tw.leader.po.Product;
 
 public interface ProductService {
 
-	public String getProductAll() throws Exception;
+	public String getProductAllLoad() throws Exception;
+	public String getProductAllP(int page) throws Exception;
 	
 	public String getProductByMain(String pMain) throws Exception;
+	public String getProductByMainP(String pMain, int page) throws Exception;
 	
 //	public String getProductByMainAndDetail(String p_main,String p_detail) throws Exception;
 	
@@ -18,9 +20,6 @@ public interface ProductService {
 
 	public String getProductByMainAndName(String email,String pMain) throws Exception;
 
-	public String getPageMessages(String email) throws Exception;
-	
-	public String getPageMessageByMain(String email,String pMain) throws Exception;
 	
 	public String getProductTotalLoad(String email) throws Exception;
 
@@ -29,4 +28,11 @@ public interface ProductService {
 	public String getProductTotal(String email,int page) throws Exception;
 	
 	public String getProductByMainAndNameP(String email,String pMain,int page) throws Exception;
+	
+	
+	public String getPageMessages(String email) throws Exception;
+	public String getPageMessageByMain(String email,String pMain) throws Exception;
+
+	public String getAllProductPageMessages() throws Exception;
+	public String getAllProductPageMessagesByMain(String pMain) throws Exception;
 }

@@ -34,12 +34,45 @@ public class ProductSelectController {
 	private ObjectMapper objectMapper ;
 	
 	/*
+	 * ***所有頁面呼叫***查詢所有商品之頁面資訊
+	 * */
+	@PostMapping(value="/panFindAllProductPage")
+	@ResponseBody
+	public String selectAllProduct() throws Exception {
+		return pService.getAllProductPageMessages();
+	}
+	
+	/*
+	 * ***shop頁面呼叫***查詢所有分類商品之頁面資訊
+	 * */
+	@PostMapping(value="/panFindAllProductMainPage")
+	@ResponseBody
+	public String selectAllProductByMain(@RequestBody ProductResp userData) throws Exception {
+		String pMain = userData.getpMain();
+		return pService.getAllProductPageMessagesByMain(pMain);
+	}
+	
+	/*
 	 * ***所有頁面皆可呼叫***查詢全部商品
 	 * */
 	@PostMapping(value="/panProductSelectAll")
 	public @ResponseBody String productSelectAll() throws Exception {
-		return pService.getProductAll();
+		return pService.getProductAllLoad();
 	}
+	
+	/*
+	 * ***所有頁面皆可呼叫***查詢全部商品+分頁查詢
+	 * */
+	@PostMapping(value="/panProductSelectAll.page")
+	@ResponseBody
+	public String productSelectAllP(@RequestBody Map<String,String> pMap) throws Exception {
+		int page = 0;
+		if(pMap.containsKey("page")) {
+			page = Integer.parseInt(pMap.get("page"));
+		}
+		return pService.getProductAllP(page);
+	}
+	
 	
 	/*
 	 * ***所有頁面皆可呼叫***藉由類別來查詢商品
@@ -49,6 +82,20 @@ public class ProductSelectController {
 	public String productSelectByMain(@RequestBody ProductResp main) throws Exception {
 		String pMain = main.getpMain();
 		return pService.getProductByMain(pMain);
+	}
+	
+	@PostMapping(value="/panProductSelectByMain.page")
+	@ResponseBody
+	public String productSelectByMainP(@RequestBody Map<String,String> pMap) throws Exception {
+		String pMain = null;
+		int page = 0;
+		if(pMap.containsKey("pMain")) {
+			pMain = pMap.get("pMain");
+		}
+		if(pMap.containsKey("page")) {
+			page = Integer.parseInt(pMap.get("page"));
+		}
+		return pService.getProductByMainP(pMain,page);
 	}
 	
 	/*

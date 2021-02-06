@@ -35,8 +35,23 @@ public class ProductServiceImpl implements ProductService {
 	 * *** shop頁面***載入時，查詢顯示全部資料 
 	 * */
 	@Override
-	public String getProductAll() throws Exception{
-		List<Product> pList = pSDao.selectAll();
+	public String getProductAllLoad() throws Exception{
+		int page = 0;
+		List<Product> pList = pSDao.selectAll(page);
+		System.out.println("go");
+		String pJson = objectMapper.writeValueAsString(pList);
+		System.out.println(pJson);
+		String response = pJson;
+		return response;
+	}
+	
+	/*
+	 * *** shop頁面***查詢顯示全部資料 +分頁查詢
+	 * */
+	@Override
+	public String getProductAllP(int page) throws Exception{
+		int rPage = page-1;
+		List<Product> pList = pSDao.selectAll(rPage);
 		System.out.println("go");
 		String pJson = objectMapper.writeValueAsString(pList);
 		System.out.println(pJson);
@@ -49,12 +64,26 @@ public class ProductServiceImpl implements ProductService {
 	 *  */
 	@Override
 	public String getProductByMain(String pMain) throws Exception{
-		System.out.println(pMain);
-		 List<Product> pList = pSDao.findByMain(pMain);
-		 String pJson = objectMapper.writeValueAsString(pList);
-		 System.out.println(pJson);
-		 String response = pJson;
-		 return response;
+		int page = 0;
+		List<Product> pList = pSDao.selectAllByMain(pMain,page);
+		String pJson = objectMapper.writeValueAsString(pList);
+		System.out.println(pJson);
+		String response = pJson;
+		return response;
+	}
+	
+	/*
+	 * *** shop頁面***查尋分類商品 +分頁查詢
+	 * */
+	@Override
+	public String getProductByMainP(String pMain,int page) throws Exception{
+		int rPage = page-1;
+		List<Product> pList = pSDao.selectAllByMain(pMain,rPage);
+		System.out.println("go");
+		String pJson = objectMapper.writeValueAsString(pList);
+		System.out.println(pJson);
+		String response = pJson;
+		return response;
 	}
 	
 	/*
@@ -155,8 +184,57 @@ public class ProductServiceImpl implements ProductService {
 		return response;
 	}
 	
+	
+	
 	/*
-	 ***取得商品總數與總頁數
+	 ***取得全部商品總數與總頁數 商城
+	 * */
+	@Override
+	public String getAllProductPageMessages() throws Exception {
+		int total = pSDao.selectAllTotal();
+		int pages = total/12;
+		if((total%12) != 0) {
+			pages += 1;
+		};
+		List<Map<String,String>> pageData = new ArrayList<>();
+		Map<String,String> totalElements = new HashMap<>();
+		Map<String,String> totalPages = new HashMap<>();
+		totalElements.put("totalElements",Integer.toString(total));
+		totalPages.put("totalPages",Integer.toString(pages));
+		pageData.add(totalElements);
+		pageData.add(totalPages);
+		
+		String pJson = objectMapper.writeValueAsString(pageData);
+		System.out.println(pJson);
+		return pJson;
+		
+	}
+	
+	/*
+	 * ***取得分類商品總數與頁數 商城
+	 * */
+	public String getAllProductPageMessagesByMain(String pMain) throws Exception {
+		int total = pSDao.selectAllTotalByMain(pMain);
+		int pages = total/12;
+		if((total%12) != 0) {
+			pages += 1;
+		};
+		List<Map<String,String>> pageData = new ArrayList<>();
+		Map<String,String> totalElements = new HashMap<>();
+		Map<String,String> totalPages = new HashMap<>();
+		totalElements.put("totalElements",Integer.toString(total));
+		totalPages.put("totalPages",Integer.toString(pages));
+		pageData.add(totalElements);
+		pageData.add(totalPages);
+		
+		String pJson = objectMapper.writeValueAsString(pageData);
+		System.out.println(pJson);
+		return pJson;
+	}
+	
+	
+	/*
+	 ***取得商品總數與總頁數 賣家
 	 * */
 	@Override
 	public String getPageMessages(String email) throws Exception {
@@ -180,7 +258,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	/*
-	 * ***取得分類商品總數與頁數
+	 * ***取得分類商品總數與頁數 賣家
 	 * */
 	public String getPageMessageByMain(String email,String pMain) throws Exception {
 		int total = pSDao.selectProductTotalByMain(email,pMain);
@@ -200,8 +278,7 @@ public class ProductServiceImpl implements ProductService {
 		System.out.println(pJson);
 		return pJson;
 	}
-	
-	
+		
 	/*
 	 * -----------------------------------------------------------
 	 * 		Test class

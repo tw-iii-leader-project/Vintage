@@ -18,5 +18,31 @@ public class MsgAddResp {
 	@JsonProperty(value ="LEAVE_TIME")
 	private Timestamp leaveTime;
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getMsgContent() {
+		return msgContent;
+	}
+
+	public void setMsgContent(String msgContent) {
+		this.msgContent = msgContent;
+	}
+
+	public Timestamp getLeaveTime() {
+		return leaveTime;
+	}
+
+	public void setLeaveTime(Timestamp leaveTime) {
+		this.leaveTime = leaveTime;
+	}
+	
+	
+
 
 }

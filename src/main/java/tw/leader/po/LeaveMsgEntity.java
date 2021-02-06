@@ -36,4 +36,38 @@ public class LeaveMsgEntity implements Serializable{
 	@Column(name="LEAVE_TIME")
 	@NotNull
 	private Timestamp leaveTime;
+
+	public Long getMsgId() {
+		return msgId;
+	}
+
+	public void setMsgId(Long msgId) {
+		this.msgId = msgId;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getMsgContent() {
+		return msgContent;
+	}
+
+	public void setMsgContent(String msgContent) {
+		this.msgContent = msgContent;
+	}
+
+	public Timestamp getLeaveTime() {
+		return leaveTime;
+	}
+
+	public void setLeaveTime(Timestamp leaveTime) {
+		this.leaveTime = leaveTime;
+	}
+	
+	
 }

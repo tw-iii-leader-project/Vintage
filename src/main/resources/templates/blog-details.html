@@ -27,7 +27,7 @@
     <script type="text/javascript">
         $(function(){
 
-            // 取得賣家資料
+            // 取得賣家全部商品筆數與總頁數
             var userEmail = $("#secretUserEmail").html();
 		    var userData = {"email":userEmail};
 		    $.ajax({
@@ -42,7 +42,7 @@
                         var pages = parseInt(v.totalPages);
                         for(n=1;n<=pages;n++){
                             $("#pageBox ul").append(
-                                `<li>${n}</li>`
+                                `<li class="productAllPage">${n}</li>`
                             );
                         };
                         $("#totalElements").append(
@@ -55,6 +55,8 @@
                     console.log(msg);
                 }
             });
+
+            // 取得賣家全部的分類
 		    $.ajax({
 			    async:true,
 			    url:"panSelectMainByUserName",
@@ -78,6 +80,8 @@
 			    	console.log(msg);
 			    }
             });
+
+            // 載入此賣家全部的商品
             $.ajax({
                 async:true,
                 url:"panSelectProductByUserName",
@@ -92,9 +96,6 @@
                          	    <div class="product-item">
                                 	<div class="pi-pic">
                                     	<img src="img/products/${v.cPhoto}" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
                                             <ul>
                                                 <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                                 <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
@@ -119,7 +120,9 @@
                     console.log(msg);
                 }
             });
-            $("#pageBox ul").on("click","li",function(){
+
+            // 註冊全部商品的頁籤+載入分頁資料
+            $("#pageBox ul").on("click",".productAllPage",function(){
                 $("#pageBox ul li").removeClass("active");
                 $(this).addClass("active");
                 $("#productList #productRow").html("");
@@ -139,9 +142,6 @@
                              	    <div class="product-item">
                                     	<div class="pi-pic">
                                         	<img src="img/products/${v.cPhoto}" alt="">
-                                                <div class="icon">
-                                                    <i class="icon_heart_alt"></i>
-                                                </div>
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                                     <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
@@ -168,6 +168,7 @@
                 });
             });
 
+            // 載入分類項目之頁數與總數
             var userMainValue = null;
             $("#filterControl ul").on("click",".productMainLi",function(){
                 $("#filterControl ul li").removeClass("active");
@@ -176,8 +177,8 @@
                 $("#pageBox ul").html("");
                 $("#totalElements").html("");
                 userMainValue = $(this).html();
-                var userName = $("#secretUserName").html();
-                var userData = {"p_main":userMainValue,"user_acc":userName};
+                var userEmail = $("#secretUserEmail").html();
+                var userData = {"pMain":userMainValue,"email":userEmail};
                 $.ajax({
 			        async:true,
 			        url:"panFindProductMainPage",
@@ -203,6 +204,8 @@
                         console.log(msg);
                     }
                 });
+
+                // 載入分類項入之商品
                 $.ajax({
                     async:true,
                     url:"panSelectProductByMainAndName",
@@ -216,20 +219,17 @@
                                 `<div class="col-lg-3 col-sm-6">
                          	        <div class="product-item">
                                     	<div class="pi-pic">
-                                        	<img src="img/products/${v.p_img}" alt="">
-                                                <div class="icon">
-                                                    <i class="icon_heart_alt"></i>
-                                                </div>
+                                        	<img src="img/products/${v.cPhoto}" alt="">
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                    <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
                                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                                 </ul>
                                         </div>
                                         <div class="pi-text">
-                                        	<div class="catagory-name">${v.p_main}</div>
-                                            <a href="panProductPage?id=${v.p_id}">
-                                                <h5>${v.p_name}</h5>
+                                        	<div class="catagory-name">${v.pMain}</div>
+                                            <a href="panProductPage?id=${v.pId}">
+                                                <h5>${v.pName}</h5>
                                             </a>
                                             <div class="product-price">
                                                 ${v.price}
@@ -245,12 +245,14 @@
                     }
                 });
             });
+
+            // 註冊分類商品查詢之頁籤
             $("#pageBox ul").on("click",".productMainPage",function(){
                 $("#pageBox ul li").removeClass("active");
                 $(this).addClass("active");
                 $("#productList #productRow").html("");
                 var pageNum = $(this).html();
-                var userAndPage = {"p_main":userMainValue,"user_acc":userName,"page":pageNum};
+                var userAndPage = {"pMain":userMainValue,"email":userEmail,"page":pageNum};
                 $.ajax({
                     async:true,
                     url:"panSelectProductByMainAndName.page",
@@ -264,20 +266,17 @@
                                 `<div class="col-lg-3 col-sm-6">
                          	        <div class="product-item">
                                     	<div class="pi-pic">
-                                        	<img src="img/products/${v.p_img}" alt="">
-                                                <div class="icon">
-                                                    <i class="icon_heart_alt"></i>
-                                                </div>
+                                        	<img src="img/products/${v.cPhoto}" alt="">
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                    <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
                                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                                 </ul>
                                         </div>
                                         <div class="pi-text">
-                                        	<div class="catagory-name">${v.p_main}</div>
-                                            <a href="panProductPage?id=${v.p_id}">
-                                                <h5>${v.p_name}</h5>
+                                        	<div class="catagory-name">${v.pMain}</div>
+                                            <a href="panProductPage?id=${v.pId}">
+                                                <h5>${v.pName}</h5>
                                             </a>
                                             <div class="product-price">
                                                 ${v.price}
@@ -293,15 +292,44 @@
                     }
                 });
             });
+
+            // 當適用者點選ALL頁籤時，新載回所有商品
             $("#userProductAll").click(function(){
                 $("#filterControl ul li").removeClass("active");
                 $(this).addClass("active");
                 $("#productList #productRow").html("");
-                var userName = $("#secretUserName").html();
-		        var userData = {"user_acc":userName};
+                $("#pageBox ul").html("");
+                $("#totalElements").html("");
+                var userEmail = $("#secretUserEmail").html();
+		        var userData = {"email":userEmail};
 		        $.ajax({
 			        async:true,
-			        url:"panSelectMainByName",
+			        url:"panFindProductPage",
+			        type:"POST",
+			        dataType:"json",
+			        contentType:"application/json;charset=utf-8",
+			        data:JSON.stringify(userData),
+                    success:function(pageData){
+                        $.each(pageData,function(i,v){
+                            var pages = parseInt(v.totalPages);
+                            for(n=1;n<=pages;n++){
+                                $("#pageBox ul").append(
+                                    `<li class="productAllPage">${n}</li>`
+                                );
+                            };
+                            $("#totalElements").append(
+                                `<span>${v.totalElements}</span>`
+                            );
+                        });
+                        $("#pageBox ul li").first().addClass("active");
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+		        $.ajax({
+			        async:true,
+			        url:"panSelectProductByUserName",
 			        type:"POST",
 			        dataType:"json",
 			        contentType:"application/json;charset=utf-8",
@@ -312,20 +340,17 @@
                                 `<div class="col-lg-3 col-sm-6">
                              	    <div class="product-item">
                                     	<div class="pi-pic">
-                                        	<img src="img/products/${v.p_img}" alt="">
-                                                <div class="icon">
-                                                    <i class="icon_heart_alt"></i>
-                                                </div>
+                                        	<img src="img/products/${v.cPhoto}" alt="">
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                    <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
                                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                                 </ul>
                                         </div>
                                         <div class="pi-text">
-                                        	<div class="catagory-name">${v.p_main}</div>
-                                            <a href="panProductPage?id=${v.p_id}">
-                                                <h5>${v.p_name}</h5>
+                                        	<div class="catagory-name">${v.pMain}</div>
+                                            <a href="panProductPage?id=${v.pId}">
+                                                <h5>${v.pName}</h5>
                                             </a>
                                             <div class="product-price">
                                                 ${v.price}

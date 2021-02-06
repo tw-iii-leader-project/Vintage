@@ -11,13 +11,22 @@ import tw.leader.po.Product;
 
 public interface ProductSelectDao extends JpaRepository<Product,Integer> {
 
+	// 載入頁面時，查詢商品總數
+	@Query(value="select count(*) from Product",nativeQuery = true)
+	int selectAllTotal();
+	
+	// 查詢出分類商品總數
+	@Query(value="select count(*) from Product where pMain = ?1",nativeQuery = true)
+	int selectAllTotalByMain(String pMain);
+	
 	// 載入頁面時，顯示全部
-	@Query(value="select * from Product",nativeQuery = true)
-	List<Product> selectAll();
-		
+	@Query(value="select * from Product order by pName offset (?1)*12 rows fetch next 12 rows only",nativeQuery = true)
+	List<Product> selectAll(int page);
+	// select * from Product order by pName offset (?1)*12 rows fetch next 12 rows only
+	
 	//查詢大項
-	@Query(value="select u from Product u where u.pMain = ?1")
-	List<Product> findByMain(String pMain);
+	@Query(value="select * from product where pMain = ?1 order by pName offset (?2)*12 rows fetch next 12 rows only",nativeQuery = true)
+	List<Product> selectAllByMain(String pMain,int page);
 	
 	//查詢大項 + 小項
 	@Query(value="select * from Product where pMain = ?1 and pDetail = ?2",nativeQuery = true)
@@ -47,7 +56,7 @@ public interface ProductSelectDao extends JpaRepository<Product,Integer> {
 	int selectProductTotalByMain(String email,String pMain);
 	
 	// 查詢出賣家全部商品
-	@Query(value="select * from Product where email = ?1 order by pMain offset (?2)*8  rows fetch next 8 rows only",nativeQuery = true)
+	@Query(value="select * from Product where email = ?1 order by pMain offset (?2)*8 rows fetch next 8 rows only",nativeQuery = true)
 	List<Product> selectProductByUserName(String email,int page);
 	
 	// 查詢賣家分類商品

@@ -22,6 +22,7 @@ public class FileUploadController {
 	@PostMapping("/upload")
 	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
 		String filemName = file.getOriginalFilename();
+		filemName = "pan"+filemName;
 		try {
 			file.transferTo(new File("C:\\SpringBoot\\eclipse\\Workspace\\Git\\VintageTest\\src\\main\\resources\\static\\img\\products\\" + filemName));
 		} catch (IllegalStateException e) {

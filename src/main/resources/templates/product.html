@@ -27,7 +27,7 @@
     <script type="text/javascript">
     	$(function(){
             var productId = parseInt($("#secretProductId").html());
-            var productData = {"p_id":productId};
+            var productData = {"pId":productId};
             $.ajax({
                 async:true,
                 url:"panProductDetailSelect",
@@ -40,29 +40,19 @@
                     $.each(response,function(i,v){
                         $("#productImg").append(
                             `<div class="product-pic-zoom">
-                                <img class="product-big-img" src="img/products/${v.p_img}" alt="">
+                                <img class="product-big-img" src="img/products/${v.cPhoto}" alt="">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
                             </div>
                             <div class="product-thumbs">
-                                <div class="product-thumbs-track ps-slider owl-carousel">
-                                    <div class="pt active" data-imgbigurl="img/product-single/LifeBracelet_4.jpg"><img
-                                            src="img/product-single/LifeBracelet_4.jpg" alt=""></div>
-                                    <div class="pt" data-imgbigurl="img/product-single/LifeBracelet_2.jpg"><img
-                                            src="img/product-single/LifeBracelet_2.jpg" alt=""></div>
-                                    <div class="pt" data-imgbigurl="img/product-single/LifeBracelet.jpg"><img
-                                            src="img/product-single/LifeBracelet.jpg" alt=""></div>
-                                    <div class="pt" data-imgbigurl="img/product-single/LifeBracelet_3.jpg"><img
-                                            src="img/product-single/LifeBracelet_3.jpg" alt=""></div>
-                                </div>
                             </div>`
                         );
                         $("#productDetails").append(
                             `<div class="product-details">
                                 <div class="pd-title">
-                                    <span><a href="panUserPage?userName=${v.user_acc}">${v.user_acc}</a></span>
-                                    <h3>${v.p_name}</h3>
+                                    <span><a href="panUserPage?email=${v.email}">${v.userName}</a></span>
+                                    <h3>${v.pName}</h3>
                                     <a href="#" class="heart-icon"><i class="icon_heart_alt"></i></a>
                                 </div>
                                 <div class="pd-rating">
@@ -75,41 +65,12 @@
                                 </div>
                                 <div class="pd-desc">
                                     <p>${v.description}</p>
-                                    <h4>$${v.price} <span>629.99</span></h4>
-                                </div>
-                                <div class="pd-color">
-                                    <h6>Color</h6>
-                                    <div class="pd-color-choose">
-                                        <div class="cc-item">
-                                            <input type="radio" id="cc-black">
-                                            <label for="cc-black"></label>
-                                        </div>
-                                        <div class="cc-item">
-                                            <input type="radio" id="cc-yellow">
-                                            <label for="cc-yellow" class="cc-yellow"></label>
-                                        </div>
-                                        <div class="cc-item">
-                                            <input type="radio" id="cc-violet">
-                                            <label for="cc-violet" class="cc-violet"></label>
-                                        </div>
-                                    </div>
+                                    <h4>$${v.price}</h4>
                                 </div>
                                 <div class="pd-size-choose">
                                     <div class="sc-item">
                                         <input type="radio" id="sm-size">
-                                        <label for="sm-size">s</label>
-                                    </div>
-                                    <div class="sc-item">
-                                        <input type="radio" id="md-size">
-                                        <label for="md-size">m</label>
-                                    </div>
-                                    <div class="sc-item">
-                                        <input type="radio" id="lg-size">
-                                        <label for="lg-size">l</label>
-                                    </div>
-                                    <div class="sc-item">
-                                        <input type="radio" id="xl-size">
-                                        <label for="xl-size">xs</label>
+                                        <label for="sm-size">${v.pSize}</label>
                                     </div>
                                 </div>
                                 <div class="quantity">
@@ -119,17 +80,9 @@
                                     <a href="#" class="primary-btn pd-cart">Add To Cart</a>
                                 </div>
                                 <ul class="pd-tags">
-                                    <li><span>CATEGORIES</span>: ${v.p_main}</li>
-                                    <li><span>TAGS</span>: ${v.p_main},${v.p_detail}</li>
+                                    <li><span>CATEGORIES</span>: ${v.pMain}</li>
+                                    <li><span>TAGS</span>: ${v.pMain},${v.pDetail}</li>
                                 </ul>
-                                <div class="pd-share">
-                                    <div class="p-code">Sku : 00012</div>
-                                    <div class="pd-social">
-                                        <a href="#"><i class="ti-facebook"></i></a>
-                                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                                        <a href="#"><i class="ti-linkedin"></i></a>
-                                    </div>
-                                </div>
                             </div>`
                         );
                         $(".product-content").append(
@@ -138,7 +91,7 @@
                                     <h5>Introduction</h5>
                                     <p>${v.description}</p>
                                     <h5>Features</h5>
-                                    <p>${v.s_description}</p>
+                                    <p>${v.sDescription}</p>
                                 </div>
                                 <div class="col-lg-5">
                                     <img src="img/product-single/tab-desc.jpg" alt="">
@@ -179,25 +132,9 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="p-catagory">Weight</td>
-                                    <td>
-                                        <div class="p-weight">1,3kg</div>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td class="p-catagory">Size</td>
                                     <td>
-                                        <div class="p-size">Xxl</div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="p-catagory">Color</td>
-                                    <td><span class="cs-color"></span></td>
-                                </tr>
-                                <tr>
-                                    <td class="p-catagory">Sku</td>
-                                    <td>
-                                        <div class="p-code">00012</div>
+                                        <div class="p-size">${v.pSize}</div>
                                     </td>
                                 </tr>
                             </table>`

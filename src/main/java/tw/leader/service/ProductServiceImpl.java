@@ -27,8 +27,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Autowired
 	private ProductSelectDao pSDao;
-	@Autowired
-	private ProductSelectPageDao pSPDao;
+
 	@Autowired
 	private ObjectMapper objectMapper ;
 	
@@ -49,9 +48,9 @@ public class ProductServiceImpl implements ProductService {
 	 * *** Vintage全部頁面***Header區分類查詢
 	 *  */
 	@Override
-	public String getProductByMain(String p_main) throws Exception{
-		System.out.println(p_main);
-		 List<Product> pList = pSDao.findByMain(p_main);
+	public String getProductByMain(String pMain) throws Exception{
+		System.out.println(pMain);
+		 List<Product> pList = pSDao.findByMain(pMain);
 		 String pJson = objectMapper.writeValueAsString(pList);
 		 System.out.println(pJson);
 		 String response = pJson;
@@ -74,9 +73,9 @@ public class ProductServiceImpl implements ProductService {
 	 * *** Vintage所有頁面***使用商品名稱查詢商品
 	 *  */
 	@Override
-	public String getProductByName(String p_name) throws Exception {
-		System.out.println(p_name);
-		List<Product> pList = pSDao.selectName(p_name);
+	public String getProductByName(String pName) throws Exception {
+		System.out.println(pName);
+		List<Product> pList = pSDao.selectName(pName);
 		String pJson = objectMapper.writeValueAsString(pList);
 		System.out.println(pJson);
 		String response = pJson;
@@ -87,9 +86,9 @@ public class ProductServiceImpl implements ProductService {
 	 * *** product-details頁面***查詢單件商品的所有資料 
 	 * */
 	@Override
-	public String getProductById(int p_id) throws Exception {
-		System.out.println(p_id);
-		List<Product> pList = pSDao.selectById(p_id);
+	public String getProductById(int pId) throws Exception {
+		System.out.println(pId);
+		List<Product> pList = pSDao.selectById(pId);
 		String pJson = objectMapper.writeValueAsString(pList);
 		System.out.println(pJson);
 		String response = pJson;
@@ -100,8 +99,8 @@ public class ProductServiceImpl implements ProductService {
 	 * ***userPage賣家頁面***查詢此賣家所有商品類別
 	 * */
 	@Override
-	public String getProductMainByUserName(String user_acc) throws Exception {
-		List<Product> mList = pSDao.selectMainByName(user_acc);
+	public String getProductMainByUserName(String email) throws Exception {
+		List<Product> mList = pSDao.selectMainByName(email);
 		String pJson = objectMapper.writeValueAsString(mList);
 		return pJson;
 	}
@@ -110,9 +109,9 @@ public class ProductServiceImpl implements ProductService {
 	 * ***userPage賣家頁面***查詢出此賣家的所有商品
 	 * */
 	@Override
-	public String getProductTotalLoad(String user_acc) throws Exception {
+	public String getProductTotalLoad(String email) throws Exception {
 		int page = 0;
-		List<Product> pList = pSDao.selectProductByUserName(user_acc,page);
+		List<Product> pList = pSDao.selectProductByUserName(email,page);
 		System.out.println(pList);
 		String pJson = objectMapper.writeValueAsString(pList);
 		System.out.println(pJson);
@@ -123,9 +122,9 @@ public class ProductServiceImpl implements ProductService {
 	 * ***userPage賣家頁面***查詢此賣家所有商品+分頁查詢
 	 * */
 	@Override
-	public String getProductTotal(String user_acc,int page) throws Exception {
+	public String getProductTotal(String email,int page) throws Exception {
 		int rPage = page-1;
-		List<Product> pList = pSDao.selectProductByUserName(user_acc,rPage);
+		List<Product> pList = pSDao.selectProductByUserName(email,rPage);
 		System.out.println(pList);
 		String pJson = objectMapper.writeValueAsString(pList);
 		System.out.println(pJson);
@@ -137,9 +136,9 @@ public class ProductServiceImpl implements ProductService {
 	 * ***userPage賣家頁面***利用類別查詢出此賣家的所有商品
 	 * */
 	@Override
-	public String getProductByMainAndName(String user_acc,String p_main) throws Exception {
+	public String getProductByMainAndName(String email,String pMain) throws Exception {
 		int page = 0;
-		List<Product> pList = pSDao.selectProductByMainAndName(user_acc,p_main,page);
+		List<Product> pList = pSDao.selectProductByMainAndName(email,pMain,page);
 		String pJson = objectMapper.writeValueAsString(pList);
 		String response = pJson;
 		return response;
@@ -148,9 +147,9 @@ public class ProductServiceImpl implements ProductService {
 	/*
 	 * ***userPage賣家頁面***利用類別查詢出此賣家的所有商品+分頁查詢
 	 * */
-	public String getProductByMainAndNameP(String user_acc,String p_main,int page) throws Exception {
+	public String getProductByMainAndNameP(String email,String pMain,int page) throws Exception {
 		int rPage = page-1;
-		List<Product> pList = pSDao.selectProductByMainAndName(user_acc,p_main,rPage);
+		List<Product> pList = pSDao.selectProductByMainAndName(email,pMain,rPage);
 		String pJson = objectMapper.writeValueAsString(pList);
 		String response = pJson;
 		return response;
@@ -160,8 +159,8 @@ public class ProductServiceImpl implements ProductService {
 	 ***取得商品總數與總頁數
 	 * */
 	@Override
-	public String getPageMessages(String user_acc) throws Exception {
-		int total = pSDao.selectProductTotal(user_acc);
+	public String getPageMessages(String email) throws Exception {
+		int total = pSDao.selectProductTotal(email);
 		int pages = total/8;
 		if((total%8) != 0) {
 			pages += 1;
@@ -183,8 +182,8 @@ public class ProductServiceImpl implements ProductService {
 	/*
 	 * ***取得分類商品總數與頁數
 	 * */
-	public String getPageMessageByMain(String user_acc,String p_main) throws Exception {
-		int total = pSDao.selectProductTotalByMain(user_acc,p_main);
+	public String getPageMessageByMain(String email,String pMain) throws Exception {
+		int total = pSDao.selectProductTotalByMain(email,pMain);
 		int pages = total/8;
 		if((total%8) != 0) {
 			pages += 1;
@@ -214,38 +213,38 @@ public class ProductServiceImpl implements ProductService {
 //	}
 	
 	
-	//ProductReq 轉 ProductEntity
-	private Product setProductEntity(ProductReq req) {
-		Product pBean = new Product();
-		
-		pBean.setP_name(req.getP_name());
-		pBean.setP_main(req.getP_main());
-		pBean.setP_detail(req.getP_detail());
-		pBean.setPrice(req.getPrice());
-		pBean.setInvantory(req.getInvantory());
-		pBean.setDescription(req.getDescription());
-		pBean.setS_description(req.getS_description());
-		pBean.setP_img(req.getP_img());
-		pBean.setUser_acc(req.getUser_acc());
-		
-		return pBean;
-	}
-	
-	// ProductEntity 轉 ProductResponse
-	private ProductResp setProductResp(Product pBean) {
-		ProductResp pResp = new ProductResp();
-		
-		pResp.setP_name(pBean.getP_name());
-		pResp.setP_main(pBean.getP_main());
-		pResp.setP_detail(pBean.getP_detail());
-		pResp.setPrice(pBean.getPrice());
-		pResp.setInvantory(pBean.getInvantory());
-		pResp.setDescription(pBean.getDescription());
-		pResp.setS_description(pBean.getS_description());
-		pResp.setP_img(pBean.getP_img());
-		pResp.setUser_acc(pBean.getUser_acc());
-		return pResp;
-	}
+//	//ProductReq 轉 ProductEntity
+//	private Product setProductEntity(ProductReq req) {
+//		Product pBean = new Product();
+//		
+//		pBean.setP_name(req.getP_name());
+//		pBean.setP_main(req.getP_main());
+//		pBean.setP_detail(req.getP_detail());
+//		pBean.setPrice(req.getPrice());
+//		pBean.setInvantory(req.getInvantory());
+//		pBean.setDescription(req.getDescription());
+//		pBean.setS_description(req.getS_description());
+//		pBean.setP_img(req.getP_img());
+//		pBean.setUser_acc(req.getUser_acc());
+//		
+//		return pBean;
+//	}
+//	
+//	// ProductEntity 轉 ProductResponse
+//	private ProductResp setProductResp(Product pBean) {
+//		ProductResp pResp = new ProductResp();
+//		
+//		pResp.setP_name(pBean.getP_name());
+//		pResp.setP_main(pBean.getP_main());
+//		pResp.setP_detail(pBean.getP_detail());
+//		pResp.setPrice(pBean.getPrice());
+//		pResp.setInvantory(pBean.getInvantory());
+//		pResp.setDescription(pBean.getDescription());
+//		pResp.setS_description(pBean.getS_description());
+//		pResp.setP_img(pBean.getP_img());
+//		pResp.setUser_acc(pBean.getUser_acc());
+//		return pResp;
+//	}
 
 	
 }

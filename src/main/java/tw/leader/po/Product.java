@@ -15,18 +15,18 @@ public class Product implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id 
-	@Column(name="p_id")
+	@Column(name="pId")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer p_id;
+	private Integer pId;
 	
-	@Column(name="p_name")
-	private String p_name;
+	@Column(name="pName")
+	private String pName;
 	
-	@Column(name="p_main")
-	private String p_main;
+	@Column(name="pMain")
+	private String pMain;
 	
-	@Column(name="p_detail")
-	private String p_detail;
+	@Column(name="pDetail")
+	private String pDetail;
 	
 	@Column(name="price")
 	private int price;
@@ -34,48 +34,54 @@ public class Product implements Serializable{
 	@Column(name="invantory")
 	private int invantory;
 	
+	@Column(name="pSize")
+	private String pSize;
+	
 	@Column(name="description")
 	private String description;
 	
-	@Column(name="s_description")
-	private String s_description;
+	@Column(name="sDescription")
+	private String sDescription;
 	
-	@Column(name="p_img")
-	private String p_img;
+	@Column(name="cPhoto")
+	private String cPhoto;
 	
-	@Column(name="user_acc")
-	private String user_acc;
+	@Column(name="email")
+	private String email;
+	
+	@Column(name="userName")
+	private String userName;
 
-	public int getP_id() {
-		return p_id;
+	public Integer getpId() {
+		return pId;
 	}
 
-	public void setP_id(int p_id) {
-		this.p_id = p_id;
+	public void setpId(Integer pId) {
+		this.pId = pId;
 	}
 
-	public String getP_name() {
-		return p_name;
+	public String getpName() {
+		return pName;
 	}
 
-	public void setP_name(String p_name) {
-		this.p_name = p_name;
+	public void setpName(String pName) {
+		this.pName = pName;
 	}
 
-	public String getP_main() {
-		return p_main;
+	public String getpMain() {
+		return pMain;
 	}
 
-	public void setP_main(String p_main) {
-		this.p_main = p_main;
+	public void setpMain(String pMain) {
+		this.pMain = pMain;
 	}
 
-	public String getP_detail() {
-		return p_detail;
+	public String getpDetail() {
+		return pDetail;
 	}
 
-	public void setP_detail(String p_detail) {
-		this.p_detail = p_detail;
+	public void setpDetail(String pDetail) {
+		this.pDetail = pDetail;
 	}
 
 	public int getPrice() {
@@ -94,6 +100,14 @@ public class Product implements Serializable{
 		this.invantory = invantory;
 	}
 
+	public String getpSize() {
+		return pSize;
+	}
+
+	public void setpSize(String pSize) {
+		this.pSize = pSize;
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -102,29 +116,39 @@ public class Product implements Serializable{
 		this.description = description;
 	}
 
-	public String getS_description() {
-		return s_description;
+	public String getsDescription() {
+		return sDescription;
 	}
 
-	public void setS_description(String s_description) {
-		this.s_description = s_description;
+	public void setsDescription(String sDescription) {
+		this.sDescription = sDescription;
+	}
+	
+	public String getcPhoto() {
+		return cPhoto;
 	}
 
-	public String getP_img() {
-		return p_img;
+	public void setcPhoto(String cPhoto) {
+		this.cPhoto = cPhoto;
 	}
 
-	public void setP_img(String p_img) {
-		this.p_img = p_img;
+	public String getEmail() {
+		return email;
 	}
 
-	public String getUser_acc() {
-		return user_acc;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public void setUser_acc(String user_acc) {
-		this.user_acc = user_acc;
+	public String getUserName() {
+		return userName;
 	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+
 	
 	
 }

@@ -42,20 +42,17 @@
         				`<div class="col-lg-4 col-sm-6">
                          	<div class="product-item">
                             	<div class="pi-pic">
-                                	<img src="img/products/${v.p_img}" alt="">
-                                        <div class="icon">
-                                            <i class="icon_heart_alt"></i>
-                                        </div>
+                                	<img src="img/products/${v.cPhoto}" alt="">
                                         <ul>
                                             <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                            <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
                                             <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                         </ul>
                                 </div>
                                 <div class="pi-text">
-                                	<div class="catagory-name">${v.p_main}</div>
-                                        <a href="panProductPage?id=${v.p_id}">
-                                            <h5>${v.p_name}</h5>
+                                	<div class="catagory-name">${v.pMain}</div>
+                                        <a href="panProductPage?id=${v.pId}">
+                                            <h5>${v.pName}</h5>
                                         </a>
                                         <div class="product-price">
                                             ${v.price}
@@ -120,7 +117,7 @@
 				e.preventDefault();
 				$(".container #productMainRow #productMain #productList #productRow").html("");
 				var mainValue = $(this).html();
-				var str = {"p_main":mainValue};
+				var str = {"pMain":mainValue};
 				$.ajax({
 	    			url:"panProductSelectByMain",
 	    			type:"POST",
@@ -134,20 +131,17 @@
 	    					`<div class="col-lg-4 col-sm-6">
 	                         	<div class="product-item">
 	                            	<div class="pi-pic">
-	                                	<img src="img/products/${v.p_img}" alt="">
-	                                        <div class="icon">
-	                                            <i class="icon_heart_alt"></i>
-	                                        </div>
+	                                	<img src="img/products/${v.cPhoto}" alt="">
 	                                        <ul>
 	                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-	                                            <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+	                                            <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
 	                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
 	                                        </ul>
 	                                </div>
 	                                <div class="pi-text">
-	                                	<div class="catagory-name">${v.p_main}</div>
-	                                        <a href="panProductPage?id=${v.p_id}">
-	                                            <h5>${v.p_name}</h5>
+	                                	<div class="catagory-name">${v.pMain}</div>
+	                                        <a href="panProductPage?id=${v.pId}">
+	                                            <h5>${v.pName}</h5>
 	                                        </a>
 	                                        <div class="product-price">
 	                                            ${v.price}
@@ -171,7 +165,7 @@
                 if(inputText == ""){}
                 else{
                     $(".container #productMainRow #productMain #productList #productRow").html("");
-                    var textInputJson = {"p_name":inputText};
+                    var textInputJson = {"pName":inputText};
                     $.ajax({
                         url:"panProductSelectByName",
                         type:"POST",
@@ -194,20 +188,17 @@
 	    		    			`<div class="col-lg-4 col-sm-6">
 	                             	<div class="product-item">
 	                                	<div class="pi-pic">
-	                                    	<img src="img/products/${v.p_img}" alt="">
-	                                            <div class="icon">
-	                                                <i class="icon_heart_alt"></i>
-	                                            </div>
+	                                    	<img src="img/products/${v.cPhoto}" alt="">
 	                                            <ul>
 	                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-	                                                <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+	                                                <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
 	                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
 	                                            </ul>
 	                                    </div>
 	                                    <div class="pi-text">
-	                                    	<div class="catagory-name">${v.p_main}</div>
-	                                            <a href="panProductPage?id=${v.p_id}">
-	                                                <h5>${v.p_name}</h5>
+	                                    	<div class="catagory-name">${v.pMain}</div>
+	                                            <a href="panProductPage?id=${v.pId}">
+	                                                <h5>${v.pName}</h5>
 	                                            </a>
 	                                            <div class="product-price">
 	                                                ${v.price}

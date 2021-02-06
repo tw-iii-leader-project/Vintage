@@ -47,8 +47,8 @@ public class ProductSelectController {
 	@PostMapping(value="/panProductSelectByMain")
 	@ResponseBody
 	public String productSelectByMain(@RequestBody ProductResp main) throws Exception {
-		String p_main = main.getP_main();
-		return pService.getProductByMain(p_main);
+		String pMain = main.getpMain();
+		return pService.getProductByMain(pMain);
 	}
 	
 	/*
@@ -56,9 +56,9 @@ public class ProductSelectController {
 	 * */
 	@PostMapping(value="/panProductSelectByName")
 	@ResponseBody
-	public String productSelectByName(@RequestBody ProductResp name) throws Exception {
-		String p_name = name.getP_name();
-		return pService.getProductByName(p_name);
+	public String productSelectByName(@RequestBody ProductResp data) throws Exception {
+		String pName = data.getpName();
+		return pService.getProductByName(pName);
 	}
 	
 	/*
@@ -75,8 +75,8 @@ public class ProductSelectController {
 	 * ***賣家連結呼叫***帶賣家ID進賣家頁面
 	 * */
 	@GetMapping(value="/panUserPage")
-	public String userJumPage(@RequestParam String userName,Model m) {
-		m.addAttribute("secretUserName",userName);
+	public String userJumPage(@RequestParam String email,Model m) {
+		m.addAttribute("secretUserEmail",email);
 		return "blog-details";
 	}
 
@@ -86,7 +86,7 @@ public class ProductSelectController {
 	@PostMapping(value="/panProductDetailSelect")
 	@ResponseBody
 	public String productSelectById(@RequestBody ProductResp id) throws Exception {
-		int p_id = id.getP_id();
+		int p_id = id.getpId();
 		return pService.getProductById(p_id);
 	}
 	
@@ -95,9 +95,9 @@ public class ProductSelectController {
 	 * */
 	@PostMapping(value="/panSelectMainByUserName")
 	@ResponseBody
-	public String selectProductMainByUserName(@RequestBody ProductResp userName) throws Exception {
-		String user_acc = userName.getUser_acc();
-		return pService.getProductMainByUserName(user_acc);
+	public String selectProductMainByUserName(@RequestBody ProductResp userData) throws Exception {
+		String email = userData.getEmail();
+		return pService.getProductMainByUserName(email);
 	}
 	
 	/*
@@ -105,9 +105,9 @@ public class ProductSelectController {
 	 * */
 	@PostMapping(value="/panSelectProductByUserName")
 	@ResponseBody
-	public String selectProductByUserName(@RequestBody ProductResp userName) throws Exception {
-		String user_acc = userName.getUser_acc();
-		return pService.getProductTotalLoad(user_acc);
+	public String selectProductByUserName(@RequestBody ProductResp userData) throws Exception {
+		String email = userData.getEmail();
+		return pService.getProductTotalLoad(email);
 	}
 	
 	/*
@@ -116,15 +116,15 @@ public class ProductSelectController {
 	@PostMapping(value="/panSelectProductByUserName.page")
 	@ResponseBody
 	public String selectProductByUserNameP(@RequestBody Map<String,String> pMap) throws Exception {
-		String user_acc = null;
+		String email = null;
 		int page = 0;
-		if(pMap.containsKey("user_acc")) {
-			user_acc = pMap.get("user_acc");
+		if(pMap.containsKey("email")) {
+			email = pMap.get("email");
 		}
 		if(pMap.containsKey("page")) {
 			page = Integer.parseInt(pMap.get("page"));
 		}
-		return pService.getProductTotal(user_acc, page);
+		return pService.getProductTotal(email, page);
 	}
 	
 	/*
@@ -133,27 +133,27 @@ public class ProductSelectController {
 	@PostMapping(value="/panSelectProductByMainAndName")
 	@ResponseBody
 	public String selectProductByMainAndName(@RequestBody ProductResp userData) throws Exception {
-		String user_acc = userData.getUser_acc();
-		String p_main = userData.getP_main();
-		return pService.getProductByMainAndName(user_acc,p_main);
+		String email = userData.getEmail();
+		String pMain = userData.getpMain();
+		return pService.getProductByMainAndName(email,pMain);
 	}
 	
 	@PostMapping(value="/panSelectProductByMainAndName.page")
 	public String selectProductByMainAndNameP(@RequestBody Map<String,String> pMap) throws Exception {
-		String user_acc = null;
-		String p_main = null;
+		String email = null;
+		String pMain = null;
 		int page = 0;
-		if(pMap.containsKey("user_acc")) {
-			user_acc = pMap.get("user_acc");
+		if(pMap.containsKey("email")) {
+			email = pMap.get("email");
 		}
-		if(pMap.containsKey("p_main")) {
-			p_main = pMap.get("p_main");
+		if(pMap.containsKey("pMain")) {
+			pMain = pMap.get("pMain");
 		}
 		if(pMap.containsKey("page")) {
 			page = Integer.parseInt(pMap.get("page"));
 		}
 		
-		return pService.getProductByMainAndNameP(user_acc, p_main, page);
+		return pService.getProductByMainAndNameP(email, pMain, page);
 	}
 	/*
 	 * ***userPage頁面呼叫***查詢此賣家所有商品之頁面資訊
@@ -161,8 +161,8 @@ public class ProductSelectController {
 	@PostMapping(value="/panFindProductPage")
 	@ResponseBody
 	public String selectProductByName(@RequestBody ProductResp userData) throws Exception {
-		String user_acc = userData.getUser_acc();
-		return pService.getPageMessages(user_acc);
+		String email = userData.getEmail();
+		return pService.getPageMessages(email);
 	}
 	
 	/*
@@ -171,9 +171,9 @@ public class ProductSelectController {
 	@PostMapping(value="/panFindProductMainPage")
 	@ResponseBody
 	public String selectProductPageByMainAndName(@RequestBody ProductResp userData) throws Exception {
-		String user_acc = userData.getUser_acc();
-		String p_main = userData.getP_main();
-		return pService.getPageMessageByMain(user_acc, p_main);
+		String email = userData.getEmail();
+		String pMain = userData.getpMain();
+		return pService.getPageMessageByMain(email, pMain);
 	}
 	
 	

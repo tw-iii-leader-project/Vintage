@@ -8,25 +8,25 @@ public interface ProductService {
 
 	public String getProductAll() throws Exception;
 	
-	public String getProductByMain(String p_main) throws Exception;
+	public String getProductByMain(String pMain) throws Exception;
 	
 //	public String getProductByMainAndDetail(String p_main,String p_detail) throws Exception;
 	
-	public String getProductByName(String p_name) throws Exception;
+	public String getProductByName(String pName) throws Exception;
 	
-	public String getProductById(int p_id) throws Exception;
+	public String getProductById(int pId) throws Exception;
 
-	public String getProductByMainAndName(String user_acc,String p_main) throws Exception;
+	public String getProductByMainAndName(String email,String pMain) throws Exception;
 
-	public String getPageMessages(String user_acc) throws Exception;
+	public String getPageMessages(String email) throws Exception;
 	
-	public String getPageMessageByMain(String user_acc,String p_main) throws Exception;
+	public String getPageMessageByMain(String email,String pMain) throws Exception;
 	
-	public String getProductTotalLoad(String user_acc) throws Exception;
+	public String getProductTotalLoad(String email) throws Exception;
 
-	public String getProductMainByUserName(String user_acc) throws Exception;
+	public String getProductMainByUserName(String email) throws Exception;
 	
-	public String getProductTotal(String user_acc,int page) throws Exception;
+	public String getProductTotal(String email,int page) throws Exception;
 	
-	public String getProductByMainAndNameP(String user_acc,String p_main,int page) throws Exception;
+	public String getProductByMainAndNameP(String email,String pMain,int page) throws Exception;
 }

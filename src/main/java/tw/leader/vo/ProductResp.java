@@ -4,17 +4,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductResp extends ErrorResp{
 	
-	@JsonProperty(value="p_id")
-	private Integer p_id;
+	@JsonProperty(value="pId")
+	private Integer pId;
 	
-	@JsonProperty(value="p_name")
-	private String p_name;
+	@JsonProperty(value="pName")
+	private String pName;
 	
-	@JsonProperty(value="p_main")
-	private String p_main;
+	@JsonProperty(value="pMain")
+	private String pMain;
 	
-	@JsonProperty(value="p_detail")
-	private String p_detail;
+	@JsonProperty(value="pDetail")
+	private String pDetail;
 	
 	@JsonProperty(value="price")
 	private int price;
@@ -22,48 +22,54 @@ public class ProductResp extends ErrorResp{
 	@JsonProperty(value="invantory")
 	private int invantory;
 	
+	@JsonProperty(value="pSize")
+	private String pSize;
+	
 	@JsonProperty(value="description")
 	private String description;
 	
-	@JsonProperty(value="s_description")
-	private String s_description;
+	@JsonProperty(value="sDescription")
+	private String sDescription;
 	
-	@JsonProperty(value="p_img")
-	private String p_img;
+	@JsonProperty(value="cPhoto")
+	private String cPhoto;
 	
-	@JsonProperty(value="user_acc")
-	private String user_acc;
+	@JsonProperty(value="email")
+	private String email;
+	
+	@JsonProperty(value="userName")
+	private String userName;
 
-	public Integer getP_id() {
-		return p_id;
+	public Integer getpId() {
+		return pId;
 	}
 
-	public void setP_id(Integer p_id) {
-		this.p_id = p_id;
+	public void setpId(Integer pId) {
+		this.pId = pId;
 	}
 
-	public String getP_name() {
-		return p_name;
+	public String getpName() {
+		return pName;
 	}
 
-	public void setP_name(String p_name) {
-		this.p_name = p_name;
+	public void setpName(String pName) {
+		this.pName = pName;
 	}
 
-	public String getP_main() {
-		return p_main;
+	public String getpMain() {
+		return pMain;
 	}
 
-	public void setP_main(String p_main) {
-		this.p_main = p_main;
+	public void setpMain(String pMain) {
+		this.pMain = pMain;
 	}
 
-	public String getP_detail() {
-		return p_detail;
+	public String getpDetail() {
+		return pDetail;
 	}
 
-	public void setP_detail(String p_detail) {
-		this.p_detail = p_detail;
+	public void setpDetail(String pDetail) {
+		this.pDetail = pDetail;
 	}
 
 	public int getPrice() {
@@ -82,6 +88,14 @@ public class ProductResp extends ErrorResp{
 		this.invantory = invantory;
 	}
 
+	public String getpSize() {
+		return pSize;
+	}
+
+	public void setpSize(String pSize) {
+		this.pSize = pSize;
+	}
+
 	public String getDescription() {
 		return description;
 	}
@@ -90,29 +104,38 @@ public class ProductResp extends ErrorResp{
 		this.description = description;
 	}
 
-	public String getS_description() {
-		return s_description;
+	public String getsDescription() {
+		return sDescription;
 	}
 
-	public void setS_description(String s_description) {
-		this.s_description = s_description;
+	public void setsDescription(String sDescription) {
+		this.sDescription = sDescription;
 	}
 
-	public String getP_img() {
-		return p_img;
+	public String getcPhoto() {
+		return cPhoto;
 	}
 
-	public void setP_img(String p_img) {
-		this.p_img = p_img;
+	public void setcPhoto(String cPhoto) {
+		this.cPhoto = cPhoto;
 	}
 
-	public String getUser_acc() {
-		return user_acc;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUser_acc(String user_acc) {
-		this.user_acc = user_acc;
+	public void setEmail(String email) {
+		this.email = email;
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	
 	
 }

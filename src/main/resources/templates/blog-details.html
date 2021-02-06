@@ -26,8 +26,10 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         $(function(){
-            var userName = $("#secretUserName").html();
-		    var userData = {"user_acc":userName};
+
+            // 取得賣家資料
+            var userEmail = $("#secretUserEmail").html();
+		    var userData = {"email":userEmail};
 		    $.ajax({
 			    async:true,
 			    url:"panFindProductPage",
@@ -63,7 +65,7 @@
 			    success:function(response){
                     var tMain = [];
 				    $.each(response,function(i,v){
-                        tMain.push(`${v.p_main}`);
+                        tMain.push(`${v.pMain}`);
                     });
                     nMain = $.uniqueSort(tMain);
 		            $.each(nMain,function(i,v){
@@ -89,20 +91,20 @@
                             `<div class="col-lg-3 col-sm-6">
                          	    <div class="product-item">
                                 	<div class="pi-pic">
-                                    	<img src="img/products/${v.p_img}" alt="">
+                                    	<img src="img/products/${v.cPhoto}" alt="">
                                             <div class="icon">
                                                 <i class="icon_heart_alt"></i>
                                             </div>
                                             <ul>
                                                 <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
                                                 <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                             </ul>
                                     </div>
                                     <div class="pi-text">
-                                    	<div class="catagory-name">${v.p_main}</div>
-                                        <a href="panProductPage?id=${v.p_id}">
-                                            <h5>${v.p_name}</h5>
+                                    	<div class="catagory-name">${v.pMain}</div>
+                                        <a href="panProductPage?id=${v.pId}">
+                                            <h5>${v.pName}</h5>
                                         </a>
                                         <div class="product-price">
                                             ${v.price}
@@ -122,7 +124,7 @@
                 $(this).addClass("active");
                 $("#productList #productRow").html("");
                 var pageNum = $(this).html();
-                var userAndPage = {"user_acc":userName,"page":pageNum};
+                var userAndPage = {"email":userEmail,"page":pageNum};
                 $.ajax({
                     async:true,
                     url:"panSelectProductByUserName.page",
@@ -136,20 +138,20 @@
                                 `<div class="col-lg-3 col-sm-6">
                              	    <div class="product-item">
                                     	<div class="pi-pic">
-                                        	<img src="img/products/${v.p_img}" alt="">
+                                        	<img src="img/products/${v.cPhoto}" alt="">
                                                 <div class="icon">
                                                     <i class="icon_heart_alt"></i>
                                                 </div>
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                    <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
                                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                                 </ul>
                                         </div>
                                         <div class="pi-text">
-                                        	<div class="catagory-name">${v.p_main}</div>
-                                            <a href="panProductPage?id=${v.p_id}">
-                                                <h5>${v.p_name}</h5>
+                                        	<div class="catagory-name">${v.pMain}</div>
+                                            <a href="panProductPage?id=${v.pId}">
+                                                <h5>${v.pName}</h5>
                                             </a>
                                             <div class="product-price">
                                                 ${v.price}
@@ -344,7 +346,7 @@
 </head>
 
 <body>
-    <span id="secretUserName" th:text="${secretUserName}" style="display: none;"></span>
+    <span id="secretUserEmail" th:text="${secretUserEmail}" style="display: none;"></span>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>

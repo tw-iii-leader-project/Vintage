@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>First Test Register</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/sweetalert2@9.17.2/dist/sweetalert2.all.min.js"></script>
+
+<script>
+	function test() {
+		Swal.fire({
+			title : "Logout",
+			text : "ready to logout?",
+			icon : "warning",
+			showCancelButton : true,
+			confirmButtonColor: 'orange',
+			cancelButtonColor: 'black',
+		}).then(function(result) {
+			if (result.value) {
+				Swal.fire({
+					text:"快滾吧",
+					icon:"success",
+					confirmButtonColor: 'orange',
+					imageUrl:"https://picsum.photos/id/237/200/300",
+					imageWidth: 200,
+					imageHeight: 300,
+				});
+			} else {
+				Swal.fire({
+					imageUrl:"https://picsum.photos/id/237/200/300",
+					text:"阿你又回來衝三小"
+				})
+			}
+		})
+	};
+
+	$('#test').click(function() {
+		Swal.fire("test SUCCESS2")
+	});
+</script>
+
+</head>
+<body>
+	<div class="container text-center">
+		<div>
+			<h1>Welcome</h1>
+		</div>
+		<div>
+			<h3>
+				<a href="/list_users">List All Users</a>
+			</h3>
+		</div>
+		<div>
+			<h3>
+				<a href="/register">Register</a>
+			</h3>
+		</div>
+		<div>
+			<h3>
+				<a href="/loginPage">Login</a>
+			</h3>
+		</div>
+		<div>
+			<h3>
+				<a href="/testpage1">testPage1</a>
+			</h3>
+		</div>
+		<div>
+			<h3>
+				<a href="/testpage2">testPage2</a>
+			</h3>
+		</div>
+		<div>
+			<h3>
+				<button onclick="test()">TEST</button>
+			</h3>
+		</div>
+		<div>
+			<h3>
+				<button id="test" type="button">TEST2</button>
+			</h3>
+		</div>
+		<div>
+			<h3>
+				<a href="/toActivity">toActivity</a>
+			</h3>
+		</div>
+		
+		
+	</div>
+</body>
+</html>

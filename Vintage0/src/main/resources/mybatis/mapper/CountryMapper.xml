@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.vintage.mapper.CountryMapper">
+    <select id="selectAll" resultType="Country">
+        SELECT id,countryname,countrycode from country
+    </select>
+    
+    <select id="select" resultType="Country">
+        SELECT id,countryname,countrycode from country where countryname = '美國'
+    </select>
+    
+    <select id="selectuser" resultType="User">
+        SELECT id,email,first_name,last_name,password from user_info where id = 1
+    </select>
+    
+</mapper>

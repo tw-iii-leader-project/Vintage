@@ -9,17 +9,24 @@ import org.springframework.web.bind.annotation.RestController;
 import tw.leader.service.LeaveMsgService;
 import tw.leader.vo.MsgAddReq;
 import tw.leader.vo.MsgAddResp;
+import tw.leader.vo.ShowPorductLeaveMsgReq;
+import tw.leader.vo.ShowPorductLeaveMsgResp;
 
 @RestController
-@RequestMapping(value="/api/leaveMsg")
+@RequestMapping(value = "/api/leaveMsg")
 public class LeaveMsgController {
 
 	@Autowired
 	public LeaveMsgService leaveMsgService;
-	
-	@PostMapping(value="/msgAdd")
+
+	@PostMapping(value = "/msgAdd")
 	public MsgAddResp msgAdd(@RequestBody MsgAddReq req) {
 		return leaveMsgService.magAdd(req);
-	} 
-	
+	}
+
+	@PostMapping(value = "/showLeaveMsg")
+	public ShowPorductLeaveMsgResp showLeaveMsg(@RequestBody ShowPorductLeaveMsgReq productId) {
+		return leaveMsgService.showLeaveMsg(productId);
+	}
+
 }

@@ -11,63 +11,47 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.Data;
 
-
 @Entity
-@Table(name="LEAVE_MSG")
+@Table(name = "leaveMsg")
 @Data
-public class LeaveMsgEntity implements Serializable{
+public class LeaveMsgEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="MSG_ID")
-	private Long msgId;
+	@Column(name = "msgId")
+	private Integer msgId;
+
+	@Column(name = "email")
+	private String email;
 	
-	@Column(name="USER_NAMES")
+	@Column(name = "userName")
 	@NotNull
 	private String userName;
-	
-	@Column(name="MSG_CONTENT")
+
+	@Column(name = "userPic")
 	@NotNull
-	private String msgContent;
-	
-	@Column(name="LEAVE_TIME")
+	private String userPic;
+
+	@Column(name = "pId")
 	@NotNull
-	private Timestamp leaveTime;
+	private Integer pId;
 
-	public Long getMsgId() {
-		return msgId;
-	}
+	@Column(name = "leaveMsgContent")
+	@NotNull
+	private String leaveMsgContent;
 
-	public void setMsgId(Long msgId) {
-		this.msgId = msgId;
-	}
+	@JsonFormat(pattern="yyyy-MM-dd")
+	@Column(name = "leaveMsgTime")
+	@NotNull
+	private Timestamp leaveMsgTime;
 
-	public String getUserName() {
-		return userName;
-	}
+	@Column(name = "starLv")
+	@NotNull
+	private Integer starLv;
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getMsgContent() {
-		return msgContent;
-	}
-
-	public void setMsgContent(String msgContent) {
-		this.msgContent = msgContent;
-	}
-
-	public Timestamp getLeaveTime() {
-		return leaveTime;
-	}
-
-	public void setLeaveTime(Timestamp leaveTime) {
-		this.leaveTime = leaveTime;
-	}
-	
-	
 }

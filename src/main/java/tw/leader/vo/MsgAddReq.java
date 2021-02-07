@@ -9,38 +9,25 @@ import lombok.Data;
 @Data
 public class MsgAddReq {
 
-	@JsonProperty(value ="USER_NAMES")
+	@JsonProperty(value = "email")
+	private String email;
+
+	@JsonProperty(value = "userName")
 	private String userName;
-	
-	@JsonProperty(value ="MSG_CONTENT")
-	private String msgContent;
-	
-	@JsonProperty(value ="LEAVE_TIME")
-	private Timestamp leaveTime;
 
-	public String getUserName() {
-		return userName;
-	}
+	@JsonProperty(value = "userPic")
+	private String userPic;
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+	@JsonProperty(value = "pId")
+	private Integer pId;
 
-	public String getMsgContent() {
-		return msgContent;
-	}
+	@JsonProperty(value = "leaveMsgContent")
+	private String leaveMsgContent;
 
-	public void setMsgContent(String msgContent) {
-		this.msgContent = msgContent;
-	}
+	@JsonProperty(value = "leaveMsgTime")
+	private Timestamp leaveMsgTime;
 
-	public Timestamp getLeaveTime() {
-		return leaveTime;
-	}
+	@JsonProperty(value = "starLv")
+	private Integer starLv;
 
-	public void setLeaveTime(Timestamp leaveTime) {
-		this.leaveTime = leaveTime;
-	}
-	
-	
 }

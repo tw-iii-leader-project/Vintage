@@ -9,40 +9,15 @@ import lombok.Data;
 @Data
 public class MsgAddResp {
 	
-	@JsonProperty(value ="USER_NAMES")
+	@JsonProperty(value = "userName")
 	private String userName;
 	
-	@JsonProperty(value ="MSG_CONTENT")
-	private String msgContent;
-	
-	@JsonProperty(value ="LEAVE_TIME")
-	private Timestamp leaveTime;
+	@JsonProperty(value = "leaveMsgContent")
+	private String leaveMsgContent;
 
-	public String getUserName() {
-		return userName;
-	}
+	@JsonProperty(value = "leaveMsgTime")
+	private Timestamp leaveMsgTime;
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getMsgContent() {
-		return msgContent;
-	}
-
-	public void setMsgContent(String msgContent) {
-		this.msgContent = msgContent;
-	}
-
-	public Timestamp getLeaveTime() {
-		return leaveTime;
-	}
-
-	public void setLeaveTime(Timestamp leaveTime) {
-		this.leaveTime = leaveTime;
-	}
-	
-	
-
-
+	@JsonProperty(value = "starLv")
+	private Integer starLv;
 }

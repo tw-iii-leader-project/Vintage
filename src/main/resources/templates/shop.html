@@ -28,141 +28,21 @@
 <script src="js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript">
     	$(function(){
+            var allPageMainValue = $("#allPageMainValue").html();
+            if(allPageMainValue == ""){
             // 網頁載入時顯示全部商品筆數與總頁數
-            $.ajax({
-			    async:true,
-			    url:"panFindAllProductPage",
-			    type:"POST",
-			    dataType:"json",
-			    contentType:"application/json;charset=utf-8",
-                success:function(pageData){
-                    $.each(pageData,function(i,v){
-                        var pages = parseInt(v.totalPages);
-                        for(n=1;n<=pages;n++){
-                            $("#pageBox ul").append(
-                                `<li class="productAllPage">${n}</li>`
-                            );
-                        };
-                        $("#totalElements").append(
-                            `<span>${v.totalElements}</span>`
-                        );
-                    });
-                    $("#pageBox ul li").first().addClass("active");
-                },
-                error:function(msg){
-                    console.log(msg);
-                }
-            });
-            // 網頁載入時顯示全部
-    		$.ajax({
-                async:true, //非同步
-        		url:"panProductSelectAll",
-        		type:"POST",
-        		dataType:"json",
-        		contentType:"application/json;charset=utf-8;",
-        		success:function(response){
-        			console.log(response);
-        			$.each(response,function(i,v){
-        				$(".container #productMainRow #productMain #productList #productRow").append(
-        				`<div class="col-lg-4 col-sm-6">
-                         	<div class="product-item">
-                            	<div class="pi-pic">
-                                	<img src="img/products/${v.cPhoto}" alt="">
-                                        <ul>
-                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                            <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
-                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                        </ul>
-                                </div>
-                                <div class="pi-text">
-                                	<div class="catagory-name">${v.pMain}</div>
-                                        <a href="panProductPage?id=${v.pId}">
-                                            <h5>${v.pName}</h5>
-                                        </a>
-                                        <div class="product-price">
-                                            ${v.price}
-                                        </div>
-                                </div>
-                            </div>
-                        </div>`
-        				);
-        			})
-        		},
-        		error:function(msg){
-        			alert("ajax異常:"+msg);
-        		}
-            });
-            // 註冊查詢全部商品分頁頁籤+分頁查詢
-            $("#pageBox ul").on("click",".productAllPage",function(){
-                $("#pageBox ul li").removeClass("active");
-                $(this).addClass("active");
-                $(".container #productMainRow #productMain #productList #productRow").html("");
-                var pageNum = $(this).html();
-                var pageData = {"page":pageNum};
-                $.ajax({
-                    async:true,
-                    url:"panProductSelectAll.page",
-                    type:"POST",
-                    dataType:"json",
-			        contentType:"application/json;charset=utf-8",
-			        data:JSON.stringify(pageData),
-                    success:function(response){
-                        $.each(response,function(i,v){	
-                            $(".container #productMainRow #productMain #productList #productRow").append(
-                                `<div class="col-lg-4 col-sm-6">
-                         	        <div class="product-item">
-                                    	<div class="pi-pic">
-                                        	<img src="img/products/${v.cPhoto}" alt="">
-                                                <ul>
-                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                    <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
-                                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                                </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                        	<div class="catagory-name">${v.pMain}</div>
-                                                <a href="panProductPage?id=${v.pId}">
-                                                    <h5>${v.pName}</h5>
-                                                </a>
-                                                <div class="product-price">
-                                                    ${v.price}
-                                                </div>
-                                        </div>
-                                    </div>
-                                </div>` 
-                            );
-                        });
-                    },
-                    error:function(msg){
-                        console.log(msg);
-                    }
-                });
-            });
-
-
-            // 使用者點擊分類標籤時，作類別搜尋
-            // 先載入頁面資訊
-            var mainValue=null;
-			$(".testActive a").click(function(e){
-				e.preventDefault();
-                $("#pageBox ul").html("");
-                $("#totalElements").html("");
-				$(".container #productMainRow #productMain #productList #productRow").html("");
-				mainValue = $(this).html();
-				var str = {"pMain":mainValue};
                 $.ajax({
 			        async:true,
-			        url:"panFindAllProductMainPage",
+			        url:"panFindAllProductPage",
 			        type:"POST",
 			        dataType:"json",
 			        contentType:"application/json;charset=utf-8",
-			        data:JSON.stringify(str),
                     success:function(pageData){
                         $.each(pageData,function(i,v){
                             var pages = parseInt(v.totalPages);
                             for(n=1;n<=pages;n++){
                                 $("#pageBox ul").append(
-                                    `<li class="productMainPage">${n}</li>`
+                                    `<li class="productAllPage">${n}</li>`
                                 );
                             };
                             $("#totalElements").append(
@@ -175,92 +55,215 @@
                         console.log(msg);
                     }
                 });
-                // 再載入分類商品資料
-				$.ajax({
-	    			url:"panProductSelectByMain",
-	    			type:"POST",
-	    			dataType:"json",
-	    			data:JSON.stringify(str),
-	    			contentType:"application/json;charset=utf-8;",
-	    			success:function(response){
-	    				console.log(response);
-	    				$.each(response,function(i,v){
-	    					$(".container #productMainRow #productMain #productList #productRow").append(
-                                `<div class="col-lg-4 col-sm-6">
-                         	        <div class="product-item">
-                                    	<div class="pi-pic">
-                                        	<img src="img/products/${v.cPhoto}" alt="">
-                                                <ul>
-                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                    <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
-                                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                                </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                        	<div class="catagory-name">${v.pMain}</div>
-                                                <a href="panProductPage?id=${v.pId}">
-                                                    <h5>${v.pName}</h5>
-                                                </a>
-                                                <div class="product-price">
-                                                    ${v.price}
-                                                </div>
-                                        </div>
+                // 網頁載入時顯示全部
+    		    $.ajax({
+                    async:true, //非同步
+        	    	url:"panProductSelectAll",
+        	    	type:"POST",
+        	    	dataType:"json",
+        	    	contentType:"application/json;charset=utf-8;",
+        	    	success:function(response){
+        	    		console.log(response);
+        	    		$.each(response,function(i,v){
+        	    			$(".container #productMainRow #productMain #productList #productRow").append(
+        	    			`<div class="col-lg-4 col-sm-6">
+                             	<div class="product-item">
+                                	<div class="pi-pic">
+                                    	<img src="img/products/${v.cPhoto}" alt="">
+                                            <ul>
+                                                <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+                                                <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                            </ul>
                                     </div>
-                                </div>`
-	    					);
-	    				})
-	    			},
-	    			error:function(msg){
-	    				alert("ajax異常:"+msg);
-	    			}
-				});
-    		});
-            // 註冊分類商品的分頁標籤與分頁查詢
-            $("#pageBox ul").on("click",".productMainPage",function(){
-                $("#pageBox ul li").removeClass("active");
-                $(this).addClass("active");
-                $(".container #productMainRow #productMain #productList #productRow").html("");
-                var pageNum = $(this).html();
-                var pageData = {"pMain":mainValue,"page":pageNum};
-                $.ajax({
-                    async:true,
-                    url:"panProductSelectByMain.page",
-                    type:"POST",
-                    dataType:"json",
-                    contentType:"application/json;charset=utf-8",
-                    data:JSON.stringify(pageData),
-                    success:function(response){
-                        $.each(response,function(i,v){
-                            $(".container #productMainRow #productMain #productList #productRow").append(
-                                `<div class="col-lg-4 col-sm-6">
-                         	        <div class="product-item">
-                                    	<div class="pi-pic">
-                                        	<img src="img/products/${v.cPhoto}" alt="">
-                                                <ul>
-                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                    <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
-                                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                                </ul>
-                                        </div>
-                                        <div class="pi-text">
-                                        	<div class="catagory-name">${v.pMain}</div>
-                                                <a href="panProductPage?id=${v.pId}">
-                                                    <h5>${v.pName}</h5>
-                                                </a>
-                                                <div class="product-price">
-                                                    ${v.price}
-                                                </div>
-                                        </div>
+                                    <div class="pi-text">
+                                    	<div class="catagory-name">${v.pMain}</div>
+                                            <a href="panProductPage?id=${v.pId}">
+                                                <h5>${v.pName}</h5>
+                                            </a>
+                                            <div class="product-price">
+                                                ${v.price}
+                                            </div>
                                     </div>
-                                </div>` 
-                            );
-                        });
-                    },
-                    error:function(msg){
-                        console.log(msg);
-                    }
+                                </div>
+                            </div>`
+        	    			);
+        	    		})
+        	    	},
+        	    	error:function(msg){
+        	    		alert("ajax異常:"+msg);
+        	    	}
                 });
-            });
+                // 註冊查詢全部商品分頁頁籤+分頁查詢
+                $("#pageBox ul").on("click",".productAllPage",function(){
+                    $("#pageBox ul li").removeClass("active");
+                    $(this).addClass("active");
+                    $(".container #productMainRow #productMain #productList #productRow").html("");
+                    var pageNum = $(this).html();
+                    var pageData = {"page":pageNum};
+                    $.ajax({
+                        async:true,
+                        url:"panProductSelectAll.page",
+                        type:"POST",
+                        dataType:"json",
+			            contentType:"application/json;charset=utf-8",
+			            data:JSON.stringify(pageData),
+                        success:function(response){
+                            $.each(response,function(i,v){	
+                                $(".container #productMainRow #productMain #productList #productRow").append(
+                                    `<div class="col-lg-4 col-sm-6">
+                             	        <div class="product-item">
+                                        	<div class="pi-pic">
+                                            	<img src="img/products/${v.cPhoto}" alt="">
+                                                    <ul>
+                                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                        <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+                                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                    </ul>
+                                            </div>
+                                            <div class="pi-text">
+                                            	<div class="catagory-name">${v.pMain}</div>
+                                                    <a href="panProductPage?id=${v.pId}">
+                                                        <h5>${v.pName}</h5>
+                                                    </a>
+                                                    <div class="product-price">
+                                                        ${v.price}
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>` 
+                                );
+                            });
+                        },
+                        error:function(msg){
+                            console.log(msg);
+                        }
+                    });
+                });
+            }
+            else{
+            // 使用者點擊分類標籤時，作類別搜尋
+            // 先載入頁面資訊
+                var mainValue=null;
+			    $(".testActive a").click(function(e){
+			    	e.preventDefault();
+                    $("#pageBox ul").html("");
+                    $("#totalElements").html("");
+			    	$(".container #productMainRow #productMain #productList #productRow").html("");
+			    	mainValue = $(this).html();
+			    	var str = {"pMain":mainValue};
+                    $.ajax({
+			            async:true,
+			            url:"panFindAllProductMainPage",
+			            type:"POST",
+			            dataType:"json",
+			            contentType:"application/json;charset=utf-8",
+			            data:JSON.stringify(str),
+                        success:function(pageData){
+                            $.each(pageData,function(i,v){
+                                var pages = parseInt(v.totalPages);
+                                for(n=1;n<=pages;n++){
+                                    $("#pageBox ul").append(
+                                        `<li class="productMainPage">${n}</li>`
+                                    );
+                                };
+                                $("#totalElements").append(
+                                    `<span>${v.totalElements}</span>`
+                                );
+                            });
+                            $("#pageBox ul li").first().addClass("active");
+                        },
+                        error:function(msg){
+                            console.log(msg);
+                        }
+                    });
+                    // 再載入分類商品資料
+			    	$.ajax({
+	    	    		url:"panProductSelectByMain",
+	    	    		type:"POST",
+	    	    		dataType:"json",
+	    	    		data:JSON.stringify(str),
+	    	    		contentType:"application/json;charset=utf-8;",
+	    	    		success:function(response){
+	    	    			console.log(response);
+	    	    			$.each(response,function(i,v){
+	    	    				$(".container #productMainRow #productMain #productList #productRow").append(
+                                    `<div class="col-lg-4 col-sm-6">
+                             	        <div class="product-item">
+                                        	<div class="pi-pic">
+                                            	<img src="img/products/${v.cPhoto}" alt="">
+                                                    <ul>
+                                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                        <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+                                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                    </ul>
+                                            </div>
+                                            <div class="pi-text">
+                                            	<div class="catagory-name">${v.pMain}</div>
+                                                    <a href="panProductPage?id=${v.pId}">
+                                                        <h5>${v.pName}</h5>
+                                                    </a>
+                                                    <div class="product-price">
+                                                        ${v.price}
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>`
+	    	    				);
+	    	    			})
+	    	    		},
+	    	    		error:function(msg){
+	    	    			alert("ajax異常:"+msg);
+	    	    		}
+			    	});
+    		    });
+                // 註冊分類商品的分頁標籤與分頁查詢
+                $("#pageBox ul").on("click",".productMainPage",function(){
+                    $("#pageBox ul li").removeClass("active");
+                    $(this).addClass("active");
+                    $(".container #productMainRow #productMain #productList #productRow").html("");
+                    var pageNum = $(this).html();
+                    var pageData = {"pMain":mainValue,"page":pageNum};
+                    $.ajax({
+                        async:true,
+                        url:"panProductSelectByMain.page",
+                        type:"POST",
+                        dataType:"json",
+                        contentType:"application/json;charset=utf-8",
+                        data:JSON.stringify(pageData),
+                        success:function(response){
+                            $.each(response,function(i,v){
+                                $(".container #productMainRow #productMain #productList #productRow").append(
+                                    `<div class="col-lg-4 col-sm-6">
+                             	        <div class="product-item">
+                                        	<div class="pi-pic">
+                                            	<img src="img/products/${v.cPhoto}" alt="">
+                                                    <ul>
+                                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                        <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+                                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                    </ul>
+                                            </div>
+                                            <div class="pi-text">
+                                            	<div class="catagory-name">${v.pMain}</div>
+                                                    <a href="panProductPage?id=${v.pId}">
+                                                        <h5>${v.pName}</h5>
+                                                    </a>
+                                                    <div class="product-price">
+                                                        ${v.price}
+                                                    </div>
+                                            </div>
+                                        </div>
+                                    </div>` 
+                                );
+                            });
+                        },
+                        error:function(msg){
+                            console.log(msg);
+                        }
+                    });
+                });
+            }
 
             // 使用者利用搜尋欄作搜尋
 			$("#textSelectFormSearch").click(function(e){
@@ -327,6 +330,7 @@
 
 <body>
     <span th:text="${user}" style="display: none;" id="loginInfo"></span>
+    <span th:text="${allPageMainValue}" style="display: none;" id="allPageMainValue"></span>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>

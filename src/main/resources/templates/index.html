@@ -32,6 +32,14 @@
 		$("#userPageControl").click(function(){
 			$(this).attr("href",cUrl+userEmail);
 		});
+		var mUrl = "panAllPageMainLink?pMain=";
+		$(".testActive a").click(function(){
+			var allPageMainValue = $(this).html();
+			$(this).attr("href",mUrl+allPageMainValue);
+		});
+// 		$(".single-banner a").click(function(){
+// 			var allPageMainValue = $()
+// 		});
 	});
 	
 </script>
@@ -229,25 +237,49 @@
 			<div class="row">
 				<div class="col-lg-4">
 					<div class="single-banner">
-						<img src="img/banner-1.jpg" alt="">
+						<a href="#"><img src="img/Coursel/accessories.jpg" border="0"></a>
 						<div class="inner-text">
-							<h4>Men’s</h4>
+							<h4>飾品</h4>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="single-banner">
-						<img src="img/banner-2.jpg" alt="">
+						<a href="#"><img src="img/Coursel/clothing.jpg" border="0"></a>
 						<div class="inner-text">
-							<h4>Women’s</h4>
+							<h4>服飾</h4>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="single-banner">
-						<img src="img/banner-3.jpg" alt="">
+						<a href="#"><img src="img/Coursel/home.jpg" border="0"></a>
 						<div class="inner-text">
-							<h4>Kid’s</h4>
+							<h4>居家生活</h4>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="single-banner">
+						<a href="#"><img src="img/Coursel/toy.jpg" border="0"></a>
+						<div class="inner-text">
+							<h4>玩具</h4>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="single-banner">
+						<a href="#"><img src="img/Coursel/art.jpg" border="0"></a>
+						<div class="inner-text">
+							<h4>藝術</h4>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="single-banner">
+						<a href="#"><img src="img/Coursel/vintage.jpg" border="0"></a>
+						<div class="inner-text">
+							<h4>經典</h4>
 						</div>
 					</div>
 				</div>

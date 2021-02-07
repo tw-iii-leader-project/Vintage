@@ -1,7 +1,11 @@
 package tw.leader.controller;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import tw.leader.po.User;
 
 @Controller
 public class SimpleJumpController {
@@ -11,19 +15,19 @@ public class SimpleJumpController {
 
 	}
 	
-	@GetMapping("/index")
-	public String fashiHomePage() {
-		return "index.html";
+	@GetMapping("")
+	public String ViewHomePage() {
+		return "index";
 	}
 	
-	@GetMapping("/shop")
+	@GetMapping("/shopPage")
 	public String fashiShopPage() {
-		return "shop.html";
+		return "shop";
 	}
 	
 	@GetMapping("/product")
 	public String productPage() {
-		return "product.html";
+		return "product";
 	}
 	
 	@GetMapping("/blog")
@@ -50,21 +54,6 @@ public class SimpleJumpController {
 	public String faqPage() {
 		return "faq";
 	}
-
-	@GetMapping("/login")
-	public String loginPage() {
-		return "login"; 
-	}
-	
-	@GetMapping("/main")
-	public String mainPage() {
-		return "main";
-	}
-	
-	@GetMapping("/register")
-	public String registerPage() {
-		return "register";
-	}
 	
 	@GetMapping("/shoppingCart")
 	public String shoppingCartPage() {
@@ -74,6 +63,55 @@ public class SimpleJumpController {
 	@GetMapping("/uploader")
 	public String uploaderPage() {
 		return "uploader";
+	}
+	
+	
+	@GetMapping("/registerNow")
+	public String toRegister(Model m) {
+		m.addAttribute("users", new User());
+		return "register3";
+	}
+	
+	@GetMapping("/forgetPassword")
+	public String forgetPassword() {
+		return "resetPassword";
+	}
+	
+	@GetMapping("/loginPage")
+	public String viewLoginPage() {
+		return "login3";
+	}
+	
+	@GetMapping("/toHomePage")
+	public String viewHomePage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
+		return "index";
+	}
+	
+	@GetMapping("/personalInfo")
+	public String viewPersonalInfo() {
+		return "personalInfo";
+	}
+	
+	@GetMapping("/toUserInfoDetail")
+	public String toUserInfoDetail(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
+		return "UserInfoDetail";
+	}
+	
+	@GetMapping("/toActivity")
+	public String viewActivityPage(Model m) {
+//		String user = GetCurrentUserAccount();
+//		m.addAttribute("user", user);
+		return "Activity";
+	}
+	
+	public String GetCurrentUserAccount() {
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		return userName;
+		// this method is for getting current user account which has login.
 	}
 }
 

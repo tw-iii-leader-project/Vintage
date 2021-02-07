@@ -126,6 +126,13 @@ public class ProductSelectController {
 		m.addAttribute("secretUserEmail",email);
 		return "blog-details";
 	}
+	
+	@GetMapping(value="/panUserControlPage")
+	public String usercontrolPage(@RequestParam String email,Model m) {
+		m.addAttribute("secretUserEmail",email);
+		System.out.println(email);
+		return "blog-details";
+	}
 
 	/*
 	 * ***Product頁面載入時呼叫***載入此商品的所有資料

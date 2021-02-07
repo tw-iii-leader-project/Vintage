@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -114,6 +115,8 @@ public class ProductSelectController {
 	@GetMapping(value="/panProductPage")
 	public String productJumPage(@RequestParam int id,Model m) {
 		System.out.println(id);
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		m.addAttribute("secretProductId", id);
 		return "product";
 	}
@@ -123,13 +126,15 @@ public class ProductSelectController {
 	 * */
 	@GetMapping(value="/panUserPage")
 	public String userJumPage(@RequestParam String email,Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		m.addAttribute("secretUserEmail",email);
 		return "blog-details";
 	}
 	
 	@GetMapping(value="/panUserControlPage")
 	public String usercontrolPage(@RequestParam String email,Model m) {
-		m.addAttribute("secretUserEmail",email);
+		m.addAttribute("user",email);
 		System.out.println(email);
 		return "blog-details";
 	}
@@ -230,7 +235,11 @@ public class ProductSelectController {
 		return pService.getPageMessageByMain(email, pMain);
 	}
 	
-	
+	public String GetCurrentUserAccount() {
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		return userName;
+		// this method is for getting current user account which has login.
+	}
 	
 	/*-------------------------------------------------------------
 	 * Test controller*/

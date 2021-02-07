@@ -11,16 +11,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import tw.leader.dao.FindUserInfoDao;
 import tw.leader.dao.UserRepository;
 import tw.leader.po.User;
+import tw.leader.vo.UserResp;
 
 @Controller
 public class AppController {
 	
 	@Autowired
 	private UserRepository uRepo;
+	@Autowired
+	private ObjectMapper objectMapper;
+	@Autowired
+	private FindUserInfoDao fDao;
 	
 	
 	
@@ -81,6 +92,16 @@ public class AppController {
 	@GetMapping("/registerProcess")
 	public String registerProcess() {
 		return "register_success";
+	}
+	
+	@PostMapping(value="/panselectUserInfo.user")
+	@ResponseBody
+	public String selectUserInfoUser(@RequestBody UserResp userData) throws Exception {
+		String email = userData.getEmail();
+		List<User> uList = fDao.findAllDataByEmail(email);
+		String uJson = objectMapper.writeValueAsString(uList);
+		System.out.println(uJson);
+		return uJson;
 	}
 	
 	

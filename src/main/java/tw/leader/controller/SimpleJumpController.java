@@ -15,28 +15,38 @@ public class SimpleJumpController {
 
 	}
 	
-	@GetMapping("")
-	public String ViewHomePage() {
+	@GetMapping("/index")
+	public String ViewHomePage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		return "index";
 	}
 	
 	@GetMapping("/shopPage")
-	public String fashiShopPage() {
+	public String fashiShopPage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		return "shop";
 	}
 	
 	@GetMapping("/product")
-	public String productPage() {
+	public String productPage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		return "product";
 	}
 	
 	@GetMapping("/blog")
-	public String blogPage() {
+	public String blogPage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		return "blog";
 	}
 	
 	@GetMapping("/blogDetails")
-	public String blogDetailsPage() {
+	public String blogDetailsPage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		return "blog-details";
 	}
 	
@@ -56,7 +66,9 @@ public class SimpleJumpController {
 	}
 	
 	@GetMapping("/shoppingCart")
-	public String shoppingCartPage() {
+	public String shoppingCartPage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		return "shopping-cart";
 	}
 	

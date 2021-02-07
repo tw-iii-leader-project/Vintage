@@ -14,24 +14,24 @@ import org.springframework.web.multipart.MultipartFile;
 @Controller
 public class FileUploadController {
 
-	@GetMapping("/index")
-	public String hello() {
-		return "uploader";
-	}
-
-	@PostMapping("/upload")
-	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
-		String filemName = file.getOriginalFilename();
-		filemName = "pan"+filemName;
-		try {
-			file.transferTo(new File("C:\\SpringBoot\\eclipse\\Workspace\\Git\\VintageTest\\src\\main\\resources\\static\\img\\products\\" + filemName));
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-		return ResponseEntity.ok("File uploaded successfully!!");
-	}
+//	@GetMapping("/index")
+//	public String hello() {
+//		return "uploader";
+//	}
+//
+//	@PostMapping("/upload")
+//	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
+//		String filemName = file.getOriginalFilename();
+//		filemName = "pan"+filemName;
+//		try {
+//			file.transferTo(new File("C:\\SpringBoot\\eclipse\\Workspace\\Git\\VintageTest\\src\\main\\resources\\static\\img\\products\\" + filemName));
+//		} catch (IllegalStateException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (Exception e) {
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//		}
+//		return ResponseEntity.ok("File uploaded successfully!!");
+//	}
 
 }

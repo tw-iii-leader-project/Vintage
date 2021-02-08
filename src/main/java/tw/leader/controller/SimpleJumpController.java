@@ -110,7 +110,7 @@ public class SimpleJumpController {
 	public String toUserInfoDetail(Model m) {
 		String user = GetCurrentUserAccount();
 		m.addAttribute("user", user);
-		return "UserInfoDetail";
+		return "userInfoDetail";
 	}
 	
 	@GetMapping("/toActivity")

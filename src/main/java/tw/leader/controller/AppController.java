@@ -79,7 +79,7 @@ public class AppController {
 			User user = uRepo.findByEmail(email);
 			user.setPassword(encoder.encode(secondPwd));
 			uRepo.save(user);
-			return "testPage1";
+			return "index";
 		}else {
 			m.addAttribute("errors", "NO EMAIL EXIST!! PLEASE CHECK AGAIN.");
 			return "resetPassword";
@@ -106,12 +106,20 @@ public class AppController {
 	
 	
 	
-//	@GetMapping("/userInfoUpdate")
-//	public String userInfoUpdate(User user, @RequestParam("userBirthday")String userBirthday) {
-//		user.setBirthday(userBirthday);
-//		uRepo.save(user);
-//		return "index3";
-//	}
+	@PostMapping("/userInfoUpdate")
+	public String userInfoUpdate(@RequestParam("userBirthday")String userBirthday, @RequestParam("userPhone") String userPhone, @RequestParam("gender") String gender) {
+		String currentUser = GetCurrentUserAccount();
+		String newRole = "ROLE_SELL";
+		User user = uRepo.findByEmail(currentUser);
+		user.setEmail(currentUser);
+		user.setBirthday(userBirthday);
+		user.setPhone(userPhone);
+		user.setGender(gender);
+		user.setRoles(newRole);
+		uRepo.save(user);
+		
+		return "update_success";
+	}
 		
 	public String GetCurrentUserAccount() {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();

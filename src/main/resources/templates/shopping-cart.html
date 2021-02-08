@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -22,9 +22,136 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+    <script type="text/javascript">
+    $(document).ready(function(){
+        sum();
+    });
+    function sum(){
+        var sum = 0;
+        var checkBoxList = document.getElementsByName("item");
+        var priceList = document.getElementsByName("priceList");
+        var amountList = document.getElementsByName("amountList");
+        var totalPrice = document.getElementById("totalPrice");
+        var cartStatus = [];
+        for(var i = 0; i<priceList.length; i++) {
+            if(checkBoxList[i].checked == true) {
+                cartStatus.push(1);
+                sum += parseFloat(priceList[i].value).toFixed(2) * parseInt(amountList[i].value);
+            } else {
+                cartStatus.push(0);
+            }
+        }
+        totalPrice.innerHTML = "$"+sum.toFixed(2);
+        $.ajax({
+            async: false,//非同步
+            cache: false,
+            traditional: true,
+            type: 'POST',
+            data: {cartStatus: cartStatus},
+            url: "/updateCartStatus",
+            success: function(result) {
+            }
+        });
+    }
+    $("#selectAll").click(function(){
+        if($(this).prop("checked")) {
+            $("input[name=item]:checkbox").each(function () {
+                $(this).prop("checked", true);
+            });
+        } else {
+            $("input[name=item]:checkbox").each(function () {
+                $(this).prop("checked", false);
+            });
+        }
+    })
+    function updateCart(pId, amount) {
+        $.ajax({
+            url: '/updateCart?'+"pId="+pId+"&amount="+amount,
+            async: false, //同步
+            complete: function(msg) {
+            },
+            success: function(result){
+                if(result != true) {
+                    alert("更新失敗！")
+                }
+            }, error: function() {
+                alert("更新失敗！")
+            }
+        });
+        layer.msg('更新成功', {
+            icon: 1,
+            time: 1000
+        });
+    }
+    function getPrice2(id) {
+        var amount = document.getElementById("amount"+id).value;
+        var price1 = $("#hidden_price1"+id).val();
+        var price2 = document.getElementById("price2"+id);
+        updateCart(id, amount);
+        price2.innerText = "$"+(parseFloat(price1).toFixed(2) * parseInt(amount));
+        sum();
+    };
+    function min1(id) {
+        //
+        var amount = $("#amount"+id);
+        var price1 = $("#hidden_price1"+id).val();
+        var price2 = document.getElementById("price2"+id);
+        //數量減少
+        if (parseInt(amount.val()) > 1){
+            amount.val(Math.abs(parseInt(amount.val()))-1);
+            updateCart(id, amount.val());
+            price2.innerText = "$"+(parseFloat(price1).toFixed(2) * parseInt(amount.val()));
+            sum();
+        }
+    };
+    function add1(id) {
+        //
+        var amount = $("#amount"+id);
+        var max_t = $("#storage"+id).val();
+        var price1 = $("#hidden_price1"+id).val();
+        var price2 = document.getElementById("price2"+id);
+        //數量增加
+        if(parseInt(amount.val()) < max_t) {
+            amount.val(Math.abs(parseInt(amount.val()))+1);
+            updateCart(id, amount.val());
+            price2.innerText = "$"+(parseFloat(price1).toFixed(2) * parseInt(amount.val()));
+            sum();
+        }
+    };
+
+    function deleteProduct(pId) {
+        var msg = "確定刪除？";
+        layer.confirm('確定刪除？', {icon: 2, title:'確定刪除？',btn:['確定','取消']},
+            function(){
+                $.ajax({
+                    url: '/deleteFromCart?pId='+pId,
+                    async: false, //同步，
+                    success: function(result){
+                        if(result != true) {
+                            alert("刪除失敗！")
+                        }
+                    }, error: function() {
+                        alert("刪除失敗！")
+                    }
+                });
+                layer.msg('刪除成功', {
+                    icon: 2,
+                    time: 1000
+                });
+                window.location.reload();
+            },
+            function(index){
+                layer.close(index);}
+        );
+
+    };
+    </script>
+
 </head>
 
 <body>
+ 	<span th:text="${user}" style="display: none;" id="loginInfo"></span>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -36,30 +163,26 @@
             <div class="container">
                 <div class="ht-left">
                     <div class="mail-service">
-                        <i class=" fa fa-envelope"></i>
-                        hello.colorlib@gmail.com
-                    </div>
-                    <div class="phone-service">
-                        <i class=" fa fa-phone"></i>
-                        +65 11.188.888
+                        <i class=" fa fa-envelope" id="userPageControl" href="#" th:text="${user}"></i>
+                        
                     </div>
                 </div>
                 <div class="ht-right">
                     <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
-                    <div class="lan-selector">
+                    <!-- <div class="lan-selector">
                         <select class="language_drop" name="countries" id="countries" style="width:300px;">
                             <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"
                                 data-title="English">English</option>
                             <option value='yu' data-image="img/flag-2.jpg" data-imagecss="flag yu"
                                 data-title="Bangladesh">German </option>
                         </select>
-                    </div>
-                    <div class="top-social">
-                        <a href="#"><i class="ti-facebook"></i></a>
-                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                        <a href="#"><i class="ti-linkedin"></i></a>
-                        <a href="#"><i class="ti-pinterest"></i></a>
-                    </div>
+                    </div> -->
+<!--                     <div class="top-social"> -->
+<!--                         <a href="#"><i class="ti-facebook"></i></a> -->
+<!--                         <a href="#"><i class="ti-twitter-alt"></i></a> -->
+<!--                         <a href="#"><i class="ti-linkedin"></i></a> -->
+<!--                         <a href="#"><i class="ti-pinterest"></i></a> -->
+<!--                     </div> -->
                 </div>
             </div>
         </div>
@@ -68,7 +191,7 @@
                 <div class="row">
                     <div class="col-lg-2 col-md-2">
                         <div class="logo">
-                            <a href="liaoIndex">
+                            <a href="index">
                                 <img src="img/logo.png" alt="">
                             </a>
                         </div>
@@ -84,11 +207,11 @@
                     </div>
                     <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
-                            <li class="heart-icon"><a href="#">
+<!--                             <li class="heart-icon"><a href="#">
                                     <i class="icon_heart_alt"></i>
                                     <span>1</span>
                                 </a>
-                            </li>
+                            </li> -->
                             <li class="cart-icon"><a href="#">
                                     <i class="icon_bag_alt"></i>
                                     <span>3</span>
@@ -126,7 +249,7 @@
                                     </div>
                                     <div class="select-total">
                                         <span>total:</span>
-                                        <h5>$120.00</h5>
+                                        <h5><p id="totalPrice" th:value="${totalPrice}"></h5>
                                     </div>
                                     <div class="select-button">
                                         <a href="#" class="primary-btn view-card">VIEW CARD</a>
@@ -145,42 +268,27 @@
                 <div class="nav-depart">
                     <div class="depart-btn">
                         <i class="ti-menu"></i>
-                        <span>All departments</span>
+                        <span>所有選項</span>
                         <ul class="depart-hover">
-                            <li class="active"><a href="#">Women’s Clothing</a></li>
-                            <li><a href="#">Men’s Clothing</a></li>
-                            <li><a href="#">Underwear</a></li>
-                            <li><a href="#">Kid's Clothing</a></li>
-                            <li><a href="#">Brand Fashion</a></li>
-                            <li><a href="#">Accessories/Shoes</a></li>
-                            <li><a href="#">Luxury Brands</a></li>
-                            <li><a href="#">Brand Outdoor Apparel</a></li>
+                            <li class="active">
+                            <a href="#">飾品</a></li>
+                            <li><a href="#">服飾</a></li>
+                            <li><a href="#">居家生活</a></li>
+                            <li><a href="#">玩具</a></li>
+                            <li><a href="#">藝術</a></li>
+                            <li><a href="#">經典</a></li>
+                          
                         </ul>
                     </div>
                 </div>
                 <nav class="nav-menu mobile-menu">
                     <ul>
-                        <li><a href="liaoIndex">Home</a></li>
-                        <li><a href="liaoShop">Shop</a></li>
-                        <li><a href="#">Collection</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Men's</a></li>
-                                <li><a href="#">Women's</a></li>
-                                <li><a href="#">Kid's</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="liaoBlog">Blog</a></li>
-                        <li><a href="liaoContact">Contact</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="liaoBlogDetails">Blog Details</a></li>
-                                <li><a href="liaoShoppingCart">Shopping Cart</a></li>
-                                <li><a href="liaoCheckOut">Checkout</a></li>
-                                <li><a href="liaoFaq">Faq</a></li>
-                                <li><a href="liaoRegister">Register</a></li>
-                                <li><a href="liaoLogin">Login</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="index">首頁</a></li>
+                        <li><a href="shopPage">商城</a></li>
+                        <li><a href="blog">博客</a></li>
+                        <li><a href="contact">活動</a></li>
+                        <li><a href="faq">問與答</a></li>
+
                     </ul>
                 </nav>
                 <div id="mobile-menu-wrap"></div>
@@ -195,8 +303,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
-                        <a href="liaoIndex"><i class="fa fa-home"></i> Home</a>
-                        <a href="liaoShop">Shop</a>
+                        <a href="index"><i class="fa fa-home"></i> Home</a>
+                        <a href="shopPage">Shop</a>
                         <span>Shopping Cart</span>
                     </div>
                 </div>
@@ -214,11 +322,11 @@
                         <table>
                             <thead>
                                 <tr>
-                                    <th>Image</th>
-                                    <th class="p-name">Product Name</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
+                                    <th> </th>
+                                    <th class="p-name">商品</th>
+                                    <th class="price">價格</th>
+                                    <th class="amount">數量</th>
+                                    <th class="sum">小計</th>
                                     <th><i class="ti-close"></i></th>
                                 </tr>
                             </thead>
@@ -239,47 +347,18 @@
                                     <td class="total-price first-row">$60.00</td>
                                     <td class="close-td first-row"><i class="ti-close"></i></td>
                                 </tr>
-                                <tr>
-                                    <td class="cart-pic"><img src="img/cart-page/product-2.jpg" alt=""></td>
-                                    <td class="cart-title">
-                                        <h5>American lobster</h5>
-                                    </td>
-                                    <td class="p-price">$60.00</td>
-                                    <td class="qua-col">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="total-price">$60.00</td>
-                                    <td class="close-td"><i class="ti-close"></i></td>
-                                </tr>
-                                <tr>
-                                    <td class="cart-pic"><img src="img/cart-page/product-3.jpg" alt=""></td>
-                                    <td class="cart-title">
-                                        <h5>Guangzhou sweater</h5>
-                                    </td>
-                                    <td class="p-price">$60.00</td>
-                                    <td class="qua-col">
-                                        <div class="quantity">
-                                            <div class="pro-qty">
-                                                <input type="text" value="1">
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="total-price">$60.00</td>
-                                    <td class="close-td"><i class="ti-close"></i></td>
-                                </tr>
+
                             </tbody>
                         </table>
                     </div>
                     <div class="row">
                         <div class="col-lg-4">
                             <div class="cart-buttons">
-                                <a href="#" class="primary-btn continue-shop">Continue shopping</a>
-                                <a href="#" class="primary-btn up-cart">Update cart</a>
+                                <a href="shopPage" class="primary-btn continue-shop">Continue shopping</a>
+                                
+                                <!-- <a href="#" class="primary-btn up-cart">Update cart</a> -->
                             </div>
+                            <!-- 
                             <div class="discount-coupon">
                                 <h6>Discount Codes</h6>
                                 <form action="#" class="coupon-form">
@@ -287,12 +366,12 @@
                                     <button type="submit" class="site-btn coupon-btn">Apply</button>
                                 </form>
                             </div>
+                            -->
                         </div>
                         <div class="col-lg-4 offset-lg-4">
                             <div class="proceed-checkout">
-                                <ul>
-                                    <li class="subtotal">Subtotal <span>$240.00</span></li>
-                                    <li class="cart-total">Total <span>$240.00</span></li>
+                                <ul>           
+                                    <li class="cart-total">總計 <span>$0</span></li>
                                 </ul>
                                 <a href="#" class="proceed-btn">PROCEED TO CHECK OUT</a>
                             </div>

@@ -69,8 +69,11 @@
                             	<div class="pi-pic">
                                 	<img src="img/products/${v.cPhoto}" alt="">
                                         <ul>
-                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                        	//加入購物車
+                                            <li class="w-icon active" id="shoppingCar"><a href="#"><i class="icon_bag_alt"></i></a></li>
+											//產品連結
                                             <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+
                                             <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                         </ul>
                                 </div>
@@ -114,8 +117,9 @@
                                     	<div class="pi-pic">
                                         	<img src="img/products/${v.cPhoto}" alt="">
                                                 <ul>
-                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                    <li class="w-icon active"><a href="addToCart?id={v.Id}"><i class="icon_bag_alt"></i></a></li>
                                                     <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+
                                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                                 </ul>
                                         </div>
@@ -191,8 +195,9 @@
                                     	<div class="pi-pic">
                                         	<img src="img/products/${v.cPhoto}" alt="">
                                                 <ul>
-                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                    <li class="w-icon active"><a href="addToCart?id={v.userId}"><i class="icon_bag_alt"></i></a></li>
                                                     <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+
                                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                                 </ul>
                                         </div>
@@ -237,8 +242,9 @@
                                     	<div class="pi-pic">
                                         	<img src="img/products/${v.cPhoto}" alt="">
                                                 <ul>
-                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                    <li class="w-icon active"><a href="addToCart?id={v.userId}"><i class="icon_bag_alt"></i></a></li>
                                                     <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+
                                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                                 </ul>
                                         </div>
@@ -296,8 +302,9 @@
                                         	<div class="pi-pic">
                                             	<img src="img/products/${v.cPhoto}" alt="">
                                                     <ul>
-                                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                        <li class="w-icon active"><a href="addToCart?id={v.userId}"><i class="icon_bag_alt"></i></a></li>
                                                         <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+
                                                         <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                                     </ul>
                                             </div>
@@ -374,7 +381,7 @@
 					<div class="col-lg-3 text-right col-md-3">
 						<ul class="nav-right">
 
-							<li class="cart-icon"><a href="#"> <i
+							<li class="cart-icon"><a href="shopping-cart"> <i
 									class="icon_bag_alt"></i> <span>3</span>
 							</a>
 								<div class="cart-hover">
@@ -411,7 +418,7 @@
 										<h5>$120.00</h5>
 									</div>
 									<div class="select-button">
-										<a href="#" class="primary-btn view-card">VIEW CARD</a> <a
+										<a href="shopping-cart" class="primary-btn view-card">VIEW CARD</a> <a
 											href="#" class="primary-btn checkout-btn">CHECK OUT</a>
 									</div>
 								</div></li>

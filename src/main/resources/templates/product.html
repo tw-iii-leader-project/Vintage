@@ -78,9 +78,9 @@
                                 </div>
                                 <div class="quantity">
                                     <div class="pro-qty">
-                                        <input type="text" value="1">
+                                        <input type="numder" id="testInput" value="1">
                                     </div>
-                                    <a href="#" class="primary-btn pd-cart">Add To Cart</a>
+                                    <a href="#" class="primary-btn pd-cart" id="shoppingCart">Add To Cart</a>
                                 </div>
                                 <ul class="pd-tags">
                                     <li><span>CATEGORIES</span>: ${v.pMain}</li>
@@ -231,7 +231,15 @@
                 console.log(textStatus);
               },
             });
-            
+            $("#shoppingCart").click(function(){
+            	var shopData = $("#testInput").val();
+            	var userEmail = $("#loginInfo").html();
+            	var uUrl = "addToCart?email=";
+            	var sUrl = "&amount="
+            	alert(uUrl+userEmail+sUrl+shopData);
+            	console.log(uUrl + userEmail + sUrl + shopData);
+            	$(this).attr("href",uUrl+userEmail+sUrl+shopData);
+            });
             
 
          
@@ -241,6 +249,7 @@
 </head>
 
 <body>
+	<button id="test">test</button>
 	<span th:text="${user}" style="display: none;" id="loginInfo"></span>
 	<span id="secretProductId" th:text="${secretProductId}"
 		style="display: none;"></span>

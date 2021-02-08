@@ -104,6 +104,17 @@ public class AppController {
 		return uJson;
 	}
 	
+	@PostMapping(value="/panSlideshowUser")
+	@ResponseBody
+	public String findFlideshowUserDetail(@RequestBody UserResp userData) throws Exception { 
+		String email = userData.getEmail();
+		System.out.println(email+1);
+		List<User> uList = fDao.findAllDataByEmail(email);
+		String uJson = objectMapper.writeValueAsString(uList);
+		return uJson;
+	}
+	
+	
 	
 	
 //	@GetMapping("/userInfoUpdate")

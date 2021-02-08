@@ -972,6 +972,7 @@ ol {
 .single-banner {
 	position: relative;
 	z-index: 1;
+	margin: 20px;
 }
 
 .single-banner:hover::before {

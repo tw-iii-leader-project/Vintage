@@ -20,6 +20,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tw.leader.service.ProductService;
+import tw.leader.service.ProductSlidesService;
 import tw.leader.vo.ProductResp;
 
 /**
@@ -31,6 +32,8 @@ public class ProductSelectController {
 
 	@Autowired
 	private ProductService pService;
+	@Autowired
+	private ProductSlidesService sService;
 	@Autowired
 	private ObjectMapper objectMapper ;
 	
@@ -248,11 +251,22 @@ public class ProductSelectController {
 		return pService.getPageMessageByMain(email, pMain);
 	}
 	
+	/*
+	 * ***SlidesBox商品展示
+	 * */
+	@PostMapping(value="/panSlideshowProduct")
+	@ResponseBody
+	public String findSlideshowProduct(@RequestBody ProductResp userData) throws Exception {
+		String email = userData.getEmail();
+		return sService.getSlidesProduct(email);
+	}
+	
 	public String GetCurrentUserAccount() {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		return userName;
 		// this method is for getting current user account which has login.
 	}
+	
 	
 	/*-------------------------------------------------------------
 	 * Test controller*/

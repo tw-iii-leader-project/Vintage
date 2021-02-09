@@ -120,6 +120,13 @@ public class SimpleJumpController {
 		return "Activity";
 	}
 	
+	@GetMapping("/toAdmin")
+	public String adminPage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
+		return "adminTest";
+	}
+	
 	public String GetCurrentUserAccount() {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		return userName;

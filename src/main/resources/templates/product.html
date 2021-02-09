@@ -48,7 +48,7 @@
                             <div class="product-thumbs">
                             </div>`
                         );
-                        $("#productDetails").append(
+                        $("#productDetails").prepend(
                             `<div class="product-details">
                                 <div class="pd-title">
                                     <span><a href="panUserPage?email=${v.email}">${v.userName}</a></span>
@@ -73,12 +73,10 @@
                                         <label for="sm-size">${v.pSize}</label>
                                     </div>
                                 </div>
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                    <a href="#" class="primary-btn pd-cart">Add To Cart</a>
-                                </div>
+                            </div>`
+                        );
+                        $("#productDetails").append(
+                            `<div class="product-details">
                                 <ul class="pd-tags">
                                     <li><span>CATEGORIES</span>: ${v.pMain}</li>
                                     <li><span>TAGS</span>: ${v.pMain},${v.pDetail}</li>
@@ -145,11 +143,25 @@
                     alert("ajax異常:"+msg);
                 }
             });
+            
+            // 點選數量加入購物車
+            var loginUser = $("#loginInfo").html();
+            var value = null;
+            var uUrl = "addshoppingCart?email=";
+            var aUrl = "&amount=";
+            $("#shoppingCart").click(function(){
+            	value = $("#amount").val();
+                $(this).attr("href",uUrl+loginUser+aUrl+value);
+            });
+
+
+            
     	});
     </script>
 </head>
 
 <body>
+    <button id="test">test</button>
     <span th:text="${user}" style="display: none;" id="loginInfo"></span>
 	<span id="secretProductId" th:text="${secretProductId}" style="display: none;"></span>
     <!-- Page Preloder -->
@@ -427,9 +439,16 @@
                             <!-- productImg Here -->
                         </div>
                         <div class="col-lg-6" id="productDetails">
+                              <!-- product-details Here -->
                             <div class="product-details">
-                                <!-- product-details Here -->
+                                <div class="quantity">
+                                    <div class="pro-qty">
+                                        <input type="text" id="amount" value="1">
+                                    </div>
+                                    <a href="#" class="primary-btn pd-cart" id="shoppingCart">Add To Cart</a>
+                                </div>
                             </div>
+                            <!-- product-details Here -->
                         </div>
                     </div>
                     <div class="product-tab">

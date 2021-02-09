@@ -37,65 +37,65 @@
 			var allPageMainValue = $(this).html();
 			$(this).attr("href",mUrl+allPageMainValue);
 		});
-		var slideshowEmailA = "1003@gmail.com";
-		var slideshowEmailB = null;
-		var slideshowData = {"email":slideshowEmailA};
-		$.ajax({
-			url:"panSlideshowUser",
-			type:"POST",
-			dataType:"json",
-			contentType:"application/json;charset=utf-8",
-			data:JSON.stringify(slideshowData),
-			success:function(response){
-				$.each(response,function(i,v){
-					$("#productSlideshowBox #productSlideshowRow #productSlideshowCol").html(
-						`<div class="product-large set-bg"
-							data-setbg="img/products/${v.userPic}">
-							<h2>${v.userName}</h2>
-							<a href="panUserPage?email=${v.email}">Discover More</a>
-						</div>`
-					);
-				});
-			},
-			error:function(msg){
-				console.log(msg);
-			}
-		});
-		$.ajax({
-			url:"panSlideshowProduct",
-			type:"POST",
-			dataType:"json",
-			contentType:"application/json;charset=utf-8",
-			data:JSON.stringify(slideshowData),
-			success:function(response){
-				$.each(response,function(i,v){
-					$("#productSlideshowBox #productSlideshowRow #productSliderCol #productSlider").html(
-						`<div class="product-item">
-                            <div class="pi-pic">
-                            	<img src="img/products/${v.cPhoto}" alt="">
-                                    <ul>
-                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                        <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
-                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                                    </ul>
-                            </div>
-                            <div class="pi-text">
-                            	<div class="catagory-name">${v.pMain}</div>
-                                    <a href="panProductPage?id=${v.pId}">
-                                        <h5>${v.pName}</h5>
-                                    </a>
-                                    <div class="product-price">
-                                        ${v.price}
-                                    </div>
-                            </div>
-						</div>`
-					);
-				});
-			},
-			error:function(msg){
-				console.log(msg);
-			}
-		});
+		// var slideshowEmailA = "1003@gmail.com";
+		// var slideshowEmailB = null;
+		// var slideshowData = {"email":slideshowEmailA};
+		// $.ajax({
+		// 	url:"panSlideshowUser",
+		// 	type:"POST",
+		// 	dataType:"json",
+		// 	contentType:"application/json;charset=utf-8",
+		// 	data:JSON.stringify(slideshowData),
+		// 	success:function(response){
+		// 		$.each(response,function(i,v){
+		// 			$("#productSlideshowBox #productSlideshowRow #productSlideshowCol").html(
+		// 				`<div class="product-large set-bg"
+		// 					data-setbg="img/products/${v.userPic}">
+		// 					<h2>${v.userName}</h2>
+		// 					<a href="panUserPage?email=${v.email}">Discover More</a>
+		// 				</div>`
+		// 			);
+		// 		});
+		// 	},
+		// 	error:function(msg){
+		// 		console.log(msg);
+		// 	}
+		// });
+		// $.ajax({
+		// 	url:"panSlideshowProduct",
+		// 	type:"POST",
+		// 	dataType:"json",
+		// 	contentType:"application/json;charset=utf-8",
+		// 	data:JSON.stringify(slideshowData),
+		// 	success:function(response){
+		// 		$.each(response,function(i,v){
+		// 			$("#productSlideshowBox #productSlideshowRow #productSliderCol #productSlider").prepend(
+		// 				`
+		// 					<div class="product-item">
+        //                 	    <div class="pi-pic">
+        //                 	    	<img src="img/products/${v.cPhoto}" alt="">
+        //                 	        <ul>
+        //                 	            <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+        //                 	        </ul>
+        //                 	    </div>
+        //                 	    <div class="pi-text">
+        //                 	    	<div class="catagory-name">${v.pMain}</div>
+        //                 	        <a href="panProductPage?id=${v.pId}">
+        //                 	            <h5>${v.pName}</h5>
+        //                 	        </a>
+        //                 	        <div class="product-price">
+        //                 	            ${v.price}
+        //                 	        </div>
+        //                 	    </div>
+		// 					</div>
+		// 				`		
+		// 			);
+		// 		});
+		// 	},
+		// 	error:function(msg){
+		// 		console.log(msg);
+		// 	}
+		// });
 	});
 	
 </script>
@@ -225,6 +225,7 @@
                             <li class="testActive" ><a href="#">玩具</a></li>
                             <li class="testActive" ><a href="#">藝術</a></li>
                             <li class="testActive" ><a href="#">經典</a></li>
+                            <li class="12133" ><a href="toAdmin">測試</a></li>
 						</ul>
 					</div>
 				</div>
@@ -349,11 +350,94 @@
 		<div class="container-fluid" id="productSlideshowBox">
 			<div class="row" id="productSlideshowRow">
 				<div class="col-lg-3" id="productSlideshowCol">
-					<!-- productDetail -->
+					<!-- userDetail -->
 				</div>
 				<div class="col-lg-8 offset-lg-1" id="productSliderCol">
 					<div class="product-slider owl-carousel" id="productSlider">
-						<!-- product-slideshow Here -->
+						<div class="product-item">
+							<div class="pi-pic">
+								<img src="img/products/man-4.jpg" alt="">
+								<div class="icon">
+									<i class="icon_heart_alt"></i>
+								</div>
+								<ul>
+									<li class="w-icon active"><a href="#"><i
+											class="icon_bag_alt"></i></a></li>
+									<li class="quick-view"><a href="#">+ Quick View</a></li>
+									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+								</ul>
+							</div>
+							<div class="pi-text">
+								<div class="catagory-name">Towel</div>
+								<a href="#">
+									<h5>Converse Shoes</h5>
+								</a>
+								<div class="product-price">$34.00</div>
+							</div>
+						</div>
+						<div class="product-item">
+							<div class="pi-pic">
+								<img src="img/products/man-4.jpg" alt="">
+								<div class="icon">
+									<i class="icon_heart_alt"></i>
+								</div>
+								<ul>
+									<li class="w-icon active"><a href="#"><i
+											class="icon_bag_alt"></i></a></li>
+									<li class="quick-view"><a href="#">+ Quick View</a></li>
+									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+								</ul>
+							</div>
+							<div class="pi-text">
+								<div class="catagory-name">Towel</div>
+								<a href="#">
+									<h5>Converse Shoes</h5>
+								</a>
+								<div class="product-price">$34.00</div>
+							</div>
+						</div>
+						<div class="product-item">
+							<div class="pi-pic">
+								<img src="img/products/man-4.jpg" alt="">
+								<div class="icon">
+									<i class="icon_heart_alt"></i>
+								</div>
+								<ul>
+									<li class="w-icon active"><a href="#"><i
+											class="icon_bag_alt"></i></a></li>
+									<li class="quick-view"><a href="#">+ Quick View</a></li>
+									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+								</ul>
+							</div>
+							<div class="pi-text">
+								<div class="catagory-name">Towel</div>
+								<a href="#">
+									<h5>Converse Shoes</h5>
+								</a>
+								<div class="product-price">$34.00</div>
+							</div>
+						</div>
+						<div class="product-item">
+							<div class="pi-pic">
+								<img src="img/products/man-4.jpg" alt="">
+								<div class="icon">
+									<i class="icon_heart_alt"></i>
+								</div>
+								<ul>
+									<li class="w-icon active"><a href="#"><i
+											class="icon_bag_alt"></i></a></li>
+									<li class="quick-view"><a href="#">+ Quick View</a></li>
+									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+								</ul>
+							</div>
+							<div class="pi-text">
+								<div class="catagory-name">Towel</div>
+								<a href="#">
+									<h5>Converse Shoes</h5>
+								</a>
+								<div class="product-price">$34.00</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

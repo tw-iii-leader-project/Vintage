@@ -218,15 +218,15 @@ public class ApiController {
 		try
 		{
 			Product product=new Product();
-			product.setPid(tryparseToInt(request.getParameter("pId")));
+			product.setpId(tryparseToInt(request.getParameter("pId")));
 			product.setpName(request.getParameter("pName"));
 			product.setPrice(new BigDecimal(request.getParameter("price")));
-			product.setDescription(request.getParameter("description"));
+			product.setdescription(request.getParameter("description"));
 			product.setCategoryId(tryparseToInt(request.getParameter("categoryId")));
 			product.setLastEditBy(getCurrentShopper());
 			product.setLastEditTime(new Date());
 			
-			if(product.getPid()<=0) {
+			if(product.getpId()<=0) {
 				productService.insertProduct(product, ppic);
 			} else {
 				productService.updateProduct(product, ppic);
@@ -245,8 +245,8 @@ public class ApiController {
 		
 	}
 	
-	@GetMapping(path="/delproduct/{pid}",produces="application/json;charset=utf-8")
-    public ApiResultMsg deleteProduct(@PathVariable("pid") int productpId) {
+	@GetMapping(path="/delproduct/{pId}",produces="application/json;charset=utf-8")
+    public ApiResultMsg deleteProduct(@PathVariable("pId") int productpId) {
         productService.deleteProduct(productpId);
         ApiResultMsg msg=new ApiResultMsg();
         msg.setCode(0);

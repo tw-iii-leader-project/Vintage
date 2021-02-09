@@ -58,7 +58,7 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	@Override
 	public void insertProduct(Product product, MultipartFile uploadProductcPhoto) {
-		String picPath= saveGoodsPic(uploadProductcPhoto);
+		String picPath= saveProductcPhoto(uploadProductcPhoto);
 		if(picPath!=null && !picPath.isEmpty()) {
 			
 			product.setcPhoto(picPath);
@@ -69,40 +69,41 @@ public class ProductServiceImpl implements ProductService {
 		gcate.setGoodsCount(gcate.getGoodsCount()+1);
 		categoryMapper.update(gcate);
 		
-		logger.info("inserted new product - id:" + product.getPid());
+		logger.info("inserted new product - id:" + product.getpId());
 	}
 	
 	@Override
 	public void updateProduct(Product product,MultipartFile uploadProductcPhoto) {
-		String picPath= saveGoodsPic(uploadProductcPhoto);
+		String picPath= saveProductcPhoto(uploadProductcPhoto);
 		if(picPath!=null && !picPath.isEmpty()) {
 			
 			product.setcPhoto(picPath);
 		}
 		 productMapper.update(product);
 		 
-		 logger.info("update product - id:" + product.get);
+		 logger.info("update product - id:" + product.getpId());
 	}
 	
 	@Transactional
 	@Override
 	public void deleteProduct(int pId) {
 		Product p= productMapper.get(pId);
+		System.out.println(p.getpId());
 		productMapper.delete(p.getpId());
 		
-		GoodsCategory gcate= categoryMapper.get(p.getCategoryId());
-		gcate.setGoodsCount(gcate.getGoodsCount()-1);
-		categoryMapper.update(gcate);
-		
-		//如果有图片，则同时删除图片
-		if(p.getcPhoto()!=null && !p.getcPhoto().isEmpty()) {
-			
-			String picPath= getRequest().getServletContext().getRealPath("/") + p.getcPhoto();
-			File file = new File(picPath);
-			if(file.exists()) {
-				file.delete();
-			}
-		}
+//		GoodsCategory gcate= categoryMapper.get(p.getCategoryId());
+//		gcate.setGoodsCount(gcate.getGoodsCount()-1);
+//		categoryMapper.update(gcate);
+//		
+//		//如果有图片，则同时删除图片
+//		if(p.getcPhoto()!=null && !p.getcPhoto().isEmpty()) {
+//			
+//			String picPath= getRequest().getServletContext().getRealPath("/") + p.getcPhoto();
+//			File file = new File(picPath);
+//			if(file.exists()) {
+//				file.delete();
+//			}
+//		}
 		
 		logger.info("deleted product - id:" + p.getpId());
 	}

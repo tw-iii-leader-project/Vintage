@@ -37,30 +37,18 @@
 	<header class="header-section">
 		<div class="header-top">
 			<div class="container">
-				<div class="ht-left">
-					<div class="mail-service">
-						<i class=" fa fa-envelope"></i> 信箱顯示
-					</div>
-					<div class="phone-service">
-						<i class=" fa fa-phone"></i> 電話顯示
-					</div>
-				</div>
+				<div class="ht-left"></div>
 				<div class="ht-right">
-					<a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
-					<div class="lan-selector">
-						<select class="language_drop" name="countries" id="countries"
-							style="width: 300px;">
-							<option value='yt' data-image="img/flag-1.jpg"
-								data-imagecss="flag yt" data-title="English">English</option>
-							<option value='yu' data-image="img/flag-2.jpg"
-								data-imagecss="flag yu" data-title="Bangladesh">German
-							</option>
-						</select>
-					</div>
+					<a href="logout" class="login-panel" th:text="Logout" ><i class="fa fa-user"></i></a>
+					<a href="loginPage" class="login-panel" th:text="Login"><i class="fa fa-user"></i></a> 
+						
+
 					<div class="top-social">
-						<a href="#"><i class="ti-facebook"></i></a> <a href="#"><i
-							class="ti-twitter-alt"></i></a> <a href="#"><i
-							class="ti-linkedin"></i></a> <a href="#"><i class="ti-pinterest"></i></a>
+						<div class="mail-service">
+							<a class=" fa fa-envelope" id="userPageControl" href="#" th:text="${user}"></a>
+							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
+
+						</div>
 					</div>
 				</div>
 			</div>
@@ -70,27 +58,24 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo">
-							<a href="./index.html"> <img src="img/logo.png" alt="">
+							<a href="index"> <img src="img/logo.png" alt="">
 							</a>
 						</div>
 					</div>
-					<div class="col-lg-7 col-lg-7">
+					<div class="col-lg-7 col-md-7">
 						<div class="advanced-search">
-							<button type="button" class="category-btn">All
-								Categories</button>
-							<form action="#" class="input-group">
-								<input type="text" placeholder="What do you need?">
+							<button type="button" class="category-btn"></button>
+							<div class="input-group">
+								<input type="text" placeholder="老鐵，關注蛤?">
 								<button type="button">
 									<i class="ti-search"></i>
 								</button>
-							</form>
+							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 text-right col-lg-3">
+					<div class="col-lg-3 text-right col-md-3">
 						<ul class="nav-right">
-							<li class="heart-icon"><a href="#"> <i
-									class="icon_heart_alt"></i> <span>1</span>
-							</a></li>
+
 							<li class="cart-icon"><a href="#"> <i
 									class="icon_bag_alt"></i> <span>3</span>
 							</a>
@@ -142,40 +127,25 @@
 			<div class="container">
 				<div class="nav-depart">
 					<div class="depart-btn">
-						<i class="ti-menu"></i> <span>All departments</span>
+						<i class="ti-menu"></i> <span>所有選項</span>
 						<ul class="depart-hover">
-							<li class="active"><a href="#">Women’s Clothing</a></li>
-							<li><a href="#">Men’s Clothing</a></li>
-							<li><a href="#">Underwear</a></li>
-							<li><a href="#">Kid's Clothing</a></li>
-							<li><a href="#">Brand Fashion</a></li>
-							<li><a href="#">Accessories/Shoes</a></li>
-							<li><a href="#">Luxury Brands</a></li>
-							<li><a href="#">Brand Outdoor Apparel</a></li>
+							<li class="testActive" ><a href="#">飾品</a></li>
+                            <li class="testActive" ><a href="#">服飾</a></li>
+                            <li class="testActive" ><a href="#">居家生活</a></li>
+                            <li class="testActive" ><a href="#">玩具</a></li>
+                            <li class="testActive" ><a href="#">藝術</a></li>
+                            <li class="testActive" ><a href="#">經典</a></li>
 						</ul>
 					</div>
 				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
-						<li><a href="./index.html">Home</a></li>
-						<li><a href="./shop.html">Shop</a></li>
-						<li><a href="#">Collection</a>
-							<ul class="dropdown">
-								<li><a href="#">Men's</a></li>
-								<li><a href="#">Women's</a></li>
-								<li><a href="#">Kid's</a></li>
-							</ul></li>
-						<li><a href="./blog.html">Blog</a></li>
-						<li><a href="./contact.html">Contact</a></li>
-						<li><a href="#">Pages</a>
-							<ul class="dropdown">
-								<li><a href="./blog-details.html">Blog Details</a></li>
-								<li><a href="./shopping-cart.html">Shopping Cart</a></li>
-								<li><a href="./check-out.html">Checkout</a></li>
-								<li><a href="./faq.html">Faq</a></li>
-								<li><a href="./register.html">Register</a></li>
-								<li><a href="./login.html">Login</a></li>
-							</ul></li>
+						<li class="active"><a href="index">首頁</a></li>
+						<li><a href="shopPage">商城</a></li>
+						<li><a href="blog">博客</a></li>
+						<li><a href="test">活動</a></li>
+						<li><a href="faq">問與答</a></li>
+
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>

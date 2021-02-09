@@ -19,7 +19,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tw.leader.dao.FindUserInfoDao;
+import tw.leader.dao.ProductInsertRepository;
 import tw.leader.dao.UserRepository;
+import tw.leader.po.Product;
 import tw.leader.po.User;
 import tw.leader.vo.UserResp;
 
@@ -32,6 +34,8 @@ public class AppController {
 	private ObjectMapper objectMapper;
 	@Autowired
 	private FindUserInfoDao fDao;
+	@Autowired
+	private ProductInsertRepository pInsertRepository;
 	
 	
 	
@@ -120,6 +124,36 @@ public class AppController {
 		
 		return "update_success";
 	}
+	
+	@PostMapping("/process_insert")
+	@ResponseBody
+	public String processInsert(@RequestBody Product product) {
+				
+		pInsertRepository.save(product);
+		
+		return "insert_success";
+	}
+	
+	@PostMapping("/process_update")
+	@ResponseBody
+	public String processUpdate(@RequestBody Product product) {
+		int id = product.getpId();
+		Product p = pInsertRepository.findById(id);
+		p.setpName(product.getpName());
+		p.setPrice(product.getPrice());
+		p.setcPhoto(product.getcPhoto());
+		p.setDescription(product.getDescription());
+		p.setsDescription(product.getsDescription());
+		p.setInvantory(product.getInvantory());
+		p.setpMain(product.getpMain());
+		p.setpDetail(product.getpDetail());
+		p.setpSize(product.getpSize());
+		p.setUserName(product.getUserName());
+		pInsertRepository.save(p);
+		
+		return "update_success";
+	}
+	
 		
 	public String GetCurrentUserAccount() {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();

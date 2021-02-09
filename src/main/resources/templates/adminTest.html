@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>test for admin page function</title>
+</head>
+<body>
+<!-- 	<p th:value="${user}" type="hidden" id="loginInfo"></p> -->
+
+	<form th:action="@{/process_insert}" th:object="${product}"
+		id="Form" method="post">
+		<div class="group-input">
+			<label for="pName">產品名稱</label> <input type="text"
+				th:field="*{pName}" name="pName" required>
+		</div>
+		<div class="group-input">
+			<label for="pMain">產品種類*</label> <input type="text"
+				th:field="*{pMain}" name="pMain" required >
+		</div>
+
+		<div class="group-input">
+			<label for="pDetail">產品細項分類</label> <input type="text"
+				th:field="*{pDetail}" name="pDetail" required >
+		</div>
+		
+		<div class="group-input">
+			<label for="price">產品價格</label> <input type="text"
+				th:field="*{price}" name="price" required >
+		</div>
+		
+		<div class="group-input">
+			<label for="invantory">庫存 *</label> <input type="text"
+				th:field="*{invantory}" name="invantory" required >
+		</div>
+		
+		<div class="group-input">
+			<label for="pSize">產品尺寸 *</label> <input type="text"
+				th:field="*{pSize}" name="pSize" required >
+		</div>
+		
+		<div class="group-input">
+			<label for="description">產品描述 *</label> <input type="text"
+				th:field="*{description}" name="description" required >
+		</div>
+		
+		<div class="group-input">
+			<label for="sDescription">產品描述2 *</label> <input type="text"
+				th:field="*{sDescription}" name="sDescription" required >
+		</div>
+		
+		<div class="group-input">
+			<label for="cPhoto">產品照片 *</label> <input type="text"
+				th:field="*{cPhoto}" name="cPhoto" required >
+		</div>
+		
+		<div class="group-input">
+			<label for="email"> *</label> <input type="text"
+				th:field="*{description}" name="description" required >
+		</div>
+		
+		<div>
+			<button type="submit" class="site-btn register-btn">送出</button>
+		</div>
+		</form>
+</body>
+</html>

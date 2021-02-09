@@ -6,9 +6,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class SimpleJumpController {
 	
-	@GetMapping("/index")
+	@GetMapping("/vindex")
 	public String homePage() {
-		return "index";
+		return "vindex";
 	}
 	
 	@GetMapping("/shop")
@@ -51,9 +51,9 @@ public class SimpleJumpController {
 		return "register";
 	}
 	
-	@GetMapping("/Login")
+	@GetMapping("/vlogin")
 	public String loginPage() {
-		return "Login";
+		return "vlogin";
 	}
 	
 	@GetMapping("/product")

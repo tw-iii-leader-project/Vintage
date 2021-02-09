@@ -1,4 +1,4 @@
-package tw.leader;
+package tw.leader.boot;
 
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;

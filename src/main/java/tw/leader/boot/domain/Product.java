@@ -1,47 +1,56 @@
 package tw.leader.boot.domain;
 
+import java.math.BigDecimal;
+import java.util.Date;
 
+import lombok.Data;
+
+@Data
 public class Product {
-	private int pid;
+	private int pId;
 	private String pName;
 	private String pMain;
 	private String pDetail;
-	private int price;
+	private BigDecimal price;
 	private int invatory;
 	private String pSize;
-	private String Description;
+	private String description;
 	private String sDescription;
 	private String cPhoto;
 	private String email;
 	private String userName;
 	private int categoryId;
+	private String lastEditBy;
+	private Date lastEditTime;
 	
 	public Product() {
 		
 	}
 	
-	public Product(int pId,String pName,String pMain,String pDetail, int price,int invantory
-			, String pSize, String Description, String sDescription, String cPhoto, String email,
+	public Product(int pId,String pName,String pMain,String pDetail, BigDecimal price,int invantory
+			, String pSize, String description, String sDescription, String cPhoto, String email,
 			String userName, int categoryId) {
-		this.pid=pId;
+		this.pId=pId;
 		this.pName=pName;
 		this.pMain=pMain;
 		this.pDetail=pDetail;
 		this.price=price;
-		this.Description=Description;
+		this.description=description;
 		this.sDescription=sDescription;
 		this.cPhoto=cPhoto;
 		this.email=email;
 		this.userName=userName;
 		this.categoryId=categoryId;
+		this.lastEditBy= lastEditBy;
+		this.lastEditTime= lastEditTime;
 	}
 
-	public int getPid() {
-		return pid;
+	public int getpId() {
+		return pId;
 	}
 
-	public void setPid(int pid) {
-		this.pid = pid;
+	public void setpId(int pId) {
+		this.pId = pId;
 	}
 
 	public String getpName() {
@@ -68,11 +77,11 @@ public class Product {
 		this.pDetail = pDetail;
 	}
 
-	public int getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(int price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
@@ -92,12 +101,12 @@ public class Product {
 		this.pSize = pSize;
 	}
 
-	public String getDescription() {
-		return Description;
+	public String getdescription() {
+		return description;
 	}
 
-	public void setDescription(String description) {
-		Description = description;
+	public void setdescription(String description) {
+		this.description = description;
 	}
 
 	public String getsDescription() {
@@ -131,13 +140,30 @@ public class Product {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	
 
-	public int getcategoryId() {
+	public int getCategoryId() {
 		return categoryId;
 	}
 
-	public void setcategoryId(int categoryId) {
+	public void setCategoryId(int categoryId) {
 		this.categoryId = categoryId;
 	}
+
+	public String getLastEditBy() {
+		return lastEditBy;
+	}
+
+	public void setLastEditBy(String lastEditBy) {
+		this.lastEditBy = lastEditBy;
+	}
+
+	public Date getLastEditTime() {
+		return lastEditTime;
+	}
+
+	public void setLastEditTime(Date lastEditTime) {
+		this.lastEditTime = lastEditTime;
+	}
+
+	
 }

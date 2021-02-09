@@ -31,7 +31,7 @@ import tw.leader.boot.service.*;
 public class ApiController {
 
 	@Autowired
-	private GoodsService goodsService;
+	private ProductService productService;
 
 	@Autowired
 	private ShoppingOrderService shoppingOrderService;
@@ -59,16 +59,16 @@ public class ApiController {
 
 	@GetMapping(value = "/categorys", produces = "application/json;charset=utf-8")
 	public List<GoodsCategory> getAllGoodsCategorys() {
-		return goodsService.getAllGoodsCategoryList();
+		return productService.getAllGoodsCategoryList();
 	}
 
-	@GetMapping(value = "/goods/{cateid}", produces = "application/json;charset=utf-8")
-	public List<Goods> getGoodsList(@PathVariable(name = "cateid") int categoryid) {
-		return goodsService.getGoodsListByCategory(categoryid);
+	@GetMapping(value = "/product/{cateid}", produces = "application/json;charset=utf-8")
+	public List<Product> getProductList(@PathVariable(name = "cateid") int categoryid) {
+		return productService.getProductListByCategory(categoryid);
 	}
 
-	@GetMapping(value = "/goods", produces = "application/json;charset=utf-8")
-	public List<Goods> getGoodsList(@RequestParam(name = "pagesize", required = false) String spageSize,
+	@GetMapping(value = "/product", produces = "application/json;charset=utf-8")
+	public List<Product> getProdcutList(@RequestParam(name = "pagesize", required = false) String spageSize,
 			@RequestParam(name = "page", required = false) String spageNo) {
 
 		int pageSize = tryparseToInt(spageSize);
@@ -76,27 +76,27 @@ public class ApiController {
 
 		pageSize = pageSize <= 0 ? 10 : pageSize;
 		pageNo = pageNo <= 1 ? 1 : pageNo;
-		return goodsService.getGoodsListByPage(pageSize, pageNo);
+		return productService.getProductListByPage(pageSize, pageNo);
 	}
 
-	@GetMapping(value = "/goodsmany", produces = "application/json;charset=utf-8")
-	public List<Goods> getGoodsListByMultIds(@RequestBody int[] ids) {
-		return goodsService.getGoodsListByMultIds(ids);
+	@GetMapping(value = "/productmany", produces = "application/json;charset=utf-8")
+	public List<Product> getProductListByMultIds(@RequestBody int[] pIds) {
+		return productService.getProductListByMultIds(pIds);
 	}
 
 	@PostMapping(value = "/addToShoppingCart", produces = "application/json;charset=utf-8")
 	public ApiResultMsg addToShoppingCart(@RequestBody Map<String, Integer> json) {
-		int goodsId = json.get("goodsid");
-		int qty = json.get("goodsqty");
+		int productpId = json.get("productpId");
+		int qty = json.get("productqty");
 		ApiResultMsg msg = new ApiResultMsg();
-		if (goodsId <= 0) {
+		if (productpId <= 0) {
 			msg.setCode(101);
 			msg.setMsg("商品ID無效");
 			return msg;
 		}
 
 		String shopper = getCurrentShopper();
-		ShoppingCart shoppingCart = new ShoppingCart(0, shopper, goodsId, qty, new Date());
+		ShoppingCart shoppingCart = new ShoppingCart(0, shopper, productpId, qty, new Date());
 
 		shoppingOrderService.insertShoppingCart(shoppingCart);
 
@@ -112,9 +112,9 @@ public class ApiController {
 		return msg;
 	}
 
-	@GetMapping(value = "/goods-{gid}", produces = "application/json;charset=utf-8")
-	public Goods getGoods(@PathVariable("gid") int goodsId) {
-		return goodsService.getGoods(goodsId);
+	@GetMapping(value = "/product-{pid}", produces = "application/json;charset=utf-8")
+	public Product getProduct(@PathVariable("pid") int productpId) {
+		return productService.getProduct(productpId);
 	}
 
 	@GetMapping(value = "/cartlist", produces = "application/json;charset=utf-8")
@@ -168,15 +168,15 @@ public class ApiController {
 		ApiResultMsg msg = new ApiResultMsg();
 		if (orderDetails.size() > 0) {
 
-			int[] goodsIds = new int[orderDetails.size()];
+			int[] productpIds = new int[orderDetails.size()];
 			for (int i = 0; i < orderDetails.size(); i++) {
-				goodsIds[i] = orderDetails.get(i).getGoodsid();
+				productpIds[i] = orderDetails.get(i).getGoodsid();
 			}
 
-			List<Goods> goodsList = goodsService.getGoodsListByMultIds(goodsIds);
+			List<Product> productList = productService.getProductListByMultIds(productpIds);
 			HashMap<String, Object> data = new HashMap<>();
 			data.put("details", orderDetails);
-			data.put("goodss", goodsList);
+			data.put("goodss", productList);
 			
 			msg.setCode(0);
 			msg.setData(data);
@@ -212,29 +212,29 @@ public class ApiController {
 	}
 	
 	
-	@PostMapping(path="/savegoods",produces="application/json;charset=utf-8",consumes="multipart/form-data")
-	public ApiResultMsg saveGoods(@RequestParam("picture") MultipartFile gpic,HttpServletRequest request) {
+	@PostMapping(path="/saveproduct",produces="application/json;charset=utf-8",consumes="multipart/form-data")
+	public ApiResultMsg saveGoods(@RequestParam("cPhoto") MultipartFile ppic,HttpServletRequest request) {
 		ApiResultMsg msg=new ApiResultMsg();
 		try
 		{
-			Goods goods=new Goods();
-			goods.setId(tryparseToInt(request.getParameter("id")));
-			goods.setTitle(request.getParameter("title"));
-			goods.setPrice(new BigDecimal(request.getParameter("price")));
-			goods.setIntroduction(request.getParameter("introduction"));
-			goods.setCategoryId(tryparseToInt(request.getParameter("categoryId")));
-			goods.setLastEditBy(getCurrentShopper());
-			goods.setLastEditTime(new Date());
+			Product product=new Product();
+			product.setPid(tryparseToInt(request.getParameter("pId")));
+			product.setpName(request.getParameter("pName"));
+			product.setPrice(new BigDecimal(request.getParameter("price")));
+			product.setDescription(request.getParameter("description"));
+			product.setCategoryId(tryparseToInt(request.getParameter("categoryId")));
+			product.setLastEditBy(getCurrentShopper());
+			product.setLastEditTime(new Date());
 			
-			if(goods.getId()<=0) {
-				goodsService.insertGoods(goods, gpic);
+			if(product.getPid()<=0) {
+				productService.insertProduct(product, ppic);
 			} else {
-				goodsService.updateGoods(goods, gpic);
+				productService.updateProduct(product, ppic);
 			}
 			
 			msg.setCode(0);
 			msg.setMsg("上傳成功！");
-			msg.setData(goods);
+			msg.setData(product);
 			
 		}catch (Exception e) {
 			msg.setCode(101);
@@ -245,15 +245,15 @@ public class ApiController {
 		
 	}
 	
-	@GetMapping(path="/delgoods/{gid}",produces="application/json;charset=utf-8")
-	public ApiResultMsg deleteGoods(@PathVariable("gid") int goodsId) {
-		goodsService.deleteGoods(goodsId);
-		ApiResultMsg msg=new ApiResultMsg();
-		msg.setCode(0);
-		msg.setMsg("確立刪除！");
-		
-		return msg;
-	}
+	@GetMapping(path="/delproduct/{pid}",produces="application/json;charset=utf-8")
+    public ApiResultMsg deleteProduct(@PathVariable("pid") int productpId) {
+        productService.deleteProduct(productpId);
+        ApiResultMsg msg=new ApiResultMsg();
+        msg.setCode(0);
+        msg.setMsg("删除商品成功！");
+        
+        return msg;
+    }
 	
 
 	private int tryparseToInt(String str) {

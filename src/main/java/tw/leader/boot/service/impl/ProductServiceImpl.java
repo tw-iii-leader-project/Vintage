@@ -21,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import tw.leader.boot.domain.*;
 import tw.leader.boot.mapper.GoodsCategoryMapper;
-import tw.leader.boot.mapper.GoodsMapper;
 import tw.leader.boot.mapper.ProductMapper;
 import tw.leader.boot.service.ProductService;
 
@@ -42,70 +41,70 @@ public class ProductServiceImpl implements ProductService {
 	}
 	
 	@Override
-	public List<Product> getGoodsListByCategory(int categoryId) {
-		return goodsMapper.getList(categoryId);
+	public List<Product> getProductListByCategory(int categoryId) {
+		return productMapper.getList(categoryId);
 	}
 	
 	@Override
-	public List<v> getGoodsListByMultIds(int... goodsIds) {
-		return goodsMapper.getListByMultIds(goodsIds);
+	public List<Product> getProductListByMultIds(int... productpIds) {
+		return productMapper.getListByMultIds(productpIds);
 	}
 	
 	@Override
-	public Goods getGoods(int id) {
-		return goodsMapper.get(id);
+	public Product getProduct(int pId) {
+		return productMapper.get(pId);
 	}
 	
 	@Transactional
 	@Override
-	public void insertGoods(Goods goods, MultipartFile uploadGoodsPic) {
-		String picPath= saveGoodsPic(uploadGoodsPic);
+	public void insertProduct(Product product, MultipartFile uploadProductcPhoto) {
+		String picPath= saveGoodsPic(uploadProductcPhoto);
 		if(picPath!=null && !picPath.isEmpty()) {
 			
-			goods.setPicture(picPath);
+			product.setcPhoto(picPath);
 		}
-		goodsMapper.insert(goods);
+		productMapper.insert(product);
 		
-		GoodsCategory gcate= categoryMapper.get(goods.getCategoryId());
+		GoodsCategory gcate= categoryMapper.get(product.getCategoryId());
 		gcate.setGoodsCount(gcate.getGoodsCount()+1);
 		categoryMapper.update(gcate);
 		
-		logger.info("inserted new goods - id:" + goods.getId());
+		logger.info("inserted new product - id:" + product.getPid());
 	}
 	
 	@Override
-	public void updateGoods(Goods goods,MultipartFile uploadGoodsPic) {
-		String picPath= saveGoodsPic(uploadGoodsPic);
+	public void updateProduct(Product product,MultipartFile uploadProductcPhoto) {
+		String picPath= saveGoodsPic(uploadProductcPhoto);
 		if(picPath!=null && !picPath.isEmpty()) {
 			
-			goods.setPicture(picPath);
+			product.setcPhoto(picPath);
 		}
-		 goodsMapper.update(goods);
+		 productMapper.update(product);
 		 
-		 logger.info("update goods - id:" + goods.getId());
+		 logger.info("update product - id:" + product.get);
 	}
 	
 	@Transactional
 	@Override
-	public void deleteGoods(int id) {
-		Goods g= goodsMapper.get(id);
-		goodsMapper.delete(g.getId());
+	public void deleteProduct(int pId) {
+		Product p= productMapper.get(pId);
+		productMapper.delete(p.getpId());
 		
-		GoodsCategory gcate= categoryMapper.get(g.getCategoryId());
+		GoodsCategory gcate= categoryMapper.get(p.getCategoryId());
 		gcate.setGoodsCount(gcate.getGoodsCount()-1);
 		categoryMapper.update(gcate);
 		
 		//如果有图片，则同时删除图片
-		if(g.getPicture()!=null && !g.getPicture().isEmpty()) {
+		if(p.getcPhoto()!=null && !p.getcPhoto().isEmpty()) {
 			
-			String picPath= getRequest().getServletContext().getRealPath("/") + g.getPicture();
+			String picPath= getRequest().getServletContext().getRealPath("/") + p.getcPhoto();
 			File file = new File(picPath);
 			if(file.exists()) {
 				file.delete();
 			}
 		}
 		
-		logger.info("deleted goods - id:" + g.getId());
+		logger.info("deleted product - id:" + p.getpId());
 	}
 	
 	@Override
@@ -129,13 +128,13 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 
-	private String saveGoodsPic(MultipartFile uploadGoodsPic) {
+	private String saveProductcPhoto(MultipartFile uploadProductcPhoto) {
 		
-		if(uploadGoodsPic==null || uploadGoodsPic.isEmpty()) {
+		if(uploadProductcPhoto==null || uploadProductcPhoto.isEmpty()) {
 			return null;
 		}
 		
-		String fileName = uploadGoodsPic.getOriginalFilename();
+		String fileName = uploadProductcPhoto.getOriginalFilename();
 		
 		String extName = fileName.substring(fileName.lastIndexOf("."));
 		
@@ -147,7 +146,7 @@ public class ProductServiceImpl implements ProductService {
 		
 		
 		try {
-			uploadGoodsPic.transferTo(file);
+			uploadProductcPhoto.transferTo(file);
 			//return file.toURI().toURL().toString();
 			return getUrlPath(file.getAbsolutePath());
 			

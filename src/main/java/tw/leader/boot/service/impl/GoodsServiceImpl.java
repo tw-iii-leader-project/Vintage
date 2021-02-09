@@ -47,7 +47,7 @@ public class GoodsServiceImpl implements GoodsService {
 	
 	@Override
 	public List<Goods> getGoodsListByMultIds(int... goodsIds) {
-		return goodsMapper.getListByMultIds(goodsIds);
+		return goodsMapper.getListByMultpIds(goodsIds);
 	}
 	
 	@Override

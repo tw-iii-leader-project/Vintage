@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Vintage-管理後臺</title>
+<meta name="author" content="www.zuowenjun.cn" >
+<script src="https://cdn.jsdelivr.net/npm/vue" type="text/javascript"></script>
+<script src="https://cdn.staticfile.org/vue-resource/1.5.1/vue-resource.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<style type="text/css">
+	div{font-family:Microsoft JhengHei;font-size:20px, text-align:center;vertical-align:middle}
+	table{font-family:Microsoft JhengHei;font-size:20px;border:solid 2px black;border-collapse:collapse;width:100%;margin:10px 1px;text-align:center;vertical-align:middle}
+	table tr >*{font-family:Microsoft JhengHei;font-size:20px;border:solid 1px blue,padding:5px;border:dotted 1px gray;text-align:center;vertical-align:middle;}
+	.gpic{width:150px;height:150px;text-align:center;vertical-align:middle;}
+</style>
+<link
+	href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
+	rel="stylesheet">
+
+<!-- Css Styles -->
+<link rel="stylesheet" href="webapp/static/css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="webapp/static/css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="webapp/static/css/themify-icons.css" type="text/css">
+<link rel="stylesheet" href="webapp/static/css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="webapp/static/css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="webapp/static/css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="webapp/static/css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="webapp/static/css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="webapp/static/css/style.css" type="text/css">
+</head>
+
+</head>
+<body>
+	<div id="app">
+		<fieldset>
+			<legend>商品管理：</legend>
+			<table>
+				<colgroup>
+					<col style="width:auto">
+					<col style="width:auto">
+					<col style="width:auto">
+					<col style="width:auto">
+					<col style="width:auto">
+					<col style="width:auto">
+					<col style="width:auto">
+					<col style="width:auto">
+					<col style="width:auto">
+				</colgroup>
+				<tr>
+					<th>商品ID</th>
+					<th>商品名稱</th>
+					<th>商品圖片</th>
+					<th>敘述</th>
+					<th>價格</th>
+					<th>類別</th>
+					<th>上傳者</th>
+					<th>上傳時間</th>
+					<!-- <th>短敘述</th>
+					<th>會員email</th>
+					<th>會員姓名</th> -->
+					
+					<!-- <th>商品圖片</th>
+					<th>商品類別</th>
+					<th>編輯者</th>
+					<th>編輯時間</th>
+					<th>操作</th> -->
+				</tr>
+				<tr style="background-color:orange;">
+					<td>{{editproduct.pId}}</td>
+					<td><input type="text" v-model="editproduct.title"></td>
+					<td><img v-bind:src="editproduct.picture" class="gpic">
+					<input class="upload" type="file" id="ppicfile" @change="selectimg($event.target)" accept="image/png,image/gif,image/jpeg"></td>
+					<td><textarea v-model="editproduct.introduction"></textarea></td>
+					<td><input type="text" v-model="editproduct.price"></td>
+					<td>
+						<select v-model="editproduct.categoryId">
+							<option v-for="c in categorys" v-bind:value="c.id">{{c.categoryName}}</option>
+						</select>
+					</td>
+					<td>{{editproduct.lastEditBy}}</td>
+					<td>{{editproduct.lastEditTime}}</td>
+					<td><button @click="saveproduct(editproduct)">保存</button></td>
+				</tr>
+				<tr v-for="p in products">
+					<td>{{p.pId}}</td>
+					<td>{{p.pName}}</td>
+					<td><img v-bind:src="p.cPhoto" class="ppic"></td>
+					<td>{{p.description}}</td>
+					<td>{{p.price}}</td>
+					<td>{{p.categoryId}}</td>
+					<td>{{p.lastEditBy}}</td>
+					<td>{{p.lastEditTime}}</td>
+					<td><button @click="delproduct(p)">删除</button></td>
+		<!-- 			<button @click="editgoods(g)" disabled="disabled">修改</button>&nbsp;|&nbsp;UI暂不实现修改，禁用 -->
+				</tr>
+			</table>
+		</fieldset>
+	</div>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:"#app",
+			data:{
+				categorys:[],
+				products:[],
+				editproduct:{
+					pId:null,
+					pName:null,
+					cPhoto:null,
+					price:0.00,
+					description:null,
+					categoryId:1,
+					lastEditBy:"",
+					lastEditTime:null
+				}
+			},
+			created:function(){
+				this.$http.get('/api/categorys').then(function(res){
+					 this.categorys=res.body;  
+	                },function(){
+	                	Swal.fire({
+		            		icon: 'warning',
+		            		title: '載入類別失敗！',
+		            	})
+	                });
+				
+				this.getGoodsListByPage(100,1);//DEMO,只加载第1页
+				 
+			},
+			methods:{
+				getGoodsListByPage:function(ps,pno){
+					var self = this;
+					//按分页检索商品列表
+					 this.$http.get('/api/product' +'?pagesize='+ps +'&page=' + pno).then(function(res){
+						 self.products=res.body;  
+						 //alert(JSON.stringify(self.goods));
+		                },function(){
+		                	Swal.fire({
+			            		icon: 'warning',
+			            		title: '載入商品失敗！',
+			            	})
+		                });
+				},
+				selectimg:function(el){
+					
+		            let gpic=el.files[0];
+		            let type=gpic.type;//文件的类型，判断是否是图片
+		            let size=gpic.size;//文件的大小，判断图片的大小
+		            if('image/gif, image/jpeg, image/png, image/jpg'.indexOf(type) == -1){
+		            	Swal.fire({
+		            		icon: 'error',
+		            		title: '格式需求:gif,jpeg,png,jpg',
+		            	})
+		                
+		                return false;
+		            }
+		            if(size>3145728){
+		            	Swal.fire({
+		            		icon: 'warning',
+		            		title: '容量過載:請選3MB以下之圖片',
+		            	})
+		                return false;
+		            }
+		            var uri ='';
+		            
+		            this.editproduct.picture=URL.createObjectURL(ppic);
+				},
+				saveproduct:function(p){
+					var fileDom=document.getElementById("ppicfile");
+					let formData = new FormData();
+					formData.append('pId', this.editproduct.pId);
+					formData.append('pName', this.editproduct.pName);
+					formData.append('cPhoto', fileDom.files[0]);
+					formData.append('price', this.editproduct.price);
+					formData.append('description', this.editproduct.description);
+					formData.append('categoryId', this.editproduct.categoryId);
+					formData.append('categoryName', this.editproduct.categoryName);
+					
+					let config = {
+				              headers: {
+				                'Content-Type': 'multipart/form-data'
+				              }
+				            }
+					
+					  this.$http.post('/api/saveproduct', formData, config).then(function (res) {
+						  Swal.fire({
+							  title: res.body.msg,
+							  html:
+							  '<a href="http://localhost:8080/login.html">返回登入頁面</a>',
+						  });
+			              if(res.body.code==0){
+			            	  this.products.unshift(res.body.data);//插入到数组最新面
+			            	  this.editproduct={//重新初始化，以便实现清空所有编辑框
+			      					pId:null,
+			    					pName:null,
+			    					cPhoto:null,
+			    					price:0.00,
+			    					description:null,
+			    					categoryId:1,
+			    					lastEditBy:"",
+			    					lastEditTime:null
+			    				};
+			              }
+			            });
+				},
+				delproduct:function(p){
+					 this.$http.get('/api/delproduct/' + p.pId).then(function(res){
+						 Swal.fire({
+							  title: res.body.msg
+						  })
+// 						 alert(res.body.msg); 
+						 if(res.body.code==0){
+							 this.products.remove(p);
+						 }
+		                },function(){
+		                	Swal.fire({
+			            		icon: 'warning',
+			            		title: '刪除商品失敗',
+			            	})
+		                });
+				}
+			}
+		});
+	
+		
+		Array.prototype.remove = function(val) { 
+			var index = this.indexOf(val); 
+			if (index > -1) { 
+			this.splice(index, 1); 
+			} 
+		};
+	</script>
+	
+</body>
+</html>

@@ -16,7 +16,7 @@ public interface ProductMapper {
 	
 	@Select("<script>select * from Product where pId in " 
 			+"<foreach item='item' index='index' collection='pIds' open='(' separator=',' close=')'>#{item}</foreach>"
-			+"order by id</script>")
+			+"order by pId</script>")
 	List<Product> getListByMultIds(@Param("pIds")int...pIds);
 	
 	@Select("select * from Product where pId=#{pId}")

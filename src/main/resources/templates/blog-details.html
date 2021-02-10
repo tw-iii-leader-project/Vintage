@@ -29,8 +29,6 @@
             var userEmail = null;
             var pageEmail = $("#secretUserEmail").html();
             var loginEmail = $("#loginInfo").html();
-            alert("login="+loginEmail);
-            alert("page="+pageEmail);
             if(pageEmail == "" || pageEmail == loginEmail){
                 userEmail = loginEmail;
                 userInfoData = {"email":userEmail};

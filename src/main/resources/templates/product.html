@@ -24,8 +24,6 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
 
     <!-- sweetalert2 -->
-    <script src="sweetalert2.all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.14.0/dist/sweetalert2.all.min.js"></script>
     
     <script src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
@@ -191,14 +189,14 @@
                     contentType:"application/json;charset=utf-8",
                     data:JSON.stringify(shoppingData),
                     success:function(resultMsg){
-                        alert(resultMsg);
-                        // Swal.fire(resultMsg);
-                        update();
+                        var jsonMsg = $.parseJSON(resultMsg);
+                        alert(jsonMsg);
                     },
                     error:function(msg){
                         console.log(msg);
                     }
                 });
+                update();
             });
             
             // 及時查看購物車
@@ -233,10 +231,26 @@
                     }
                 });
             });
-            $(".ti-close").click(function(){
-                var t = $("td").first().html();
+            $("#shoppingList tr .si-close").on("click",".ti-close",function(){
+                alert("test");
+                var cartId = $("td").first().html();
+                var cartData = {"cartId":cartId};
                 $(this).closest("tr").remove();
-                alert(t);
+                $.ajax({
+                    url:"panDeleteShoppingProduct",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(cartData),
+                    success:function(result){
+                        var jsonMsg = $.parseJSON(result);
+                        alert(jsonMsg);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+                update();
             });
             
             

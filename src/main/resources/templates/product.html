@@ -230,8 +230,11 @@
                         concole.log(msg);
                     }
                 });
+                
             });
-            $("#shoppingList tr .si-close").on("click",".ti-close",function(){
+            
+            // 刪除購物車裡的物品
+            $("#shoppingList tr").on("click","si-close",function(){
                 alert("test");
                 var cartId = $("td").first().html();
                 var cartData = {"cartId":cartId};
@@ -252,26 +255,28 @@
                 });
                 update();
             });
-            
-            
-
-
+            $("#test").click(function(){
+            	$.ajax({
+            		url:"pantesttest",
+            		type:"POST",
+            		dataType:"json",
+            		contentType:"application/json;charset=utf-8",
+            		data:JSON.stringify(userData),
+            		success:function(){
+            			console.log("yes");
+            		},
+            		error:function(){
+            			console.log("motherFucker!!!");
+            		}
+            	});
+            });
             
     	});
     </script>
 </head>
 
 <body>
-    <div style="border: 2px solid red;">
-        <div>test</div>
-        <table>
-        <tr>
-            <td style="display: none;">123</td>
-            <td>787878</td>
-            <td class="si-close"><i class="ti-close"></i></td>
-        </tr>
-        </table>
-    </div>
+    <div id="test">test</div>
     <span th:text="${user}" style="display: none;" id="loginInfo"></span>
 	<span id="secretProductId" th:text="${secretProductId}" style="display: none;"></span>
     <span id="secretProductName" style="display: none;"></span>

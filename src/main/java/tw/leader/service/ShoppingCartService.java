@@ -13,4 +13,6 @@ public interface ShoppingCartService {
 	public ShoppingCartResp deleteProduct(int cartId);
 	
 	public void updateshoppingCart(int amount,int cartId);
+	
+//	public void payAndAddOrder(String email);
 }

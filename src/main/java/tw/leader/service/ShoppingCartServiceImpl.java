@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import tw.leader.dao.ShoppingCartDao;
 import tw.leader.po.ShoppingCart;
 import tw.leader.vo.ShoppingCartResp;
+import tw.leader.vo.ShoppingOrderResp;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService{
@@ -70,5 +71,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 		sDao.updateProductAmount(amount, cartId);
 		System.out.println("修改成功");
 	}
+	
+//	public String payAndAddOrder(String email) {
+//		List<ShoppingCart> sList = sDao.findShop(email);
+//		String memo = "";
+//		int totalPrice = 0;
+//		for(ShoppingCart i: sList) {
+//			memo = memo+i.getpName();
+//			memo = memo+"x"+i.getAmount()+";";
+//		}
+//		for(ShoppingCart j:sList) {
+//			total
+//		}
+//		System.out.println(memo);
+//		
+//	}
 }
 

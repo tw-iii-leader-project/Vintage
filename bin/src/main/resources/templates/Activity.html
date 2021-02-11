@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -22,9 +22,125 @@
     <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+    <style type="text/css">
+      /* Set the size of the div element that contains the map */
+      #map {
+        height: 400px;
+        /* The height is 400 pixels */
+        width: 100%;
+        /* The width is the width of the web page */
+      }
+      #map2 {
+        height: 600px;
+        /* The height is 400 pixels */
+        width: 100%;
+        /* The width is the width of the web page */
+        
+      }
+    </style>
+    
+    <script>
+    function initMap() {
+    	const test = {
+    			lat : 39.915168,
+    			lng : 116.403875,
+    	};
+    	
+    	//const test2 = results[0].geometry.location;
+    	const map = new google.maps.Map(document.getElementById("map"), 
+    	{
+    	zoom : 16,
+    	center : test,
+    	});
+    	
+    	const marker = new google.maps.Marker({
+    		position : test,
+    		map : map,
+    	});
+    	//use to tag a place.
+    	
+    	var address = "車車開起來" 
+    	
+    	var infowindow = new google.maps.InfoWindow({content: address }); //build InfoWindow
+    	infowindow.open(map, marker); //bind infoWindow on specified marker
+    	//add marker for click event
+    	google.maps.event.addListener(marker, "click", function(){
+    	    infowindow.open(map,marker);
+    	});
+    }
+    
+    //practice 2-------------------------------
+    
+//     addMaker({
+//     	coords:{lat:42.1668, lng:-70.9495}
+//     	content:"<h1>TianAnMeng萬歲</h1>"
+    
+//     });
+//     addMaker({coords:{lat:43.1668, lng:-72.9495}});
+//     addMaker({coords:{lat:46.1668, lng:-75.9495}});
+    
+//     function addMaker(props) {
+//     	var marker = new google.maps.Marker({
+//     		positions : props.coords,
+//     		map : map,
+    		  		
+//     	}) 
+//     }
+    
+//    	if (props.content) {
+//    		var infoWindow = new google.maps.InfoWindow({
+//    			content : props.content,
+//    		})
+//    	}
+    
+    
+    </script>
+    
+    <script type="text/javascript">
+    var geocoder;
+    
+    function initialize() {
+      geocoder = new google.maps.Geocoder();
+    }
+    
+    function codeAddress() {
+        var address = document.getElementById("address").value;
+        geocoder.geocode( { 'address': address}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+        	 	
+            //alert(results[0].geometry.location);
+            
+            const map = new google.maps.Map(document.getElementById("map2"), 
+                	{
+                	zoom : 16,
+                	center : results[0].geometry.location,
+                	});
+            
+            const marker = new google.maps.Marker({
+        		position : results[0].geometry.location,
+        		map : map,
+        	});
+            
+            
+            
+          } else {
+            alert("Geocode was not successful for the following reason: " + status);
+          }
+        });
+      }
+    
+    
+    
+    </script>
+    
+    
+    
+    
 </head>
 
-<body>
+<body onload="initialize()">
+	
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
@@ -73,7 +189,7 @@
                             </a>
                         </div>
                     </div>
-                    <div class="col-lg-7 col-lg-7">
+                    <div class="col-lg-7 col-md-7">
                         <div class="advanced-search">
                             <button type="button" class="category-btn">All Categories</button>
                             <form action="#" class="input-group">
@@ -82,7 +198,7 @@
                             </form>
                         </div>
                     </div>
-                    <div class="col-lg-3 text-right col-lg-3">
+                    <div class="col-lg-3 text-right col-md-3">
                         <ul class="nav-right">
                             <li class="heart-icon"><a href="#">
                                     <i class="icon_heart_alt"></i>
@@ -170,7 +286,7 @@
                             </ul>
                         </li>
                         <li><a href="liaoBlog">Blog</a></li>
-                        <li><a href="liaoContact">Contact</a></li>
+                        <li class="active"><a href="liaoContact">Contact</a></li>
                         <li><a href="#">Pages</a>
                             <ul class="dropdown">
                                 <li><a href="liaoBlogDetails">Blog Details</a></li>
@@ -196,51 +312,98 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text">
                         <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <span>Login</span>
+                        <span>Contact</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Breadcrumb Form Section Begin -->
+    <!-- Breadcrumb Section Begin -->
 
-    <!-- Register Section Begin -->
-    <div class="register-login-section spad">
+    <!-- Map Section Begin -->
+    
+    
+    <!--The div element for the map -->
+        
+    <h3>Google Map Address Mapping</h3>
+    
+    <input id="address" type="textbox" value="天安門廣場">
+    <input type="button" value="查詢地圖" onclick="codeAddress()">
+    
+    <div class="map spad">
+        <div class="container">
+            <div class="map-inner">
+            <div id="map2" style="text-align:center"></div>
+<!--                 <iframe -->
+<!--                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48158.305462977965!2d-74.13283844036356!3d41.02757295168286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e440473470d7%3A0xcaf503ca2ee57958!2sSaddle%20River%2C%20NJ%2007458%2C%20USA!5e0!3m2!1sen!2sbd!4v1575917275626!5m2!1sen!2sbd" -->
+<!--                     height="610" style="border:0" allowfullscreen=""> -->
+<!--                 </iframe> -->
+                <div class="icon">
+<!--                     <i class="fa fa-map-marker"></i> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Map Section Begin -->
+
+    <!-- Contact Section Begin -->
+    <section class="contact-section spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-6 offset-lg-3">
-                    <div class="login-form">
-                        <h2>Login</h2>
-                        <form action="#">
-                            <div class="group-input">
-                                <label for="username">Username or email address *</label>
-                                <input type="text" id="username">
+                <div class="col-lg-5">
+                    <div class="contact-title">
+                        <h4>Main Infomation</h4>
+                        <p>Here you should enter information about the activity you are going to create.</p>
+                    </div>
+                    <div class="contact-widget">
+                        <div class="cw-item">
+                            <div class="ci-icon">
+                                <i class="ti-location-pin"></i>
                             </div>
-                            <div class="group-input">
-                                <label for="pass">Password *</label>
-                                <input type="text" id="pass">
+                            <div class="ci-text">
+                                <span>Activity NAme</span>
+                                <p>垃圾專賣市集</p>
                             </div>
-                            <div class="group-input gi-check">
-                                <div class="gi-more">
-                                    <label for="save-pass">
-                                        Save Password
-                                        <input type="checkbox" id="save-pass">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <a href="#" class="forget-pass">Forget your Password</a>
+                        </div>
+                        <div class="cw-item">
+                            <div class="ci-icon">
+                                <i class="ti-mobile"></i>
+                            </div>
+                            <div class="ci-text">
+                                <span>Host</span>
+                                <p>李德</p>
+                            </div>
+                        </div>
+                        <div class="cw-item">
+                            <div class="ci-icon">
+                                <i class="ti-email"></i>
+                            </div>
+                            <div class="ci-text">
+                                <span>Contact Number:</span>
+                                <p>8887866878</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 offset-lg-1">
+                    <div class="contact-form">
+                        <div class="leave-comment">
+                            <h4>Details about your activity</h4>
+                            <form action="/actCreateProcess" class="comment-form">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <textarea placeholder="Activity Description"></textarea>
+                                        <button type="submit" class="site-btn">Send message</button>
+                                    </div>
                                 </div>
-                            </div>
-                            <button type="submit" class="site-btn login-btn">Sign In</button>
-                        </form>
-                        <div class="switch-login">
-                            <a href="./register.html" class="or-login">Or Create An Account</a>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- Register Form Section End -->
+    </section>
+    <!-- Contact Section End -->
 
     <!-- Partner Logo Section Begin -->
     <div class="partner-logo">
@@ -337,9 +500,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="copyright-text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                            
                         </div>
                         <div class="payment-pic">
                             <img src="img/payment-method.png" alt="">
@@ -362,6 +523,9 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBV_XLX4sK0tZDC7QXt59sVxN6QOx_aWMs&libraries=places&callback=initMap">
+	</script>
 </body>
 
 </html>

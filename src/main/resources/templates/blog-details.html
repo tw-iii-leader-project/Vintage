@@ -2,29 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Fashi Template">
-    <meta name="keywords" content="Fashi, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Blog-detail</title>
+<meta charset="UTF-8">
+<meta name="description" content="Fashi Template">
+<meta name="keywords" content="Fashi, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Fashi | Blog-detail</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
+	rel="stylesheet">
 
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+<!-- Css Styles -->
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+<link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript">
+<!-- 聊天室的css跟js跟cdn -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" />
+<link rel="stylesheet" href="css/chat-style.css" />
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+	integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+	crossorigin="anonymous"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"
+	integrity="sha512-5yJ548VSnLflcRxWNqVWYeQZnby8D8fJTmYRLyvs445j1XmzR8cnWi85lcHx3CUEeAX+GrK3TqTfzOO6LKDpdw=="
+	crossorigin="anonymous"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"
+	integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
+	crossorigin="anonymous"></script>
+<!-- 聊天室的css跟js跟cdn -->
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
         $(function(){
             var userEmail = null;
             var pageEmail = $("#secretUserEmail").html();
@@ -435,28 +458,148 @@
                 });
             });
         });
+        
+//////////////////////        聊天室的JS        //////////////////////////////
+var stompClient = null;
+
+	//載入完瀏覽器後  呼叫connect（），開啟雙通道
+	$(function() {
+		connect();
+	});
+
+	//強制關閉瀏覽器  呼叫websocket.close（）,進行正常關閉
+	window.onunload = function() {
+		disconnect();
+	};
+
+	//開啟雙通道
+	function connect() {
+		var socket = new SockJS(
+				"http://localhost:8080/Vintage/endpointOyzc"); //連線SockJS的endpoint名稱為"endpointOyzc"
+		stompClient = Stomp.over(socket); //使用STMOP子協議的WebSocket客戶端
+		stompClient.connect({}, function(frame) {
+			//連線WebSocket服務端
+			console.log("Connected:" + frame);
+		});
+	}
+
+	//關閉雙通道
+	function disconnect() {
+		if (stompClient != null) {
+			stompClient.disconnect();
+		}
+		console.log("Disconnected");
+	}
+
+	//選擇傳送給誰的時候觸發連線伺服器
+	function sendAloneUser() {
+		stompQueue();
+	}
+
+// 	//廣播（一對多）
+// 	function stompTopic() {
+// 		//通過stompClient.subscribe訂閱/topic/getResponse 目標(destination)傳送的訊息（廣播接收資訊）
+// 		stompClient.subscribe('/mass/getResponse', function(response) {
+// 			var message = JSON.parse(response.body);
+// 			//展示廣播的接收的內容接收
+// 			var response = $("#chatRecord");
+// 			response.append("<p><span>" + message.name + ":</span><span>"
+// 					+ message.chatValue + "</span></p>");
+// 		});
+// 	}
+	
+	//列隊（一對一）
+	//	$(function() {
+	function stompQueue() {
+		
+		var userId = $("#loginInfo").html();//抓userName (登入者名稱)
+		alert("監聽:" + userId);
+		
+		//通過stompClient.subscribe訂閱/topic/getResponse 目標(destination)傳送的訊息（佇列接收資訊）		
+		stompClient.subscribe("/user/" + userId + "/alone/getResponse",
+						function(response) {
+							var message = JSON.parse(response.body);
+							$("#chat-area")
+									.append(
+											`<div class="income-msg"><img src="img/person.jpg" class="avatar" alt="" /><span class="msg">${message.chatValue}</span></div>`);
+						});
+	}
+	//	});
+
+	//單獨發
+	function sendAloneMessage() {
+		var postValue = {}; //陣列存放訊息
+		var chatValue = $("#input-area"); //聊天輸入框的值
+
+		var userName = $("#loginInfo").html();		//抓登入者(發送者)
+
+		var sendToId = sendTo;		//抓接收者(沒辦法先寫死吧) abi跟lin 去DEMO
+		
+		var response = $("#chat-area"); //訊息顯示框
+		var userPic = $("#user-pic"); //使用者頭像
+		postValue.name = userName;
+		postValue.chatValue = chatValue.val();
+		postValue.userId = sendToId; //JSON物件 postValue = {發送者,訊息,接收者}
+		if (userName == 1 || userName == null) {
+			alert("請選擇你是誰！");
+			return;
+		}
+		if (sendToId == 1 || sendToId == null) {
+			alert("請選擇你要發給誰！");
+			return;
+		}
+		if (chatValue == "" || chatValue == null) {
+			alert("不能傳送空訊息！");
+			return;
+		}
+		stompClient.send("/aloneRequest", {}, JSON.stringify(postValue));
+		response
+				.append(`<div class="out-msg"><span class="my-msg">${postValue.chatValue}</span><img src="img/me.jpg" class="avatar"></div>`);
+
+		chatValue.val("");
+	}
+	
+// 	//群發
+// 	function sendMassMessage() {
+// 		var postValue = {};
+// 		var chatValue = $("#sendChatValue");
+// 		var userName = $("#selectName").val();
+// 		postValue.name = userName;
+// 		postValue.chatValue = chatValue.val();
+// 		if (userName == 1 || userName == null) {
+// 			alert("請選擇你是誰！");
+// 			return;
+// 		}
+// 		if (chatValue == "" || userName == null) {
+// 			alert("不能傳送空訊息！");
+// 			return;
+// 		}
+// 		stompClient.send("/massRequest", {}, JSON.stringify(postValue));
+// 		chatValue.val("");
+// 	}
+
+	//賣家頁面一個 [聊天] 按鈕 -> 跳出對話框
+
+	$(function() {
+		$("#sendToWho").click(function() {
+			$(".chat-popup").addClass("show");
+				
+		});
+	});
+        
+	// //////////////////////        聊天室的JS        //////////////////////////////
+        
     </script>
 </head>
-<script>
-	<div class="ht-right">
-	<a href="/loginPage" class="login-panel" th:text="Login"><i class="fa fa-user"></i></a>
-	<a href="/logout" class="login-panel" th:text="Logout" style="display:none"><i class="fa fa-user" ></i></a>
 
-	<div class="top-social">
-	<div class="mail-service">
-	<a class=" fa fa-envelope" href="#" th:text="${user}"></a>
-
-	</div>
-	</div>
-	</div>
-</script>
 <body>
-    <span th:text="${user}" style="display: none;" id="loginInfo"></span>
-    <span id="secretUserEmail" th:text="${secretUserEmail}" style="display: none;"></span>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
+	<span th:text="${user}" style="display: none;" id="loginInfo"></span>
+	<span id="secretUserEmail" th:text="${secretUserEmail}"
+		style="display: none;"></span>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
 
 	<!-- Header Section Begin -->
 	<header class="header-section">
@@ -470,7 +613,8 @@
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#" th:text="${user}"></a>
+							<a class=" fa fa-envelope" id="userPageControl" href="#"
+								th:text="${user}"></a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 
 						</div>
@@ -554,12 +698,12 @@
 					<div class="depart-btn">
 						<i class="ti-menu"></i> <span>所有選項</span>
 						<ul class="depart-hover">
-							<li class="testActive" ><a href="#">飾品</a></li>
-                            <li class="testActive" ><a href="#">服飾</a></li>
-                            <li class="testActive" ><a href="#">居家生活</a></li>
-                            <li class="testActive" ><a href="#">玩具</a></li>
-                            <li class="testActive" ><a href="#">藝術</a></li>
-                            <li class="testActive" ><a href="#">經典</a></li>
+							<li class="testActive"><a href="#">飾品</a></li>
+							<li class="testActive"><a href="#">服飾</a></li>
+							<li class="testActive"><a href="#">居家生活</a></li>
+							<li class="testActive"><a href="#">玩具</a></li>
+							<li class="testActive"><a href="#">藝術</a></li>
+							<li class="testActive"><a href="#">經典</a></li>
 						</ul>
 					</div>
 				</div>
@@ -577,287 +721,337 @@
 			</div>
 		</div>
 	</header>
-    <!-- Header End -->
+	<!-- Header End -->
 
-    <!-- Blog Details Section Begin -->
-    <section class="blog-details spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="blog-details-inner">
-                        <div class="blog-detail-title">
-                            <div class="blog-large-pic">
-                                <img src="img/blog/blog-detail.jpg" alt="">
-                            </div>
-                            <h2>The Personality Trait That Makes People Happier</h2>
-                            <p>travel <span>- May 19, 2019</span></p>
-                        </div>
-                        <div class="posted-by" id="userDetailBox">
-                            <!-- 使用者的基本資料 Here -->
-                        </div>
-                        <div class="blog-detail-desc">
-                            <p>psum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure Lorem ipsum dolor sit
-                                amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.
-                            </p>
-                        </div>
-                        <div class="blog-quote">
-                            <p>“ Technology is nothing. What's important is that you have a faith in people, that
-                                they're basically good and smart, and if you give them tools, they'll do wonderful
-                                things with them.” <span>- Steven Jobs</span></p>
-                        </div>
-                        <div class="blog-more">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <img src="img/blog/blog-detail-1.jpg" alt="">
-                                </div>
-                                <div class="col-sm-4">
-                                    <img src="img/blog/blog-detail-2.jpg" alt="">
-                                </div>
-                                <div class="col-sm-4">
-                                    <img src="img/blog/blog-detail-3.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <p>Sum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                            et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                            nisi ut aliquip ex ea commodo consequat. Duis aute irure Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="product-shop spad">
-        <div class="container">
-            <div class="row" id="productMainRow">
-                <div class="col-lg-12 order-1 order-lg-2">
-                    <h3>更多此賣家作品</h3>
-                    <div class="filter-control" id="filterControl">
-                        <ul>
-                            <li class="active" id="userProductAll">ALL</li>
-                            <!-- add product main Here -->
-                        </ul>
-                    </div>
-                    <div class="product-list" id="productList">
-                        <div class="row" id="productRow">
-                            <!-- productBox Here -->
-                        </div>
-                    </div>
-                    <div class="filter-control" id="pageBox">
-                        <ul>
+	<!-- Blog Details Section Begin -->
+	<section class="blog-details spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="blog-details-inner">
+						<div class="blog-detail-title">
+							<div class="blog-large-pic">
+								<img src="img/blog/blog-detail.jpg" alt="">
+							</div>
+							<h2>The Personality Trait That Makes People Happier</h2>
+							<p>
+								travel <span>- May 19, 2019</span>
+							</p>
+						</div>
+						<div class="posted-by" id="userDetailBox">
 
-                        </ul>
-                        <div id="totalElements">
+							<button type="button" id="sendToWho">與賣家聊聊天</button>
+							<!-- 使用者的基本資料 Here -->
+						</div>
+						<div class="blog-detail-desc">
+							<p>psum dolor sit amet, consectetur adipisicing elit, sed do
+								eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut
+								enim ad minim veniam, quis nostrud exercitation ullamco laboris
+								nisi ut aliquip ex ea commodo consequat. Duis aute irure Lorem
+								ipsum dolor sit amet, consectetur adipisicing elit, sed do
+								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+								enim ad minim veniam, quis nostrud exercitation ullamco laboris
+								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+								in reprehenderit in voluptate.</p>
+						</div>
+						<div class="blog-quote">
+							<p>
+								“ Technology is nothing. What's important is that you have a
+								faith in people, that they're basically good and smart, and if
+								you give them tools, they'll do wonderful things with them.” <span>-
+									Steven Jobs</span>
+							</p>
+						</div>
+						<div class="blog-more">
+							<div class="row">
+								<div class="col-sm-4">
+									<img src="img/blog/blog-detail-1.jpg" alt="">
+								</div>
+								<div class="col-sm-4">
+									<img src="img/blog/blog-detail-2.jpg" alt="">
+								</div>
+								<div class="col-sm-4">
+									<img src="img/blog/blog-detail-3.jpg" alt="">
+								</div>
+							</div>
+						</div>
+						<p>Sum dolor sit amet, consectetur adipisicing elit, sed do
+							eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut
+							enim ad minim veniam, quis nostrud exercitation ullamco laboris
+							nisi ut aliquip ex ea commodo consequat. Duis aute irure Lorem
+							ipsum dolor sit amet, consectetur adipisicing elit, sed do
+							eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+							enim ad minim veniam, quis nostrud exercitation ullamco laboris
+							nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+							reprehenderit in voluptate.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="product-shop spad">
+		<div class="container">
+			<div class="row" id="productMainRow">
+				<div class="col-lg-12 order-1 order-lg-2">
+					<h3>更多此賣家作品</h3>
+					<div class="filter-control" id="filterControl">
+						<ul>
+							<li class="active" id="userProductAll">ALL</li>
+							<!-- add product main Here -->
+						</ul>
+					</div>
+					<div class="product-list" id="productList">
+						<div class="row" id="productRow">
+							<!-- productBox Here -->
+						</div>
+					</div>
+					<div class="filter-control" id="pageBox">
+						<ul>
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>    
-    <section class="blog-details spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="blog-details-inner">
-                        <div class="tag-share">
-                            <div class="details-tag">
-                                <ul>
-                                    <li><i class="fa fa-tags"></i></li>
-                                    <li>Travel</li>
-                                    <li>Beauty</li>
-                                    <li>Fashion</li>
-                                </ul>
-                            </div>
-                            <div class="blog-share">
-                                <span>Share:</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                    <a href="#"><i class="fa fa-youtube-play"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="blog-post">
-                            <div class="row">
-                                <div class="col-lg-5 col-md-6">
-                                    <a href="#" class="prev-blog">
-                                        <div class="pb-pic">
-                                            <i class="ti-arrow-left"></i>
-                                            <img src="img/blog/prev-blog.png" alt="">
-                                        </div>
-                                        <div class="pb-text">
-                                            <span>Previous Post:</span>
-                                            <h5>The Personality Trait That Makes People Happier</h5>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-lg-5 offset-lg-2 col-md-6">
-                                    <a href="#" class="next-blog">
-                                        <div class="nb-pic">
-                                            <img src="img/blog/next-blog.png" alt="">
-                                            <i class="ti-arrow-right"></i>
-                                        </div>
-                                        <div class="nb-text">
-                                            <span>Next Post:</span>
-                                            <h5>The Personality Trait That Makes People Happier</h5>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="leave-comment">
-                            <h4>Leave A Comment</h4>
-                            <form action="#" class="comment-form">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <input type="text" placeholder="Name">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <input type="text" placeholder="Email">
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <textarea placeholder="Messages"></textarea>
-                                        <button type="submit" class="site-btn">Send message</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Blog Details Section End -->
+						</ul>
+						<div id="totalElements"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="blog-details spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="blog-details-inner">
+						<div class="tag-share">
+							<div class="details-tag">
+								<ul>
+									<li><i class="fa fa-tags"></i></li>
+									<li>Travel</li>
+									<li>Beauty</li>
+									<li>Fashion</li>
+								</ul>
+							</div>
+							<div class="blog-share">
+								<span>Share:</span>
+								<div class="social-links">
+									<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
+										class="fa fa-twitter"></i></a> <a href="#"><i
+										class="fa fa-google-plus"></i></a> <a href="#"><i
+										class="fa fa-instagram"></i></a> <a href="#"><i
+										class="fa fa-youtube-play"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="blog-post">
+							<div class="row">
+								<div class="col-lg-5 col-md-6">
+									<a href="#" class="prev-blog">
+										<div class="pb-pic">
+											<i class="ti-arrow-left"></i> <img
+												src="img/blog/prev-blog.png" alt="">
+										</div>
+										<div class="pb-text">
+											<span>Previous Post:</span>
+											<h5>The Personality Trait That Makes People Happier</h5>
+										</div>
+									</a>
+								</div>
+								<div class="col-lg-5 offset-lg-2 col-md-6">
+									<a href="#" class="next-blog">
+										<div class="nb-pic">
+											<img src="img/blog/next-blog.png" alt=""> <i
+												class="ti-arrow-right"></i>
+										</div>
+										<div class="nb-text">
+											<span>Next Post:</span>
+											<h5>The Personality Trait That Makes People Happier</h5>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="leave-comment">
+							<h4>Leave A Comment</h4>
+							<form action="#" class="comment-form">
+								<div class="row">
+									<div class="col-lg-6">
+										<input type="text" placeholder="Name">
+									</div>
+									<div class="col-lg-6">
+										<input type="text" placeholder="Email">
+									</div>
+									<div class="col-lg-12">
+										<textarea placeholder="Messages"></textarea>
+										<button type="submit" class="site-btn">Send message</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Blog Details Section End -->
 
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-1.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-2.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-3.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-4.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-5.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Partner Logo Section End -->
+	<!-- Partner Logo Section Begin -->
+	<div class="partner-logo">
+		<div class="container">
+			<div class="logo-carousel owl-carousel">
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-1.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-2.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-3.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-4.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-5.png" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <!-- Footer Section Begin -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="footer-left">
-                        <div class="footer-logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                        </div>
-                        <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello.colorlib@gmail.com</li>
-                        </ul>
-                        <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1">
-                    <div class="footer-widget">
-                        <h5>Information</h5>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Checkout</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Serivius</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="footer-widget">
-                        <h5>My Account</h5>
-                        <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Shopping Cart</a></li>
-                            <li><a href="#">Shop</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="newslatter-item">
-                        <h5>Join Our Newsletter Now</h5>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#" class="subscribe-form">
-                            <input type="text" placeholder="Enter Your Mail">
-                            <button type="button">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright-reserved">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="copyright-text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
-                        <div class="payment-pic">
-                            <img src="img/payment-method.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
 
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.zoom.min.js"></script>
-    <script src="js/jquery.dd.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
+
+	<!-- Partner Logo Section End -->
+
+	<!-- Footer Section Begin -->
+	<footer class="footer-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="footer-left">
+						<div class="footer-logo">
+							<a href="#"><img src="img/footer-logo.png" alt=""></a>
+						</div>
+						<ul>
+							<li>Address: 60-49 Road 11378 New York</li>
+							<li>Phone: +65 11.188.888</li>
+							<li>Email: hello.colorlib@gmail.com</li>
+						</ul>
+						<div class="footer-social">
+							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
+								class="fa fa-instagram"></i></a> <a href="#"><i
+								class="fa fa-twitter"></i></a> <a href="#"><i
+								class="fa fa-pinterest"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2 offset-lg-1">
+					<div class="footer-widget">
+						<h5>Information</h5>
+						<ul>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Checkout</a></li>
+							<li><a href="#">Contact</a></li>
+							<li><a href="#">Serivius</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2">
+					<div class="footer-widget">
+						<h5>My Account</h5>
+						<ul>
+							<li><a href="#">My Account</a></li>
+							<li><a href="#">Contact</a></li>
+							<li><a href="#">Shopping Cart</a></li>
+							<li><a href="#">Shop</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="newslatter-item">
+						<h5>Join Our Newsletter Now</h5>
+						<p>Get E-mail updates about our latest shop and special
+							offers.</p>
+						<form action="#" class="subscribe-form">
+							<input type="text" placeholder="Enter Your Mail">
+							<button type="button">Subscribe</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copyright-reserved">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="copyright-text">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>document.write(new Date().getFullYear());</script>
+							All rights reserved | This template is made with <i
+								class="fa fa-heart-o" aria-hidden="true"></i> by <a
+								href="https://colorlib.com" target="_blank">Colorlib</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</div>
+						<div class="payment-pic">
+							<img src="img/payment-method.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--     聊天對話框div -->
+		<section class="chat-section">
+			<button class="chat-btn">
+				<i class="material-icons"> comment </i>
+			</button>
+
+			<div class="chat-popup">
+				<div class="badge">1</div>
+				<div class="chat-area" id="chat-area">
+					<div class="income-msg">
+						<img src="img/person.jpg" class="avatar" alt="" /> <span
+							class="msg"> Hi, How </span>
+					</div>
+				</div>
+
+				<div class="input-area">
+					<input type="text" id="input-area" class="chat-input" />
+					<button id="emoji-btn">&#127773;</button>
+					<button class="chat-submit" onclick="sendAloneMessage()">
+						<i class="material-icons"> send</i>
+					</button>
+				</div>
+			</div>
+		</section>
+
+		<!-- 聊天室的css跟js跟cdn -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@3.1.1/dist/index.min.js"></script>
+		<script src="js/chat.js"></script>
+		<!-- 聊天室的css跟js跟cdn -->
+
+	</footer>
+	<!-- Footer Section End -->
+
+	<!-- Js Plugins -->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/jquery.countdown.min.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/jquery.dd.min.js"></script>
+	<script src="js/jquery.slicknav.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/main.js"></script>
 </body>
 
 </html>

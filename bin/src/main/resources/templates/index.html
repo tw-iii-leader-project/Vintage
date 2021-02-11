@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8">
@@ -24,45 +24,47 @@
 <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
+<script src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		var userEmail = $("#userPageControl").html();
+		var cUrl = "panUserControlPage?email=";
+		$("#userPageControl").click(function(){
+			$(this).attr("href",cUrl+userEmail);
+		});
+	});
+	
+</script>
+
 </head>
 
+<script>
+
+</script>
+
 <body>
+	<p th:value="${user}" type="hidden" id="loginInfo"></p>
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
 	</div>
+
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="header-top">
 			<div class="container">
-				<div class="ht-left">
-					<div class="mail-service">
-						<i class=" fa fa-envelope"></i> silvester60740@gmail.com
-					</div>
-					<div class="phone-service">
-						<i class=" fa fa-phone"></i> +886975270587
-					</div>
-				</div>
+				<div class="ht-left"></div>
 				<div class="ht-right">
-					<a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
-					<div class="lan-selector">
-						<select class="language_drop" name="countries" id="countries"
-							style="width: 300px;">
-							<option value='yt' data-image="img/flag-1.jpg"
-								data-imagecss="flag yt" data-title="English">English</option>
-							<option value='yu' data-image="img/flag-2.jpg"
-								data-imagecss="flag yu" data-title="Bangladesh">German
-							</option>
-						</select>
-					</div>
-					<div class="top-social">
-						<a href="index">
-						<button id="upload-button" >Buyers' Pic Upload</button>
-						</a>
-						<a href="#"><i class="ti-facebook"></i></a> <a href="#"><i
-							class="ti-twitter-alt"></i></a> <a href="#"><i
-							class="ti-linkedin"></i></a> <a href="#"><i class="ti-pinterest"></i></a>
+					<a href="logout" class="login-panel" th:text="Logout" ><i class="fa fa-user"></i></a>
+					<a href="loginPage" class="login-panel" th:text="Login"><i class="fa fa-user"></i></a> 
 						
+
+					<div class="top-social">
+						<div class="mail-service">
+							<a class=" fa fa-envelope" id="userPageControl" href="#" th:text="${user}"></a>
+							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
+
+						</div>
 					</div>
 				</div>
 			</div>
@@ -72,16 +74,15 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo">
-							<a href="liaoIndex"> <img src="img/Vintage.jpg" alt="">
+							<a href="index"> <img src="img/logo.png" alt="">
 							</a>
 						</div>
 					</div>
 					<div class="col-lg-7 col-md-7">
 						<div class="advanced-search">
-							<button type="button" class="category-btn">All
-								Categories</button>
+							<button type="button" class="category-btn"></button>
 							<div class="input-group">
-								<input type="text" placeholder="What do you need?">
+								<input type="text" placeholder="老鐵，關注蛤?">
 								<button type="button">
 									<i class="ti-search"></i>
 								</button>
@@ -90,9 +91,7 @@
 					</div>
 					<div class="col-lg-3 text-right col-md-3">
 						<ul class="nav-right">
-							<li class="heart-icon"><a href="#"> <i
-									class="icon_heart_alt"></i> <span>1</span>
-							</a></li>
+
 							<li class="cart-icon"><a href="#"> <i
 									class="icon_bag_alt"></i> <span>3</span>
 							</a>
@@ -144,40 +143,25 @@
 			<div class="container">
 				<div class="nav-depart">
 					<div class="depart-btn">
-						<i class="ti-menu"></i> <span>All departments</span>
+						<i class="ti-menu"></i> <span>所有選項</span>
 						<ul class="depart-hover">
-							<li class="active"><a href="#">Women’s Clothing</a></li>
-							<li><a href="#">Men’s Clothing</a></li>
-							<li><a href="#">Underwear</a></li>
-							<li><a href="#">Kid's Clothing</a></li>
-							<li><a href="#">Brand Fashion</a></li>
-							<li><a href="#">Accessories/Shoes</a></li>
-							<li><a href="#">Luxury Brands</a></li>
-							<li><a href="#">Brand Outdoor Apparel</a></li>
+							<li class="testActive" ><a href="#">飾品</a></li>
+                            <li class="testActive" ><a href="#">服飾</a></li>
+                            <li class="testActive" ><a href="#">居家生活</a></li>
+                            <li class="testActive" ><a href="#">玩具</a></li>
+                            <li class="testActive" ><a href="#">藝術</a></li>
+                            <li class="testActive" ><a href="#">經典</a></li>
 						</ul>
 					</div>
 				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
-						<li class="active"><a href="liaoIndex">Home</a></li>
-						<li><a href="liaoShop">Shop</a></li>
-						<li><a href="#">Collection</a>
-							<ul class="dropdown">
-								<li><a href="#">Men's</a></li>
-								<li><a href="#">Women's</a></li>
-								<li><a href="#">Kid's</a></li>
-							</ul></li>
-						<li><a href="liaoBlog">Blog</a></li>
-						<li><a href="liaoContact">Contact</a></li>
-						<li><a href="#">Pages</a>
-							<ul class="dropdown">
-								<li><a href="liaoBlogDetails">Blog Details</a></li>
-								<li><a href="liaoShoppingCart">Shopping Cart</a></li>
-								<li><a href="liaoCheckOut">Checkout</a></li>
-								<li><a href="liaoFaq">Faq</a></li>
-								<li><a href="liaoRegister">Register</a></li>
-								<li><a href="liaoLogin">Login</a></li>
-							</ul></li>
+						<li class="active"><a href="index">首頁</a></li>
+						<li><a href="shopPage">商城</a></li>
+						<li><a href="blog">博客</a></li>
+						<li><a href="contact">活動</a></li>
+						<li><a href="faq">問與答</a></li>
+
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -187,16 +171,17 @@
 	<!-- Header End -->
 
 	<!-- Hero Section Begin -->
-	 <section class="hero-section">
-        <div class="hero-items owl-carousel">
-            <div class="single-hero-items set-bg" data-setbg="img/africanhair.jpg">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <span></span>
-                            <h1>Black friday</h1>
-							<p>To sure you know, Black Force is arising</p>
-							<a href="liaoshop" class="primary-btn">Shop Now</a>
+	<section class="hero-section">
+		<div class="hero-items owl-carousel">
+			<div class="single-hero-items set-bg" data-setbg="img/hero-1.jpg">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-5">
+							<span>Bag,kids</span>
+							<h1>Black friday</h1>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+								sed do eiusmod tempor incididunt ut labore et dolore</p>
+							<a href="#" class="primary-btn">Shop Now</a>
 						</div>
 					</div>
 					<div class="off-card">
@@ -206,13 +191,14 @@
 					</div>
 				</div>
 			</div>
-			<div class="single-hero-items set-bg" data-setbg="">
+			<div class="single-hero-items set-bg" data-setbg="img/hero-2.jpg">
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-5">
 							<span>Bag,kids</span>
 							<h1>Black friday</h1>
-							<p></p>
+							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+								sed do eiusmod tempor incididunt ut labore et dolore</p>
 							<a href="#" class="primary-btn">Shop Now</a>
 						</div>
 					</div>
@@ -226,7 +212,6 @@
 		</div>
 	</section>
 	<!-- Hero Section End -->
-
 
 	<!-- Banner Section Begin -->
 	<div class="banner-section spad">

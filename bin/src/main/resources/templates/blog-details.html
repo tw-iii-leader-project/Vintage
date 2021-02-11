@@ -7,7 +7,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+    <title>Fashi | Blog-detail</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -26,9 +26,77 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         $(function(){
+            var userEmail = null;
+            var pageEmail = $("#secretUserEmail").html();
+            var loginEmail = $("#loginInfo").html();
+            alert("login="+loginEmail);
+            alert("page="+pageEmail);
+            if(pageEmail == "" || pageEmail == loginEmail){
+                userEmail = loginEmail;
+                userInfoData = {"email":userEmail};
+                $.ajax({
+                    url:"panselectUserInfo.user",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userInfoData),
+                    success:function(response){
+                        $.each(response,function(i,v){
+                            $("#userDetailBox").append(
+                                `<div class="pb-pic">
+                                    <img src="img/blog/${v.userPhoto}" alt="">
+                                </div>
+                                <div class="pb-text">
+                                    <a href="#">
+                                        <h5>${v.userName}</h5>
+                                    </a>
+                                    <p>${v.birthday}</p>
+                                    <p>${v.userPic}</p>
+                                    <p>${v.phone}</p>
+                                    <p>${v.gender}</p>
+                                    <a href="toUserInfoDetail">更改基本資料</a>
+                                </div>`
+                            );
+                        });
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            }
+            else{
+                userEmail = pageEmail;
+                userInfoData = {"email":userEmail};
+                $.ajax({
+                    url:"panselectUserInfo.user",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userInfoData),
+                    success:function(response){
+                        $.each(response,function(i,v){
+                            $("#userDetailBox").append(
+                                `<div class="pb-pic">
+                                    <img src="img/blog/${v.userPhoto}" alt="">
+                                </div>
+                                <div class="pb-text">
+                                    <a href="#">
+                                        <h5>${v.userName}</h5>
+                                    </a>
+                                    <p>${v.userBirthday}</p>
+                                    <p>${v.userPic}</p>
+                                </div>`
+                            );
+                        });
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            }
 
-            // 取得賣家資料
-            var userEmail = $("#secretUserEmail").html();
+            // 取得賣家全部商品筆數與總頁數
+            
 		    var userData = {"email":userEmail};
 		    $.ajax({
 			    async:true,
@@ -42,7 +110,7 @@
                         var pages = parseInt(v.totalPages);
                         for(n=1;n<=pages;n++){
                             $("#pageBox ul").append(
-                                `<li>${n}</li>`
+                                `<li class="productAllPage">${n}</li>`
                             );
                         };
                         $("#totalElements").append(
@@ -55,6 +123,8 @@
                     console.log(msg);
                 }
             });
+
+            // 取得賣家全部的分類
 		    $.ajax({
 			    async:true,
 			    url:"panSelectMainByUserName",
@@ -78,6 +148,8 @@
 			    	console.log(msg);
 			    }
             });
+
+            // 載入此賣家全部的商品
             $.ajax({
                 async:true,
                 url:"panSelectProductByUserName",
@@ -92,9 +164,6 @@
                          	    <div class="product-item">
                                 	<div class="pi-pic">
                                     	<img src="img/products/${v.cPhoto}" alt="">
-                                            <div class="icon">
-                                                <i class="icon_heart_alt"></i>
-                                            </div>
                                             <ul>
                                                 <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                                 <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
@@ -119,7 +188,9 @@
                     console.log(msg);
                 }
             });
-            $("#pageBox ul").on("click","li",function(){
+
+            // 註冊全部商品的頁籤+載入分頁資料
+            $("#pageBox ul").on("click",".productAllPage",function(){
                 $("#pageBox ul li").removeClass("active");
                 $(this).addClass("active");
                 $("#productList #productRow").html("");
@@ -139,9 +210,6 @@
                              	    <div class="product-item">
                                     	<div class="pi-pic">
                                         	<img src="img/products/${v.cPhoto}" alt="">
-                                                <div class="icon">
-                                                    <i class="icon_heart_alt"></i>
-                                                </div>
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                                     <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
@@ -168,6 +236,7 @@
                 });
             });
 
+            // 載入分類項目之頁數與總數
             var userMainValue = null;
             $("#filterControl ul").on("click",".productMainLi",function(){
                 $("#filterControl ul li").removeClass("active");
@@ -176,8 +245,8 @@
                 $("#pageBox ul").html("");
                 $("#totalElements").html("");
                 userMainValue = $(this).html();
-                var userName = $("#secretUserName").html();
-                var userData = {"p_main":userMainValue,"user_acc":userName};
+                var userEmail = $("#secretUserEmail").html();
+                var userData = {"pMain":userMainValue,"email":userEmail};
                 $.ajax({
 			        async:true,
 			        url:"panFindProductMainPage",
@@ -203,6 +272,8 @@
                         console.log(msg);
                     }
                 });
+
+                // 載入分類項入之商品
                 $.ajax({
                     async:true,
                     url:"panSelectProductByMainAndName",
@@ -216,20 +287,17 @@
                                 `<div class="col-lg-3 col-sm-6">
                          	        <div class="product-item">
                                     	<div class="pi-pic">
-                                        	<img src="img/products/${v.p_img}" alt="">
-                                                <div class="icon">
-                                                    <i class="icon_heart_alt"></i>
-                                                </div>
+                                        	<img src="img/products/${v.cPhoto}" alt="">
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                    <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
                                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                                 </ul>
                                         </div>
                                         <div class="pi-text">
-                                        	<div class="catagory-name">${v.p_main}</div>
-                                            <a href="panProductPage?id=${v.p_id}">
-                                                <h5>${v.p_name}</h5>
+                                        	<div class="catagory-name">${v.pMain}</div>
+                                            <a href="panProductPage?id=${v.pId}">
+                                                <h5>${v.pName}</h5>
                                             </a>
                                             <div class="product-price">
                                                 ${v.price}
@@ -245,12 +313,14 @@
                     }
                 });
             });
+
+            // 註冊分類商品查詢之頁籤
             $("#pageBox ul").on("click",".productMainPage",function(){
                 $("#pageBox ul li").removeClass("active");
                 $(this).addClass("active");
                 $("#productList #productRow").html("");
                 var pageNum = $(this).html();
-                var userAndPage = {"p_main":userMainValue,"user_acc":userName,"page":pageNum};
+                var userAndPage = {"pMain":userMainValue,"email":userEmail,"page":pageNum};
                 $.ajax({
                     async:true,
                     url:"panSelectProductByMainAndName.page",
@@ -264,20 +334,17 @@
                                 `<div class="col-lg-3 col-sm-6">
                          	        <div class="product-item">
                                     	<div class="pi-pic">
-                                        	<img src="img/products/${v.p_img}" alt="">
-                                                <div class="icon">
-                                                    <i class="icon_heart_alt"></i>
-                                                </div>
+                                        	<img src="img/products/${v.cPhoto}" alt="">
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                    <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
                                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                                 </ul>
                                         </div>
                                         <div class="pi-text">
-                                        	<div class="catagory-name">${v.p_main}</div>
-                                            <a href="panProductPage?id=${v.p_id}">
-                                                <h5>${v.p_name}</h5>
+                                        	<div class="catagory-name">${v.pMain}</div>
+                                            <a href="panProductPage?id=${v.pId}">
+                                                <h5>${v.pName}</h5>
                                             </a>
                                             <div class="product-price">
                                                 ${v.price}
@@ -293,15 +360,44 @@
                     }
                 });
             });
+
+            // 當適用者點選ALL頁籤時，新載回所有商品
             $("#userProductAll").click(function(){
                 $("#filterControl ul li").removeClass("active");
                 $(this).addClass("active");
                 $("#productList #productRow").html("");
-                var userName = $("#secretUserName").html();
-		        var userData = {"user_acc":userName};
+                $("#pageBox ul").html("");
+                $("#totalElements").html("");
+                var userEmail = $("#secretUserEmail").html();
+		        var userData = {"email":userEmail};
 		        $.ajax({
 			        async:true,
-			        url:"panSelectMainByName",
+			        url:"panFindProductPage",
+			        type:"POST",
+			        dataType:"json",
+			        contentType:"application/json;charset=utf-8",
+			        data:JSON.stringify(userData),
+                    success:function(pageData){
+                        $.each(pageData,function(i,v){
+                            var pages = parseInt(v.totalPages);
+                            for(n=1;n<=pages;n++){
+                                $("#pageBox ul").append(
+                                    `<li class="productAllPage">${n}</li>`
+                                );
+                            };
+                            $("#totalElements").append(
+                                `<span>${v.totalElements}</span>`
+                            );
+                        });
+                        $("#pageBox ul li").first().addClass("active");
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+		        $.ajax({
+			        async:true,
+			        url:"panSelectProductByUserName",
 			        type:"POST",
 			        dataType:"json",
 			        contentType:"application/json;charset=utf-8",
@@ -312,20 +408,17 @@
                                 `<div class="col-lg-3 col-sm-6">
                              	    <div class="product-item">
                                     	<div class="pi-pic">
-                                        	<img src="img/products/${v.p_img}" alt="">
-                                                <div class="icon">
-                                                    <i class="icon_heart_alt"></i>
-                                                </div>
+                                        	<img src="img/products/${v.cPhoto}" alt="">
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                                                    <li class="quick-view"><a href="panProductPage?id=${v.p_id}">+ Quick View</a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
                                                     <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
                                                 </ul>
                                         </div>
                                         <div class="pi-text">
-                                        	<div class="catagory-name">${v.p_main}</div>
-                                            <a href="panProductPage?id=${v.p_id}">
-                                                <h5>${v.p_name}</h5>
+                                        	<div class="catagory-name">${v.pMain}</div>
+                                            <a href="panProductPage?id=${v.pId}">
+                                                <h5>${v.pName}</h5>
                                             </a>
                                             <div class="product-price">
                                                 ${v.price}
@@ -344,171 +437,146 @@
         });
     </script>
 </head>
+<script>
+	<div class="ht-right">
+	<a href="/loginPage" class="login-panel" th:text="Login"><i class="fa fa-user"></i></a>
+	<a href="/logout" class="login-panel" th:text="Logout" style="display:none"><i class="fa fa-user" ></i></a>
 
+	<div class="top-social">
+	<div class="mail-service">
+	<a class=" fa fa-envelope" href="#" th:text="${user}"></a>
+
+	</div>
+	</div>
+	</div>
+</script>
 <body>
+    <span th:text="${user}" style="display: none;" id="loginInfo"></span>
     <span id="secretUserEmail" th:text="${secretUserEmail}" style="display: none;"></span>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>
     </div>
 
-    <!-- Header Section Begin -->
-    <header class="header-section">
-        <div class="header-top">
-            <div class="container">
-                <div class="ht-left">
-                    <div class="mail-service">
-                        <i class=" fa fa-envelope"></i>
-                        hello.colorlib@gmail.com
-                    </div>
-                    <div class="phone-service">
-                        <i class=" fa fa-phone"></i>
-                        +65 11.188.888
-                    </div>
-                </div>
-                <div class="ht-right">
-                    <a href="#" class="login-panel"><i class="fa fa-user"></i>Login</a>
-                    <div class="lan-selector">
-                        <select class="language_drop" name="countries" id="countries" style="width:300px;">
-                            <option value='yt' data-image="img/flag-1.jpg" data-imagecss="flag yt"
-                                data-title="English">English</option>
-                            <option value='yu' data-image="img/flag-2.jpg" data-imagecss="flag yu"
-                                data-title="Bangladesh">German </option>
-                        </select>
-                    </div>
-                    <div class="top-social">
-                        <a href="#"><i class="ti-facebook"></i></a>
-                        <a href="#"><i class="ti-twitter-alt"></i></a>
-                        <a href="#"><i class="ti-linkedin"></i></a>
-                        <a href="#"><i class="ti-pinterest"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="container">
-            <div class="inner-header">
-                <div class="row">
-                    <div class="col-lg-2 col-md-2">
-                        <div class="logo">
-                            <a href="liaoIndex">
-                                <img src="img/logo.png" alt="">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-lg-7 col-md-7">
-                        <div class="advanced-search">
-                            <button type="button" class="category-btn">All Categories</button>
-                            <form action="#" class="input-group">
-                                <input type="text" placeholder="What do you need?">
-                                <button type="button"><i class="ti-search"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 text-right col-md-3">
-                        <ul class="nav-right">
-                            <li class="heart-icon"><a href="#">
-                                    <i class="icon_heart_alt"></i>
-                                    <span>1</span>
-                                </a>
-                            </li>
-                            <li class="cart-icon"><a href="#">
-                                    <i class="icon_bag_alt"></i>
-                                    <span>3</span>
-                                </a>
-                                <div class="cart-hover">
-                                    <div class="select-items">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-1.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="si-pic"><img src="img/select-product-2.jpg" alt=""></td>
-                                                    <td class="si-text">
-                                                        <div class="product-selected">
-                                                            <p>$60.00 x 1</p>
-                                                            <h6>Kabino Bedside Table</h6>
-                                                        </div>
-                                                    </td>
-                                                    <td class="si-close">
-                                                        <i class="ti-close"></i>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="select-total">
-                                        <span>total:</span>
-                                        <h5>$120.00</h5>
-                                    </div>
-                                    <div class="select-button">
-                                        <a href="#" class="primary-btn view-card">VIEW CARD</a>
-                                        <a href="#" class="primary-btn checkout-btn">CHECK OUT</a>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="cart-price">$150.00</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="nav-item">
-            <div class="container">
-                <div class="nav-depart">
-                    <div class="depart-btn">
-                        <i class="ti-menu"></i>
-                        <span>All departments</span>
-                        <ul class="depart-hover">
-                            <li class="active"><a href="#">Women’s Clothing</a></li>
-                            <li><a href="#">Men’s Clothing</a></li>
-                            <li><a href="#">Underwear</a></li>
-                            <li><a href="#">Kid's Clothing</a></li>
-                            <li><a href="#">Brand Fashion</a></li>
-                            <li><a href="#">Accessories/Shoes</a></li>
-                            <li><a href="#">Luxury Brands</a></li>
-                            <li><a href="#">Brand Outdoor Apparel</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <nav class="nav-menu mobile-menu">
-                    <ul>
-                        <li><a href="liaoIndex">Home</a></li>
-                        <li><a href="liaoShop">Shop</a></li>
-                        <li><a href="#">Collection</a>
-                            <ul class="dropdown">
-                                <li><a href="#">Men's</a></li>
-                                <li><a href="#">Women's</a></li>
-                                <li><a href="#">Kid's</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="liaoBlog">Blog</a></li>
-                        <li><a href="liaoCheckOut">Contact</a></li>
-                        <li><a href="#">Pages</a>
-                            <ul class="dropdown">
-                                <li><a href="liaoBlogDetails">Blog Details</a></li>
-                                <li><a href="liaoShoppingCart">Shopping Cart</a></li>
-                                <li><a href="liaoCheckOut">Checkout</a></li>
-                                <li><a href="liaoFaq">Faq</a></li>
-                                <li><a href="liaoRegister">Register</a></li>
-                                <li><a href="liaoLogin">Login</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </nav>
-                <div id="mobile-menu-wrap"></div>
-            </div>
-        </div>
-    </header>
+	<!-- Header Section Begin -->
+	<header class="header-section">
+		<div class="header-top">
+			<div class="container">
+				<div class="ht-left"></div>
+				<div class="ht-right">
+					<a href="loginPage" class="login-panel" th:text="Login"><i
+						class="fa fa-user"></i></a> <a href="logout" class="login-panel"
+						th:text="Logout" style="display: none"><i class="fa fa-user"></i></a>
+
+					<div class="top-social">
+						<div class="mail-service">
+							<a class=" fa fa-envelope" id="userPageControl" href="#" th:text="${user}"></a>
+							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="inner-header">
+				<div class="row">
+					<div class="col-lg-2 col-md-2">
+						<div class="logo">
+							<a href="index"> <img src="img/logo.png" alt="">
+							</a>
+						</div>
+					</div>
+					<div class="col-lg-7 col-md-7">
+						<div class="advanced-search">
+							<button type="button" class="category-btn"></button>
+							<div class="input-group">
+								<input type="text" placeholder="老鐵，關注蛤?">
+								<button type="button">
+									<i class="ti-search"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 text-right col-md-3">
+						<ul class="nav-right">
+
+							<li class="cart-icon"><a href="#"> <i
+									class="icon_bag_alt"></i> <span>3</span>
+							</a>
+								<div class="cart-hover">
+									<div class="select-items">
+										<table>
+											<tbody>
+												<tr>
+													<td class="si-pic"><img src="img/select-product-1.jpg"
+														alt=""></td>
+													<td class="si-text">
+														<div class="product-selected">
+															<p>$60.00 x 1</p>
+															<h6>Kabino Bedside Table</h6>
+														</div>
+													</td>
+													<td class="si-close"><i class="ti-close"></i></td>
+												</tr>
+												<tr>
+													<td class="si-pic"><img src="img/select-product-2.jpg"
+														alt=""></td>
+													<td class="si-text">
+														<div class="product-selected">
+															<p>$60.00 x 1</p>
+															<h6>Kabino Bedside Table</h6>
+														</div>
+													</td>
+													<td class="si-close"><i class="ti-close"></i></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="select-total">
+										<span>total:</span>
+										<h5>$120.00</h5>
+									</div>
+									<div class="select-button">
+										<a href="#" class="primary-btn view-card">VIEW CARD</a> <a
+											href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+									</div>
+								</div></li>
+							<li class="cart-price">$150.00</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="nav-item">
+			<div class="container">
+				<div class="nav-depart">
+					<div class="depart-btn">
+						<i class="ti-menu"></i> <span>所有選項</span>
+						<ul class="depart-hover">
+							<li class="testActive" ><a href="#">飾品</a></li>
+                            <li class="testActive" ><a href="#">服飾</a></li>
+                            <li class="testActive" ><a href="#">居家生活</a></li>
+                            <li class="testActive" ><a href="#">玩具</a></li>
+                            <li class="testActive" ><a href="#">藝術</a></li>
+                            <li class="testActive" ><a href="#">經典</a></li>
+						</ul>
+					</div>
+				</div>
+				<nav class="nav-menu mobile-menu">
+					<ul>
+						<li class="active"><a href="index">首頁</a></li>
+						<li><a href="shopPage">商城</a></li>
+						<li><a href="blog">博客</a></li>
+						<li><a href="contact">活動</a></li>
+						<li><a href="faq">問與答</a></li>
+
+					</ul>
+				</nav>
+				<div id="mobile-menu-wrap"></div>
+			</div>
+		</div>
+	</header>
     <!-- Header End -->
 
     <!-- Blog Details Section Begin -->
@@ -523,6 +591,9 @@
                             </div>
                             <h2>The Personality Trait That Makes People Happier</h2>
                             <p>travel <span>- May 19, 2019</span></p>
+                        </div>
+                        <div class="posted-by" id="userDetailBox">
+                            <!-- 使用者的基本資料 Here -->
                         </div>
                         <div class="blog-detail-desc">
                             <p>psum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
@@ -641,19 +712,6 @@
                                         </div>
                                     </a>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="posted-by">
-                            <div class="pb-pic">
-                                <img src="img/blog/post-by.png" alt="">
-                            </div>
-                            <div class="pb-text">
-                                <a href="#">
-                                    <h5>Shane Lynch</h5>
-                                </a>
-                                <p>Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                                    velit esse cillum bore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                                    amodo</p>
                             </div>
                         </div>
                         <div class="leave-comment">

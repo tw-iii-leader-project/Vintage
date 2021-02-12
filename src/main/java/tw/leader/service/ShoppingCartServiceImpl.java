@@ -72,19 +72,25 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 		System.out.println("修改成功");
 	}
 	
-//	public String payAndAddOrder(String email) {
-//		List<ShoppingCart> sList = sDao.findShop(email);
-//		String memo = "";
-//		int totalPrice = 0;
-//		for(ShoppingCart i: sList) {
-//			memo = memo+i.getpName();
-//			memo = memo+"x"+i.getAmount()+";";
-//		}
-//		for(ShoppingCart j:sList) {
-//			total
-//		}
-//		System.out.println(memo);
-//		
-//	}
+	public void payAndAddOrder(String email) {
+		List<ShoppingCart> sList = sDao.findShop(email);
+		String memo = "";
+		int totalPrice = 0;
+		for(ShoppingCart i: sList) {
+			memo = memo+i.getpName();
+			memo = memo+"x"+i.getAmount()+";";
+		}
+		for(ShoppingCart j:sList) {
+			int price = j.getPrice();
+			int amount = j.getAmount();
+			int mPrice = price*amount;
+			totalPrice = totalPrice+mPrice;
+		}
+		System.out.println(memo);
+		System.out.println(totalPrice);
+		
+//		ShoppingCartResp resultMsg = sDao.deleteProductById(cartId);
+		
+	}
 }
 

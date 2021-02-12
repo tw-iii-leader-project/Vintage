@@ -255,9 +255,10 @@
                 });
                 update();
             });
-            $("#test").click(function(){
+            $("#shoppingCartCheckOut").click(function(e){
+            	e.preventDefault();
             	$.ajax({
-            		url:"pantesttest",
+            		url:"panShoppingCartCheckout",
             		type:"POST",
             		dataType:"json",
             		contentType:"application/json;charset=utf-8",
@@ -349,7 +350,7 @@
 									</div>
 									<div class="select-button">
 										<a href="#" class="primary-btn view-card">VIEW CARD</a> <a
-											href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+											href="#" class="primary-btn checkout-btn" id="shoppingCartCheckOut">CHECK OUT</a>
 									</div>
 								</div></li>
 							<li class="cart-price">$150.00</li>

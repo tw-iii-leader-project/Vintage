@@ -62,12 +62,12 @@ public class ShoppingCartController {
 		sCService.updateshoppingCart(amount, cartId);
 	}
 	
-//	@PostMapping(value="/panShoppingCartCheckout")
-//	@ResponseBody
-//	public String checkout(@RequestBody ShoppingCartResp cartData) {
-//		String email = cartData.getEmail();
-//		
-//	}
+	@PostMapping(value="/panShoppingCartCheckout")
+	@ResponseBody
+	public void checkout(@RequestBody ShoppingCartResp cartData) {
+		String email = cartData.getEmail();
+		sCService.payAndAddOrder(email);
+	}
 	
 	
 	

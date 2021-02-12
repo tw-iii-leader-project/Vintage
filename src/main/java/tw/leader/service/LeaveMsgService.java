@@ -11,15 +11,15 @@ public interface LeaveMsgService {
 	 * 
 	 * @param req
 	 * @return
-	 * */
+	 */
 	public MsgAddResp magAdd(MsgAddReq req);
-	
+
 	/**
-	 *載入頁面時顯示該商品留言 
+	 * 載入頁面時顯示該商品留言
 	 * 
 	 * @param req
 	 * @return
-	 * */
+	 */
 	public ShowPorductLeaveMsgResp showLeaveMsg(ShowPorductLeaveMsgReq pId);
-	
+
 }

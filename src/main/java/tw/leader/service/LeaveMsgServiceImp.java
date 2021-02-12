@@ -59,7 +59,7 @@ public class LeaveMsgServiceImp implements LeaveMsgService {
 		msgAddResp.setUserName(leaveMsgEntity.getUserName());
 		msgAddResp.setLeaveMsgContent(leaveMsgEntity.getLeaveMsgContent());
 		msgAddResp.setLeaveMsgTime(leaveMsgEntity.getLeaveMsgTime());
-		msgAddResp.setUserName(leaveMsgEntity.getUserPic());
+		msgAddResp.setUserPic(leaveMsgEntity.getUserPic());
 		msgAddResp.setStarLv(leaveMsgEntity.getStarLv());
 		return msgAddResp;
 	}

@@ -1,0 +1,10 @@
+create table leaveMsg(
+msgId int IDENTITY(1,1) not null primary key,
+pId int not null,
+email nvarchar(50) not null,
+userName nvarchar(50) not null,
+userPic nvarchar(max),
+starLv int,
+leaveMsgContent nvarchar(max) not null,
+leaveMsgTime datetime not null
+)

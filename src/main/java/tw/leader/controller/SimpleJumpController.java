@@ -125,6 +125,12 @@ public class SimpleJumpController {
 		return "adminTest";
 	}
 	
+	// 賣家管理頁面
+	@GetMapping("/admin")
+	public String adminPage() {
+		return "admin";
+	}
+	
 	public String GetCurrentUserAccount() {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		return userName;

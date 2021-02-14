@@ -18,10 +18,10 @@
 	<properties>
 		<java.version>11</java.version>
 	</properties>
-	
+
 	<dependencies>
-	<!-- webSake -->
-			<dependency>
+		<!-- webSake -->
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
@@ -115,7 +115,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.jaxrs</groupId>
+			<artifactId>jackson-jaxrs-xml-provider</artifactId>
+			<version>[2.5.0,)</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
@@ -183,6 +189,32 @@
 			<artifactId>webjars-locator-core</artifactId>
 		</dependency>
 
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>1.3.2</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.microsoft.sqlserver</groupId>
+			<artifactId>mssql-jdbc</artifactId>
+			<version>7.0.0.jre8</version><!--$NO-MVN-MAN-VER$ -->
+		</dependency>
+		
+		<!-- 解决打包resources目录及packacing错误 -->
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-resources-plugin</artifactId>
+			<version>2.5</version>
+			<type>maven-plugin</type>
+		</dependency>
+		
+		<!-- 添加mybatis生成器，以便通过maven build自动生成model、mapper及XML -->
+		<dependency>
+			<groupId>org.mybatis.generator</groupId>
+			<artifactId>mybatis-generator-core</artifactId>
+			<version>1.3.7</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -190,6 +222,31 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<fork>true</fork>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!--ref: https://gitee.com/free/Mybatis_Utils/blob/master/MybatisGeneator/MybatisGeneator.md -->
+				<!--ref: https://www.cnblogs.com/handsomeye/p/6268513.html -->
+				<groupId>org.mybatis.generator</groupId>
+				<artifactId>mybatis-generator-maven-plugin</artifactId>
+				<version>1.3.7</version>
+				<configuration>
+					<configurationFile>src/main/resources/mybatis/generatorconfig.xml</configurationFile>
+					<verbose>true</verbose>
+					<overwrite>true</overwrite>
+				</configuration>
+				<dependencies>
+					<!-- 为mybatis-generator增加自定义插件依赖 -->
+					<dependency>
+						<groupId>tw.leader.mybatis.plugin</groupId>
+						<artifactId>tw.leader.mybatis.plugin</artifactId>
+						<version>1.0</version>
+						<scope>system</scope>
+						<systemPath>${basedir}/src/main/libs/cn.zuowenjun.boot.mybatis.plugin.jar</systemPath>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>

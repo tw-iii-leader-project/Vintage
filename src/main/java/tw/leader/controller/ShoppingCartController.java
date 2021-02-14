@@ -45,6 +45,13 @@ public class ShoppingCartController {
 		return sCService.selectshoppingCart(email);
 	}
 	
+	@PostMapping(value="/panSelectShoppingCartPrice")
+	@ResponseBody
+	public int selectShoppingPrice(@RequestBody ShoppingCartResp userData) {
+		String email = userData.getEmail();
+		return sCService.getShoppingCartTotalPrice(email);
+	}
+	
 	@PostMapping(value="/panDeleteShoppingProduct")
 	@ResponseBody
 	public String deleteShoppingProduct(@RequestBody ShoppingCartResp cartData) {

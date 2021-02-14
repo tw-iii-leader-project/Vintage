@@ -30,7 +30,8 @@ public interface ShoppingCartDao extends JpaRepository<ShoppingCart, Integer> {
 	public ShoppingCart updateProductAmount(int amount,int cartId);
 	//update ShoppingCart set amount = 5 where cartId = 1;
 	
-	@Query(value="")
+	@Query(value="delete from ShoppingCart where email = ?1",nativeQuery = true)
 	public ShoppingCartResp deleteAllProductByEmail(String email);
+	// delete from ShoppingCart where email = ?1;
 	
 }

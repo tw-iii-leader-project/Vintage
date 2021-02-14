@@ -1,6 +1,11 @@
 package tw.leader.service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +14,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tw.leader.dao.ShoppingCartDao;
+import tw.leader.dao.ShoppingOrderDao;
 import tw.leader.po.ShoppingCart;
+import tw.leader.po.ShoppingOrder;
 import tw.leader.vo.ShoppingCartResp;
 import tw.leader.vo.ShoppingOrderResp;
 
@@ -18,6 +25,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 
 	@Autowired
 	private ShoppingCartDao sDao;
+	@Autowired
+	private ShoppingOrderDao sODao;
 	@Autowired
 	private ObjectMapper objectMapper;
 	
@@ -72,6 +81,20 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 		System.out.println("修改成功");
 	}
 	
+	@Override
+	public int getShoppingCartTotalPrice(String email) {
+		List<ShoppingCart> sList = sDao.findShop(email);
+		int totalPrice = 0;
+		for(ShoppingCart j:sList) {
+			int price = j.getPrice();
+			int amount = j.getAmount();
+			int mPrice = price*amount;
+			totalPrice = totalPrice+mPrice;
+		}
+		
+		return totalPrice;
+	}
+	
 	public void payAndAddOrder(String email) {
 		List<ShoppingCart> sList = sDao.findShop(email);
 		String memo = "";
@@ -89,7 +112,14 @@ public class ShoppingCartServiceImpl implements ShoppingCartService{
 		System.out.println(memo);
 		System.out.println(totalPrice);
 		
-//		ShoppingCartResp resultMsg = sDao.deleteProductById(cartId);
+		ShoppingOrder sOBean = new ShoppingOrder();
+		sOBean.setEmail(email);
+		sOBean.setMemo(memo);
+		sOBean.setTotalPrice(totalPrice);
+		sOBean.setOrderTime(Timestamp.valueOf(LocalDateTime.now()));
+		sODao.save(sOBean);
+		ShoppingCartResp resultMsg = sDao.deleteAllProductByEmail(email);
+		
 		
 	}
 }

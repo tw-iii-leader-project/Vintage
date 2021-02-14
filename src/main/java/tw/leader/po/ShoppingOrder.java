@@ -68,6 +68,7 @@ public class ShoppingOrder {
 	public void setOrderTime(Timestamp orderTime) {
 		this.orderTime = orderTime;
 	}
+
 	
 	
 

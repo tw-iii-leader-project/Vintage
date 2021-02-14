@@ -14,5 +14,7 @@ public interface ShoppingCartService {
 	
 	public void updateshoppingCart(int amount,int cartId);
 	
+	public int getShoppingCartTotalPrice(String email);
+	
 	public void payAndAddOrder(String email);
 }

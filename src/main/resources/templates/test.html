@@ -9,6 +9,7 @@
 		color:red;
 	}
 </style>
+<link rel="stylesheet" href="css/style.css" type="text/css">
 <script type="text/javascript">
 	$(function(){
 		// var t = parseInt($("#test").html());
@@ -97,6 +98,26 @@
 				}
 			});
 		});
+		$("#shoppingList").append(
+			`<tr>
+                <td style="display: none;">123</td>													
+                <td class="si-pic"><img src="img/products/product-1.jpg"											
+                    alt=""></td>												
+                <td class="si-text">												
+                	<div class="product-selected">													
+                        <p>$600 x 5</p>														
+                        <h6>product</h6>									
+                	</div>										
+                </td>											
+                <td class="si-close"><a href="#" style="text-decoration:none">x</a></td>								
+            </tr>`
+		);
+		
+		$("#shoppingList tr .si-close").on("click","a",function(e){
+			e.preventDefault();
+			var cartId = $("td").first().html();
+			console.log(cartId);
+		});
 	});
 
 
@@ -107,7 +128,14 @@
 	<h1><span id="test" th:text="'ID:'+${secretProductId}"></span> love GawrGura!!!</h1>
 	<span id="secretUserName">GawrGura</span>
 	<img src="https://img.4gamers.com.tw/ckfinder/images/ALIEN/2021-1/maxresd213efault.jpg?versionId=Kmz4sadnKzhhuFKgyTuOes3KgyKq8eCZ">
-	<div id="detailsTest1"></div>
+	<div id="detailsTest1">
+		<table> 
+			<tbody id="shoppingList">
+        	<!-- ShoppingList Here -->
+			</tbody>
+		</table>
+	</div>
+	<button id="testOn"></button>
 	<div id="detailsTest2" style="border: 2px solid red;">
 		<ul id="userProductMain">
 			<li class="active">Clothings</li>

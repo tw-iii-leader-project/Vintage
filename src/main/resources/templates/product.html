@@ -188,38 +188,9 @@
                     }
                 });
             };
-            // 頁面載入時尋此使用者購物車裏的商品數量
-            update();
-
-            // 點選數量加入購物車
-            $("#shoppingCart").click(function(e){
-                e.preventDefault();
-                var productId = $("#secretProductId").html();
-                var productName = $("#secretProductName").html();
-                var productPrice = $("#secretPrice").html();
-                var amount = $("#amount").val();
-                var productPhoto = $("#secretPhoto").html();
-                var shoppingData = {"email":loginUser,"pId":productId,"pName":productName,"price":productPrice,"amount":amount,"cPhoto":productPhoto};
-                $.ajax({
-                    url:"addshoppingCart",
-                    type:"POST",
-                    dataType:"json",
-                    contentType:"application/json;charset=utf-8",
-                    data:JSON.stringify(shoppingData),
-                    success:function(resultMsg){
-                        var jsonMsg = $.parseJSON(resultMsg);
-                        alert(jsonMsg);
-                    },
-                    error:function(msg){
-                        console.log(msg);
-                    }
-                });
-                update();
-            });
             
-            // 及時查看購物車
-            $(".cart-icon").mouseenter(function(){
-                $("#shoppingList").html("");
+            function updateShoppingCart(){
+            	$("#shoppingList").html("");
                 $.ajax({
                     url:"panSelectShoppingCart",
                     type:"POST",
@@ -248,15 +219,46 @@
                         concole.log(msg);
                     }
                 });
+            };
+            // 頁面載入時尋此使用者購物車裏的商品數量
+            update();
+			updateShoppingCart();
+			updatePrice();
+            // 點選數量加入購物車
+            $("#shoppingCart").click(function(e){
+                e.preventDefault();
+                var productId = $("#secretProductId").html();
+                var productName = $("#secretProductName").html();
+                var productPrice = $("#secretPrice").html();
+                var amount = $("#amount").val();
+                var productPhoto = $("#secretPhoto").html();
+                var shoppingData = {"email":loginUser,"pId":productId,"pName":productName,"price":productPrice,"amount":amount,"cPhoto":productPhoto};
+                $.ajax({
+                    url:"addshoppingCart",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(shoppingData),
+                    success:function(resultMsg){
+                        var jsonMsg = $.parseJSON(resultMsg);
+                        alert(jsonMsg);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+                update();
+                updateShoppingCart();
                 updatePrice();
             });
+
             
             // 刪除購物車裡的物品
             $("#shoppingList tr .si-close").on("click","a",function(e){
             	e.preventDefault();
+                $(this).closest("tr").remove();
                 var cartId = $("td").first().html();
                 var cartData = {"cartId":cartId};
-                $(this).closest("tr").remove();
                 $.ajax({
                     url:"panDeleteShoppingProduct",
                     type:"POST",
@@ -272,6 +274,7 @@
                     }
                 });
                 update();
+                updateShoppingCart();
                 updatePrice();
             });
             

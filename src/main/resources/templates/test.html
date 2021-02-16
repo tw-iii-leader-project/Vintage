@@ -117,6 +117,7 @@
 			e.preventDefault();
 			var cartId = $("td").first().html();
 			console.log(cartId);
+			$(this).closest("tr").remove();
 		});
 	});
 

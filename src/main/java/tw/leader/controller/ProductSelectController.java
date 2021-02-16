@@ -252,6 +252,15 @@ public class ProductSelectController {
 	}
 	
 	/*
+	 * ***userPage頁面呼叫***賣家email進修改頁面
+	 * */
+	@GetMapping(value="/panBlogDetailUpdate")
+	public String blogDetailUpdatePage(@RequestParam String email,Model m) {
+		m.addAttribute("user",email);
+		return "blog-update";
+	}
+	
+	/*
 	 * ***SlidesBox商品展示
 	 * */
 	@PostMapping(value="/panSlideshowProduct")
@@ -293,6 +302,7 @@ public class ProductSelectController {
 		System.out.println(tJson);
 		return tJson;
 	}
+	
 	
 //	@GetMapping(value="/panProductPageTest")
 //	public String productJumPageTest(@RequestParam int id,Model m) {

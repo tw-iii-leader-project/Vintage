@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
 
+    <script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         $(function(){
@@ -50,7 +51,7 @@
                                     </a>
                                     <p>${v.userBirthday}</p>
                                     <p>${v.userPic}</p>
-                                    <a href="#">更改基本資料</a>
+                                    <a href="panBlogDetailUpdate?email=${v.email}">更改基本資料</a>
                                 </div>`
                             );
                         });

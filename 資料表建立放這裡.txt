@@ -28,7 +28,6 @@ userBirthday nvarchar(10),
 userPic nvarchar(max),
 verificationCode varchar(64),
 enabled bit,
-roles nvarchar(10) NOT NULL,
 createdTime nvarchar(max),
 roles nvarchar(10) not null
 )

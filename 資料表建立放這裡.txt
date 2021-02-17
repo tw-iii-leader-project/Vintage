@@ -34,3 +34,4 @@ roles nvarchar(20) not null
 )
 
 ---------bobby userInfo data
+---------pan

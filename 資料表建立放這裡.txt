@@ -29,6 +29,7 @@ userPic nvarchar(max),
 verificationCode varchar(64),
 enabled bit,
 createdTime nvarchar(max),
+resetPasswordToken varchar(45),
 roles nvarchar(10) not null
 )
 

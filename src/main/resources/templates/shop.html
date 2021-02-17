@@ -29,7 +29,8 @@
 	<script type="text/javascript">
     	$(function(){
             var allPageMainValue = $("#allPageMainValue").html();
-            if(allPageMainValue == ""){
+            var allPageFormValue = $("#allPageFormValue").html();
+            if(allPageMainValue == "" && allPageFormValue == ""){
             // 網頁載入時顯示全部商品筆數與總頁數
                 $.ajax({
 			        async:true,
@@ -141,7 +142,7 @@
                     });
                 });
             }
-            else{
+            else if(allPageMainValue != "") {
             // 使用者點擊分類標籤時，作類別搜尋
             // 先載入頁面資訊
                 var mainValue=allPageMainValue;
@@ -213,53 +214,62 @@
 	    	    		alert("ajax異常:"+msg);
 	    	    	}
 			    });
-                // // 註冊分類商品的分頁標籤與分頁查詢
-                // $("#pageBox ul").on("click",".productMainPage",function(){
-                //     $("#pageBox ul li").removeClass("active");
-                //     $(this).addClass("active");
-                //     $(".container #productMainRow #productMain #productList #productRow").html("");
-                //     var pageNum = $(this).html();
-                //     var pageData = {"pMain":mainValue,"page":pageNum};
-                //     $.ajax({
-                //         async:true,
-                //         url:"panProductSelectByMain.page",
-                //         type:"POST",
-                //         dataType:"json",
-                //         contentType:"application/json;charset=utf-8",
-                //         data:JSON.stringify(pageData),
-                //         success:function(response){
-                //             $.each(response,function(i,v){
-                //                 $(".container #productMainRow #productMain #productList #productRow").append(
-                //                     `<div class="col-lg-4 col-sm-6">
-                //              	        <div class="product-item">
-                //                         	<div class="pi-pic">
-                //                             	<img src="img/products/${v.cPhoto}" alt="">
-                //                                     <ul>
-                //                                         <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
-                //                                         <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
-                //                                         <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-                //                                     </ul>
-                //                             </div>
-                //                             <div class="pi-text">
-                //                             	<div class="catagory-name">${v.pMain}</div>
-                //                                     <a href="panProductPage?id=${v.pId}">
-                //                                         <h5>${v.pName}</h5>
-                //                                     </a>
-                //                                     <div class="product-price">
-                //                                         ${v.price}
-                //                                     </div>
-                //                             </div>
-                //                         </div>
-                //                     </div>` 
-                //                 );
-                //             });
-                //         },
-                //         error:function(msg){
-                //             console.log(msg);
-                //         }
-                //     });
-                // });
             }
+            else {
+                var inputText = allPageFormValue;
+                $("#pageBox ul").html("");
+                $("#totalElements").html("");
+                $(".container #productMainRow #productMain #productList #productRow").html("");
+                var textInputJson = {"pName":inputText};
+                $.ajax({
+                    url:"panProductSelectByName",
+                    type:"POST",
+                    dataType:"json",
+                    data:JSON.stringify(textInputJson),
+                    contentType:"application/json;charset=utf-8;",
+                    success:function(response){
+                        console.log(response);
+                        if(response == ""){
+                            $(".container #productMainRow #productMain #productList #productRow").append(
+                                `<div>
+                                    <img src="img/data-Not-found/dataNotFound.jpeg">
+                                    <h4>沒有找到你要的東西啦 இдஇ</h4>
+                                </div>`
+                            );
+                            console.log("查無資料!");
+                        }
+                        $.each(response,function(i,v){
+                            $(".container #productMainRow #productMain #productList #productRow").append(
+                                `<div class="col-lg-4 col-sm-6">
+                     	            <div class="product-item">
+                                    	<div class="pi-pic">
+                                        	<img src="img/products/${v.cPhoto}" alt="">
+                                                <ul>
+                                                    <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                                    <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+                                                    <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                                </ul>
+                                        </div>
+                                        <div class="pi-text">
+                                        	<div class="catagory-name">${v.pMain}</div>
+                                                <a href="panProductPage?id=${v.pId}">
+                                                    <h5>${v.pName}</h5>
+                                                </a>
+                                                <div class="product-price">
+                                                    ${v.price}
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>`
+	    					);
+                        });
+                    },
+                    error:function(msg){
+                        alert("ajax異常:"+msg);
+                    }
+                });
+
+            };
             var mainValue=null;
 			$(".testActive a").click(function(e){
 				e.preventDefault();
@@ -445,6 +455,7 @@
 <body>
     <span th:text="${user}" style="display: none;" id="loginInfo"></span>
     <span th:text="${allPageMainValue}" style="display: none;" id="allPageMainValue"></span>
+    <span th:text="${allPageFormValue}" style="display: none;" id="allPageFormValue"></span>
     <!-- Page Preloder -->
     <div id="preloder">
         <div class="loader"></div>

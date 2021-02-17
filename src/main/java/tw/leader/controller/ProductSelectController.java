@@ -154,6 +154,13 @@ public class ProductSelectController {
 		System.out.println(pMain);
 		return "shop";
 	}
+	
+	@GetMapping(value="/panAllPageFormLink")
+	public String allPageFormLink(@RequestParam String pName,Model m) {
+		m.addAttribute("allPageFormValue",pName);
+		System.out.println(pName);
+		return "shop";
+	}
 
 	/*
 	 * ***Product頁面載入時呼叫***載入此商品的所有資料

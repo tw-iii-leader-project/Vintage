@@ -37,6 +37,16 @@
 			var allPageMainValue = $(this).html();
 			$(this).attr("href",mUrl+allPageMainValue);
 		});
+
+		$("#textSelectFormSearch").click(function(){
+			fUrl = "panAllPageFormLink?pName=";
+			var allPageFormValue = $("#textSelectFormInput").val();
+			if(allPageFormValue == ""){}
+			else{
+				window.location.href=fUrl+allPageFormValue;
+			}
+		});
+
 		// var slideshowEmailA = "1003@gmail.com";
 		// var slideshowEmailB = null;
 		// var slideshowData = {"email":slideshowEmailA};
@@ -156,8 +166,8 @@
 						<div class="advanced-search">
 							<button type="button" class="category-btn"></button>
 							<div class="input-group">
-								<input type="text" placeholder="老鐵，關注蛤?">
-								<button type="button">
+								<input type="text" id="textSelectFormInput" placeholder="老鐵，關注蛤?">
+								<button type="button" id="textSelectFormSearch">
 									<i class="ti-search"></i>
 								</button>
 							</div>

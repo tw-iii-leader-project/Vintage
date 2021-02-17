@@ -22,19 +22,39 @@ public class userArticleServiceImpl implements userArticleService{
 	
 	@Override
 	public String getUserArticle(String email) throws Exception {
-		userArticle uList = uADao.selectUserArticle(email);
+		List<userArticle> uList = uADao.selectUserArticle(email);
 		String uJson = objectMapper.writeValueAsString(uList);
 		System.out.println(uJson);
 		return uJson;
 	}
 	
 	@Override
-	public userArticleResp insertArticle(String email,String description,String articleContext) {
-		userArticle result = uADao.selectUserArticle(email);
+	public userArticleResp insertDescription(String email,String description) {
+		List<userArticle> result = uADao.selectUserArticle(email);
 		if(result == null) {
 			userArticle aBean = new userArticle();
 			aBean.setEmail(email);
 			aBean.setDescription(description);
+			
+			uADao.save(aBean);
+			userArticleResp insertMsg = new userArticleResp();
+			insertMsg.setMessage("文章已新增");
+			return insertMsg;
+		}
+		else {
+			uADao.updateUserDescription(description, email);
+			userArticleResp insertMsg = new userArticleResp();
+			insertMsg.setMessage("文章已更新");
+			return insertMsg;
+		}
+	}
+	
+	@Override
+	public userArticleResp insertArticle(String email,String articleContext) {
+		List<userArticle> result = uADao.selectUserArticle(email);
+		if(result == null) {
+			userArticle aBean = new userArticle();
+			aBean.setEmail(email);
 			aBean.setArticleContext(articleContext);
 			
 			uADao.save(aBean);
@@ -43,10 +63,12 @@ public class userArticleServiceImpl implements userArticleService{
 			return insertMsg;
 		}
 		else {
+			uADao.updateUserArticle(articleContext, email);
 			userArticleResp insertMsg = new userArticleResp();
-			insertMsg.setMessage("已有此文長");
+			insertMsg.setMessage("文章已更新");
 			return insertMsg;
-
 		}
 	}
+	
+	
 }

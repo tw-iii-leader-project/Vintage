@@ -27,10 +27,98 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         $(function(){
+            var email = $("#loginInfo").html();
+            var userData = {"email":email};
+            $.ajax({
+                url:"panfindUserArticle",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userData),
+                success:function(response){
+                    $.each(response,function(i,v){
+                        var essay = v.description;
+                        if(essay == null || essay == ""){
+                            $("#essay1").val('寫點什麼吧!!!');
+                        }
+                        else{
+                            $("#essay1").val(essay);
+                        }
+                    });
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+
+            $.ajax({
+                url:"panfindUserArticle",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userData),
+                success:function(response){
+                    $.each(response,function(i,v){
+                        var essay = v.articleContext;
+                        if(essay == null || essay == ""){
+                            $("#essay2").val('寫點什麼吧!!!');
+                        }
+                        else{
+                            $("#essay2").val(essay);
+                        }
+                        
+                    });
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+
             $("#essay1Save").click(function(){
                 var essayData = CKEDITOR.instances.essay1.getData();
-                
+                var articleData = {"email":email,"description":essayData};
+                $.ajax({
+                	url:"panInsertDescription",
+                	type:"POST",
+                	dataType:"json",
+                	contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(articleData),
+                    success:function(result){
+                        var sMsg = JSON.parse(result);
+                        console.log(sMsg);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
             });
+
+            $("#essay2Save").click(function(){
+                var essayData = CKEDITOR.instances.essay2.getData();
+                var articleData = {"email":email,"articleContext":essayData};
+                $.ajax({
+                	url:"panInsertArticle",
+                	type:"POST",
+                	dataType:"json",
+                	contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(articleData),
+                    success:function(result){
+                        var sMsg = JSON.parse(result);
+                        alert(sMsg);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            });
+
+            $("#saveAndOut").click(function(){
+            	alert("確定要儲存&離開嗎?");
+                $("#essay1Save").trigger("click");
+                $("#essay2Save").trigger("click");
+                history.go(-1);
+            });
+
         });
     </script>
 </head>
@@ -172,26 +260,14 @@
                             <div>封面大圖</div>
                         </div>
                         <div class="posted-by" id="userDetailBox">
-<!--                             <form method="POST" action="" id=""> -->
-<!--                                 <div class="form-group"> -->
-<!--                                     <label>名稱</label> -->
-<!--                                     <input type="text" name="userName" id="userName" th:text=""> -->
-<!--                                 </div> -->
-<!--                                 <div class="form-group"> -->
-<!--                                     <label>名稱</label> -->
-<!--                                     <input type="text" name="userName" id="userName" th:text=""> -->
-<!--                                 </div> -->
-<!--                                 <div class="form-group"> -->
-<!--                                     <label>名稱</label> -->
-<!--                                     <input type="text" name="userName" id="userName" th:text=""> -->
-<!--                                 </div> -->
-<!--                             </form> -->
+
                         </div>
-                        <form>
+                        <h3 style="margin: 30px;">自我介紹</h3>
+                        <form style="margin: 30px;">
                             <textarea name="essay1" id="essay1" rows="10" cols="80">
-                                This is my textarea to be replaced with CKEditor 4.
+
                             </textarea>
-                            <button type="button" id="essay1Save">儲存</button>
+                            <button type="button" id="essay1Save" class="primary-btn">儲存</button>
                             <script>
                                 // Replace the <textarea id="editor1"> with a CKEditor 4
                                 // instance, using default configuration.
@@ -201,34 +277,25 @@
                         <div>圖片1</div>
                         <div>圖片2</div>
                         <div>圖片3</div>
-                        <form>
+                        <h3 style="margin: 30px;">分享故事</h3>
+                        <form style="margin: 30px;">
                             <textarea name="essay2" id="essay2" rows="10" cols="80">
-                                This is my textarea to be replaced with CKEditor 4.
+                                
                             </textarea>
-                            <button type="submit" id="essay2Submit">儲存</button>
+                            <button type="button" id="essay2Save" class="primary-btn">儲存</button>
                             <script>
                                 // Replace the <textarea id="editor1"> with a CKEditor 4
                                 // instance, using default configuration.
                                 CKEDITOR.replace( 'essay2' );
                             </script>
                         </form>
-                        <button id="saveAndOut">完成&離開</button>
+                        <button id="saveAndOut" class="primary-btn checkout-btn">完成&離開</button>
 
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <section class="product-shop spad">
-        <div class="container">
-            <div class="row" id="productMainRow">
-                <div class="col-lg-12 order-1 order-lg-2">
-                    <h3>更多此賣家作品</h3>
-                    
-                </div>
-            </div>
-        </div>
-    </section>    
+    </section>  
     
     <!-- Blog Details Section End -->
 

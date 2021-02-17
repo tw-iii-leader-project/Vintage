@@ -38,6 +38,9 @@ public class User {
 	@Column(name = "gender")
 	private String gender;
 	
+	@Column(name = "userPic")
+	private String userPic;
+	
 	@Column(name = "verificationCode",updatable = false, length = 64)
 	private String verificationCode;
 	

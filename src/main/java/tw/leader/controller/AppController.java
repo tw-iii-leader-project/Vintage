@@ -1,7 +1,13 @@
 package tw.leader.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -136,16 +143,43 @@ public class AppController {
 	
 	
 	@PostMapping("/userInfoUpdate")
-	public String userInfoUpdate(@RequestParam("userBirthday")String userBirthday, @RequestParam("userPhone") String userPhone, @RequestParam("gender") String gender) {
+	public String userInfoUpdate(
+			@RequestParam("userBirthday")String userBirthday, 
+			@RequestParam("userPhone") String userPhone, 
+			@RequestParam("gender") String gender,
+			@RequestParam("fileImage") MultipartFile multipartFile
+			) throws IOException{
 		String currentUser = GetCurrentUserAccount();
 		String newRole = "ROLE_SELL";
 		User user = uRepo.findByEmail(currentUser);
+		
+		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+		user.setUserPic(fileName);
+		
 		user.setEmail(currentUser);
 		user.setBirthday(userBirthday);
 		user.setPhone(userPhone);
 		user.setGender(gender);
 		user.setRoles(newRole);
-		uRepo.save(user);
+				
+		
+		User saveUser = uRepo.save(user);
+		
+		String uploadDir = "C:\\Users\\user\\git\\Vintage217\\userPhoto\\" + saveUser.getUserId();
+		
+		Path uploadPath = Paths.get(uploadDir);
+		
+		if ( !Files.exists(uploadPath) ) {
+			Files.createDirectories(uploadPath);
+		}
+		
+		try (InputStream inputStream = multipartFile.getInputStream()) {
+			Path filePath = uploadPath.resolve(fileName);
+			System.out.println(filePath.toFile().getAbsolutePath());
+			Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+		} catch (IOException e) {
+			throw new IOException("Could not save upload file" + fileName); 
+		}
 		
 		return "update_success";
 	}

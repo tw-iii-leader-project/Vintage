@@ -22,6 +22,9 @@ public class Productb {
 	private int categoryId;
 	private String lastEditBy;
 	private Date lastEditTime;
+	private String categoryName;
+	private String sellerName;
+	
 	
 	public Productb() {
 		
@@ -29,7 +32,7 @@ public class Productb {
 	
 	public Productb(int pId,String pName,String pMain,String pDetail, int price,int invantory
 			, String pSize, String description, String sDescription, String cPhoto, String email,
-			String userName, int categoryId) {
+			String userName, int categoryId, String categoryName, String sellerName) {
 		this.pId=pId;
 		this.pName=pName;
 		this.pMain=pMain;
@@ -45,6 +48,8 @@ public class Productb {
 		this.categoryId=categoryId;
 		this.lastEditBy= lastEditBy;
 		this.lastEditTime= lastEditTime;
+		this.categoryName=categoryName; 
+		this.sellerName=sellerName;
 	}
 
 	public int getpId() {
@@ -167,6 +172,21 @@ public class Productb {
 		this.lastEditTime = lastEditTime;
 	}
 
-	
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+	public String getSellerName() {
+		return sellerName;
+	}
+
+	public void setSellerName(String sellerName) {
+		this.sellerName = sellerName;
+	}
+
 	
 }

@@ -127,8 +127,17 @@ public class SimpleJumpController {
 	
 	// 賣家管理頁面
 	@GetMapping("/admin")
-	public String adminPage() {
+	public String adminPage(Model m) {
+		String userName = GetCurrentUserAccount();
+		m.addAttribute("user", userName);
 		return "admin";
+	}
+	
+	@GetMapping("/blog2")
+	public String blog2Page(Model m) {
+		String userName = GetCurrentUserAccount();
+		m.addAttribute("user", userName);
+		return "blog2";
 	}
 	
 	public String GetCurrentUserAccount() {

@@ -1,4 +1,4 @@
-	package tw.leader.boot.mapper;
+package tw.leader.boot.mapper;
 
 import java.util.*;
 
@@ -19,14 +19,19 @@ public interface ProductMapper {
 			+"order by pId</script>")
 	List<Productb> getListByMultIds(@Param("pIds")int...pIds);
 	
+	@Select("<script>select * from Product where email in " 
+			+"<foreach item='item' index='index' collection='email' open='(' separator=',' close=')'>#{item}</foreach>"
+			+"order by lastEditTime</script>")
+	List<Productb> getListByMultiEmail(@Param("email")String...email);
+	
 	@Select("select * from Product where pId=#{pId}")
 	Productb get(int pId);
 	
 
 	@Insert(value="insert into Product(pName, pMain, pDetail, price, invantory,pSize, description, sDescription,"
-			+ "cPhoto, email, userName,categoryId, lastEditBy, lastEditTime) "
+			+ "cPhoto, email, userName,categoryId, lastEditBy, lastEditTime,categoryName) "
 			+ "values(#{pName},#{pMain},#{pDetail},#{price},#{invantory},#{pSize},#{description},#{sDescription},"
-			+ "#{cPhoto},#{email},#{userName},#{categoryId},#{lastEditBy},getdate())")
+			+ "#{cPhoto},#{email},#{userName},#{categoryId},#{lastEditBy},getdate(), #{categoryName})")
 	@Options(useGeneratedKeys=true,keyProperty="pId",keyColumn="pId")
 	void insert(Productb product);
 	
@@ -35,7 +40,7 @@ public interface ProductMapper {
 	
 	@Update("update Product set pName=#{pName},pMain=#{pMain},pDetail=#{pDetail},"
 			+ "price=#{price}, invantory=#{invantory}, pSize=#{pSize},decription=#{decription},sDescription=#{sDescription},cPhoto=#{cPhoto},email=#{email},userName=#{userName}" 
-			+ "categoryId=#{categoryId},lastEditBy=#{lastEditBy},lastEditTime=getdate()" 
+			+ "categoryId=#{categoryId},lastEditBy=#{lastEditBy},lastEditTime=getdate(),categoryName=#{categoryName}" 
 			+ "where pId=#{pId}")
 	void update(Productb product);
 	

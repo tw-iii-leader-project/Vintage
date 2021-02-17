@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -13,13 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import tw.leader.boot.domain.*;
+import tw.leader.boot.domain.GoodsCategory;
+import tw.leader.boot.domain.Productb;
 import tw.leader.boot.mapper.GoodsCategoryMapper;
 import tw.leader.boot.mapper.ProductMapper;
 import tw.leader.boot.service.ProductServiceb;
@@ -49,6 +47,12 @@ public class ProductServiceImplb implements ProductServiceb {
 	public List<Productb> getProductListByMultIds(int... productpIds) {
 		return productMapper.getListByMultIds(productpIds);
 	}
+	
+	@Override
+	public List<Productb> getListByMultiEmail(String... email) {
+		return productMapper.getListByMultiEmail(email);
+	}
+	
 	
 	@Override
 	public Productb getProduct(int pId) {
@@ -176,6 +180,7 @@ public class ProductServiceImplb implements ProductServiceb {
         HttpServletRequest  request= ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
         return request;
     }
+
 	
 	
 }

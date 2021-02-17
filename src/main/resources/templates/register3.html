@@ -28,53 +28,6 @@
 <link rel="stylesheet" href="css/style.css" type="text/css">
 
 <script>
-$.fn.serializeObject = function () {
-	var o = {};
-	var a = this.serializeArray();
-	$.each(a, function() {
-		if (o[this.name]) {
-			if (!o[this.name].push) {
-				o[this.name] = [o[this.name]];
-			}
-			o[this.name].push(this.value || "");
-		} else {
-			o[this.name] = this.value || "";
-		}
-	});
-	return o;
-};
-
-$("#registerForm").submit(function (e) {
-	e.preventDefault();
-	var jsonuserinfo = $(this).serializeObject();
-	cnsole.log(jsonuserinfo)
-	
-	
-	$.ajax({
-		type:"POST",
-		async: false,
-		dataType:"json",
-		url:"/registerExecute",
-		contentType: 'application/json; charset=UTF-8',
-		data: JSON.stringify(jsonuserinfo),
-		success: function (msg) {
-			var sResult = msg.d.sResult;
-			var db_Result = msg.d.db_Result;
-		},
-		statusCode: {
-			403: function (response) {
-				LocationHerf();
-			}
-		}
-	});
-	var LocationHerf = function () {
-		alert("SUCCESS");
-	    window.location.href = "toindex";
-	};
-	
-})
-
-
 
 </script>
 

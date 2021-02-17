@@ -19,4 +19,15 @@ public interface UserRepository extends JpaRepository<User, Long>{
 //	@Modifying
 //	@Query("UPDATE userInfo as u SET u.userBirthday=?1, u.userPhone=?2, u.gender=?3 where u.email=?4")
 //	User updateByEmail(String userBirthday, String userPhone, String gender, String email);
+	
+	@Query("SELECT u FROM userInfo u WHERE u.verificationCode = ?1")
+	public User findByVerificationCode(String code);
+	
+	@Modifying
+	@Query("UPDATE userInfo  u SET u.enabled=1 WHERE u.userId=?1")
+	public void enabled(int id);
+	
+	public User findByResetPasswordToken(String token);
+		
+	
 }

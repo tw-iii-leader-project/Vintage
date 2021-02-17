@@ -38,8 +38,22 @@ public class User {
 	@Column(name = "gender")
 	private String gender;
 	
+	@Column(name = "verificationCode",updatable = false, length = 64)
+	private String verificationCode;
+	
+	@Column(name = "resetPasswordToken")
+	private String resetPasswordToken;
+	
+	@Column(name = "enabled")
+	private int enabled;
+	
 	@Column(name = "roles")
 	private String roles;
+	
+	@Column(name = "createdTime", updatable = false)
+	private Date createTime;
+	
+//	private String userMsg;
 
 	public int getUserId() {
 		return userId;

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
-
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
 
 <head>
 <meta charset="UTF-8">
@@ -26,17 +25,10 @@
 <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
-
-<script>
-
-</script>
-
 </head>
 
-
-
 <body>
-	<span th:text="${user}" style="display: none;" id="loginInfo"></span>
+<p th:value="${user}" type="hidden" id="loginInfo"></p>
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -154,7 +146,7 @@
 						<li class="active"><a href="index">首　頁</a></li>
 						<li><a href="shopPage">商　城</a></li>
 						<li><a href="blog">部落格</a></li>
-						<li><a href="Activity">活　動</a></li>
+						<li><a href="test">活　動</a></li>
 						<li><a href="faq">問與答</a></li>
 
 					</ul>
@@ -171,7 +163,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb-text">
-						<a href="#"><i class="fa fa-home"></i> Home</a> <span>Register</span>
+						<a href="#"><i class="fa fa-home"></i> Home</a> <span>Login</span>
 					</div>
 				</div>
 			</div>
@@ -184,36 +176,10 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-6 offset-lg-3">
-					<div class="register-form">
-						<h2>開啟賣家功能</h2>
-						<h3 style="text-align: center">填寫詳細資料以成為賣家</h3>
-						<form th:action="@{/userInfoUpdate}" id="registerForm" method="post" >
-							<div class="group-input">
-								<label for="birthday">Birthday *</label> 
-								<input type="date" name="userBirthday" id="userBirthday" required>
-							</div>
-							<div class="group-input">
-								<label for="phone">Phone *</label> <input type="text"
-									name="userPhone" id="userPhone" required length="10">
-							</div>
-
-							<div class="group-input">
-								<label for="gender">Gender</label> 
-								<input type="radio" name="gender" id="gender" value="MAN" th:text="男">
-								<input type="radio" name="gender" id="gender" value="WOMEN" th:text="女">
-								<input type="radio" name="gender" id="gender" value="PRIVATE" th:text="不公開">
-							</div>
-<!-- 							<div class="group-input"> -->
-<!-- 								<label for="con-pass"></label> <input type="text" -->
-<!-- 									th:field="*{roles}" id="roles" style="display:none" value="ROLES_SELLER"> -->
-<!-- 							</div> -->
-			
-
-							<div>
-							<button type="submit" class="site-btn register-btn">送出</button>
-							</div>
-						</form>
-						
+					<div class="login-form">
+						<h2>Password Reset Successfully!!</h2>
+									
+												
 					</div>
 				</div>
 			</div>
@@ -265,47 +231,48 @@
 							<a href="#"><img src="img/footer-logo.png" alt=""></a>
 						</div>
 						<ul>
-							<li>地址: 80147高雄市前金區中正四路211號8號樓之1</li>
-							<li>電話: 07 969 9885</li>
-							<li>電子信箱: vintage@gmail.com</li>
+							<li>Address: 60-49 Road 11378 New York</li>
+							<li>Phone: +65 11.188.888</li>
+							<li>Email:</li>
 						</ul>
 						<div class="footer-social">
-							<a href="https://facebook.com"><i class="fa fa-facebook"></i></a>
-							<a href="https://instagram.com"><i class="fa fa-instagram"></i></a>
-							<a href="https://twitter.com"><i class="fa fa-twitter"></i></a> <a
-								href="https://www.pinterest.com"><i class="fa fa-pinterest"></i></a>
+							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
+								class="fa fa-instagram"></i></a> <a href="#"><i
+								class="fa fa-twitter"></i></a> <a href="#"><i
+								class="fa fa-pinterest"></i></a>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-2 offset-lg-1">
 					<div class="footer-widget">
-						<h5>資訊</h5>
+						<h5>Information</h5>
 						<ul>
-							<li><a href="#">關於我們</a></li>
-							<li><a href="#">首頁</a></li>
-							<!-- 							<li><a href="#">Contact</a></li> -->
-							<li><a href="#">Q&A</a></li>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Checkout</a></li>
+							<li><a href="#">Contact</a></li>
+							<li><a href="#">Serivius</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-2">
 					<div class="footer-widget">
-						<h5>我的帳戶</h5>
+						<h5>My Account</h5>
 						<ul>
-							<li><a href="#">個人帳戶</a></li>
-							<!-- 							<li><a href="#">Contact</a></li> -->
-							<li><a href="#">購物車</a></li>
-							<li><a href="#">商城</a></li>
+							<li><a href="#">My Account</a></li>
+							<li><a href="#">Contact</a></li>
+							<li><a href="#">Shopping Cart</a></li>
+							<li><a href="#">Shop</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="newslatter-item">
-						<h5>現在就加入我們的電子報！</h5>
-						<p>獲取最新最即時的商品資訊</p>
+						<h5>Join Our Newsletter Now</h5>
+						<p>Get E-mail updates about our latest shop and special
+							offers.</p>
 						<form action="#" class="subscribe-form">
-							<input type="text" placeholder="輸入您的電子信箱">
-							<button type="button">訂閱</button>
+							<input type="text" placeholder="Enter Your Mail">
+							<button type="button">Subscribe</button>
 						</form>
 					</div>
 				</div>
@@ -337,6 +304,17 @@
 	<!-- Footer Section End -->
 
 	<!-- Js Plugins -->
+	<script type="text/javascript">
+	
+		function checkPasswordMatch(fieldConfirmPassword) {
+			if ( fieldConfirmPassword.value != $("#password").val() ) {
+				fieldConfirmPassword.setCustomValidity("Password do not match!!");
+			} else {
+				fieldConfirmPassword.setCustomValidity(""); 
+			}
+		}
+	
+	</script>
 	<script src="js/jquery-3.3.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>

@@ -56,12 +56,16 @@ public class SimpleJumpController {
 	}
 	
 	@GetMapping("/contact")
-	public String contactPage() {
+	public String contactPage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		return "contact";
 	}
 	
 	@GetMapping("/faq")
-	public String faqPage() {
+	public String faqPage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		return "faq";
 	}
 	
@@ -90,7 +94,9 @@ public class SimpleJumpController {
 	}
 	
 	@GetMapping("/loginPage")
-	public String viewLoginPage() {
+	public String viewLoginPage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		return "login3";
 	}
 	

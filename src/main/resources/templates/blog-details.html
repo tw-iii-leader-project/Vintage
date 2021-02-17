@@ -7,7 +7,7 @@
 <meta name="keywords" content="Fashi, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Fashi | Blog-detail</title>
+<title>Fashi | Blog-details</title>
 
 <!-- Google Font -->
 <link
@@ -29,11 +29,23 @@
 <script src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
         $(function(){
+    		var mUrl = "panAllPageMainLink?pMain=";
+    		$(".testActive a").click(function(){
+    			var allPageMainValue = $(this).html();
+    			$(this).attr("href",mUrl+allPageMainValue);
+    		});
+
+    		$("#textSelectFormSearch").click(function(){
+    			fUrl = "panAllPageFormLink?pName=";
+    			var allPageFormValue = $("#textSelectFormInput").val();
+    			if(allPageFormValue == ""){}
+    			else{
+    				window.location.href=fUrl+allPageFormValue;
+    			}
+    		});
             var userEmail = null;
             var pageEmail = $("#secretUserEmail").html();
             var loginEmail = $("#loginInfo").html();
-            alert("login="+loginEmail);
-            alert("page="+pageEmail);
             if(pageEmail == "" || pageEmail == loginEmail){
                 userEmail = loginEmail;
                 userInfoData = {"email":userEmail};
@@ -57,8 +69,8 @@
                                     <p>${v.userPic}</p>
                                     <p>${v.phone}</p>
                                     <p>${v.gender}</p>
-                                    <a href="toUserInfoDetail">基本資料補充</a>
-                                    <a href="admin">更改基本資料</a>
+                                    <a href="toUserInfoDetail">更改基本資料</a>
+                                    <a href="admin">商品管理後台</a>
                                 </div>`
                             );
                         });
@@ -112,14 +124,13 @@
                 success:function(pageData){
                     $.each(pageData,function(i,v){
                         var pages = parseInt(v.totalPages);
+                        var total = v.totalElements;
                         for(n=1;n<=pages;n++){
                             $("#pageBox ul").append(
                                 `<li class="productAllPage">${n}</li>`
                             );
                         };
-                        $("#totalElements").append(
-                            `<span>${v.totalElements}</span>`
-                        );
+                        $("#totalElements").html(total);
                     });
                     $("#pageBox ul li").first().addClass("active");
                 },
@@ -261,14 +272,13 @@
                     success:function(pageData){
                         $.each(pageData,function(i,v){
                             var pages = parseInt(v.totalPages);
+                            var total = v.totalElements;
                             for(n=1;n<=pages;n++){
                                 $("#pageBox ul").append(
                                     `<li class="productMainPage">${n}</li>`
                                 );
                             };
-                            $("#totalElements").append(
-                                `<span>${v.totalElements}</span>`
-                            );
+                            $("#totalElements").html(total);
                         });
                         $("#pageBox ul li").first().addClass("active");
                     },
@@ -438,10 +448,56 @@
 			        }
                 });
             });
-        });
-        
+            
+            /*
+            -------------------------------------------------------------
+                userArticle
+            */
+            $.ajax({
+                url:"panfindUserArticle",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userData),
+                success:function(result){
+                    $.each(result,function(i,v){
+                        var essay = v.description;
+                        if(essay == null || essay == "" || essay == "寫點什麼吧!!!"){
+                            $("#userDescription").html("");
+                        }
+                        else{
+                            $("#userDescription").html(essay);
+                        }
+                    });
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
 
-        
+            $.ajax({
+                url:"panfindUserArticle",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userData),
+                success:function(result){
+                    $.each(result,function(i,v){
+                        var essay = v.articleContext;
+                        if(essay == null || essay == "" || essay == "寫點什麼吧!!!"){
+                            $("#userArticle").html("");
+                        }
+                        else{
+                            $("#userArticle").html(essay);
+                        }
+                    });
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+        });
+         
     </script>
 </head>
 
@@ -489,8 +545,8 @@
 						<div class="advanced-search">
 							<button type="button" class="category-btn">所　有　分　類　</button>
 							<div class="input-group">
-								<input type="text" placeholder="您在搜尋什麼商品嗎?">
-								<button type="button" class="ml-5">
+								<input type="text" id="textSelectFormInput" placeholder="您在搜尋什麼商品嗎?">
+								<button type="button" class="ml-5" id="textSelectFormSearch">
 									<i class="ti-search"></i>
 								</button>
 							</div>
@@ -593,29 +649,11 @@
 							</p>
 						</div>
 						<div class="posted-by" id="userDetailBox">
-
-							
 							<!-- 使用者的基本資料 Here -->
 						</div>
-						<div class="blog-detail-desc">
-							<p>psum dolor sit amet, consectetur adipisicing elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut
-								enim ad minim veniam, quis nostrud exercitation ullamco laboris
-								nisi ut aliquip ex ea commodo consequat. Duis aute irure Lorem
-								ipsum dolor sit amet, consectetur adipisicing elit, sed do
-								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-								enim ad minim veniam, quis nostrud exercitation ullamco laboris
-								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-								in reprehenderit in voluptate.</p>
-						</div>
-						<div class="blog-quote">
-							<p>
-								“ Technology is nothing. What's important is that you have a
-								faith in people, that they're basically good and smart, and if
-								you give them tools, they'll do wonderful things with them.” <span>-
-									Steven Jobs</span>
-							</p>
-						</div>
+						<div id="userDescription">
+                            <!-- 文章1 -->
+                        </div>
 						<div class="blog-more">
 							<div class="row">
 								<div class="col-sm-4">
@@ -629,15 +667,9 @@
 								</div>
 							</div>
 						</div>
-						<p>Sum dolor sit amet, consectetur adipisicing elit, sed do
-							eiusmod tempor incididunt ut labore et dolore magna aliqua.Ut
-							enim ad minim veniam, quis nostrud exercitation ullamco laboris
-							nisi ut aliquip ex ea commodo consequat. Duis aute irure Lorem
-							ipsum dolor sit amet, consectetur adipisicing elit, sed do
-							eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-							enim ad minim veniam, quis nostrud exercitation ullamco laboris
-							nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-							reprehenderit in voluptate.</p>
+                        <div id="userArticle">
+                            <!-- 文章2 -->
+                        </div>
 					</div>
 				</div>
 			</div>

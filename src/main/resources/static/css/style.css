@@ -556,7 +556,7 @@ ol {
 	position: absolute;
 	right: -70px;
 	top: 100px;
-	width: 350px;
+	width: 400px;
 	background: #ffffff;
 	z-index: 99;
 	text-align: left;
@@ -571,7 +571,7 @@ ol {
 }
 
 .inner-header .nav-right li.cart-icon .cart-hover .select-items table {
-	width: 100%;
+	width: 90%;
 }
 
 .inner-header .nav-right li.cart-icon .cart-hover .select-items table tr td {
@@ -972,6 +972,7 @@ ol {
 .single-banner {
 	position: relative;
 	z-index: 1;
+	margin: 20px;
 }
 
 .single-banner:hover::before {
@@ -1250,7 +1251,7 @@ ol {
 }
 
 .product-item .pi-text a {
-	display: block;
+	display: inline-block;
 }
 
 .product-item .pi-text a h5 {

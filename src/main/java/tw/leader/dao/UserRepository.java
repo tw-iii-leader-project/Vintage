@@ -26,6 +26,8 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	@Modifying
 	@Query("UPDATE userInfo  u SET u.enabled=1 WHERE u.userId=?1")
 	public void enabled(int id);
+	
+	public User findByResetPasswordToken(String token);
 		
 	
 }

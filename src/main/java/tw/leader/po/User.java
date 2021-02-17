@@ -40,8 +40,12 @@ public class User {
 	
 	@Column(name = "verificationCode",updatable = false, length = 64)
 	private String verificationCode;
-	     
-	private boolean enabled;
+	
+	@Column(name = "resetPasswordToken")
+	private String resetPasswordToken;
+	
+	@Column(name = "enabled")
+	private int enabled;
 	
 	@Column(name = "roles")
 	private String roles;

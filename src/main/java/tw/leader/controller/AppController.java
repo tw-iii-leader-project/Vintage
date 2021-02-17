@@ -51,21 +51,7 @@ public class AppController {
 	
 	@Autowired
 	private CustomUserDetailsService service;
-//	@Autowired
-//	private ProductInsertRepository pInsertRepository;
-	
-	
-	
-//	@PostMapping("/process_register")
-//	public String processRegister(User user) {
-//		String roles = "ROLES_USER";
-//		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-//		String encodedPassword = encoder.encode(user.getPassword());
-//		user.setPassword(encodedPassword);
-//		user.setRoles(roles);
-//		uRepo.save(user);
-//		return "register_success";
-//	}
+
 	
 	@PostMapping("/process_register")
 	public String processRegister(User user, Model m, HttpServletRequest request) 
@@ -178,36 +164,6 @@ public class AppController {
 		}
 		return ResponseEntity.ok("File uploaded successfully!!");
 	}
-	
-//	@PostMapping("/process_insert")
-//	@ResponseBody
-//	public String processInsert(@RequestBody Product product) {
-//				
-//		pInsertRepository.save(product);
-//		
-//		return "insert_success";
-//	}
-//	
-//	@PostMapping("/process_update")
-//	@ResponseBody
-//	public String processUpdate(@RequestBody Product product) {
-//		int id = product.getpId();
-//		Product p = pInsertRepository.findById(id);
-//		p.setpName(product.getpName());
-//		p.setPrice(product.getPrice());
-//		p.setcPhoto(product.getcPhoto());
-//		p.setDescription(product.getDescription());
-//		p.setsDescription(product.getsDescription());
-//		p.setInvantory(product.getInvantory());
-//		p.setpMain(product.getpMain());
-//		p.setpDetail(product.getpDetail());
-//		p.setpSize(product.getpSize());
-//		p.setUserName(product.getUserName());
-//		pInsertRepository.save(p);
-//		
-//		return "update_success";
-//	}
-	
 		
 	public String GetCurrentUserAccount() {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();

@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +50,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 			String encodedPassword = passwordEncoder.encode(user.getPassword());
 			user.setPassword(encodedPassword);
 			user.setCreateTime(new Date());
-			user.setEnabled(false);
+			user.setEnabled(0);
 
 			String randomCode = RandomString.make(64);
 			user.setVerificationCode(randomCode);
@@ -95,13 +96,40 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public boolean verify(String verificationCode) {
 		User user = uRepo.findByVerificationCode(verificationCode);
 		
-		if (user == null || user.isEnabled()) {
+		if (user == null || user.getEnabled() == 1) {
 			return false;
 		}else {
-			uRepo.enabled(user.getUserId());
+			user.setEnabled(1);
+			uRepo.save(user);
 			
 			return true;
 		}
+	}
+	
+	
+	public void updateResetPasswordToken(String token, String email) throws UserNotFoundException{
+		User user = uRepo.findByEmail(email);
+		
+		if (user != null) {
+			user.setResetPasswordToken(token);
+			uRepo.save(user);
+		} else {
+			throw new UserNotFoundException("Could not find any user with email" + email);
+		}
+	}
+	
+	public User get(String resetPasswordToken) {
+		return uRepo.findByResetPasswordToken(resetPasswordToken);
+	}
+	
+	public void updatePassword(User user, String newPassword) {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String encodePassword = passwordEncoder.encode(newPassword);
+		
+		user.setPassword(encodePassword);
+		user.setResetPasswordToken(null);
+		
+		uRepo.save(user);
 	}
 
 }

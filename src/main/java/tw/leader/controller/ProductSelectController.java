@@ -132,11 +132,34 @@ public class ProductSelectController {
 		return "blog-details";
 	}
 	
+	/*
+	 * ***全部頁面皆可呼叫***代賣家進自己頁面
+	 * */
 	@GetMapping(value="/panUserControlPage")
 	public String usercontrolPage(@RequestParam String email,Model m) {
 		m.addAttribute("user",email);
 		System.out.println(email);
 		return "blog-details";
+	}
+	
+	/*
+	 * ***全部頁面皆可呼叫***代商品類別值進shop頁
+	 * */
+	@GetMapping(value="/panAllPageMainLink")
+	public String allPageMainLink(@RequestParam String pMain,Model m) {
+		m.addAttribute("allPageMainValue",pMain);
+		System.out.println(pMain);
+		return "shop";
+	}
+	
+	/*
+	 * ***全部頁面皆可呼叫***代商品名稱進shop頁
+	 * */
+	@GetMapping(value="/panAllPageFormLink")
+	public String allPageFormLink(@RequestParam String pName,Model m) {
+		m.addAttribute("allPageFormValue",pName);
+		System.out.println(pName);
+		return "shop";
 	}
 
 	/*

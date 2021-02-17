@@ -16,5 +16,13 @@ public interface FindUserInfoDao extends JpaRepository<User,Long>  {
 	@Query(value="select * from userInfo where email = ?1",nativeQuery = true)
 	List<User> findAllDataByEmail(String email);
 	
+	@Query(value="select count(*) from userInfo",nativeQuery = true)
+	int selectTotalUser();
+	
+	@Query(value="select * from userInfo order by userId offset (?1)*12 rows fetch next 12 rows only",nativeQuery = true)
+	List<User> findAllUser(int page);
+	
+	@Query(value="select * from userInfo where userName like %?1%",nativeQuery = true)
+	List<User> findUserByName(String userName);
 	
 }

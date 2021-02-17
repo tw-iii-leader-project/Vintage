@@ -22,14 +22,15 @@ userId int IDENTITY(1,1) not null primary key,
 email nvarchar(50) not null,
 userPwd nvarchar(max) not null,
 userName nvarchar(50) not null,
-gender nvarchar(5),
-userPhone nvarchar(11),
+gender nvarchar(max),
+userPhone nvarchar(max),
 userBirthday nvarchar(10),
 userPic nvarchar(max),
 verificationCode varchar(64),
 enabled bit,
 createdTime nvarchar(max),
-roles nvarchar(10) not null
+resetPasswordToken varchar(45),
+roles nvarchar(20) not null
 )
 
 ---------bobby userInfo data

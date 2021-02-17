@@ -113,7 +113,7 @@ public class SimpleJumpController {
 		return "userInfoDetail";
 	}
 	
-	@GetMapping("/toActivity")
+	@GetMapping("/Activity")
 	public String viewActivityPage(Model m) {
 //		String user = GetCurrentUserAccount();
 //		m.addAttribute("user", user);

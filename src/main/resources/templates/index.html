@@ -28,6 +28,11 @@
 <script type="text/javascript">
 	$(function(){
 		var userEmail = $("#userPageControl").html();
+		if(userEmail == 'vintage@gmail.com'){
+			$(".top-social").html("");
+			$(".top-social").append(
+				`<a class=" fa fa-envelope" href="panUserManagement">後台管理系統</a>`);
+		}
 		var cUrl = "panUserControlPage?email=";
 		$("#userPageControl").click(function(){
 			$(this).attr("href",cUrl+userEmail);
@@ -111,20 +116,6 @@
 </script>
 
 </head>
-
-<script>
-	<div class="ht-right">
-	<a href="/loginPage" class="login-panel" th:text="Login"><i class="fa fa-user"></i></a>
-	<a href="/logout" class="login-panel" th:text="Logout" style="display:none"><i class="fa fa-user" ></i></a>
-
-	<div class="top-social">
-	<div class="mail-service">
-	<a class=" fa fa-envelope" href="#" th:text="${user}"></a>
-
-	</div>
-	</div>
-	</div>
-</script>
 
 <body>
 	<p th:value="${user}" type="hidden" id="loginInfo"></p>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -26,91 +26,7 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
     	$(function(){
-    		$.ajax({
-		        async:true,
-		        url:"panFindAllProductPage",
-		        type:"POST",
-		        dataType:"json",
-		        contentType:"application/json;charset=utf-8",
-                success:function(pageData){
-                    $.each(pageData,function(i,v){
-                        var pages = parseInt(v.totalPages);
-                        for(n=1;n<=pages;n++){
-                            $("#pageBox ul").append(
-                                `<li class="pageLi">${n}</li>`
-                            );
-                        };
-                        $("#totalUser").append(
-                            `<span>${v.totalUser}</span>`
-                        );
-                    });
-                    $("#pageBox ul li").first().addClass("active");
-                },
-                error:function(msg){
-                    console.log(msg);
-                }
-            });
-    		$.ajax({
-    			url:"panFindAllProductPage",
-		        type:"POST",
-		        dataType:"json",
-		        contentType:"application/json;charset=utf-8",
-                success:function(response){
-                	$.each(response,function(i,v){
-                		$("#userTable #userTr").append(
-                			`<tr>
-                                <td class="cart-title">${v.userId}</td>
-                                <td class="cart-title">
-                                	<h5>${v.userName}</h5>
-                                </td>
-                                <td class="cart-pic"><img src="img/${v.userPic}" alt=""></td>
-                                <td class="p-price">${v.email}</td>
-                                <td class="total-price">${v.userPhone}</td>
-                                <td class="p-price">${v.userBirthday}</td>
-                                <td class="close-td"><button value="停權"></button></td>
-                        	</tr>`
-                		);
-                	});
-                },
-                error:function(msg){
-                	console.log(msg);
-                }
-    		});
-    		$("#pageBox ul").on("click",".pageLi",function(){
-                $("#pageBox ul li").removeClass("active");
-                $(this).addClass("active");
-                $("#userTable #userTr").html("");
-                var pageNum = $(this).html();
-                var pageData = {"page":pageNum};
-                $.ajax({
-                    async:true,
-                    url:"panFindAllUser.page",
-                    type:"POST",
-                    dataType:"json",
-		            contentType:"application/json;charset=utf-8",
-		            data:JSON.stringify(pageData),
-                    success:function(response){
-                        $.each(response,function(i,v){
-                        	$("#userTable #userTr").append(
-                        		`<tr>
-                                	<td class="cart-title">${v.userId}</td>
-                                	<td class="cart-title">
-                                		<h5>${v.userName}</h5>
-                                	</td>
-                                	<td class="cart-pic"><img src="img/${v.userPic}" alt=""></td>
-                                	<td class="p-price">${v.email}</td>
-                                	<td class="total-price">${v.userPhone}</td>
-                                	<td class="p-price">${v.userBirthday}</td>
-                                	<td class="close-td"><button value="停權"></button></td>
-                        		</tr>`	
-                        	);
-            			});
-            		},
-            		error:function(msg){
-            			console.log(msg);
-            		}
-				});
-            });
+
     	});
     </script>
 </head>
@@ -134,7 +50,7 @@
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#" th:text="${user}"></a>
+							<a class=" fa fa-envelope" href="panUserManagement">後台管理系統</a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 
 						</div>
@@ -151,90 +67,17 @@
 							</a>
 						</div>
 					</div>
-					<div class="col-lg-7 col-md-7">
-						<div class="advanced-search">
-							<button type="button" class="category-btn"></button>
-							<div class="input-group">
-								<input type="text" placeholder="老鐵，關注蛤?">
-								<button type="button">
-									<i class="ti-search"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 text-right col-md-3">
-						<ul class="nav-right">
-
-							<li class="cart-icon"><a href="#"> <i
-									class="icon_bag_alt"></i> <span>3</span>
-							</a>
-								<div class="cart-hover">
-									<div class="select-items">
-										<table>
-											<tbody>
-												<tr>
-													<td class="si-pic"><img src="img/select-product-1.jpg"
-														alt=""></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
-												<tr>
-													<td class="si-pic"><img src="img/select-product-2.jpg"
-														alt=""></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
-											</tbody>
-										</table>
-									</div>
-									<div class="select-total">
-										<span>total:</span>
-										<h5>$120.00</h5>
-									</div>
-									<div class="select-button">
-										<a href="#" class="primary-btn view-card">VIEW CARD</a> <a
-											href="#" class="primary-btn checkout-btn">CHECK OUT</a>
-									</div>
-								</div></li>
-							<li class="cart-price">$150.00</li>
-						</ul>
-					</div>
 				</div>
 			</div>
 		</div>
 		<div class="nav-item">
 			<div class="container">
-				<div class="nav-depart">
-					<div class="depart-btn">
-						<i class="ti-menu"></i> <span>所有選項</span>
-						<ul class="depart-hover">
-							<li class="testActive" ><a href="#">飾品</a></li>
-                            <li class="testActive" ><a href="#">服飾</a></li>
-                            <li class="testActive" ><a href="#">居家生活</a></li>
-                            <li class="testActive" ><a href="#">玩具</a></li>
-                            <li class="testActive" ><a href="#">藝術</a></li>
-                            <li class="testActive" ><a href="#">經典</a></li>
-						</ul>
-					</div>
-				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
-						<li class="active"><a href="index">首頁</a></li>
-						<li><a href="shopPage">商城</a></li>
-						<li><a href="blog">博客</a></li>
-						<li><a href="contact">活動</a></li>
-						<li><a href="faq">問與答</a></li>
-
+						<li class="active"><a href="panUserManagement">管理首頁</a></li>
+						<li><a href="panMember">會員權限管理</a></li>
+						<li><a href="panAdvertisement">廣告</a></li>
+						<li><a href="panContact">活動</a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -250,8 +93,8 @@
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
                         <a href="liaoIndex"><i class="fa fa-home"></i> Home</a>
-                        <a href="liaoShop">Shop</a>
-                        <span>Shopping Cart</span>
+                        <a href="liaoShop">UserManagement</a>
+                        <span>ManagementIndex</span>
                     </div>
                 </div>
             </div>
@@ -263,58 +106,30 @@
     <section class="shopping-cart spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="cart-table">
-                        <table id="userTable">
-                            <thead>
-                                <tr>
-                                	<th>UserId</th>
-                                    <th class="p-name">Member Name</th>
-                                    <th>Image</th>
-                                    <th>Email</th>
-                                    <th>Phone</th>
-                                    <th>Birthday</th>
-                                    <th>Suspension</th>
-                                </tr>
-                            </thead>
-                            <tbody id="userTr">
-                                <!-- userData Here -->
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="filter-control" id="pageBox">
-                        <ul>
-
-                        </ul>
-                    </div>
-                    <div id="totalUser">
-                    	
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-4">
-                            <div class="cart-buttons">
-                                <a href="#" class="primary-btn continue-shop">Continue shopping</a>
-                                <a href="#" class="primary-btn up-cart">Update cart</a>
-                            </div>
-                            <div class="discount-coupon">
-                                <h6>Discount Codes</h6>
-                                <form action="#" class="coupon-form">
-                                    <input type="text" placeholder="Enter your codes">
-                                    <button type="submit" class="site-btn coupon-btn">Apply</button>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 offset-lg-4">
-                            <div class="proceed-checkout">
-                                <ul>
-                                    <li class="subtotal">Subtotal <span>$240.00</span></li>
-                                    <li class="cart-total">Total <span>$240.00</span></li>
-                                </ul>
-                                <a href="#" class="proceed-btn">PROCEED TO CHECK OUT</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="col-lg-4">
+					<div class="single-banner">
+						<a href="panMember"><img src="img/Coursel/accessories.jpg" border="0"></a>
+						<div class="inner-text">
+							<h4>會員權限管理</h4>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="single-banner">
+						<a href="panAdvertisement"><img src="img/Coursel/clothing.jpg" border="0"></a>
+						<div class="inner-text">
+							<h4>廣告</h4>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="single-banner">
+						<a href="panContact"><img src="img/Coursel/home.jpg" border="0"></a>
+						<div class="inner-text">
+							<h4>活動</h4>
+						</div>
+					</div>
+				</div>
             </div>
         </div>
     </section>

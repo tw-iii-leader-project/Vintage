@@ -7,7 +7,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+    <title>Fashi | Product</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -173,7 +173,7 @@
             };
             
             function updatePrice(){
-            	$(".select-total").html("");
+            	$("#selectTotal").html("");
                 $.ajax({
                     url:"panSelectShoppingCartPrice",
                     type:"POST",
@@ -181,7 +181,7 @@
                     contentType:"application/json;charset=utf-8",
                     data:JSON.stringify(userData),
                     success:function(result){
-                        $(".select-total").html(result);
+                        $("#selectTotal").html(result);
                     },
                     error:function(msg){
                         concole.log(msg);
@@ -351,11 +351,12 @@
 										</table>
 									</div>
 									<div class="select-total">
-										<!-- selectTotal Here -->
+										<span>總共:</span>
+										<h5 id="selectTotal"><!-- selectTotal Here --></h5>
 									</div>
 									<div class="select-button">
-										<a href="#" class="primary-btn view-card">VIEW CARD</a> <a
-											href="#" class="primary-btn checkout-btn" id="shoppingCartCheckOut">CHECK OUT</a>
+										<a href="#" class="primary-btn view-card">購　物　車</a> <a
+											href="#" class="primary-btn checkout-btn" id="shoppingCartCheckOut">結　　　帳</a>
 									</div>
 								</div></li>
 							<li class="cart-price">$150.00</li>

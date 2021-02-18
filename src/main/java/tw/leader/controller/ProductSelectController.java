@@ -155,6 +155,9 @@ public class ProductSelectController {
 		return "shop";
 	}
 	
+	/*
+	 * ***全部頁面皆可呼叫***代商品名稱進shop頁
+	 * */
 	@GetMapping(value="/panAllPageFormLink")
 	public String allPageFormLink(@RequestParam String pName,Model m) {
 		m.addAttribute("allPageFormValue",pName);

@@ -2,7 +2,7 @@ package tw.leader.vo;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserResp {
+public class UserResp extends ErrorResp{
 
 	@JsonProperty(value="userId")
 	private int userId;

@@ -41,14 +41,13 @@
                     success:function(pageData){
                         $.each(pageData,function(i,v){
                             var pages = parseInt(v.totalPages);
+                            var total = v.totalElements;
                             for(n=1;n<=pages;n++){
                                 $("#pageBox ul").append(
                                     `<li class="productAllPage">${n}</li>`
                                 );
                             };
-                            $("#totalElements").append(
-                                `<span>${v.totalElements}</span>`
-                            );
+                            $("#totalElements").html(total);
                         });
                         $("#pageBox ul li").first().addClass("active");
                     },

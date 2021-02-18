@@ -56,10 +56,14 @@ create table Product (
 ------------pan Article data
 
 create Table userArticle(
-	articleId int not null primary key identity(1,1),
-    email nvarchar(80),
-    description nvarchar(max),
-    articleContext nvarchar(max)
+articleId int not null primary key identity(1,1),
+email nvarchar(80),
+description nvarchar(max),
+articleContext nvarchar(max),
+userPicMain nvarchar(max),
+userPic1 nvarchar(max),
+userPic2 nvarchar(max).
+userPic3 nvarchar(max)
 );
 
 ------------pan Article data

@@ -15,6 +15,8 @@ public interface ProductServiceb {
 	
 	List<Productb> getProductListByMultIds(int...productIds);
 	
+	List<Productb> getListByMultiEmail(String...email);
+	
 	Productb getProduct(int pId);
 	
 	void insertProduct(Productb product,MultipartFile uploadProductcPhoto);

@@ -51,7 +51,9 @@ public class SimpleJumpController {
 	}
 
 	@GetMapping("/checkOut")
-	public String checkOutPage() {
+	public String checkOutPage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
 		return "check-out";
 	}
 

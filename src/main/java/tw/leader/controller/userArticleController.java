@@ -29,6 +29,9 @@ public class userArticleController {
 	public String insertUserDescription(@RequestBody userArticleResp articleData) {
 		String email = articleData.getEmail();
 		String description = articleData.getDescription();
+		System.out.println(email);
+		System.out.println(description);
+		
 		userArticleResp result = uAService.insertDescription(email, description);
 		String message = result.getMessage();
 		return message;

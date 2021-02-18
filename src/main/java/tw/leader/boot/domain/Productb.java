@@ -1,9 +1,6 @@
 package tw.leader.boot.domain;
 
-import java.math.BigDecimal;
 import java.util.Date;
-
-import lombok.Data;
 
 
 public class Productb {

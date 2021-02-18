@@ -36,7 +36,7 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
 	integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
 	crossorigin="anonymous"></script>
-	
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <style type="text/css">
 table {
@@ -69,7 +69,6 @@ table tr>* {
 </style>
 
 <script>
-	
 	var gg = $("#loginInfo").html();
 	alert(gg);
 	console.log(gg);
@@ -177,30 +176,34 @@ table tr>* {
 		</div>
 		<div class="nav-item">
 			<div class="container">
-				<div class="nav-depart">
-					<div class="depart-btn">
-						<i class="ti-menu"></i> <span>所有選項</span>
-						<ul class="depart-hover">
-							<li class="testActive"><a href="#">飾 品</a></li>
-							<li class="testActive"><a href="#">服 飾</a></li>
-							<li class="testActive"><a href="#">生 活</a></li>
-							<li class="testActive"><a href="#">玩 具</a></li>
-							<li class="testActive"><a href="#">藝 術</a></li>
-							<li class="testActive"><a href="#">經 典</a></li>
-						</ul>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="nav-depart">
+							<div class="depart-btn">
+								<i class="ti-menu"></i> <span>所有選項</span>
+								<ul class="depart-hover">
+									<li class="testActive"><a href="#">飾 品</a></li>
+									<li class="testActive"><a href="#">服 飾</a></li>
+									<li class="testActive"><a href="#">生 活</a></li>
+									<li class="testActive"><a href="#">玩 具</a></li>
+									<li class="testActive"><a href="#">藝 術</a></li>
+									<li class="testActive"><a href="#">經 典</a></li>
+								</ul>
+							</div>
+						</div>
+						<nav class="nav-menu mobile-menu">
+							<ul>
+								<li class="active"><a href="index">首 頁</a></li>
+								<li><a href="shopPage">商 城</a></li>
+								<li><a href="blog">部落格</a></li>
+								<li><a href="test">活 動</a></li>
+								<li><a href="faq">問與答</a></li>
+
+							</ul>
+						</nav>
+						<div id="mobile-menu-wrap"></div>
 					</div>
 				</div>
-				<nav class="nav-menu mobile-menu">
-					<ul>
-						<li class="active"><a href="index">首 頁</a></li>
-						<li><a href="shopPage">商 城</a></li>
-						<li><a href="blog">部落格</a></li>
-						<li><a href="test">活 動</a></li>
-						<li><a href="faq">問與答</a></li>
-
-					</ul>
-				</nav>
-				<div id="mobile-menu-wrap"></div>
 			</div>
 		</div>
 	</header>
@@ -208,7 +211,7 @@ table tr>* {
 
 	<!-- Breadcrumb Section Begin -->
 	<div class="breacrumb-section">
-		<div class="container-fluid">
+		<div class="container">
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb-text">
@@ -224,13 +227,12 @@ table tr>* {
 	<div class="management-section">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-12">
+				<div class="col col-12 col-sm-6 col-md-4 col-lg-2">
 					<div class="management-content">
 						<div id="app">
 							<fieldset>
 								<table>
-									<colgroup >
-										<col style="width: 100px">
+									<colgroup>
 										<col style="width: auto">
 										<col style="width: auto">
 										<col style="width: auto">
@@ -239,14 +241,16 @@ table tr>* {
 										<col style="width: auto">
 										<col style="width: auto">
 										<col style="width: auto">
+										<col style="width: 60%">
+										<col style="width: 50px">
+										<col style="width: 50px">
 										<col style="width: auto">
-										<col style="width: auto">
-									<!-- 	<col style="width: auto">
+										<!-- <col style="width: auto">
 										<col style="width: auto"> -->
 										<col style="width: auto">
 										<col style="width: auto">
 									</colgroup>
-									<tr style="background-color:#212529; color:white">
+									<tr style="background-color: #212529; color: white">
 										<th>商品ID</th>
 										<th>商品名稱</th>
 										<th>商品大類</th>
@@ -264,236 +268,295 @@ table tr>* {
 										<th>操作</th>
 										<!-- <th>短敘述</th>
 					<th>會員email</th>
-					<th>會員姓名</th>
-					
-					<!-- <th>商品圖片</th>
+					<th>會員姓名</th> -->
+
+										<!-- <th>商品圖片</th>
 					<th>商品類別</th>
 					<th>編輯者</th>
 					<th>編輯時間</th>
 					<th>操作</th> -->
 									</tr>
-									<tr style="background-color: #E7AB3C;">
+									<tr style="background-color: #e7ab3c;">
 										<td>{{editproduct.pId}}</td>
 										<td><input type="text" v-model="editproduct.pName"></td>
-										<td><select v-model="editproduct.categoryId">
-												<option v-for="c in categorys" v-bind:value="c.id">{{c.categoryName}}</option>
-										</select>
-										</td>
+										<td><select v-model="editproduct.pMain" type="selected">
+												<option disabled="disabled">請選擇商品類別</option>
+												<option>飾品</option>
+												<option>服飾</option>
+												<option>生活</option>
+												<option>玩具</option>
+												<option>藝術</option>
+												<option>經典</option>
+										</select></td>
 										<td><textarea v-model="editproduct.pDetail"></textarea></td>
-										<td><input type="text" v-model="editproduct.price"></td>
-										<td><input type="text" v-model="editproduct.invantory"></td>
-										<td><input type="text" v-model="editproduct.pSize"></td>
+										<td><input type="text" v-model="editproduct.price"
+											style="width: 50px"></td>
+										<td><input type="text" v-model="editproduct.invantory"
+											style="width: 50px"></td>
+										<td><input type="text" v-model="editproduct.pSize"
+											style="width: 50px"></td>
 										<td><textarea v-model="editproduct.description"></textarea></td>
 										<td><textarea v-model="editproduct.sDescription"></textarea></td>
 										<td><img v-bind:src="editproduct.cPhoto" class="ppic">
 											<input class="upload" type="file" id="ppicfile"
 											@change="selectimg($event.target)"
 											accept="image/png,image/gif,image/jpeg"></td>
-										<!-- <td><input type="text" v-model="editproduct.userName"></td>
-										<td><textarea v-model="editproduct.pMain"></textarea></td> -->
 										<td>{{editproduct.email}}</td>
+										<!-- 	<td><input type="text" v-model="editproduct.userName"></td>
+										<td>
+										<select v-model="editproduct.categoryId">
+										<option v-for="c in categorys" v-bind:value="c.id">{{c.categoryName}}</option>
+										</select>
+										</td> -->
 										<td>{{editproduct.lastEditTime}}</td>
 										<td><button @click="saveproduct(editproduct)">保存</button></td>
-									</tr>	
-									<tr v-for="p in products ">
+									</tr>
+									<tr v-for="p in products">
 										<td>{{p.pId}}</td>
 										<td>{{p.pName}}</td>
-										<td>{{p.categoryId}}</td>
+										<td>{{p.pMain}}</td>
 										<td>{{p.pDetail}}</td>
 										<td>{{p.price}}</td>
 										<td>{{p.invantory}}</td>
 										<td>{{p.pSize}}</td>
 										<td>{{p.description}}</td>
 										<td>{{p.sDescription}}</td>
-										<td><img v-bind:src="p.cPhoto" class="ppic">
+										<td><img v-bind:src="p.cPhoto" class="ppic"></td>
 										<td>{{p.email}}</td>
-								<!-- 		<td>{{p.userName}}</td>
-										<td>{{p.pMain}}</td> -->
+										<!-- 		<td>{{p.userName}}</td>
+										<td>{{p.categoryId}}</td> -->
 										<td>{{p.lastEditTime}}</td>
-										<td><!-- button @click="updateproduct(editproduct)">修改</button>&nbsp;|&nbsp; -->
-											<button @click="delproduct(p)">删除</button></td>
-										<!-- UI暂不实现修改，禁用  -->
+										<td><button @click="delproduct(p)">删除</button></td>
+										<!-- 			<button @click="editgoods(g)" disabled="disabled">修改</button>&nbsp;|&nbsp;UI暂不实现修改，禁用 -->
 									</tr>
 								</table>
 							</fieldset>
 						</div>
+						<script type="text/javascript">
+							var gg = $("#loginInfo").html();
+							alert(gg);
+							console.log(gg);
+
+							var vm = new Vue(
+									{
+										el : "#app",
+										data : {
+											categorys : [],
+											products : [],
+											editproduct : {
+												pId : null,
+												pName : null,
+												pMain : null,
+												pDetail : null,
+												price : null,
+												invantory : null,
+												pSize : null,
+												description : null,
+												sDescription : null,
+												cPhoto : null,
+												email : gg,
+												userName : "",
+												categoryId : 1,
+												lastEditBy : "",
+												lastEditTime : null
+											}
+										},
+										created : function() {
+											this.$http
+													.get('/api/categorys')
+													.then(
+															function(res) {
+																this.categorys = res.body;
+															},
+															function() {
+																Swal
+																		.fire({
+																			icon : 'warning',
+																			title : '載入類別失敗！',
+																		})
+															});
+
+											this.getGoodsListByPage(100, 1);//DEMO,只加载第1页
+
+										},
+										methods : {
+											getGoodsListByPage : function(ps,
+													pno) {
+												var self = this;
+												//按分页检索商品列表
+												this.$http
+														.get(
+																'/api/product'
+																		+ '?pagesize='
+																		+ ps
+																		+ '&page='
+																		+ pno)
+														.then(
+																function(res) {
+																	self.products = res.body;
+																	//alert(JSON.stringify(self.goods));
+																},
+																function() {
+																	Swal
+																			.fire({
+																				icon : 'warning',
+																				title : '載入商品失敗！',
+																			})
+																});
+											},
+											selectimg : function(el) {
+
+												let ppic = el.files[0];
+												let type = ppic.type;//文件的类型，判断是否是图片
+												let size = ppic.size;//文件的大小，判断图片的大小
+												if ('image/gif, image/jpeg, image/png, image/jpg'
+														.indexOf(type) == -1) {
+													Swal
+															.fire({
+																icon : 'error',
+																title : '格式需求:gif,jpeg,png,jpg',
+															})
+
+													return false;
+												}
+												if (size > 3145728) {
+													Swal
+															.fire({
+																icon : 'warning',
+																title : '容量過載:請選3MB以下之圖片',
+															})
+													return false;
+												}
+												var uri = '';
+
+												this.editproduct.cPhoto = URL
+														.createObjectURL(ppic);
+											},
+											saveproduct : function(p) {
+												var fileDom = document
+														.getElementById("ppicfile");
+												let formData = new FormData();
+												formData.append('pId',
+														this.editproduct.pId);
+												formData.append('pName',
+														this.editproduct.pName);
+												formData.append('pMain',
+														this.editproduct.pMain);
+												formData
+														.append(
+																'pDetail',
+																this.editproduct.pDetail);
+												formData.append('price',
+														this.editproduct.price);
+												formData
+														.append(
+																'invantory',
+																this.editproduct.invantory);
+												formData.append('pSize',
+														this.editproduct.pSize);
+												formData
+														.append(
+																'description',
+																this.editproduct.description);
+												formData
+														.append(
+																'sDescription',
+																this.editproduct.sDescription);
+												formData.append('cPhoto',
+														fileDom.files[0]);
+
+												formData.append('email',
+														this.editproduct.email);
+												formData
+														.append(
+																'userName',
+																this.editproduct.userName);
+												formData
+														.append(
+																'categoryId',
+																this.editproduct.categoryId);
+												let config = {
+													headers : {
+														'Content-Type' : 'multipart/form-data'
+													}
+												}
+
+												this.$http
+														.post(
+																'/api/saveproduct',
+																formData,
+																config)
+														.then(
+																function(res) {
+																	Swal
+																			.fire({
+																				title : res.body.msg,
+																				html : '<a href="http://localhost:8080/login.html">返回登入頁面</a>',
+																			});
+																	if (res.body.code == 0) {
+																		this.products
+																				.unshift(res.body.data);//插入到数组最新面
+																		this.editproduct = {//重新初始化，以便实现清空所有编辑框
+																			pId : null,
+																			pName : null,
+																			pMain : null,
+																			pDetail : null,
+																			price : null,
+																			invantory : null,
+																			pSize : null,
+																			description : null,
+																			sDescription : null,
+																			cPhoto : null,
+																			email : null,
+																			userName : "",
+																			categoryId : 1,
+																			lastEditBy : "",
+																			lastEditTime : null
+																		};
+																	}
+																});
+											},
+											delproduct : function(p) {
+												this.$http
+														.get(
+																'/api/delproduct/'
+																		+ p.pId)
+														.then(
+																function(res) {
+																	Swal
+																			.fire({
+																				title : res.body.msg
+																			})
+																	// 						 alert(res.body.msg); 
+																	if (res.body.code == 0) {
+																		this.products
+																				.remove(p);
+																	}
+																},
+																function() {
+																	Swal
+																			.fire({
+																				icon : 'warning',
+																				title : '刪除商品失敗',
+																			})
+																});
+											}
+										}
+									});
+
+							Array.prototype.remove = function(val) {
+								var index = this.indexOf(val);
+								if (index > -1) {
+									this.splice(index, 1);
+								}
+							};
+						</script>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<script type="text/javascript">
-	
-		var gg = $("#loginInfo").html();
-		alert(gg);
-		console.log(gg);
-
-		var vm = new Vue(
-				{
-					el : "#app",
-					data : {
-						categorys : [],
-						products : [],
-						editproduct : {
-							pId : null,
-							pName : null,
-						/* 	pMain : null, */
-							pDetail : null,
-							price : null,
-							invantory : null,
-							pSize : null,
-							description : null,
-							sDescription : null,
-							cPhoto : null,
-							email : gg, 
-						/* 	userName : "", */
-							categoryId : 1,
-							lastEditBy : "",
-							lastEditTime : null
-						}
-					},
-					created : function() {
-						this.$http.get('/api/categorys').then(function(res) {
-							this.categorys = res.body;
-						}, function() {
-							Swal.fire({
-								icon : 'warning',
-								title : '載入類別失敗！',
-							})
-						});
-
-						this.getGoodsListByPage(100, 1);//DEMO,只加载第1页
-
-					},
-					methods : {
-						getGoodsListByPage : function(ps, pno) {
-							var self = this;
-							//按分页检索商品列表
-							this.$http.get(
-									'/api/product' + '?pagesize=' + ps
-											+ '&page=' + pno).then(
-									function(res) {
-										self.products = res.body;
-										//alert(JSON.stringify(self.goods));
-									}, function() {
-										Swal.fire({
-											icon : 'warning',
-											title : '載入商品失敗！',
-										})
-									});
-						},
-						selectimg : function(el) {
-
-							let ppic = el.files[0];
-							let type = ppic.type;//文件的类型，判断是否是图片
-							let size = ppic.size;//文件的大小，判断图片的大小
-							if ('image/gif, image/jpeg, image/png, image/jpg'
-									.indexOf(type) == -1) {
-								Swal.fire({
-									icon : 'error',
-									title : '格式需求:gif,jpeg,png,jpg',
-								})
-
-								return false;
-							}
-							if (size > 3145728) {
-								Swal.fire({
-									icon : 'warning',
-									title : '容量過載:請選3MB以下之圖片',
-								})
-								return false;
-							}
-							var uri = '';
-
-							this.editproduct.cPhoto = URL.createObjectURL(ppic);
-						},
-						saveproduct : function(p) {
-							var fileDom = document.getElementById("ppicfile");
-							let formData = new FormData();
-							formData.append('pId', this.editproduct.pId);
-							formData.append('pName', this.editproduct.pName);
-							/* formData.append('pMain', this.editproduct.pMain); */
-							formData.append('pDetail', this.editproduct.pDetail);
-							formData.append('price', this.editproduct.price);
-							formData.append('invantory',this.editproduct.invantory);
-							formData.append('pSize', this.editproduct.pSize);
-							formData.append('description',this.editproduct.description);
-							formData.append('sDescription',this.editproduct.sDescription);
-							formData.append('cPhoto', fileDom.files[0]);
-							formData.append('email', this.editproduct.email);
-						/* 	formData.append('userName',this.editproduct.userName);*/
-							formData.append('categoryId',this.editproduct.categoryId); 
-							formData.append('categoryName',this.editproduct.categoryName);
-							let config = {
-								headers : {
-									'Content-Type' : 'multipart/form-data'
-								}
-							}
-
-							this.$http
-									.post('/api/saveproduct', formData, config)
-									.then(
-											function(res) {
-												Swal
-														.fire({
-															title : res.body.msg,
-															html : '<a href="http://localhost:8080/login.html">返回登入頁面</a>',
-														});
-												if (res.body.code == 0) {
-													this.products
-															.unshift(res.body.data);//插入到数组最新面
-													this.editproduct = {//重新初始化，以便实现清空所有编辑框
-														pId : null,
-														pName : null,
-														/* pMain : null, */
-														pDetail : null,
-														price : null,
-														invantory : null,
-														pSize : null,
-														description : null,
-														sDescription : null,
-														cPhoto : null,
-														email : null,
-														/* userName : "", */
-														categoryId : 1,
-														lastEditBy : "",
-														lastEditTime : null
-													};
-												}
-											});
-						},
-
-
-						delproduct : function(p) {
-							this.$http.get('/api/delproduct/' + p.pId).then(
-									function(res) {
-										Swal.fire({
-											title : res.body.msg
-										})
-										// 						 alert(res.body.msg); 
-										if (res.body.code == 0) {
-											this.products.remove(p);
-										}
-									}, function() {
-										Swal.fire({
-											icon : 'warning',
-											title : '刪除商品失敗',
-										})
-									});
-						}
-					}
-				});
-
-		Array.prototype.remove = function(val) {
-			var index = this.indexOf(val);
-			if (index > -1) {
-				this.splice(index, 1);
-			}
-		};
-	</script>
-   
-   <!-- Partner Logo Section Begin -->
+	<!-- Partner Logo Section Begin -->
 	<div class="partner-logo">
 		<div class="container">
 			<div class="logo-carousel owl-carousel">
@@ -527,92 +590,99 @@ table tr>* {
 	</div>
 	<!-- Partner Logo Section End -->
 
-    <!-- Footer Section Begin -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="footer-left">
-                        <div class="footer-logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                        </div>
-                        <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello.colorlib@gmail.com</li>
-                        </ul>
-                        <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1">
-                    <div class="footer-widget">
-                        <h5>Information</h5>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Checkout</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Serivius</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="footer-widget">
-                        <h5>My Account</h5>
-                        <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Shopping Cart</a></li>
-                            <li><a href="#">Shop</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="newslatter-item">
-                        <h5>Join Our Newsletter Now</h5>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#" class="subscribe-form">
-                            <input type="text" placeholder="Enter Your Mail">
-                            <button type="button">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright-reserved">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="copyright-text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
-                        <div class="payment-pic">
-                            <img src="img/payment-method.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
+	<!-- Footer Section Begin -->
+	<footer class="footer-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="footer-left">
+						<div class="footer-logo">
+							<a href="#"><img src="img/footer-logo.png" alt=""></a>
+						</div>
+						<ul>
+							<li>Address: 60-49 Road 11378 New York</li>
+							<li>Phone: +65 11.188.888</li>
+							<li>Email: hello.colorlib@gmail.com</li>
+						</ul>
+						<div class="footer-social">
+							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
+								class="fa fa-instagram"></i></a> <a href="#"><i
+								class="fa fa-twitter"></i></a> <a href="#"><i
+								class="fa fa-pinterest"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2 offset-lg-1">
+					<div class="footer-widget">
+						<h5>Information</h5>
+						<ul>
+							<li><a href="#">About Us</a></li>
+							<li><a href="#">Checkout</a></li>
+							<li><a href="#">Contact</a></li>
+							<li><a href="#">Serivius</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2">
+					<div class="footer-widget">
+						<h5>My Account</h5>
+						<ul>
+							<li><a href="#">My Account</a></li>
+							<li><a href="#">Contact</a></li>
+							<li><a href="#">Shopping Cart</a></li>
+							<li><a href="#">Shop</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="newslatter-item">
+						<h5>Join Our Newsletter Now</h5>
+						<p>Get E-mail updates about our latest shop and special
+							offers.</p>
+						<form action="#" class="subscribe-form">
+							<input type="text" placeholder="Enter Your Mail">
+							<button type="button">Subscribe</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copyright-reserved">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="copyright-text">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>
+								document.write(new Date().getFullYear());
+							</script>
+							All rights reserved | This template is made with <i
+								class="fa fa-heart-o" aria-hidden="true"></i> by <a
+								href="https://colorlib.com" target="_blank">Colorlib</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</div>
+						<div class="payment-pic">
+							<img src="img/payment-method.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Footer Section End -->
 
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.zoom.min.js"></script>
-    <script src="js/jquery.dd.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
+	<!-- Js Plugins -->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/jquery.countdown.min.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/jquery.dd.min.js"></script>
+	<script src="js/jquery.slicknav.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/main.js"></script>
 </body>
 
 </html>

@@ -31,7 +31,7 @@ public class userArticleServiceImpl implements userArticleService{
 	@Override
 	public userArticleResp insertDescription(String email,String description) {
 		List<userArticle> result = uADao.selectUserArticle(email);
-		if(result == null) {
+		if(result.isEmpty()) {
 			userArticle aBean = new userArticle();
 			aBean.setEmail(email);
 			aBean.setDescription(description);
@@ -52,7 +52,7 @@ public class userArticleServiceImpl implements userArticleService{
 	@Override
 	public userArticleResp insertArticle(String email,String articleContext) {
 		List<userArticle> result = uADao.selectUserArticle(email);
-		if(result == null) {
+		if(result.isEmpty()) {
 			userArticle aBean = new userArticle();
 			aBean.setEmail(email);
 			aBean.setArticleContext(articleContext);

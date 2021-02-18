@@ -46,6 +46,137 @@
 				window.location.href=fUrl+allPageFormValue;
 			}
 		});
+		
+
+        /*
+        ---------------------------------------------------------
+        ShoppingCart
+        */
+        // 註冊方法搜尋此使用者購物車裏的商品數量
+        var loginUser = $("#loginInfo").html();
+        var userData = {"email":loginUser};
+        function update(){
+        	$("#shoppingQuantity").html("");
+            $.ajax({
+                url:"panfindShoppingProductQuantity",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userData),
+                success:function(response){
+                    $("#shoppingQuantity").html(response);
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+        };
+        
+        function updatePrice(){
+        	$("#selectTotal").html("");
+            $.ajax({
+                url:"panSelectShoppingCartPrice",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userData),
+                success:function(result){
+                    $("#selectTotal").html(result);
+                },
+                error:function(msg){
+                    concole.log(msg);
+                }
+            });
+        };
+        
+        function updateShoppingCart(){
+        	$("#shoppingList").html("");
+            $.ajax({
+                url:"panSelectShoppingCart",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userData),
+                success:function(response){
+                    $.each(response,function(i,v){
+                        $("#shoppingList").append(
+                            `<tr>
+                                <td style="display: none;">${v.cartId}</td>													
+                                <td class="si-pic"><img src="img/products/${v.cPhoto}"											
+                                    alt=""></td>												
+                                <td class="si-text">												
+                                	<div class="product-selected">														
+                                        <p>$${v.price} x ${v.amount}</p>														
+                                        <h6>${v.pName}</h6>									
+                                	</div>										
+                                </td>											
+                                <td class="si-close"><a href="#">X</a></td>									
+                            </tr>`
+                        );
+                    }); 
+                },
+                error:function(msg){
+                    concole.log(msg);
+                }
+            });
+        };
+        // 頁面載入時尋此使用者購物車裏的商品數量
+        update();
+		updateShoppingCart();
+		updatePrice();
+        // 點選數量加入購物車
+        $("#shoppingCart").click(function(e){
+            e.preventDefault();
+            var productId = $("#secretProductId").html();
+            var productName = $("#secretProductName").html();
+            var productPrice = $("#secretPrice").html();
+            var amount = $("#amount").val();
+            var productPhoto = $("#secretPhoto").html();
+            var shoppingData = {"email":loginUser,"pId":productId,"pName":productName,"price":productPrice,"amount":amount,"cPhoto":productPhoto};
+            $.ajax({
+                url:"addshoppingCart",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(shoppingData),
+                success:function(resultMsg){
+                    var jsonMsg = $.parseJSON(resultMsg);
+                    alert(jsonMsg);
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+            update();
+            updateShoppingCart();
+            updatePrice();
+        });
+
+        
+        // 刪除購物車裡的物品
+        $("#shoppingList tr .si-close").on("click","a",function(e){
+        	e.preventDefault();
+            $(this).closest("tr").remove();
+            var cartId = $("td").first().html();
+            var cartData = {"cartId":cartId};
+            $.ajax({
+                url:"panDeleteShoppingProduct",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(cartData),
+                success:function(result){
+                    var jsonMsg = $.parseJSON(result);
+                    alert(jsonMsg);
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+            update();
+            updateShoppingCart();
+            updatePrice();
+        });
 	});
 </script>
 
@@ -104,48 +235,30 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 text-right col-md-3 mt-4">
+					<div class="col-lg-3 text-right col-md-3">`
 						<ul class="nav-right">
 
 							<li class="cart-icon"><a href="#"> <i
-									class="icon_bag_alt"></i> <span>3</span>
+									class="icon_bag_alt"></i> 
+                                    <span id="shoppingQuantity">
+                                        <!-- shoppingQuantity Here -->
+                                    </span>
 							</a>
 								<div class="cart-hover">
-									<div class="select-items">
-										<table>
-											<tbody>
-												<tr>
-													<td class="si-pic"><img src="img/select-product-1.jpg"
-														alt=""></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
-												<tr>
-													<td class="si-pic"><img src="img/select-product-2.jpg"
-														alt=""></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
+									<div class="select-items" style="height: 210px;overflow: auto;">
+										<table> 
+											<tbody id="shoppingList">
+                                                <!-- ShoppingList Here -->
 											</tbody>
 										</table>
 									</div>
 									<div class="select-total">
 										<span>總共:</span>
-										<h5>$120.00</h5>
+										<h5 id="selectTotal"><!-- selectTotal Here --></h5>
 									</div>
 									<div class="select-button">
-										<a href="#" class="primary-btn view-card">購 物 車</a> <a
-											href="#" class="primary-btn checkout-btn">結 帳</a>
+										<a href="shoppingCart" class="primary-btn view-card">購　物　車</a> <a
+											href="checkOut" class="primary-btn checkout-btn">結　　　帳</a>
 									</div>
 								</div></li>
 							<li class="cart-price">$150.00</li>
@@ -160,12 +273,12 @@
 					<div class="depart-btn">
 						<i class="ti-menu"></i> <span>所有選項</span>
 						<ul class="depart-hover">
-							<li class="testActive"><a href="#">飾 品</a></li>
-							<li class="testActive"><a href="#">服 飾</a></li>
-							<li class="testActive"><a href="#">生 活</a></li>
-							<li class="testActive"><a href="#">玩 具</a></li>
-							<li class="testActive"><a href="#">藝 術</a></li>
-							<li class="testActive"><a href="#">經 典</a></li>
+							<li class="testActive"><a href="#">飾品</a></li>
+							<li class="testActive"><a href="#">服飾</a></li>
+							<li class="testActive"><a href="#">生活</a></li>
+							<li class="testActive"><a href="#">玩具</a></li>
+							<li class="testActive"><a href="#">藝術</a></li>
+							<li class="testActive"><a href="#">經典</a></li>
 						</ul>
 					</div>
 				</div>

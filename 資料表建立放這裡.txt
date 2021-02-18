@@ -34,3 +34,60 @@ roles nvarchar(20) not null
 )
 
 ---------bobby userInfo data
+
+------------pan product data
+create table Product (
+	pId int not null primary key identity(1,1),
+	pName nvarchar(50) not null,
+	pMain nvarchar(50) not null,
+	pDetail nvarchar(50),
+	price int not null,
+	invantory int not null,
+    pSize nvarchar(10),
+	description nvarchar(max),
+	sDescription nvarchar(max),
+    cPhoto nvarchar(max),
+	email nvarchar(50) not null,
+    userName nvarchar(50)
+);
+------------pan product data
+
+
+------------pan Article data
+
+create Table userArticle(
+	articleId int not null primary key identity(1,1),
+    email nvarchar(80),
+    description nvarchar(max),
+    articleContext nvarchar(max)
+);
+
+------------pan Article data
+
+
+-------------pan ShoppingCart data
+
+create table shoppingCart(
+cartId int primary key identity(1,1),
+email nvarchar(max),
+pId int not null, 
+pName nvarchar(50)not null,
+price int not null,
+amount int not null,
+cPhoto nvarchar(max)
+);
+
+-------------pan ShoppingCart data
+
+
+-------------pan ShoppingOrder data
+
+create table shoppingOrder(
+orderId int primary key identity(1,1),
+email nvarchar(max)not null,
+memo nvarchar(max)not null,
+totalPrice int not null,
+orderTime  datetime not null
+);
+
+-------------pan ShoppingOrder data

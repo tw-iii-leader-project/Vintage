@@ -273,9 +273,10 @@
                   });
                   
                   var avgStarLv = allStarLv / item.leaveMsgList.length ;
-                  console.log("平均星數"+avgStarLv);
+                  var mathavgStarLv = Math.round(avgStarLv);
+                  console.log("平均星數"+mathavgStarLv);
                   
-                  $("#avgStarLv").append(`平均星數 ${show_star_icon(avgStarLv)} `);
+                  $("#avgStarLv").append(`${show_star_icon(mathavgStarLv)} </br>`);
                   $("#msgNums").append(`( ${item.leaveMsgList.length} )`);
                           
                   

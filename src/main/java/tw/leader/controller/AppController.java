@@ -135,6 +135,14 @@ public class AppController {
 	public String selectUserInfoUser(@RequestBody UserResp userData) throws Exception {
 		String email = userData.getEmail();
 		List<User> uList = fDao.findAllDataByEmail(email);
+		
+		for (User u : uList) {
+			System.out.println("TESTTTTTTTT");
+			System.out.println(u.getEmail());
+			System.out.println(u.getUserPic());
+			System.out.println("TESTTTTTTTT");
+		}
+		
 		String uJson = objectMapper.writeValueAsString(uList);
 		System.out.println(uJson);
 		return uJson;
@@ -164,6 +172,8 @@ public class AppController {
 		user.setPhone(userPhone);
 		user.setGender(gender);
 		user.setRoles(newRole);
+		
+		uRepo.save(user);
 		
 
 		String uploadDir = "C:\\Users\\iii\\git\\Vintage218\\src\\main\\resources\\static\\img\\userPic";

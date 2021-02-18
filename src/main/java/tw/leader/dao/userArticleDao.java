@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import tw.leader.po.User;
 import tw.leader.po.userArticle;
 
 public interface userArticleDao extends JpaRepository<userArticle, Integer> {
@@ -17,5 +18,8 @@ public interface userArticleDao extends JpaRepository<userArticle, Integer> {
 	
 	@Query(value="update userArticle set articleContext = ?1 where email = ?2",nativeQuery = true)
 	public userArticle updateUserArticle(String articleContext,String email);
+	
+	@Query("SELECT u FROM userInfo AS u WHERE u.email = ?1")
+	userArticle findByEmail(String email);
 	
 }

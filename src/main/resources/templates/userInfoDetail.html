@@ -146,9 +146,20 @@
         });
         
         $(document).ready(function () {
+        	
+        	$("#mainImage").change(function () {
+        		showImageThumbnail(this);
+        	});
+        	
         	$("#fileImage").change(function () {
         		showImageThumbnail(this);
         	});
+        	
+        	$("input[name='extraImage']").each(function(index) {
+            	$(this).change(function () {
+            		showExtraImageThumbnail(this, index);
+            	});	
+            });
         })
 
 
@@ -162,6 +173,17 @@
 
         	reader.readAsDataURL(file);
         }
+        
+        function showExtraImageThumbnail(fileInput, index) {
+        	file = fileInput.files[0];
+        	reader = new FileReader();
+        	
+        	reader.onload = function(e) {
+        		$("#thumbnail" + index).attr('src', e.target.result);
+        	};
+        }
+        
+        
         
     </script>
 
@@ -333,6 +355,57 @@
 							<div>
 							<button type="submit" class="site-btn register-btn">送出</button>
 							</div>
+						</form>
+						
+						<form th:action="@{/userPicUpdate}" id="userPicUpload" method="post" enctype="multipart/form-data">
+							<div class="group-input">
+								<p>
+									<img id="thumbnail0" alt="Image Preview" />
+								</p>
+								<p>
+									<label>Extra Image #1</label>
+								</p>
+								<p>
+									<input type="file" name="mainImage" accept="image/png, image/jpeg">
+								</p>
+							</div>
+							<div class="group-input">
+								<p>
+									<img id="thumbnail0" alt="Image Preview" />
+								</p>
+								<p>
+									<label>Extra Image #1</label>
+								</p>
+								<p>
+									<input type="file" name="extraImage" accept="image/png, image/jpeg">
+								</p>
+							</div>
+							<div class="group-input">
+								<p>
+									<img id="thumbnail1" alt="Image Preview" />
+								</p>
+								<p>
+									<label>Extra Image #2</label>
+								</p>
+								<p>
+									<input type="file" name="extraImage" accept="image/png, image/jpeg">
+								</p>
+							</div>
+							<div class="group-input">
+								<p>
+									<img id="thumbnail2" alt="Image Preview" />
+								</p>
+								<p>
+									<label>Extra Image #3</label>
+								</p>
+								<p>
+									<input type="file" name="extraImage" accept="image/png, image/jpeg">
+								</p>
+							</div>
+						
+						
+							
+						
 						</form>
 						
 					</div>

@@ -7,8 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
 @Table(name="userArticle")
+@Data
 public class userArticle {
 	
 	@Id @Column(name="articleId")
@@ -23,6 +26,21 @@ public class userArticle {
 	
 	@Column(name="articleContext")
 	private String articleContext;
+	
+	@Column(name = "userName")
+	private String userName;
+	
+	@Column(name = "userPicMain")
+	private String userPicMain;
+	
+	@Column(name = "userPic1")
+	private String userPic1;
+	
+	@Column(name = "userPic2")
+	private String userPic2;
+	
+	@Column(name = "userPic3")
+	private String userPic3;
 
 	public int getArticleId() {
 		return articleId;

@@ -143,6 +143,25 @@
             });
 
         });
+        
+        $(document).ready(function () {
+        	$("#fileImage").change(function () {
+        		showImageThumbnail(this);
+        	});
+        })
+
+
+        function showImageThumbnail(fileInput) {
+        	file = fileInput.files[0];
+        	reader =new FileReader();
+
+        	reader.onload = function(e) {
+        		$("#thumbnail").attr("src", e.target.result);
+        	};
+
+        	reader.readAsDataURL(file);
+        }
+        
     </script>
 
 </head>
@@ -301,7 +320,7 @@
 					<div class="register-form">
 						<h2>開啟賣家功能</h2>
 						<h3 style="text-align: center">填寫詳細資料以成為賣家</h3>
-						<form th:action="@{/userInfoUpdate}" id="registerForm" method="post" >
+						<form th:action="@{/userInfoUpdate}" id="registerForm" method="post" enctype="multipart/form-data">
 							<div class="group-input">
 								<label for="birthday">Birthday *</label> 
 								<input type="date" name="userBirthday" id="userBirthday" required>
@@ -317,11 +336,16 @@
 								<input type="radio" name="gender" id="gender" value="WOMEN" th:text="女">
 								<input type="radio" name="gender" id="gender" value="PRIVATE" th:text="不公開">
 							</div>
-<!-- 							<div class="group-input"> -->
-<!-- 								<label for="con-pass"></label> <input type="text" -->
-<!-- 									th:field="*{roles}" id="roles" style="display:none" value="ROLES_SELLER"> -->
-<!-- 							</div> -->
-			
+							
+							<div>
+								<label>個人照片上傳</label>
+								<input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg" >
+							</div>
+							<div>
+							<p>
+								<img id="thumbnail" alt="Logo Preview" />
+							</p>
+							</div>
 
 							<div>
 							<button type="submit" class="site-btn register-btn">送出</button>

@@ -103,13 +103,13 @@ public class ＭanagementServiceImpl implements ManagementService{
 			
 		}
 		System.out.println(roles);
-		if(roles == "ROLES_SELLER") {
+		if(roles.equals("ROLES_SELLER")) {
 			String newRoles = "ROLES_DISABLED";
 			UserResp result = fDao.upDateUserRoles(newRoles, userId);
 			result.setMessage("此帳戶已停權");
 			return result;
 		}
-		if(roles == "ROLES_DISABLED") {
+		if(roles.equals("ROLES_DISABLED")) {
 			String newRoles = "ROLES_SELLER";
 			UserResp result = fDao.upDateUserRoles(newRoles, userId);
 			result.setMessage("此帳戶權限已重啟");

@@ -63,7 +63,7 @@ articleContext nvarchar(max),
 userName nvarchar(max),
 userPicMain nvarchar(max),
 userPic1 nvarchar(max),
-userPic2 nvarchar(max).
+userPic2 nvarchar(max),
 userPic3 nvarchar(max)
 );
 

@@ -36,7 +36,6 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
 	integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
 	crossorigin="anonymous"></script>
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <style type="text/css">
 table {
@@ -277,9 +276,11 @@ table tr>* {
 					<th>操作</th> -->
 									</tr>
 									<tr style="background-color: #e7ab3c;">
-										<td>{{editproduct.pId}}</td>
-										<td><input type="text" v-model="editproduct.pName"></td>
-										<td><select v-model="editproduct.pMain" type="selected">
+										<td><div style="width: 70px">{{editproduct.pId}}</div></td>
+										<td><input style="width: 70px" class="form-control"
+											type="text" v-model="editproduct.pName"></td>
+										<td><select v-model="editproduct.pMain" type="selected"
+											class="form-control" style="width: 150px">
 												<option disabled="disabled">請選擇商品類別</option>
 												<option>飾品</option>
 												<option>服飾</option>
@@ -288,17 +289,20 @@ table tr>* {
 												<option>藝術</option>
 												<option>經典</option>
 										</select></td>
-										<td><textarea v-model="editproduct.pDetail"></textarea></td>
+										<td><textarea v-model="editproduct.pDetail"
+												class="form-control" style="width: 200px"></textarea></td>
 										<td><input type="text" v-model="editproduct.price"
-											style="width: 50px"></td>
+											style="width: 70px" class="form-control"></td>
 										<td><input type="text" v-model="editproduct.invantory"
-											style="width: 50px"></td>
+											style="width: 70px" class="form-control"></td>
 										<td><input type="text" v-model="editproduct.pSize"
-											style="width: 50px"></td>
-										<td><textarea v-model="editproduct.description"></textarea></td>
-										<td><textarea v-model="editproduct.sDescription"></textarea></td>
+											style="width: 70px" class="form-control"></td>
+										<td><textarea v-model="editproduct.description"
+												style="width: 200px" class="form-control"></textarea></td>
+										<td><textarea v-model="editproduct.sDescription"
+												style="width: 200px" class="form-control"></textarea></td>
 										<td><img v-bind:src="editproduct.cPhoto" class="ppic">
-											<input class="upload" type="file" id="ppicfile"
+											 <input class="upload" type="file" id="ppicfile"
 											@change="selectimg($event.target)"
 											accept="image/png,image/gif,image/jpeg"></td>
 										<td>{{editproduct.email}}</td>
@@ -309,7 +313,8 @@ table tr>* {
 										</select>
 										</td> -->
 										<td>{{editproduct.lastEditTime}}</td>
-										<td><button @click="saveproduct(editproduct)">保存</button></td>
+										<td><button @click="saveproduct(editproduct)"
+												class="btn btn-success" style="width: 70px">保存</button></td>
 									</tr>
 									<tr v-for="p in products">
 										<td>{{p.pId}}</td>
@@ -326,7 +331,8 @@ table tr>* {
 										<!-- 		<td>{{p.userName}}</td>
 										<td>{{p.categoryId}}</td> -->
 										<td>{{p.lastEditTime}}</td>
-										<td><button @click="delproduct(p)">删除</button></td>
+										<td><button @click="delproduct(p)" class="btn btn-danger"
+												style="width: 70px">删除</button></td>
 										<!-- 			<button @click="editgoods(g)" disabled="disabled">修改</button>&nbsp;|&nbsp;UI暂不实现修改，禁用 -->
 									</tr>
 								</table>
@@ -363,7 +369,7 @@ table tr>* {
 										},
 										created : function() {
 											this.$http
-													.get('/api/categorys')
+													.get('/Vintage/api/categorys')
 													.then(
 															function(res) {
 																this.categorys = res.body;
@@ -386,7 +392,7 @@ table tr>* {
 												//按分页检索商品列表
 												this.$http
 														.get(
-																'/api/product'
+																'/Vintage/api/product'
 																		+ '?pagesize='
 																		+ ps
 																		+ '&page='
@@ -483,7 +489,7 @@ table tr>* {
 
 												this.$http
 														.post(
-																'/api/saveproduct',
+																'/Vintage/api/saveproduct',
 																formData,
 																config)
 														.then(
@@ -519,7 +525,7 @@ table tr>* {
 											delproduct : function(p) {
 												this.$http
 														.get(
-																'/api/delproduct/'
+																'/Vintage/api/delproduct/'
 																		+ p.pId)
 														.then(
 																function(res) {

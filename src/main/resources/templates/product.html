@@ -82,7 +82,7 @@
                     $.each(response,function(i,v){
                         $("#productImg").append(
                             `<div class="product-pic-zoom">
-                                <img class="product-big-img" src="img/products/${v.cPhoto}" alt="">
+                                <img class="product-big-img" src="${v.cPhoto}" alt="">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
@@ -237,7 +237,7 @@
 //             var product_id = 12345; //取得商品的ID值
 //             var product_id_data = { pId: product_id }; //存成JSON物件
             $.ajax({
-              url: "http://localhost:8080/Vintage/api/leaveMsg/showLeaveMsg",
+              url: "/Vintage/api/leaveMsg/showLeaveMsg",
               method: "POST",
               dataType: "json",
               contentType: "application/json; charset=UTF-8",
@@ -273,10 +273,9 @@
                   });
                   
                   var avgStarLv = allStarLv / item.leaveMsgList.length ;
-                  var mathavgStarLv = Math.round(avgStarLv);
-                  console.log("平均星數"+mathavgStarLv);
+                  console.log("平均星數"+avgStarLv);
                   
-                  $("#avgStarLv").append(`${show_star_icon(mathavgStarLv)} </br>`);
+                  $("#avgStarLv").append(`平均星數 ${show_star_icon(avgStarLv)} `);
                   $("#msgNums").append(`( ${item.leaveMsgList.length} )`);
                           
                   
@@ -341,7 +340,7 @@
                             $("#shoppingList").append(
                                 `<tr>
                                     <td style="display: none;">${v.cartId}</td>													
-	                                <td class="si-pic"><img src="img/products/${v.cPhoto}"											
+	                                <td class="si-pic"><img src="${v.cPhoto}"											
                                         alt=""></td>												
 	                                <td class="si-text">												
 	                                	<div class="product-selected">														

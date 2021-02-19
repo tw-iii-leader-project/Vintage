@@ -65,9 +65,10 @@
                                     <a href="#">
                                         <h5>${v.userName}</h5>
                                     </a>
-                                    <p>生日 : ${v.birthday}</p>
-                                    <p>電話 : ${v.phone}</p>
-                                    <p>性別 : ${v.gender}</p>
+                                    <p>${v.birthday}</p>
+                                    <p>${v.userPhoto}</p>
+                                    <p>${v.phone}</p>
+                                    <p>${v.gender}</p>
                                     <a href="toUserInfoDetail">更改基本資料</a>
                                     <a href="admin">商品管理後台</a>
                                 </div>`
@@ -98,8 +99,8 @@
                                     <a href="#">
                                         <h5>${v.userName}</h5>
                                     </a>
-                                    <p>生日 : ${v.userBirthday}</p>
-                                    <p>電話 : ${v.phone}</p>
+                                    <p>${v.userBirthday}</p>
+                                    <p>${v.userPic}</p>
                                 </div>`
                             );
                         });
@@ -177,7 +178,7 @@
                             `<div class="col-lg-3 col-sm-6">
                          	    <div class="product-item">
                                 	<div class="pi-pic">
-                                    	<img src="img/products/${v.cPhoto}" alt="">
+                                    	<img src="${v.cPhoto}" alt="">
                                             <ul>
                                                 <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                                 <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
@@ -223,7 +224,7 @@
                                 `<div class="col-lg-3 col-sm-6">
                              	    <div class="product-item">
                                     	<div class="pi-pic">
-                                        	<img src="img/products/${v.cPhoto}" alt="">
+                                        	<img src="${v.cPhoto}" alt="">
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                                     <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
@@ -300,7 +301,7 @@
                                 `<div class="col-lg-3 col-sm-6">
                          	        <div class="product-item">
                                     	<div class="pi-pic">
-                                        	<img src="img/products/${v.cPhoto}" alt="">
+                                        	<img src="${v.cPhoto}" alt="">
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                                     <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
@@ -347,7 +348,7 @@
                                 `<div class="col-lg-3 col-sm-6">
                          	        <div class="product-item">
                                     	<div class="pi-pic">
-                                        	<img src="img/products/${v.cPhoto}" alt="">
+                                        	<img src="${v.cPhoto}" alt="">
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                                     <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
@@ -421,7 +422,7 @@
                                 `<div class="col-lg-3 col-sm-6">
                              	    <div class="product-item">
                                     	<div class="pi-pic">
-                                        	<img src="img/products/${v.cPhoto}" alt="">
+                                        	<img src="${v.cPhoto}" alt="">
                                                 <ul>
                                                     <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
                                                     <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
@@ -551,7 +552,7 @@
                             $("#shoppingList").append(
                                 `<tr>
                                     <td style="display: none;">${v.cartId}</td>													
-	                                <td class="si-pic"><img src="img/products/${v.cPhoto}"											
+	                                <td class="si-pic"><img src="${v.cPhoto}"											
                                         alt=""></td>												
 	                                <td class="si-text">												
 	                                	<div class="product-selected">														

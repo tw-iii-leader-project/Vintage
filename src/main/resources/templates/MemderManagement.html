@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Fashi Template">
+    <meta name="keywords" content="Fashi, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vintage | MemderManagement</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+    	$(function(){
+    		$.ajax({
+		        async:true,
+		        url:"panFindPages",
+		        type:"POST",
+		        dataType:"json",
+		        contentType:"application/json;charset=utf-8",
+                success:function(pageData){
+                    $.each(pageData,function(i,v){
+                        var pages = parseInt(v.totalPages);
+                        for(n=1;n<=pages;n++){
+                            $("#pageBox ul").append(
+                                `<li class="pageLi">${n}</li>`
+                            );
+                        };
+                        $("#totalUser").append(
+                            `<span>${v.totalUser}</span>`
+                        );
+                    });
+                    $("#pageBox ul li").first().addClass("active");
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+    		$.ajax({
+    			url:"panFindAllUser",
+		        type:"POST",
+		        dataType:"json",
+		        contentType:"application/json;charset=utf-8",
+                success:function(response){
+                	$.each(response,function(i,v){
+                		$("#userTable #userTr").append(
+                			`<tr>
+                                <td class="cart-title">${v.userId}</td>
+                                <td class="cart-title">
+                                	<h5>${v.userName}</h5>
+                                </td>
+                                <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                <td class="p-price">${v.email}</td>
+                                <td class="total-price">${v.userPhone}</td>
+                                <td class="p-price">${v.userBirthday}</td>
+                                <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
+                        	</tr>`
+                		);
+                	});
+                },
+                error:function(msg){
+                	console.log(msg);
+                }
+    		});
+    		$("#pageBox ul").on("click",".pageLi",function(){
+                $("#pageBox ul li").removeClass("active");
+                $(this).addClass("active");
+                $("#userTable #userTr").html("");
+                var pageNum = $(this).html();
+                var pageData = {"page":pageNum};
+                $.ajax({
+                    async:true,
+                    url:"panFindAllUser.page",
+                    type:"POST",
+                    dataType:"json",
+		            contentType:"application/json;charset=utf-8",
+		            data:JSON.stringify(pageData),
+                    success:function(response){
+                        $.each(response,function(i,v){
+                        	$("#userTable #userTr").append(
+                        		`<tr>
+                                	<td class="cart-title">${v.userId}</td>
+                                	<td class="cart-title">
+                                		<h5>${v.userName}</h5>
+                                	</td>
+                                	<td class="cart-pic"><img src="img/${v.userPic}" alt=""></td>
+                                	<td class="p-price">${v.email}</td>
+                                	<td class="total-price">${v.userPhone}</td>
+                                	<td class="p-price">${v.userBirthday}</td>
+                                	<td class="close-td"><button value="停權"></button></td>
+                        		</tr>`	
+                        	);
+            			});
+            		},
+            		error:function(msg){
+            			console.log(msg);
+            		}
+				});
+            });
+
+            $("#userSelectSearch").click(function(){
+                if($("#userSelectInput").val() == ''){}
+                var userData = null;
+                if($("#userSelect").val() == 'userId'){
+                    $("#userTable #userTr").html("");
+                    var userId = $("#userSelectInput").val();
+                    var userData = {"userId":userId};
+                    $.ajax({
+                        url:"panFindUserById.management",
+                        type:"POST",
+                        dataType:"json",
+                        contentType:"application/json;charset=utf-8",
+                        data:JSON.stringify(userData),
+                        success:function(response){
+                            $.each(response,function(i,v){
+                		        $("#userTable #userTr").append(
+                		        	`<tr>
+                                        <td class="cart-title">${v.userId}</td>
+                                        <td class="cart-title">
+                                        	<h5>${v.userName}</h5>
+                                        </td>
+                                        <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                        <td class="p-price">${v.email}</td>
+                                        <td class="total-price">${v.userPhone}</td>
+                                        <td class="p-price">${v.userBirthday}</td>
+                                        <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
+                                	</tr>`
+                		        );
+                	        });
+                        },
+                        error:function(msg){
+                            console.log(msg);
+                        }
+                    });
+                }
+                else if($("#userSelect").val() == 'userName'){
+                    $("#userTable #userTr").html("");
+                    var userName = $("#userSelectInput").val();
+                    var userData = {"userName":userName};
+                    $.ajax({
+                        url:"panFindUserByName.management",
+                        type:"POST",
+                        dataType:"json",
+                        contentType:"application/json;charset=utf-8",
+                        data:JSON.stringify(userData),
+                        success:function(response){
+                            $.each(response,function(i,v){
+                		        $("#userTable #userTr").append(
+                		        	`<tr>
+                                        <td class="cart-title">${v.userId}</td>
+                                        <td class="cart-title">
+                                        	<h5>${v.userName}</h5>
+                                        </td>
+                                        <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                        <td class="p-price">${v.email}</td>
+                                        <td class="total-price">${v.userPhone}</td>
+                                        <td class="p-price">${v.userBirthday}</td>
+                                        <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
+                                	</tr>`
+                		        );
+                	        });
+                        },
+                        error:function(msg){
+                            console.log(msg);
+                        }
+                    });
+                }
+                else if($("#userSelect").val() == 'userEmail'){
+                    $("#userTable #userTr").html("");
+                    var userEmail = $("#userSelectInput").val();
+                    var userData = {"email":userEmail};
+                    $.ajax({
+                        url:"panFindUserByEmail.management",
+                        type:"POST",
+                        dataType:"json",
+                        contentType:"application/json;charset=utf-8",
+                        data:JSON.stringify(userData),
+                        success:function(response){
+                            $.each(response,function(i,v){
+                                var userRoles = v.roles;
+                                if(userRoles == "ROLES_SELLER"){
+                                    $("#userTable #userTr").append(
+                		        	    `<tr>
+                                            <td class="userIdClass">${v.userId}</td>
+                                            <td class="cart-title">
+                                            	<h5>${v.userName}</h5>
+                                            </td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="p-price">${v.email}</td>
+                                            <td class="total-price">${v.userPhone}</td>
+                                            <td class="p-price">${v.userBirthday}</td>
+                                            <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
+                                	    </tr>`
+                		            );
+                                }
+                                else if(userRoles == "ROLES_DISABLED"){
+                                    $("#userTable #userTr").append(
+                		        	    `<tr>
+                                            <td class="userIdClass">${v.userId}</td>
+                                            <td class="cart-title">
+                                            	<h5>${v.userName}</h5>
+                                            </td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="p-price">${v.email}</td>
+                                            <td class="total-price">${v.userPhone}</td>
+                                            <td class="p-price">${v.userBirthday}</td>
+                                            <td class="close-td"><button class="userAuthority" value="${v.userId}">解除</button></td>
+                                	    </tr>`
+                		            );
+                                }
+                		        
+                	        });
+                        },
+                        error:function(msg){
+                            console.log(msg);
+                        }
+                    });
+                }
+                else if($("#userSelect").val() == ''){
+                    alert("請選擇搜尋方式");
+                }
+                else{
+                    console.log('系統例外發生!!!');
+                } 
+            });
+
+
+
+            $("#userTable #userTr").on("click",".userAuthority",function(){
+                if($(this).html() == '停權'){
+                    var userId = $(this).val();
+                    var userData = {"userId":userId};
+                    $(this).html("解除");
+                    $.ajax({
+                        url:"panSetUserAuthority",
+                        type:"POST",
+                        dataType:"json",
+                        contentType:"application/json;charset=utf-8",
+                        data:JSON.stringify(userData),
+                        success:function(result){
+                            console.log(result);
+                        },
+                        error:function(msg){
+                            console.log(msg);
+                        }
+                    });
+                }
+                else{
+                    var userId = $(this).val();
+                    var userData = {"userId":userId};
+                    $(this).html("停權");
+                    $.ajax({
+                        url:"panSetUserAuthority",
+                        type:"POST",
+                        dataType:"json",
+                        contentType:"application/json;charset=utf-8",
+                        data:JSON.stringify(userData),
+                        success:function(result){
+                            console.log(result);
+                        },
+                        error:function(msg){
+                            console.log(msg);
+                        }
+                    });
+                }
+                
+            });
+
+    	});
+    </script>
+</head>
+
+<body>
+    <p th:value="${user}" type="hidden" id="loginInfo"></p>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+
+	<!-- Header Section Begin -->
+	<header class="header-section">
+		<div class="header-top">
+			<div class="container">
+				<div class="ht-left"></div>
+				<div class="ht-right">
+					<a href="loginPage" class="login-panel" th:text="Login"><i
+						class="fa fa-user"></i></a> <a href="logout" class="login-panel"
+						th:text="Logout" style="display: none"><i class="fa fa-user"></i></a>
+
+					<div class="top-social">
+						<div class="mail-service">
+							<a class=" fa fa-envelope" href="panUserManagement">後台管理系統</a>
+							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="inner-header">
+				<div class="row">
+					<div class="col-lg-2 col-md-2">
+						<div class="logo">
+							<a href="index"> <img src="img/logo.png" alt="">
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="nav-item">
+			<div class="container">
+				<nav class="nav-menu mobile-menu">
+					<ul>
+						<li><a href="panUserManagement">管理首頁</a></li>
+						<li class="active"><a href="panMember">會員權限管理</a></li>
+						<li><a href="panAdvertisement">廣告</a></li>
+						<li><a href="panContact">活動</a></li>
+					</ul>
+				</nav>
+				<div id="mobile-menu-wrap"></div>
+			</div>
+		</div>
+	</header>
+	<!-- Header End -->
+
+    <!-- Breadcrumb Section Begin -->
+    <div class="breacrumb-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="breadcrumb-text product-more">
+                        <a href="liaoIndex"><i class="fa fa-home"></i> Home</a>
+                        <a href="liaoShop">UserManagement</a>
+                        <span>MemderManagement</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Section Begin -->
+
+    <!-- Shopping Cart Section Begin -->
+    <section class="shopping-cart spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <select id="userSelect">
+                        <option value="">請選擇搜尋方式</option>
+                        <option value="userId">使用者ID</option>
+                        <option value="userName">使用者Name</option>
+                        <option value="userEmail">使用者email</option>
+                    </select>
+                    <div class="input-group">
+                        <input type="text" id="userSelectInput" placeholder="快速搜尋使用者">
+                        <button type="button" class="ml-5" id="userSelectSearch">
+                            <i class="ti-search"></i>
+                        </button>
+                    </div>
+                    <div class="cart-table">
+                        <table id="userTable">
+                            <thead>
+                                <tr>
+                                	<th>UserId</th>
+                                    <th class="p-name">Member Name</th>
+                                    <th>Image</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Birthday</th>
+                                    <th>Suspension</th>
+                                </tr>
+                            </thead>
+                            <tbody id="userTr">
+                                <!-- userData Here -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="filter-control" id="pageBox">
+                        <ul>
+
+                        </ul>
+                    </div>
+                    <div id="totalUser">
+                    	
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Shopping Cart Section End -->
+
+    <!-- Partner Logo Section Begin -->
+    <div class="partner-logo">
+        <div class="container">
+            <div class="logo-carousel owl-carousel">
+                <div class="logo-item">
+                    <div class="tablecell-inner">
+                        <img src="img/logo-carousel/logo-1.png" alt="">
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="tablecell-inner">
+                        <img src="img/logo-carousel/logo-2.png" alt="">
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="tablecell-inner">
+                        <img src="img/logo-carousel/logo-3.png" alt="">
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="tablecell-inner">
+                        <img src="img/logo-carousel/logo-4.png" alt="">
+                    </div>
+                </div>
+                <div class="logo-item">
+                    <div class="tablecell-inner">
+                        <img src="img/logo-carousel/logo-5.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Partner Logo Section End -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="footer-left">
+                        <div class="footer-logo">
+                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                        </div>
+                        <ul>
+                            <li>Address: 60-49 Road 11378 New York</li>
+                            <li>Phone: +65 11.188.888</li>
+                            <li>Email: hello.colorlib@gmail.com</li>
+                        </ul>
+                        <div class="footer-social">
+                            <a href="#"><i class="fa fa-facebook"></i></a>
+                            <a href="#"><i class="fa fa-instagram"></i></a>
+                            <a href="#"><i class="fa fa-twitter"></i></a>
+                            <a href="#"><i class="fa fa-pinterest"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 offset-lg-1">
+                    <div class="footer-widget">
+                        <h5>Information</h5>
+                        <ul>
+                            <li><a href="#">About Us</a></li>
+                            <li><a href="#">Checkout</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Serivius</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2">
+                    <div class="footer-widget">
+                        <h5>My Account</h5>
+                        <ul>
+                            <li><a href="#">My Account</a></li>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Shopping Cart</a></li>
+                            <li><a href="#">Shop</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="newslatter-item">
+                        <h5>Join Our Newsletter Now</h5>
+                        <p>Get E-mail updates about our latest shop and special offers.</p>
+                        <form action="#" class="subscribe-form">
+                            <input type="text" placeholder="Enter Your Mail">
+                            <button type="button">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-reserved">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="copyright-text">
+                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                        </div>
+                        <div class="payment-pic">
+                            <img src="img/payment-method.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Js Plugins -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.countdown.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery.zoom.min.js"></script>
+    <script src="js/jquery.dd.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

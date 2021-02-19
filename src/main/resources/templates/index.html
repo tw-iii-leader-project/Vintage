@@ -7,7 +7,7 @@
 <meta name="keywords" content="Fashi, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Fashi | Template</title>
+<title>Vintage | Index</title>
 
 <!-- Google Font -->
 <link
@@ -27,6 +27,12 @@
 <script src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	$(function() {
+		var roles = $("#userRoles").html();
+		if(roles == "ROLES_ADMIN"){
+			$(".top-social").html("");
+			$(".top-social").append(
+				`<a class=" fa fa-envelope" href="toUserManagement">後台管理系統</a>`);
+		}
 		var userEmail = $("#userPageControl").html();
 		var cUrl = "panUserControlPage?email=";
 		$("#userPageControl").click(function(){
@@ -177,6 +183,8 @@
             updateShoppingCart();
             updatePrice();
         });
+
+		
 	});
 </script>
 
@@ -188,6 +196,7 @@
 
 <body>
 	<p th:value="${user}" type="hidden" id="loginInfo"></p>
+	<span th:text="${roles}" style="display: none;" id="userRoles"></span>
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>

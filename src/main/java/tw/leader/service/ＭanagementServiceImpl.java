@@ -6,13 +6,16 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import tw.leader.dao.FindUserInfoDao;
 import tw.leader.po.User;
+import tw.leader.vo.UserResp;
 
+@Service
 public class ＭanagementServiceImpl implements ManagementService{
 
 	@Autowired
@@ -50,6 +53,14 @@ public class ＭanagementServiceImpl implements ManagementService{
 		return uJson;
 	}
 	
+//	@Override
+//	public String getAllUser() throws Exception {
+//		List<User> uList = fDao.findAllUser();
+//		String uJson = objectMapper.writeValueAsString(uList);
+//		System.out.println(uJson);
+//		return uJson;
+//	}
+	
 	@Override
 	public String getAllUserP(int page) throws Exception {
 		int rPage = page-1;
@@ -66,6 +77,52 @@ public class ＭanagementServiceImpl implements ManagementService{
 		System.out.println(uJson);
 		return uJson;
 	}
+	
+	@Override
+	public String getUserById(int userId) throws Exception {
+		List<User> uList = fDao.findUserById(userId);
+		String uJson = objectMapper.writeValueAsString(uList);
+		System.out.println(uJson);
+		return uJson;
+	}
+	
+	@Override
+	public String getUserByEmail(String email) throws Exception {
+		List<User> uList = fDao.findUserByEmail(email);
+		String uJson = objectMapper.writeValueAsString(uList);
+		System.out.println(uJson);
+		return uJson;
+	}
+	
+	@Override
+	public UserResp getUserAuthorityResult(int userId) {
+		List<User> uList = fDao.findUserById(userId);
+		String roles = null;
+		for(User uBean : uList) {
+			roles = uBean.getRoles();
+			
+		}
+		System.out.println(roles);
+		if(roles == "ROLES_SELLER") {
+			String newRoles = "ROLES_DISABLED";
+			UserResp result = fDao.upDateUserRoles(newRoles, userId);
+			result.setMessage("此帳戶已停權");
+			return result;
+		}
+		if(roles == "ROLES_DISABLED") {
+			String newRoles = "ROLES_SELLER";
+			UserResp result = fDao.upDateUserRoles(newRoles, userId);
+			result.setMessage("此帳戶權限已重啟");
+			return result;
+		}
+		else {
+			UserResp result = new UserResp();
+			result.setMessage("此帳戶無法更改權限");
+			return result;
+		}
+	}
+	
+	
 	
 	
 }

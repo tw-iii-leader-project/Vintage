@@ -151,7 +151,7 @@ public class AppController {
 			@RequestParam("fileImage") MultipartFile multipartFile
 			) throws IOException{
 		String currentUser = GetCurrentUserAccount();
-		String newRole = "ROLE_SELL";
+		String newRole = "ROLES_SELLER";
 		User user = uRepo.findByEmail(currentUser);
 		
 //		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());

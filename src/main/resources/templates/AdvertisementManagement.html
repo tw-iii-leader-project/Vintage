@@ -7,7 +7,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vintage | UserManagement</title>
+    <title>Vintage | AdvertisementManagement</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -74,9 +74,9 @@
 			<div class="container">
 				<nav class="nav-menu mobile-menu">
 					<ul>
-						<li class="active"><a href="panUserManagement">管理首頁</a></li>
+						<li><a href="panUserManagement">管理首頁</a></li>
 						<li><a href="panMember">會員權限管理</a></li>
-						<li><a href="panAdvertisement">廣告</a></li>
+						<li class="active"><a href="panAdvertisement">廣告</a></li>
 						<li><a href="panContact">活動</a></li>
 					</ul>
 				</nav>
@@ -94,7 +94,7 @@
                     <div class="breadcrumb-text product-more">
                         <a href="liaoIndex"><i class="fa fa-home"></i> Home</a>
                         <a href="liaoShop">UserManagement</a>
-                        <span>ManagementIndex</span>
+                        <span>AdvertisementManagement</span>
                     </div>
                 </div>
             </div>
@@ -103,33 +103,48 @@
     <!-- Breadcrumb Section Begin -->
 
     <!-- Shopping Cart Section Begin -->
-    <section class="shopping-cart spad">
+    <section class="blog-details spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-4">
-					<div class="single-banner">
-						<a href="panMember"><img src="img/Coursel/accessories.jpg" border="0"></a>
-						<div class="inner-text">
-							<h4>會員權限管理</h4>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="single-banner">
-						<a href="panAdvertisement"><img src="img/Coursel/clothing.jpg" border="0"></a>
-						<div class="inner-text">
-							<h4>廣告</h4>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="single-banner">
-						<a href="panContact"><img src="img/Coursel/home.jpg" border="0"></a>
-						<div class="inner-text">
-							<h4>活動</h4>
-						</div>
-					</div>
-				</div>
+                <div class="col-lg-12">
+                    <div class="blog-details-inner">
+                        <div class="blog-detail-title">
+                            <div>封面大圖</div>
+                        </div>
+                        <div class="posted-by" id="userDetailBox">
+
+                        </div>
+                        <h3 style="margin: 30px;">自我介紹</h3>
+                        <form style="margin: 30px;">
+                            <textarea name="essay1" id="essay1" rows="10" cols="80">
+
+                            </textarea>
+                            <button type="button" id="essay1Save" class="primary-btn">儲存</button>
+                            <script>
+                                // Replace the <textarea id="editor1"> with a CKEditor 4
+                                // instance, using default configuration.
+                                CKEDITOR.replace( 'essay1' );
+                            </script>
+                        </form>
+                        <div>圖片1</div>
+                        <div>圖片2</div>
+                        <div>圖片3</div>
+                        <h3 style="margin: 30px;">分享故事</h3>
+                        <form style="margin: 30px;">
+                            <textarea name="essay2" id="essay2" rows="10" cols="80">
+                                
+                            </textarea>
+                            <button type="button" id="essay2Save" class="primary-btn">儲存</button>
+                            <script>
+                                // Replace the <textarea id="editor1"> with a CKEditor 4
+                                // instance, using default configuration.
+                                CKEDITOR.replace( 'essay2' );
+                            </script>
+                        </form>
+                        <button id="saveAndOut" class="primary-btn checkout-btn">完成&離開</button>
+
+                    </div>
+                </div>
             </div>
         </div>
     </section>

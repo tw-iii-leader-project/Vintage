@@ -1,10 +1,12 @@
 package tw.leader.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import tw.leader.dao.UserRepository;
 import tw.leader.po.User;
 
 @Controller
@@ -14,6 +16,9 @@ public class SimpleJumpController {
 		// TODO Auto-generated method stub
 
 	}
+	@Autowired
+	private UserRepository uRepo;
+
 
 	@GetMapping("/index")
 	public String ViewHomePage(Model m) {
@@ -104,8 +109,18 @@ public class SimpleJumpController {
 	@GetMapping("/toHomePage")
 	public String viewHomePage(Model m) {
 		String user = GetCurrentUserAccount();
+		User u = uRepo.findByEmail(user);
+		String roles = u.getRoles();
+		
 		m.addAttribute("user", user);
-		return "index";
+		m.addAttribute("roles", roles);
+		
+		if (roles == "ROLES_DISABLED") {
+			m.addAttribute("msg", "您已遭到停權，請洽詢Vintage以獲得更多資訊");
+			return "login";
+		}
+		return "index";		
+		
 	}
 
 	@GetMapping("/personalInfo")
@@ -130,6 +145,13 @@ public class SimpleJumpController {
 	@GetMapping("/test")
 	public String testPage() {
 		return "adminTest";
+	}
+	
+	@GetMapping(value="/toUserManagement")
+	public String goToUserManagementPage(Model m) {
+		String user = GetCurrentUserAccount();
+		m.addAttribute("user", user);
+		return "UserManagement";
 	}
 
 	// 賣家管理頁面

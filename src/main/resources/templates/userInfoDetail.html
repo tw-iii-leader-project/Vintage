@@ -148,7 +148,7 @@
         $(document).ready(function () {
         	
         	$("#mainImage").change(function () {
-        		showImageThumbnail(this);
+        		showImageThumbnailMain(this);
         	});
         	
         	$("#fileImage").change(function () {
@@ -181,6 +181,19 @@
         	reader.onload = function(e) {
         		$("#thumbnail" + index).attr('src', e.target.result);
         	};
+        	
+        	reader.readAsDataURL(file);
+        }
+        
+        function showImageThumbnailMain(fileInput) {
+        	file = fileInput.files[0];
+        	reader =new FileReader();
+
+        	reader.onload = function(e) {
+        		$("#thumbnailMain").attr("src", e.target.result);
+        	};
+
+        	reader.readAsDataURL(file);
         }
         
         
@@ -360,13 +373,13 @@
 						<form th:action="@{/userPicUpdate}" id="userPicUpload" method="post" enctype="multipart/form-data">
 							<div class="group-input">
 								<p>
-									<img id="thumbnail0" alt="Image Preview" />
+									<img id="thumbnailMain" alt="Image Preview" />
 								</p>
 								<p>
-									<label>Extra Image #1</label>
+									<label>封面照</label>
 								</p>
 								<p>
-									<input type="file" name="mainImage" accept="image/png, image/jpeg">
+									<input type="file" name="mainImage" id="mainImage" accept="image/png, image/jpeg">
 								</p>
 							</div>
 							<div class="group-input">
@@ -402,8 +415,10 @@
 									<input type="file" name="extraImage" accept="image/png, image/jpeg">
 								</p>
 							</div>
-						
-						
+							<div>
+							<button type="submit" class="site-btn register-btn">送出</button>
+							</div>
+										
 							
 						
 						</form>

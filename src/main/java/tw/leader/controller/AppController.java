@@ -169,7 +169,7 @@ public class AppController {
 		uRepo.save(user);
 		
 
-		String uploadDir = "C:\\Users\\iii\\git\\Vintage218\\src\\main\\resources\\static\\img\\userPic\\" + user.getEmail();
+		String uploadDir = "C:\\Users\\iii\\git\\Vintage219\\src\\main\\resources\\static\\img\\userPic";
 
 		Path uploadPath = Paths.get(uploadDir);
 
@@ -186,22 +186,6 @@ public class AppController {
 		}
 		
 		return "update_success";
-	}
-	
-	@PostMapping("/userPicUpload")
-	public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
-		String filemName = file.getOriginalFilename();
-		filemName = "user_"+filemName;
-		
-		try {
-			file.transferTo(new File("C:\\SpringBoot\\eclipse\\Workspace\\Git\\VintageTest\\src\\main\\resources\\static\\img\\userPic\\" + filemName));
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-		return ResponseEntity.ok("File uploaded successfully!!");
 	}
 		
 	public String GetCurrentUserAccount() {

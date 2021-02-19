@@ -19,7 +19,7 @@ public interface userArticleDao extends JpaRepository<userArticle, Integer> {
 	@Query(value="update userArticle set articleContext = ?1 where email = ?2",nativeQuery = true)
 	public userArticle updateUserArticle(String articleContext,String email);
 	
-	@Query("SELECT u FROM userInfo AS u WHERE u.email = ?1")
+	@Query("SELECT u FROM userArticle AS u WHERE u.email = ?1")
 	userArticle findByEmail(String email);
 	
 }

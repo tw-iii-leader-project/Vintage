@@ -9,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,6 +20,7 @@ import tw.leader.dao.userArticleDao;
 import tw.leader.po.User;
 import tw.leader.po.userArticle;
 
+@Controller
 public class blogController {
 	
 	@Autowired
@@ -27,7 +29,7 @@ public class blogController {
 	@Autowired
 	private userArticleDao aRepo;
 	
-	@PostMapping("/userPicUpdate")
+	@PostMapping(value = "/userPicUpdate")
 	public String userInfoUpdate(
 			@RequestParam("mainImage") MultipartFile mainMultipartFile,
 			@RequestParam("extraImage") MultipartFile[] extraMultipartFiles
@@ -35,13 +37,20 @@ public class blogController {
 		String currentUser = GetCurrentUserAccount();
 		userArticle user = aRepo.findByEmail(currentUser);
 		
+		if (user == null) {
+			user = new userArticle();
+			user.setEmail(currentUser);
+		}
+		
 		String mainImageName = StringUtils.cleanPath(mainMultipartFile.getOriginalFilename());
+		mainImageName = user.getArticleId() + mainImageName;
 		
 		user.setUserPicMain(mainImageName);
 		
 		int count = 0;
 		for (MultipartFile extraMultipart : extraMultipartFiles) {
 			String extraImageName = StringUtils.cleanPath(extraMultipart.getOriginalFilename());
+			extraImageName = user.getArticleId() + extraImageName;
 			
 			if (count == 0) {
 				user.setUserPic1(extraImageName);
@@ -60,10 +69,17 @@ public class blogController {
 		
 		userArticle saveUser = aRepo.save(user);
 				
-		String uploadDir = "C:\\Users\\user\\git\\Vintage218\\src\\main\\resources\\static\\img\\userPic" + saveUser.getEmail();
+		String uploadDir = "C:\\Users\\iii\\git\\Vintage219\\src\\main\\resources\\static\\img\\userArticlePic";
+		
+		String fileNameMain = StringUtils.cleanPath(mainMultipartFile.getOriginalFilename());
+		fileNameMain = user.getArticleId() + fileNameMain;
+		
+		FileUploadUtil.saveFile(uploadDir, mainMultipartFile, fileNameMain);
+		
 
 		for (MultipartFile extraMultipart : extraMultipartFiles) {
 			String fileName = StringUtils.cleanPath(extraMultipart.getOriginalFilename());
+			fileName = user.getArticleId() + fileName;
 			
 			FileUploadUtil.saveFile(uploadDir, extraMultipart, fileName);
 		}

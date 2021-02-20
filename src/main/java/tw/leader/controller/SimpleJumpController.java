@@ -168,14 +168,5 @@ public class SimpleJumpController {
 		// this method is for getting current user account which has login.
 	}
 	
-	//撈出會員名稱與頭貼
-	@GetMapping("/product")
-    public String registerProcess1(Model m) {
-        String user = GetCurrentUserAccount();
-        User user1 = uRepo.findByEmail(user);
-        m.addAttribute("user", user);
-        m.addAttribute("userPic",user1.getUserPic());
-        return "product";
-    }
 
 }

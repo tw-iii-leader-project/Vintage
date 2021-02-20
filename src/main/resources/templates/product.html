@@ -468,7 +468,7 @@
     								var message = JSON.parse(response.body);
     								$("#chat-area")
     										.append(
-    												`<div class="income-msg"><img src="img/person.jpg" class="avatar" alt="" /><span class="msg">${message.chatValue}</span></div>`);
+    												`<div class="income-msg"><img src="img/puipui02.png" class="avatar" alt="" /><span class="msg">${message.chatValue}</span></div>`);
     							});
     		}
 
@@ -500,7 +500,7 @@
     			}
     			stompClient.send("/aloneRequest", {}, JSON.stringify(postValue));
     			response
-    					.append(`<div class="out-msg"><span class="my-msg">${postValue.chatValue}</span><img src="img/me.jpg" class="avatar"></div>`);
+    					.append(`<div class="out-msg"><span class="my-msg">${postValue.chatValue}</span><img src="img/puipui01.png" class="avatar"></div>`);
 
     			chatValue.val("");
     		}
@@ -536,7 +536,6 @@
 
 <body>
 	<span th:text="${user}" style="display: none;" id="loginInfo"></span>
-	<span th:text="${userPic}" style="display: none;" id="userPic"></span>
 
 	<span id="secretProductId" th:text="${secretProductId}"
 		style="display: none;"></span>

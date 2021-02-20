@@ -7,8 +7,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Entity
 @Table(name="advMain")
+@Data
 public class AdvMain {
 
 	@Id @Column(name="mainId")
@@ -29,6 +32,9 @@ public class AdvMain {
 	
 	@Column(name="activity")
 	private String Activity;
+	
+	@Column(name = "aPhoto")
+	private String aPhoto;
 
 	public int getMainId() {
 		return MainId;

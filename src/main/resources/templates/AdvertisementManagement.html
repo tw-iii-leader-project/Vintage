@@ -26,9 +26,52 @@
     <script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
-    	$(function(){
-
+    	$(document).ready(function () {
+    		$("#fileImage1").change(function () {
+    			showImageThumbnail1(this);
+    		});
+    		
+    		$("#fileImage2").change(function () {
+    			showImageThumbnail2(this);
+    		});
+    		
+    		$("#fileImage3").change(function () {
+    			showImageThumbnail3(this);
+    		});
     	});
+    	
+    	function showImageThumbnail1(fileInput) {
+    		file = fileInput.files[0];
+    		reader = new FileReader();
+    		
+    		reader.onload = function (e) {
+    			$("#thumbnail1").attr("src", e.target.result);
+    		};
+    		
+    		reader.readAsDataURL(file);
+    	};
+    	
+    	function showImageThumbnail2(fileInput) {
+    		file = fileInput.files[0];
+    		reader = new FileReader();
+    		
+    		reader.onload = function (e) {
+    			$("#thumbnail2").attr("src", e.target.result);
+    		};
+    		
+    		reader.readAsDataURL(file);
+    	};
+    	
+    	function showImageThumbnail3(fileInput) {
+    		file = fileInput.files[0];
+    		reader = new FileReader();
+    		
+    		reader.onload = function (e) {
+    			$("#thumbnail3").attr("src", e.target.result);
+    		};
+    		
+    		reader.readAsDataURL(file);
+    	};
     </script>
 </head>
 
@@ -114,6 +157,10 @@
                             <label>標題</label>
                             <input type="text" name="title1" id="title1"/>
                         </div>
+                         <div class="group-input">
+                            <label>賣家</label>
+                            <input type="text" name="seller1" id="seller1"/>
+                        </div>
                         <div class="group-input">
                             <label>敘述</label>
                             <textarea name="content1" id="content1" rows="10" cols="80">
@@ -126,11 +173,11 @@
                         </div>
                         <div>
                             <label>照片上傳</label>
-                            <input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg" >
+                            <input type="file" name="fileImage1" id="fileImage1" accept="image/png, image/jpeg" >
                         </div>
                         <div>
                         <p>
-                            <img id="thumbnail" alt="Logo Preview" />
+                            <img id="thumbnail1" alt="Logo Preview" />
                         </p>
                         </div>
                         <div>
@@ -145,6 +192,10 @@
                             <input type="text" name="title2" id="title2"/>
                         </div>
                         <div class="group-input">
+                            <label>賣家</label>
+                            <input type="text" name="seller2" id="seller2"/>
+                        </div>
+                        <div class="group-input">
                             <label>敘述</label>
                             <textarea name="content2" id="content2" rows="10" cols="80">
 
@@ -156,11 +207,11 @@
                         </div>
                         <div>
                             <label>照片上傳</label>
-                            <input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg" >
+                            <input type="file" name="fileImage2" id="fileImage2" accept="image/png, image/jpeg" >
                         </div>
                         <div>
                         <p>
-                            <img id="thumbnail" alt="Logo Preview" />
+                            <img id="thumbnail2" alt="Logo Preview" />
                         </p>
                         </div>
                         <div>
@@ -169,10 +220,14 @@
                     </form>
 
                     <form th:action="@{/advForm3}" id="advForm3" method="post" enctype="multipart/form-data">
-                        <h3>封面廣告一</h3>
+                        <h3>封面廣告三</h3>
                         <div class="group-input">
                             <label>標題</label>
                             <input type="text" name="title1" id="title1"/>
+                        </div>
+                        <div class="group-input">
+                            <label>賣家</label>
+                            <input type="text" name="seller3" id="seller3"/>
                         </div>
                         <div class="group-input">
                             <label>敘述</label>
@@ -186,11 +241,11 @@
                         </div>
                         <div>
                             <label>照片上傳</label>
-                            <input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg" >
+                            <input type="file" name="fileImage3" id="fileImage3" accept="image/png, image/jpeg" >
                         </div>
                         <div>
                         <p>
-                            <img id="thumbnail" alt="Logo Preview" />
+                            <img id="thumbnail3" alt="Logo Preview" />
                         </p>
                         </div>
                         <div>

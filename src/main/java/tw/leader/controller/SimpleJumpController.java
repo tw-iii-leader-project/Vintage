@@ -122,6 +122,11 @@ public class SimpleJumpController {
 		return "index";		
 		
 	}
+	
+	@GetMapping("logoutToHomePage")
+	public String logoutPage() {
+		return "index";
+	}
 
 	@GetMapping("/personalInfo")
 	public String viewPersonalInfo() {

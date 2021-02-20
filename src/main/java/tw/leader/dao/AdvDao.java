@@ -12,4 +12,8 @@ public interface AdvDao extends JpaRepository<AdvMain, Integer> {
 	@Query(value="select * from AdvMain",nativeQuery = true)
 	List<AdvMain> findAdvMain();
 	
+	@Query(value="select * from AdvMain where Seat = ?1",nativeQuery = true)
+	AdvMain findBySeat(int seat);
+	
+
 }

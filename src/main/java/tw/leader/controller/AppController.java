@@ -8,6 +8,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 
@@ -88,20 +89,6 @@ public class AppController {
 		m.addAttribute("listUsers", listUsers);
 		return "users";
 	}
-	
-	@GetMapping("/testpage1")
-	public String testP1(Model m) {
-		String user = GetCurrentUserAccount();
-		m.addAttribute("user", user);
-		return "testPage1";
-	}
-	
-	@GetMapping("/testpage2")
-	public String testP2(Model m) {
-		String user = GetCurrentUserAccount();
-		m.addAttribute("user", user);
-		return "testPage2";
-	}
 		
 	
 	@PostMapping("/resetPassword")
@@ -122,9 +109,6 @@ public class AppController {
 		}
 	}
 		
-	
-	
-	
 	@GetMapping("/registerProcess")
 	public String registerProcess() {
 		return "register_success";
@@ -153,8 +137,7 @@ public class AppController {
 		String currentUser = GetCurrentUserAccount();
 		String newRole = "ROLES_SELLER";
 		User user = uRepo.findByEmail(currentUser);
-		
-//		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
+
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		fileName = user.getUserId() + fileName;
 		

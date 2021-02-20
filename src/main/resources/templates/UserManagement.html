@@ -44,13 +44,15 @@
 			<div class="container">
 				<div class="ht-left"></div>
 				<div class="ht-right">
-					<a href="loginPage" class="login-panel" th:text="Login"><i
-						class="fa fa-user"></i></a> <a href="logout" class="login-panel"
-						th:text="Logout" style="display: none"><i class="fa fa-user"></i></a>
+					<a href="logout" class="login-panel" th:text="Logout"><i
+						class="fa fa-user"></i></a> <a href="loginPage" class="login-panel"
+						th:text="Login"><i class="fa fa-user"></i></a>
+
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" href="panUserManagement">後台管理系統</a>
+							<a class=" fa fa-envelope" id="userPageControl" href="#"
+								th:text="${user}"></a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 
 						</div>
@@ -62,22 +64,80 @@
 			<div class="inner-header">
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
-						<div class="logo">
-							<a href="index"> <img src="img/logo.png" alt="">
+						<div class="logo ml-5">
+							<a href="index"> <img src="img/VintageLogo8888.png" alt="">
 							</a>
 						</div>
+					</div>
+					<div class="col-lg-7 col-md-7 mt-4">
+						<div class="advanced-search">
+							<button type="button" class="category-btn">關 鍵 字 搜 尋</button>
+							<div class="input-group">
+								<input type="text" id="textSelectFormInput"
+									placeholder="您在搜尋什麼商品嗎?">
+								<button type="button" class="ml-5" id="textSelectFormSearch">
+									<i class="ti-search"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3 text-right col-md-3">
+						
+						<ul class="nav-right">
+
+							<li class="cart-icon"><a href="#"> <i
+									class="icon_bag_alt"></i> <span id="shoppingQuantity"> <!-- shoppingQuantity Here -->
+								</span>
+							</a>
+								<div class="cart-hover">
+									<div class="select-items"
+										style="height: 210px; overflow: auto;">
+										<table>
+											<tbody id="shoppingList">
+												<!-- ShoppingList Here -->
+											</tbody>
+										</table>
+									</div>
+									<div class="select-total">
+										<span>總共:</span>
+										<h5 id="selectTotal">
+											<!-- selectTotal Here -->
+										</h5>
+									</div>
+									<div class="select-button">
+										<a href="shoppingCart" class="primary-btn view-card">加入購物車</a> <a
+											href="checkOut" class="primary-btn checkout-btn">前往結帳</a>
+									</div>
+								</div></li>
+							<li class="cart-price"></li>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 		<div class="nav-item">
 			<div class="container">
+				<div class="nav-depart">
+					<div class="depart-btn">
+						<i class="ti-menu"></i> <span>所有選項</span>
+						<ul class="depart-hover">
+							<li class="testActive"><a href="#">飾品</a></li>
+							<li class="testActive"><a href="#">服飾</a></li>
+							<li class="testActive"><a href="#">生活</a></li>
+							<li class="testActive"><a href="#">玩具</a></li>
+							<li class="testActive"><a href="#">藝術</a></li>
+							<li class="testActive"><a href="#">經典</a></li>
+						</ul>
+					</div>
+				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
-						<li class="active"><a href="panUserManagement">管理首頁</a></li>
-						<li><a href="panMember">會員權限管理</a></li>
-						<li><a href="panAdvertisement">廣告</a></li>
-						<li><a href="panContact">活動</a></li>
+						<li><a href="index">首 頁</a></li>
+						<li><a href="shopPage">商 城</a></li>
+						<li><a href="blog">部落格</a></li>
+						<li><a href="Activity">活 動</a></li>
+						<li><a href="faq">問與答</a></li>
+
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>

@@ -233,7 +233,8 @@
               return star_lv_icon;
             }
 
-            //頁面載入時show該商品的所有留言
+//------------------------頁面載入時show該商品的所有留言----------------------------------------
+
 //             var product_id = 12345; //取得商品的ID值
 //             var product_id_data = { pId: product_id }; //存成JSON物件
             $.ajax({
@@ -534,11 +535,14 @@
 </head>
 
 <body>
-    <span th:text="${user}" style="display: none;" id="loginInfo"></span>
-	<span id="secretProductId" th:text="${secretProductId}" style="display: none;"></span>
-    <span id="secretProductName" style="display: none;"></span>
-    <span id="secretPrice" style="display: none;"></span>
-    <span id="secretPhoto" style="display: none;"></span>
+	<span th:text="${user}" style="display: none;" id="loginInfo"></span>
+	<span th:text="${userPic}" style="display: none;" id="userPic"></span>
+
+	<span id="secretProductId" th:text="${secretProductId}"
+		style="display: none;"></span>
+	<span id="secretProductName" style="display: none;"></span>
+	<span id="secretPrice" style="display: none;"></span>
+	<span id="secretPhoto" style="display: none;"></span>
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -570,49 +574,52 @@
 			<div class="inner-header">
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
-						<div class="logo">
-							<a href="index"> <img src="img/logo.png" alt="">
+						<div class="logo ml-5">
+							<a href="index"> <img src="img/VintageLogo8888.png" alt="">
 							</a>
 						</div>
 					</div>
-					<div class="col-lg-7 col-md-7">
+					<div class="col-lg-7 col-md-7 mt-4">
 						<div class="advanced-search">
-							<button type="button" class="category-btn">所　有　分　類　</button>
+							<button type="button" class="category-btn">關 鍵 字 搜 尋</button>
 							<div class="input-group">
-								<input type="text" id="textSelectFormInput" placeholder="您在搜尋什麼商品嗎?">
+								<input type="text" id="textSelectFormInput"
+									placeholder="您在搜尋什麼商品嗎?">
 								<button type="button" class="ml-5" id="textSelectFormSearch">
 									<i class="ti-search"></i>
 								</button>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 text-right col-md-3">`
+					<div class="col-lg-3 text-right col-md-3">
+
 						<ul class="nav-right">
 
 							<li class="cart-icon"><a href="#"> <i
-									class="icon_bag_alt"></i> 
-                                    <span id="shoppingQuantity">
-                                        <!-- shoppingQuantity Here -->
-                                    </span>
+									class="icon_bag_alt"></i> <span id="shoppingQuantity"> <!-- shoppingQuantity Here -->
+								</span>
 							</a>
 								<div class="cart-hover">
-									<div class="select-items" style="height: 210px;overflow: auto;">
-										<table> 
+									<div class="select-items"
+										style="height: 210px; overflow: auto;">
+										<table>
 											<tbody id="shoppingList">
-                                                <!-- ShoppingList Here -->
+												<!-- ShoppingList Here -->
 											</tbody>
 										</table>
 									</div>
 									<div class="select-total">
 										<span>總共:</span>
-										<h5 id="selectTotal"><!-- selectTotal Here --></h5>
+										<h5 id="selectTotal">
+											<!-- selectTotal Here -->
+										</h5>
 									</div>
 									<div class="select-button">
-										<a href="shoppingCart" class="primary-btn view-card">購　物　車</a> <a
-											href="checkOut" class="primary-btn checkout-btn">結　　　帳</a>
+										<a href="shoppingCart" class="primary-btn view-card">加入購物車</a>
+										<a href="checkOut" class="primary-btn checkout-btn">前往結帳</a>
 									</div>
 								</div></li>
-							<li class="cart-price">$150.00</li>
+							<li class="cart-price"></li>
 						</ul>
 					</div>
 				</div>
@@ -635,10 +642,10 @@
 				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
-						<li class="active"><a href="index">首　頁</a></li>
-						<li class="active"><a href="shopPage">商　城</a></li>
+						<li><a href="index">首 頁</a></li>
+						<li class="active"><a href="shopPage">商 城</a></li>
 						<li><a href="blog">部落格</a></li>
-						<li><a href="Activity">活　動</a></li>
+						<li><a href="Activity">活 動</a></li>
 						<li><a href="faq">問與答</a></li>
 
 					</ul>
@@ -780,22 +787,23 @@
 				</div>
 				<div class="col-lg-9">
 					<div class="row">
-                        <div class="col-lg-6" id="productImg">
-                            <!-- productImg Here -->
-                        </div>
-                        <div class="col-lg-6" id="productDetails">
-                              <!-- product-details Here -->
-                            <div class="product-details">
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" id="amount" value="1">
-                                    </div>
-                                    <a href="#" class="primary-btn pd-cart" id="shoppingCart">Add To Cart</a>
-                                </div>
-                            </div>
-                            <!-- product-details Here -->
-                        </div>
-                    </div>
+						<div class="col-lg-6" id="productImg">
+							<!-- productImg Here -->
+						</div>
+						<div class="col-lg-6" id="productDetails">
+							<!-- product-details Here -->
+							<div class="product-details">
+								<div class="quantity">
+									<div class="pro-qty">
+										<input type="text" id="amount" value="1">
+									</div>
+									<a href="#" class="primary-btn pd-cart" id="shoppingCart">Add
+										To Cart</a>
+								</div>
+							</div>
+							<!-- product-details Here -->
+						</div>
+					</div>
 					<div class="product-tab">
 						<div class="tab-item">
 							<ul class="nav" role="tablist">
@@ -823,12 +831,12 @@
 								<div class="tab-pane fade" id="tab-3" role="tabpanel">
 									<div class="customer-review-option">
 
-										<div class="at-rating" id="avgStarLv"></div>
+										<div class="at-rating mb-3" id="avgStarLv"></div>
 
 										<button type="button" class="btn btn-outline-warning mb-3"
 											id="sendToWho">與賣家聊天</button>
 
-										<h4>Comments</h4>
+										<h4>評論</h4>
 										<div class="comment-option">
 											<!-- 											<div class="co-item"> -->
 											<!-- 												<div class="avatar-pic"> -->
@@ -867,7 +875,7 @@
 											<div id="show_leave_mag"></div>
 										</div>
 										<div class="personal-rating">
-											<h6>Your Ratind</h6>
+											<h6>選擇顆星</h6>
 											<div class="rating h3" id="starLv">
 												<i class="fa fa-star" id="star1"></i> <i class="fa fa-star"
 													id="star2"></i> <i class="fa fa-star" id="star3"></i> <i
@@ -877,17 +885,17 @@
 										</div>
 
 										<div class="leave-comment">
-											<h4>Leave A Comment</h4>
+											<h4>留下商品評價</h4>
 											<div class="comment-form">
 												<div class="row">
 													<div class="col-lg-6">
-														<input type="text" placeholder="Name" id="leave_name" />
+														<input type="text" placeholder="暱稱" id="leave_name" />
 													</div>
 													<div class="col-lg-6"></div>
 													<div class="col-lg-12">
-														<textarea placeholder="Messages" id="leave_content"></textarea>
+														<textarea placeholder="留言內容" id="leave_content"></textarea>
 														<button type="button" class="site-btn" id="send_msg">
-															Send message</button>
+															留言</button>
 													</div>
 												</div>
 											</div>
@@ -1019,7 +1027,7 @@
                           var leave_content = $("#leave_content").val();
                           var star_lv_sel = $(star_lv_ele).val();
                           var product_id = productId;     //從商品載入取值
-                          var user_pic = "ab.png";    //從會員登入取值
+                          var user_pic = $("#userPic").html();    //從會員登入取值
                           var user_email = $("#loginInfo").html();
                           var send_leave_msg = {
                         		  email:user_email,
@@ -1053,7 +1061,7 @@
                               console.log(data);
                               $("#show_leave_mag").append(` <div class="co-item">
                               <div class="avatar-pic">
-                                  <img src="img/product-single/${data.userPic}" alt="">
+                                  <img src="img/userPic/${data.userPic}" alt="">
                               </div>
                               <div class="avatar-text">
                                   <div class="at-rating">
@@ -1250,7 +1258,7 @@
 							<li>電子信箱: vintage@gmail.com</li>
 						</ul>
 						<div class="footer-social">
-								<a href="https://facebook.com"><i class="fa fa-facebook"></i></a>
+							<a href="https://facebook.com"><i class="fa fa-facebook"></i></a>
 							<a href="https://instagram.com"><i class="fa fa-instagram"></i></a>
 							<a href="https://twitter.com"><i class="fa fa-twitter"></i></a> <a
 								href="https://www.pinterest.com"><i class="fa fa-pinterest"></i></a>

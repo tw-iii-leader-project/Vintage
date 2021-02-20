@@ -35,7 +35,7 @@ roles nvarchar(20) not null
 
 ---------bobby userInfo data
 
-------------pan product data
+------------pan product data (用leader的Product
 create table Product (
 	pId int not null primary key identity(1,1),
 	pName nvarchar(50) not null,
@@ -98,7 +98,7 @@ orderTime  datetime not null
 -------------pan ShoppingOrder data
 
 -------------BTLiao Product data
-cCREATE TABLE [dbo].[Product](
+CREATE TABLE [dbo].[Product](
 	[pId] [int] IDENTITY(1,1) NOT NULL,
 	[pName] [nvarchar](50) NULL,
 	[pMain] [nvarchar](50) NULL,

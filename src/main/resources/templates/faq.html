@@ -2,28 +2,30 @@
 <html lang="zxx">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Fashi Template">
-    <meta name="keywords" content="Fashi, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+<meta charset="UTF-8">
+<meta name="description" content="Fashi Template">
+<meta name="keywords" content="Fashi, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Fashi | Template</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
+	rel="stylesheet">
 
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-    
-    <script src="js/jquery-3.3.1.min.js"></script>
+<!-- Css Styles -->
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+<link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+
+<script src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	$(function() {
 		var userEmail = $("#userPageControl").html();
@@ -181,7 +183,7 @@
 </head>
 
 <body>
-   <p th:value="${user}" type="hidden" id="loginInfo"></p>
+	<p th:value="${user}" type="hidden" id="loginInfo"></p>
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -213,49 +215,52 @@
 			<div class="inner-header">
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
-						<div class="logo">
-							<a href="index"> <img src="img/logo.png" alt="">
+						<div class="logo ml-5">
+							<a href="index"> <img src="img/VintageLogo8888.png" alt="">
 							</a>
 						</div>
 					</div>
-					<div class="col-lg-7 col-md-7">
+					<div class="col-lg-7 col-md-7 mt-4">
 						<div class="advanced-search">
-							<button type="button" class="category-btn">所　有　分　類　</button>
+							<button type="button" class="category-btn">關 鍵 字 搜 尋</button>
 							<div class="input-group">
-								<input type="text" id="textSelectFormInput" placeholder="您在搜尋什麼商品嗎?">
+								<input type="text" id="textSelectFormInput"
+									placeholder="您在搜尋什麼商品嗎?">
 								<button type="button" class="ml-5" id="textSelectFormSearch">
 									<i class="ti-search"></i>
 								</button>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 text-right col-md-3">`
+					<div class="col-lg-3 text-right col-md-3">
+						`
 						<ul class="nav-right">
 
 							<li class="cart-icon"><a href="#"> <i
-									class="icon_bag_alt"></i> 
-                                    <span id="shoppingQuantity">
-                                        <!-- shoppingQuantity Here -->
-                                    </span>
+									class="icon_bag_alt"></i> <span id="shoppingQuantity"> <!-- shoppingQuantity Here -->
+								</span>
 							</a>
 								<div class="cart-hover">
-									<div class="select-items" style="height: 210px;overflow: auto;">
-										<table> 
+									<div class="select-items"
+										style="height: 210px; overflow: auto;">
+										<table>
 											<tbody id="shoppingList">
-                                                <!-- ShoppingList Here -->
+												<!-- ShoppingList Here -->
 											</tbody>
 										</table>
 									</div>
 									<div class="select-total">
 										<span>總共:</span>
-										<h5 id="selectTotal"><!-- selectTotal Here --></h5>
+										<h5 id="selectTotal">
+											<!-- selectTotal Here -->
+										</h5>
 									</div>
 									<div class="select-button">
-										<a href="shoppingCart" class="primary-btn view-card">購　物　車</a> <a
-											href="checkOut" class="primary-btn checkout-btn">結　　　帳</a>
+										<a href="shoppingCart" class="primary-btn view-card">加入購物車</a>
+										<a href="checkOut" class="primary-btn checkout-btn">前往結帳</a>
 									</div>
 								</div></li>
-							<li class="cart-price">$150.00</li>
+							<li class="cart-price"></li>
 						</ul>
 					</div>
 				</div>
@@ -278,10 +283,10 @@
 				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
-						<li><a href="index">首　頁</a></li>
-						<li><a href="shopPage">商　城</a></li>
+						<li><a href="index">首 頁</a></li>
+						<li><a href="shopPage">商 城</a></li>
 						<li><a href="blog">部落格</a></li>
-						<li><a href="Activity">活　動</a></li>
+						<li><a href="Activity">活 動</a></li>
 						<li class="active"><a href="faq">問與答</a></li>
 
 					</ul>
@@ -292,116 +297,114 @@
 	</header>
 	<!-- Header End -->
 
-    <!-- Breadcrumb Section Begin -->
-    <div class="breacrumb-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb-text">
-                        <a href="#"><i class="fa fa-home"></i> Home</a>
-                        <span>FAQs</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Breadcrumb Section Begin -->
+	<!-- Breadcrumb Section Begin -->
+	<div class="breacrumb-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="breadcrumb-text">
+						<a href="#"><i class="fa fa-home"></i> Home</a> <span>FAQs</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Breadcrumb Section Begin -->
 
-    <!-- Faq Section Begin -->
-    <div class="faq-section spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="faq-accordin">
-                        <div class="accordion" id="accordionExample">
-                            <div class="card">
-                                <div class="card-heading active">
-                                    <a class="active" data-toggle="collapse" data-target="#collapseOne">
-                                        Is There Anything I Should Bring?
-                                    </a>
-                                </div>
-                                <div id="collapseOne" class="collapse show" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                            consequat.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-heading">
-                                    <a data-toggle="collapse" data-target="#collapseTwo">
-                                        Where Can I Find Market Research Reports?
-                                    </a>
-                                </div>
-                                <div id="collapseTwo" class="collapse" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                            consequat.</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-heading">
-                                    <a data-toggle="collapse" data-target="#collapseThree">
-                                        Where Can I Find The Wall Street Journal?
-                                    </a>
-                                </div>
-                                <div id="collapseThree" class="collapse" data-parent="#accordionExample">
-                                    <div class="card-body">
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                            consequat.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Faq Section End -->
+	<!-- Faq Section Begin -->
+	<div class="faq-section spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="faq-accordin">
+						<div class="accordion" id="accordionExample">
+							<div class="card">
+								<div class="card-heading active">
+									<a class="active" data-toggle="collapse"
+										data-target="#collapseOne"> 我可以成為賣家嗎? </a>
+								</div>
+								<div id="collapseOne" class="collapse show"
+									data-parent="#accordionExample">
+									<div class="card-body">
+										<p>只要您註冊本網站會員，上架您的文創商品，即可成為賣家。</p>
+									</div>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-heading">
+									<a data-toggle="collapse" data-target="#collapseTwo"> Where
+										Can I Find Market Research Reports? </a>
+								</div>
+								<div id="collapseTwo" class="collapse"
+									data-parent="#accordionExample">
+									<div class="card-body">
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
+											elit, sed do eiusmod tempor incididunt ut labore et dolore
+											magna aliqua. Ut enim ad minim veniam, quis nostrud
+											exercitation ullamco laboris nisi ut aliquip ex ea commodo
+											consequat.</p>
+									</div>
+								</div>
+							</div>
+							<div class="card">
+								<div class="card-heading">
+									<a data-toggle="collapse" data-target="#collapseThree">
+										Where Can I Find The Wall Street Journal? </a>
+								</div>
+								<div id="collapseThree" class="collapse"
+									data-parent="#accordionExample">
+									<div class="card-body">
+										<p>Lorem ipsum dolor sit amet, consectetur adipisicing
+											elit, sed do eiusmod tempor incididunt ut labore et dolore
+											magna aliqua. Ut enim ad minim veniam, quis nostrud
+											exercitation ullamco laboris nisi ut aliquip ex ea commodo
+											consequat.</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Faq Section End -->
 
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-1.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-2.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-3.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-4.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-5.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Partner Logo Section End -->
+	<!-- Partner Logo Section Begin -->
+	<div class="partner-logo">
+		<div class="container">
+			<div class="logo-carousel owl-carousel">
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-1.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-2.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-3.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-4.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-5.png" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Partner Logo Section End -->
 
-   <!-- Footer Section Begin -->
+	<!-- Footer Section Begin -->
 	<footer class="footer-section">
 		<div class="container">
 			<div class="row">
@@ -483,17 +486,17 @@
 	<!-- Footer Section End -->
 
 
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.zoom.min.js"></script>
-    <script src="js/jquery.dd.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
+	<!-- Js Plugins -->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/jquery.countdown.min.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/jquery.dd.min.js"></script>
+	<script src="js/jquery.slicknav.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/main.js"></script>
 </body>
 
 </html>

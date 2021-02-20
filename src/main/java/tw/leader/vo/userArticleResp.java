@@ -1,5 +1,7 @@
 package tw.leader.vo;
 
+import javax.persistence.Column;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class userArticleResp extends ErrorResp{
@@ -15,6 +17,9 @@ public class userArticleResp extends ErrorResp{
 	
 	@JsonProperty(value="articleContext")
 	private String articleContext;
+	
+	@JsonProperty(value="userName")
+	private String userName;
 
 	public int getArticleId() {
 		return articleId;
@@ -47,6 +52,15 @@ public class userArticleResp extends ErrorResp{
 	public void setArticleContext(String articleContext) {
 		this.articleContext = articleContext;
 	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
 	
 	
 }

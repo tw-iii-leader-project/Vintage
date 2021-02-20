@@ -9,7 +9,7 @@
 <meta name="keywords" content="Fashi, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Fashi | Template</title>
+<title>Fashi | UserInfoDetail</title>
 
 <!-- Google Font -->
 <link
@@ -27,56 +27,178 @@
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 
-<script>
-// $.fn.serializeObject = function () {
-// 	var o = {};
-// 	var a = this.serializeArray();
-// 	$.each.(a, function() {
-// 		if (o[this.name]) {
-// 			if (!o[this.name].push) {
-// 				o[this.name] = [o[this.name]];
-// 			}
-// 			o[this.name].push(this.value || "");
-// 		} else {
-// 			o[this.name] = this.value || "";
-// 		}
-// 	});
-// 	return o;
-// };
 
-// $("#registerForm").submit(function (e) {
-// 	e.preventDefault();
-// 	var jsonuserinfo = $(this).serializeObject();
-// 	cnsole.log(jsonuserinfo)
-	
-	
-// 	$.ajax({
-// 		type:"POST";
-// 		async: false;
-// 		dataType:"json";
-// 		url:"/registerExecute";
-// 		contentType: 'application/json; charset=UTF-8',
-// 		data: JSON.stringify(jsonuserinfo),
-// 		success: function (msg) {
-// 			var sResult = msg.d.sResult;
-// 			var db_Result = msg.d.db_Result;
-// 		},
-// 		statusCode: {
-// 			403: function (response) {
-// 				LocationHerf();
-// 			}
-// 		}
-// 	});
-// 	var LocationHerf = function () {
-// 		alert("SUCCESS");
-// 	    window.location.href = "toindex";
-// 	};
-	
-// })
+<script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript">
+        $(function(){
+        	var userEmail = $("#loginInfo").html();
+        	var cUrl = "panUserControlPage?email=";
+    		$("#userPageControl").click(function(){
+    			$(this).attr("href",cUrl+userEmail);
+    		});
+    		var mUrl = "panAllPageMainLink?pMain=";
+    		$(".testActive a").click(function(){
+    			var allPageMainValue = $(this).html();
+    			$(this).attr("href",mUrl+allPageMainValue);
+    		});
+
+    		$("#textSelectFormSearch").click(function(){
+    			fUrl = "panAllPageFormLink?pName=";
+    			var allPageFormValue = $("#textSelectFormInput").val();
+    			if(allPageFormValue == ""){}
+    			else{
+    				window.location.href=fUrl+allPageFormValue;
+    			}
+    		});
+            var email = $("#loginInfo").html();
+            var userData = {"email":email};
+            $.ajax({
+                url:"panfindUserArticle",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userData),
+                success:function(response){
+                    $.each(response,function(i,v){
+                        var essay = v.description;
+                        if(essay == null || essay == ""){
+                            $("#essay1").val('寫點什麼吧!!!');
+                        }
+                        else{
+                            $("#essay1").val(essay);
+                        }
+                    });
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+
+            $.ajax({
+                url:"panfindUserArticle",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userData),
+                success:function(response){
+                    $.each(response,function(i,v){
+                        var essay = v.articleContext;
+                        if(essay == null || essay == ""){
+                            $("#essay2").val('寫點什麼吧!!!');
+                        }
+                        else{
+                            $("#essay2").val(essay);
+                        }
+                        
+                    });
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+
+            $("#essay1Save").click(function(){
+                var essayData = CKEDITOR.instances.essay1.getData();
+                var articleData = {"email":email,"description":essayData};
+                $.ajax({
+                	url:"panInsertDescription",
+                	type:"POST",
+                	dataType:"json",
+                	contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(articleData),
+                    success:function(result){
+                        var sMsg = JSON.parse(result);
+                        console.log(sMsg);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            });
+
+            $("#essay2Save").click(function(){
+                var essayData = CKEDITOR.instances.essay2.getData();
+                var articleData = {"email":email,"articleContext":essayData};
+                $.ajax({
+                	url:"panInsertArticle",
+                	type:"POST",
+                	dataType:"json",
+                	contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(articleData),
+                    success:function(result){
+                        var sMsg = JSON.parse(result);
+                        alert(sMsg);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            });
+
+            $("#saveAndOut").click(function(){
+            	alert("確定要儲存&離開嗎?");
+                $("#essay1Save").trigger("click");
+                $("#essay2Save").trigger("click");
+                history.go(-1);
+            });
+
+        });
+        
+        $(document).ready(function () {
+        	
+        	$("#mainImage").change(function () {
+        		showImageThumbnailMain(this);
+        	});
+        	
+        	$("#fileImage").change(function () {
+        		showImageThumbnail(this);
+        	});
+        	
+        	$("input[name='extraImage']").each(function(index) {
+            	$(this).change(function () {
+            		showExtraImageThumbnail(this, index);
+            	});	
+            });
+        })
 
 
+        function showImageThumbnail(fileInput) {
+        	file = fileInput.files[0];
+        	reader =new FileReader();
 
-</script>
+        	reader.onload = function(e) {
+        		$("#thumbnail").attr("src", e.target.result);
+        	};
+
+        	reader.readAsDataURL(file);
+        }
+        
+        function showExtraImageThumbnail(fileInput, index) {
+        	file = fileInput.files[0];
+        	reader = new FileReader();
+        	
+        	reader.onload = function(e) {
+        		$("#thumbnail" + index).attr('src', e.target.result);
+        	};
+        	
+        	reader.readAsDataURL(file);
+        }
+        
+        function showImageThumbnailMain(fileInput) {
+        	file = fileInput.files[0];
+        	reader =new FileReader();
+
+        	reader.onload = function(e) {
+        		$("#thumbnailMain").attr("src", e.target.result);
+        	};
+
+        	reader.readAsDataURL(file);
+        }
+        
+        
+        
+    </script>
 
 </head>
 
@@ -95,13 +217,15 @@
 			<div class="container">
 				<div class="ht-left"></div>
 				<div class="ht-right">
-					<a href="loginPage" class="login-panel" th:text="Login"><i
-						class="fa fa-user"></i></a> <a href="logout" class="login-panel"
-						th:text="Logout" style="display: none"><i class="fa fa-user"></i></a>
+					<a href="logout" class="login-panel" th:text="Logout"><i
+						class="fa fa-user"></i></a> <a href="loginPage" class="login-panel"
+						th:text="Login"><i class="fa fa-user"></i></a>
+
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#" th:text="${user}"></a>
+							<a class=" fa fa-envelope" id="userPageControl" href="#"
+								th:text="${user}"></a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 
 						</div>
@@ -120,57 +244,39 @@
 					</div>
 					<div class="col-lg-7 col-md-7">
 						<div class="advanced-search">
-							<button type="button" class="category-btn"></button>
+							<button type="button" class="category-btn">所　有　分　類　</button>
 							<div class="input-group">
-								<input type="text" placeholder="老鐵，關注蛤?">
-								<button type="button">
+								<input type="text" id="textSelectFormInput" placeholder="您在搜尋什麼商品嗎?">
+								<button type="button" class="ml-5" id="textSelectFormSearch">
 									<i class="ti-search"></i>
 								</button>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 text-right col-md-3">
+					<div class="col-lg-3 text-right col-md-3">`
 						<ul class="nav-right">
 
 							<li class="cart-icon"><a href="#"> <i
-									class="icon_bag_alt"></i> <span>3</span>
+									class="icon_bag_alt"></i> 
+                                    <span id="shoppingQuantity">
+                                        <!-- shoppingQuantity Here -->
+                                    </span>
 							</a>
 								<div class="cart-hover">
-									<div class="select-items">
-										<table>
-											<tbody>
-												<tr>
-													<td class="si-pic"><img src="img/select-product-1.jpg"
-														alt=""></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
-												<tr>
-													<td class="si-pic"><img src="img/select-product-2.jpg"
-														alt=""></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
+									<div class="select-items" style="height: 210px;overflow: auto;">
+										<table> 
+											<tbody id="shoppingList">
+                                                <!-- ShoppingList Here -->
 											</tbody>
 										</table>
 									</div>
 									<div class="select-total">
-										<span>total:</span>
-										<h5>$120.00</h5>
+										<span>總共:</span>
+										<h5 id="selectTotal"><!-- selectTotal Here --></h5>
 									</div>
 									<div class="select-button">
-										<a href="#" class="primary-btn view-card">VIEW CARD</a> <a
-											href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+										<a href="shoppingCart" class="primary-btn view-card">購　物　車</a> <a
+											href="checkOut" class="primary-btn checkout-btn">結　　　帳</a>
 									</div>
 								</div></li>
 							<li class="cart-price">$150.00</li>
@@ -185,21 +291,21 @@
 					<div class="depart-btn">
 						<i class="ti-menu"></i> <span>所有選項</span>
 						<ul class="depart-hover">
-							<li class="testActive" ><a href="#">飾品</a></li>
-                            <li class="testActive" ><a href="#">服飾</a></li>
-                            <li class="testActive" ><a href="#">居家生活</a></li>
-                            <li class="testActive" ><a href="#">玩具</a></li>
-                            <li class="testActive" ><a href="#">藝術</a></li>
-                            <li class="testActive" ><a href="#">經典</a></li>
+							<li class="testActive"><a href="#">飾品</a></li>
+							<li class="testActive"><a href="#">服飾</a></li>
+							<li class="testActive"><a href="#">生活</a></li>
+							<li class="testActive"><a href="#">玩具</a></li>
+							<li class="testActive"><a href="#">藝術</a></li>
+							<li class="testActive"><a href="#">經典</a></li>
 						</ul>
 					</div>
 				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
-						<li class="active"><a href="index">首頁</a></li>
-						<li><a href="shopPage">商城</a></li>
-						<li><a href="blog">博客</a></li>
-						<li><a href="contact">活動</a></li>
+						<li><a href="index">首　頁</a></li>
+						<li><a href="shopPage">商　城</a></li>
+						<li class="active"><a href="blog">部落格</a></li>
+						<li><a href="Activity">活　動</a></li>
 						<li><a href="faq">問與答</a></li>
 
 					</ul>
@@ -208,7 +314,7 @@
 			</div>
 		</div>
 	</header>
-    <!-- Header End -->
+	<!-- Header End -->
 
 	<!-- Breadcrumb Section Begin -->
 	<div class="breacrumb-section">
@@ -232,7 +338,7 @@
 					<div class="register-form">
 						<h2>開啟賣家功能</h2>
 						<h3 style="text-align: center">填寫詳細資料以成為賣家</h3>
-						<form th:action="@{/userInfoUpdate}" id="registerForm" method="post" >
+						<form th:action="@{/userInfoUpdate}" id="registerForm" method="post" enctype="multipart/form-data">
 							<div class="group-input">
 								<label for="birthday">Birthday *</label> 
 								<input type="date" name="userBirthday" id="userBirthday" required>
@@ -248,15 +354,73 @@
 								<input type="radio" name="gender" id="gender" value="WOMEN" th:text="女">
 								<input type="radio" name="gender" id="gender" value="PRIVATE" th:text="不公開">
 							</div>
-<!-- 							<div class="group-input"> -->
-<!-- 								<label for="con-pass"></label> <input type="text" -->
-<!-- 									th:field="*{roles}" id="roles" style="display:none" value="ROLES_SELLER"> -->
-<!-- 							</div> -->
-			
+							
+							<div>
+								<label>個人照片上傳</label>
+								<input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg" >
+							</div>
+							<div>
+							<p>
+								<img id="thumbnail" alt="Logo Preview" />
+							</p>
+							</div>
 
 							<div>
 							<button type="submit" class="site-btn register-btn">送出</button>
 							</div>
+						</form>
+						
+						<form th:action="@{/userPicUpdate}" id="userPicUpload" method="post" enctype="multipart/form-data">
+							<div class="group-input">
+								<p>
+									<img id="thumbnailMain" alt="Image Preview" />
+								</p>
+								<p>
+									<label>封面照</label>
+								</p>
+								<p>
+									<input type="file" name="mainImage" id="mainImage" accept="image/png, image/jpeg">
+								</p>
+							</div>
+							<div class="group-input">
+								<p>
+									<img id="thumbnail0" alt="Image Preview" />
+								</p>
+								<p>
+									<label>Extra Image #1</label>
+								</p>
+								<p>
+									<input type="file" name="extraImage" accept="image/png, image/jpeg">
+								</p>
+							</div>
+							<div class="group-input">
+								<p>
+									<img id="thumbnail1" alt="Image Preview" />
+								</p>
+								<p>
+									<label>Extra Image #2</label>
+								</p>
+								<p>
+									<input type="file" name="extraImage" accept="image/png, image/jpeg">
+								</p>
+							</div>
+							<div class="group-input">
+								<p>
+									<img id="thumbnail2" alt="Image Preview" />
+								</p>
+								<p>
+									<label>Extra Image #3</label>
+								</p>
+								<p>
+									<input type="file" name="extraImage" accept="image/png, image/jpeg">
+								</p>
+							</div>
+							<div>
+							<button type="submit" class="site-btn register-btn">送出</button>
+							</div>
+										
+							
+						
 						</form>
 						
 					</div>
@@ -264,6 +428,51 @@
 			</div>
 		</div>
 	</div>
+	<section class="blog-details spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="blog-details-inner">
+                        <div class="blog-detail-title">
+                            <div>封面大圖</div>
+                        </div>
+                        <div class="posted-by" id="userDetailBox">
+
+                        </div>
+                        <h3 style="margin: 30px;">自我介紹</h3>
+                        <form style="margin: 30px;">
+                            <textarea name="essay1" id="essay1" rows="10" cols="80">
+
+                            </textarea>
+                            <button type="button" id="essay1Save" class="primary-btn">儲存</button>
+                            <script>
+                                // Replace the <textarea id="editor1"> with a CKEditor 4
+                                // instance, using default configuration.
+                                CKEDITOR.replace( 'essay1' );
+                            </script>
+                        </form>
+                        <div>圖片1</div>
+                        <div>圖片2</div>
+                        <div>圖片3</div>
+                        <h3 style="margin: 30px;">分享故事</h3>
+                        <form style="margin: 30px;">
+                            <textarea name="essay2" id="essay2" rows="10" cols="80">
+                                
+                            </textarea>
+                            <button type="button" id="essay2Save" class="primary-btn">儲存</button>
+                            <script>
+                                // Replace the <textarea id="editor1"> with a CKEditor 4
+                                // instance, using default configuration.
+                                CKEDITOR.replace( 'essay2' );
+                            </script>
+                        </form>
+                        <button id="saveAndOut" class="primary-btn checkout-btn">完成&離開</button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 	<!-- Register Form Section End -->
 
 	<!-- Partner Logo Section Begin -->
@@ -310,46 +519,47 @@
 							<a href="#"><img src="img/footer-logo.png" alt=""></a>
 						</div>
 						<ul>
-							
+							<li>地址: 80147高雄市前金區中正四路211號8號樓之1</li>
+							<li>電話: 07 969 9885</li>
+							<li>電子信箱: vintage@gmail.com</li>
 						</ul>
 						<div class="footer-social">
-							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-								class="fa fa-instagram"></i></a> <a href="#"><i
-								class="fa fa-twitter"></i></a> <a href="#"><i
-								class="fa fa-pinterest"></i></a>
+							<a href="https://facebook.com"><i class="fa fa-facebook"></i></a>
+							<a href="https://instagram.com"><i class="fa fa-instagram"></i></a>
+							<a href="https://twitter.com"><i class="fa fa-twitter"></i></a> <a
+								href="https://www.pinterest.com"><i class="fa fa-pinterest"></i></a>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-2 offset-lg-1">
 					<div class="footer-widget">
-						<h5>Information</h5>
+						<h5>資訊</h5>
 						<ul>
-							<li><a href="#">About Us</a></li>
-							<li><a href="#">Checkout</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">Serivius</a></li>
+							<li><a href="#">關於我們</a></li>
+							<li><a href="#">首頁</a></li>
+							<!-- 							<li><a href="#">Contact</a></li> -->
+							<li><a href="#">Q&A</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-2">
 					<div class="footer-widget">
-						<h5>My Account</h5>
+						<h5>我的帳戶</h5>
 						<ul>
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">Shopping Cart</a></li>
-							<li><a href="#">Shop</a></li>
+							<li><a href="#">個人帳戶</a></li>
+							<!-- 							<li><a href="#">Contact</a></li> -->
+							<li><a href="#">購物車</a></li>
+							<li><a href="#">商城</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="newslatter-item">
-						<h5>Join Our Newsletter Now</h5>
-						<p>Get E-mail updates about our latest shop and special
-							offers.</p>
+						<h5>現在就加入我們的電子報！</h5>
+						<p>獲取最新最即時的商品資訊</p>
 						<form action="#" class="subscribe-form">
-							<input type="text" placeholder="Enter Your Mail">
-							<button type="button">Subscribe</button>
+							<input type="text" placeholder="輸入您的電子信箱">
+							<button type="button">訂閱</button>
 						</form>
 					</div>
 				</div>

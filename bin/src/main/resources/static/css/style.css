@@ -556,7 +556,7 @@ ol {
 	position: absolute;
 	right: -70px;
 	top: 100px;
-	width: 350px;
+	width: 400px;
 	background: #ffffff;
 	z-index: 99;
 	text-align: left;
@@ -571,7 +571,7 @@ ol {
 }
 
 .inner-header .nav-right li.cart-icon .cart-hover .select-items table {
-	width: 100%;
+	width: 90%;
 }
 
 .inner-header .nav-right li.cart-icon .cart-hover .select-items table tr td {
@@ -679,7 +679,7 @@ ol {
 	color: #ffffff;
 	right: 20px;
 	top: 13px;
-	content: "";
+	content: "";
 	font-family: FontAwesome;
 	font-size: 18px;
 }
@@ -972,6 +972,7 @@ ol {
 .single-banner {
 	position: relative;
 	z-index: 1;
+	margin: 20px;
 }
 
 .single-banner:hover::before {
@@ -1250,7 +1251,7 @@ ol {
 }
 
 .product-item .pi-text a {
-	display: block;
+	display: inline-block;
 }
 
 .product-item .pi-text a h5 {
@@ -3508,6 +3509,7 @@ ol {
 	border: 1px solid #ebebeb;
 	border-radius: 5px;
 	padding: 40px 65px;
+	overflow: hidden;
 }
 
 .blog-details-inner .posted-by .pb-pic {
@@ -3732,7 +3734,7 @@ ol {
 
 .faq-accordin .card-heading a:after,
 .faq-accordin .card-heading>a.active[aria-expanded=false]:after {
-	content: "";
+	content: "�";
 	font-family: "FontAwesome";
 	font-size: 14px;
 	color: #404040;
@@ -3749,7 +3751,7 @@ ol {
 
 .faq-accordin .card-heading a[aria-expanded=true]:after,
 .faq-accordin .card-heading>a.active:after {
-	content: "";
+	content: "�";
 	font-family: "FontAwesome";
 	float: left;
 	font-size: 13px;

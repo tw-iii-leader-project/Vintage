@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
     
+    <script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
     	$(function(){
@@ -107,43 +108,96 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="blog-details-inner">
-                        <div class="blog-detail-title">
-                            <div>封面大圖</div>
+                    <form th:action="@{/advForm1}" id="advForm1" method="post" enctype="multipart/form-data">
+                        <h3>封面廣告一</h3>
+                        <div class="group-input">
+                            <label>標題</label>
+                            <input type="text" name="title1" id="title1"/>
                         </div>
-                        <div class="posted-by" id="userDetailBox">
-
-                        </div>
-                        <h3 style="margin: 30px;">自我介紹</h3>
-                        <form style="margin: 30px;">
-                            <textarea name="essay1" id="essay1" rows="10" cols="80">
+                        <div class="group-input">
+                            <label>敘述</label>
+                            <textarea name="content1" id="content1" rows="10" cols="80">
 
                             </textarea>
-                            <button type="button" id="essay1Save" class="primary-btn">儲存</button>
-                            <script>
-                                // Replace the <textarea id="editor1"> with a CKEditor 4
-                                // instance, using default configuration.
-                                CKEDITOR.replace( 'essay1' );
-                            </script>
-                        </form>
-                        <div>圖片1</div>
-                        <div>圖片2</div>
-                        <div>圖片3</div>
-                        <h3 style="margin: 30px;">分享故事</h3>
-                        <form style="margin: 30px;">
-                            <textarea name="essay2" id="essay2" rows="10" cols="80">
-                                
-                            </textarea>
-                            <button type="button" id="essay2Save" class="primary-btn">儲存</button>
-                            <script>
-                                // Replace the <textarea id="editor1"> with a CKEditor 4
-                                // instance, using default configuration.
-                                CKEDITOR.replace( 'essay2' );
-                            </script>
-                        </form>
-                        <button id="saveAndOut" class="primary-btn checkout-btn">完成&離開</button>
+                        </div>
+                        <div class="group-input">
+                            <label>折扣</label>
+                            <input type="text" name="activity1" id="activity1"/>
+                        </div>
+                        <div>
+                            <label>照片上傳</label>
+                            <input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg" >
+                        </div>
+                        <div>
+                        <p>
+                            <img id="thumbnail" alt="Logo Preview" />
+                        </p>
+                        </div>
+                        <div>
+                        <button type="submit" class="site-btn register-btn">送出</button>
+                        </div>
+                    </form>
 
-                    </div>
+                    <form th:action="@{/advForm2}" id="advForm2" method="post" enctype="multipart/form-data">
+                        <h3>封面廣告二</h3>
+                        <div class="group-input">
+                            <label>標題</label>
+                            <input type="text" name="title2" id="title2"/>
+                        </div>
+                        <div class="group-input">
+                            <label>敘述</label>
+                            <textarea name="content2" id="content2" rows="10" cols="80">
+
+                            </textarea>
+                        </div>
+                        <div class="group-input">
+                            <label>折扣</label>
+                            <input type="text" name="activity2" id="activity2"/>
+                        </div>
+                        <div>
+                            <label>照片上傳</label>
+                            <input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg" >
+                        </div>
+                        <div>
+                        <p>
+                            <img id="thumbnail" alt="Logo Preview" />
+                        </p>
+                        </div>
+                        <div>
+                        <button type="submit" class="site-btn register-btn">送出</button>
+                        </div>
+                    </form>
+
+                    <form th:action="@{/advForm3}" id="advForm3" method="post" enctype="multipart/form-data">
+                        <h3>封面廣告一</h3>
+                        <div class="group-input">
+                            <label>標題</label>
+                            <input type="text" name="title1" id="title1"/>
+                        </div>
+                        <div class="group-input">
+                            <label>敘述</label>
+                            <textarea name="content3" id="content3" rows="10" cols="80">
+
+                            </textarea>
+                        </div>
+                        <div class="group-input">
+                            <label>折扣</label>
+                            <input type="text" name="activity3" id="activity3"/>
+                        </div>
+                        <div>
+                            <label>照片上傳</label>
+                            <input type="file" name="fileImage" id="fileImage" accept="image/png, image/jpeg" >
+                        </div>
+                        <div>
+                        <p>
+                            <img id="thumbnail" alt="Logo Preview" />
+                        </p>
+                        </div>
+                        <div>
+                        <button type="submit" class="site-btn register-btn">送出</button>
+                        </div>
+                    </form>
+                    
                 </div>
             </div>
         </div>

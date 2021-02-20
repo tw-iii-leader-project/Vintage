@@ -70,5 +70,25 @@ public class userArticleServiceImpl implements userArticleService{
 		}
 	}
 	
+	/*
+	 *----------------------------------------------------
+	 *	BlogPage
+	 * */
+	
+	@Override
+	public String findAllBlog() throws Exception {
+		List<userArticle> uList = uADao.findAllBlog();
+		String uJson = objectMapper.writeValueAsString(uList);
+		System.out.println(uJson);
+		return uJson;
+	}
+	
+	@Override
+	public String findBlogByName(String userName) throws Exception {
+		List<userArticle> uList = uADao.findBlogByName(userName);
+		String uJson = objectMapper.writeValueAsString(uList);
+		System.out.println(uJson);
+		return uJson;
+	}
 	
 }

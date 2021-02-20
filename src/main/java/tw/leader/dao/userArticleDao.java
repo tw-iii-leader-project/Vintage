@@ -22,4 +22,14 @@ public interface userArticleDao extends JpaRepository<userArticle, Integer> {
 	@Query("SELECT u FROM userArticle AS u WHERE u.email = ?1")
 	userArticle findByEmail(String email);
 	
+	/*
+	 * --------------------------------------------------
+	 * 		BlogPage
+	 * */
+	
+	@Query(value="select * from userArticle",nativeQuery = true)
+	List<userArticle> findAllBlog();
+	
+	@Query(value="select * from userArticle where userName like %?1%",nativeQuery = true)
+	List<userArticle> findBlogByName(String userName);
 }

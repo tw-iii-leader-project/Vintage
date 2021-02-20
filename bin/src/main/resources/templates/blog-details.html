@@ -2,35 +2,50 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Fashi Template">
-    <meta name="keywords" content="Fashi, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Blog-detail</title>
+<meta charset="UTF-8">
+<meta name="description" content="Fashi Template">
+<meta name="keywords" content="Fashi, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>Fashi | Blog-details</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+<!-- Google Font -->
+<link
+	href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap"
+	rel="stylesheet">
 
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/themify-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+<!-- Css Styles -->
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+<link rel="stylesheet" href="css/themify-icons.css" type="text/css">
+<link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+<link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+<link rel="stylesheet" href="css/nice-select.css" type="text/css">
+<link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
 
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script type="text/javascript">
+
+<script src="js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
         $(function(){
+    		var mUrl = "panAllPageMainLink?pMain=";
+    		$(".testActive a").click(function(){
+    			var allPageMainValue = $(this).html();
+    			$(this).attr("href",mUrl+allPageMainValue);
+    		});
+
+    		$("#textSelectFormSearch").click(function(){
+    			fUrl = "panAllPageFormLink?pName=";
+    			var allPageFormValue = $("#textSelectFormInput").val();
+    			if(allPageFormValue == ""){}
+    			else{
+    				window.location.href=fUrl+allPageFormValue;
+    			}
+    		});
             var userEmail = null;
             var pageEmail = $("#secretUserEmail").html();
             var loginEmail = $("#loginInfo").html();
-            alert("login="+loginEmail);
-            alert("page="+pageEmail);
             if(pageEmail == "" || pageEmail == loginEmail){
                 userEmail = loginEmail;
                 userInfoData = {"email":userEmail};
@@ -44,17 +59,17 @@
                         $.each(response,function(i,v){
                             $("#userDetailBox").append(
                                 `<div class="pb-pic">
-                                    <img src="img/blog/${v.userPhoto}" alt="">
+                                    <img src="img/userPic/${v.userPic}" alt="">
                                 </div>
                                 <div class="pb-text">
                                     <a href="#">
                                         <h5>${v.userName}</h5>
                                     </a>
-                                    <p>${v.birthday}</p>
-                                    <p>${v.userPic}</p>
-                                    <p>${v.phone}</p>
-                                    <p>${v.gender}</p>
+                                    <p>生日 : ${v.birthday}</p>
+                                    <p>電話 : ${v.phone}</p>
+                                    <p>性別 : ${v.gender}</p>
                                     <a href="toUserInfoDetail">更改基本資料</a>
+                                    <a href="admin">商品管理後台</a>
                                 </div>`
                             );
                         });
@@ -77,14 +92,14 @@
                         $.each(response,function(i,v){
                             $("#userDetailBox").append(
                                 `<div class="pb-pic">
-                                    <img src="img/blog/${v.userPhoto}" alt="">
+                                    <img src="img/userPic/${v.userPic}" alt="">
                                 </div>
                                 <div class="pb-text">
                                     <a href="#">
                                         <h5>${v.userName}</h5>
                                     </a>
-                                    <p>${v.userBirthday}</p>
-                                    <p>${v.userPic}</p>
+                                    <p>生日 : ${v.userBirthday}</p>
+                                    <p>電話 : ${v.phone}</p>
                                 </div>`
                             );
                         });
@@ -108,14 +123,13 @@
                 success:function(pageData){
                     $.each(pageData,function(i,v){
                         var pages = parseInt(v.totalPages);
+                        var total = v.totalElements;
                         for(n=1;n<=pages;n++){
                             $("#pageBox ul").append(
                                 `<li class="productAllPage">${n}</li>`
                             );
                         };
-                        $("#totalElements").append(
-                            `<span>${v.totalElements}</span>`
-                        );
+                        $("#totalElements").html(total);
                     });
                     $("#pageBox ul li").first().addClass("active");
                 },
@@ -257,14 +271,13 @@
                     success:function(pageData){
                         $.each(pageData,function(i,v){
                             var pages = parseInt(v.totalPages);
+                            var total = v.totalElements;
                             for(n=1;n<=pages;n++){
                                 $("#pageBox ul").append(
                                     `<li class="productMainPage">${n}</li>`
                                 );
                             };
-                            $("#totalElements").append(
-                                `<span>${v.totalElements}</span>`
-                            );
+                            $("#totalElements").html(total);
                         });
                         $("#pageBox ul li").first().addClass("active");
                     },
@@ -434,29 +447,198 @@
 			        }
                 });
             });
+            
+            /*
+            -------------------------------------------------------------
+                userArticle
+            */
+            $.ajax({
+                url:"panfindUserArticle",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userData),
+                success:function(result){
+                    $.each(result,function(i,v){
+                        var essay = v.description;
+                        if(essay == null || essay == "" || essay == "寫點什麼吧!!!"){
+                            $("#userDescription").html("");
+                        }
+                        else{
+                            $("#userDescription").html(essay);
+                        }
+                    });
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+
+            $.ajax({
+                url:"panfindUserArticle",
+                type:"POST",
+                dataType:"json",
+                contentType:"application/json;charset=utf-8",
+                data:JSON.stringify(userData),
+                success:function(result){
+                    $.each(result,function(i,v){
+                        var essay = v.articleContext;
+                        if(essay == null || essay == "" || essay == "寫點什麼吧!!!"){
+                            $("#userArticle").html("");
+                        }
+                        else{
+                            $("#userArticle").html(essay);
+                        }
+                    });
+                },
+                error:function(msg){
+                    console.log(msg);
+                }
+            });
+            
+
+            /*
+            ---------------------------------------------------------
+            ShoppingCart
+            */
+            // 註冊方法搜尋此使用者購物車裏的商品數量
+            var loginUser = $("#loginInfo").html();
+            var userData = {"email":loginUser};
+            function update(){
+            	$("#shoppingQuantity").html("");
+                $.ajax({
+                    url:"panfindShoppingProductQuantity",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(response){
+                        $("#shoppingQuantity").html(response);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            };
+            
+            function updatePrice(){
+            	$("#selectTotal").html("");
+                $.ajax({
+                    url:"panSelectShoppingCartPrice",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(result){
+                        $("#selectTotal").html(result);
+                    },
+                    error:function(msg){
+                        concole.log(msg);
+                    }
+                });
+            };
+            
+            function updateShoppingCart(){
+            	$("#shoppingList").html("");
+                $.ajax({
+                    url:"panSelectShoppingCart",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(response){
+                        $.each(response,function(i,v){
+                            $("#shoppingList").append(
+                                `<tr>
+                                    <td style="display: none;">${v.cartId}</td>													
+	                                <td class="si-pic"><img src="img/products/${v.cPhoto}"											
+                                        alt=""></td>												
+	                                <td class="si-text">												
+	                                	<div class="product-selected">														
+                                            <p>$${v.price} x ${v.amount}</p>														
+                                            <h6>${v.pName}</h6>									
+	                                	</div>										
+	                                </td>											
+	                                <td class="si-close"><a href="#">X</a></td>									
+                                </tr>`
+                            );
+                        }); 
+                    },
+                    error:function(msg){
+                        concole.log(msg);
+                    }
+                });
+            };
+            // 頁面載入時尋此使用者購物車裏的商品數量
+            update();
+			updateShoppingCart();
+			updatePrice();
+            // 點選數量加入購物車
+            $("#shoppingCart").click(function(e){
+                e.preventDefault();
+                var productId = $("#secretProductId").html();
+                var productName = $("#secretProductName").html();
+                var productPrice = $("#secretPrice").html();
+                var amount = $("#amount").val();
+                var productPhoto = $("#secretPhoto").html();
+                var shoppingData = {"email":loginUser,"pId":productId,"pName":productName,"price":productPrice,"amount":amount,"cPhoto":productPhoto};
+                $.ajax({
+                    url:"addshoppingCart",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(shoppingData),
+                    success:function(resultMsg){
+                        var jsonMsg = $.parseJSON(resultMsg);
+                        alert(jsonMsg);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+                update();
+                updateShoppingCart();
+                updatePrice();
+            });
+
+            
+            // 刪除購物車裡的物品
+            $("#shoppingList tr .si-close").on("click","a",function(e){
+            	e.preventDefault();
+                $(this).closest("tr").remove();
+                var cartId = $("td").first().html();
+                var cartData = {"cartId":cartId};
+                $.ajax({
+                    url:"panDeleteShoppingProduct",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(cartData),
+                    success:function(result){
+                        var jsonMsg = $.parseJSON(result);
+                        alert(jsonMsg);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+                update();
+                updateShoppingCart();
+                updatePrice();
+            });
         });
+         
     </script>
 </head>
-<script>
-	<div class="ht-right">
-	<a href="/loginPage" class="login-panel" th:text="Login"><i class="fa fa-user"></i></a>
-	<a href="/logout" class="login-panel" th:text="Logout" style="display:none"><i class="fa fa-user" ></i></a>
 
-	<div class="top-social">
-	<div class="mail-service">
-	<a class=" fa fa-envelope" href="#" th:text="${user}"></a>
-
-	</div>
-	</div>
-	</div>
-</script>
 <body>
-    <span th:text="${user}" style="display: none;" id="loginInfo"></span>
-    <span id="secretUserEmail" th:text="${secretUserEmail}" style="display: none;"></span>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
+	<span th:text="${user}" style="display: none;" id="loginInfo"></span>
+	<span id="secretUserEmail" th:text="${secretUserEmail}"
+		style="display: none;"></span>
+	<!-- Page Preloder -->
+	<div id="preloder">
+		<div class="loader"></div>
+	</div>
 
 	<!-- Header Section Begin -->
 	<header class="header-section">
@@ -464,13 +646,15 @@
 			<div class="container">
 				<div class="ht-left"></div>
 				<div class="ht-right">
-					<a href="loginPage" class="login-panel" th:text="Login"><i
-						class="fa fa-user"></i></a> <a href="logout" class="login-panel"
-						th:text="Logout" style="display: none"><i class="fa fa-user"></i></a>
+					<a href="logout" class="login-panel" th:text="Logout"><i
+						class="fa fa-user"></i></a> <a href="loginPage" class="login-panel"
+						th:text="Login"><i class="fa fa-user"></i></a>
+
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#" th:text="${user}"></a>
+							<a class=" fa fa-envelope" id="userPageControl" href="#"
+								th:text="${user}"></a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 
 						</div>
@@ -489,57 +673,39 @@
 					</div>
 					<div class="col-lg-7 col-md-7">
 						<div class="advanced-search">
-							<button type="button" class="category-btn"></button>
+							<button type="button" class="category-btn">所　有　分　類　</button>
 							<div class="input-group">
-								<input type="text" placeholder="老鐵，關注蛤?">
-								<button type="button">
+								<input type="text" id="textSelectFormInput" placeholder="您在搜尋什麼商品嗎?">
+								<button type="button" class="ml-5" id="textSelectFormSearch">
 									<i class="ti-search"></i>
 								</button>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 text-right col-md-3">
+					<div class="col-lg-3 text-right col-md-3">`
 						<ul class="nav-right">
 
 							<li class="cart-icon"><a href="#"> <i
-									class="icon_bag_alt"></i> <span>3</span>
+									class="icon_bag_alt"></i> 
+                                    <span id="shoppingQuantity">
+                                        <!-- shoppingQuantity Here -->
+                                    </span>
 							</a>
 								<div class="cart-hover">
-									<div class="select-items">
-										<table>
-											<tbody>
-												<tr>
-													<td class="si-pic"><img src="img/select-product-1.jpg"
-														alt=""></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
-												<tr>
-													<td class="si-pic"><img src="img/select-product-2.jpg"
-														alt=""></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
+									<div class="select-items" style="height: 210px;overflow: auto;">
+										<table> 
+											<tbody id="shoppingList">
+                                                <!-- ShoppingList Here -->
 											</tbody>
 										</table>
 									</div>
 									<div class="select-total">
-										<span>total:</span>
-										<h5>$120.00</h5>
+										<span>總共:</span>
+										<h5 id="selectTotal"><!-- selectTotal Here --></h5>
 									</div>
 									<div class="select-button">
-										<a href="#" class="primary-btn view-card">VIEW CARD</a> <a
-											href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+										<a href="shoppingCart" class="primary-btn view-card">購　物　車</a> <a
+											href="checkOut" class="primary-btn checkout-btn">結　　　帳</a>
 									</div>
 								</div></li>
 							<li class="cart-price">$150.00</li>
@@ -554,21 +720,21 @@
 					<div class="depart-btn">
 						<i class="ti-menu"></i> <span>所有選項</span>
 						<ul class="depart-hover">
-							<li class="testActive" ><a href="#">飾品</a></li>
-                            <li class="testActive" ><a href="#">服飾</a></li>
-                            <li class="testActive" ><a href="#">居家生活</a></li>
-                            <li class="testActive" ><a href="#">玩具</a></li>
-                            <li class="testActive" ><a href="#">藝術</a></li>
-                            <li class="testActive" ><a href="#">經典</a></li>
+							<li class="testActive"><a href="#">飾品</a></li>
+							<li class="testActive"><a href="#">服飾</a></li>
+							<li class="testActive"><a href="#">生活</a></li>
+							<li class="testActive"><a href="#">玩具</a></li>
+							<li class="testActive"><a href="#">藝術</a></li>
+							<li class="testActive"><a href="#">經典</a></li>
 						</ul>
 					</div>
 				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
-						<li class="active"><a href="index">首頁</a></li>
-						<li><a href="shopPage">商城</a></li>
-						<li><a href="blog">博客</a></li>
-						<li><a href="contact">活動</a></li>
+						<li><a href="index">首　頁</a></li>
+						<li><a href="shopPage">商　城</a></li>
+						<li class="active"><a href="blog">部落格</a></li>
+						<li><a href="Activity">活　動</a></li>
 						<li><a href="faq">問與答</a></li>
 
 					</ul>
@@ -577,287 +743,283 @@
 			</div>
 		</div>
 	</header>
-    <!-- Header End -->
+	<!-- Header End -->
 
-    <!-- Blog Details Section Begin -->
-    <section class="blog-details spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="blog-details-inner">
-                        <div class="blog-detail-title">
-                            <div class="blog-large-pic">
-                                <img src="img/blog/blog-detail.jpg" alt="">
-                            </div>
-                            <h2>The Personality Trait That Makes People Happier</h2>
-                            <p>travel <span>- May 19, 2019</span></p>
+	<!-- Blog Details Section Begin -->
+	<section class="blog-details spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="blog-details-inner">
+						<div class="blog-detail-title">
+							<div class="blog-large-pic">
+								<img src="img/blog/blog-detail.jpg" alt="">
+							</div>
+							<h2>The Personality Trait That Makes People Happier</h2>
+							<p>
+								travel <span>- May 19, 2019</span>
+							</p>
+						</div>
+						<div class="posted-by" id="userDetailBox">
+							<!-- 使用者的基本資料 Here -->
+						</div>
+						<div id="userDescription">
+                            <!-- 文章1 -->
                         </div>
-                        <div class="posted-by" id="userDetailBox">
-                            <!-- 使用者的基本資料 Here -->
+						<div class="blog-more">
+							<div class="row">
+								<div class="col-sm-4">
+									<img src="img/blog/blog-detail-1.jpg" alt="">
+								</div>
+								<div class="col-sm-4">
+									<img src="img/blog/blog-detail-2.jpg" alt="">
+								</div>
+								<div class="col-sm-4">
+									<img src="img/blog/blog-detail-3.jpg" alt="">
+								</div>
+							</div>
+						</div>
+                        <div id="userArticle">
+                            <!-- 文章2 -->
                         </div>
-                        <div class="blog-detail-desc">
-                            <p>psum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                                labore et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure Lorem ipsum dolor sit
-                                amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                                magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                                aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.
-                            </p>
-                        </div>
-                        <div class="blog-quote">
-                            <p>“ Technology is nothing. What's important is that you have a faith in people, that
-                                they're basically good and smart, and if you give them tools, they'll do wonderful
-                                things with them.” <span>- Steven Jobs</span></p>
-                        </div>
-                        <div class="blog-more">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <img src="img/blog/blog-detail-1.jpg" alt="">
-                                </div>
-                                <div class="col-sm-4">
-                                    <img src="img/blog/blog-detail-2.jpg" alt="">
-                                </div>
-                                <div class="col-sm-4">
-                                    <img src="img/blog/blog-detail-3.jpg" alt="">
-                                </div>
-                            </div>
-                        </div>
-                        <p>Sum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore
-                            et dolore magna aliqua.Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                            nisi ut aliquip ex ea commodo consequat. Duis aute irure Lorem ipsum dolor sit amet,
-                            consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-                            aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <section class="product-shop spad">
-        <div class="container">
-            <div class="row" id="productMainRow">
-                <div class="col-lg-12 order-1 order-lg-2">
-                    <h3>更多此賣家作品</h3>
-                    <div class="filter-control" id="filterControl">
-                        <ul>
-                            <li class="active" id="userProductAll">ALL</li>
-                            <!-- add product main Here -->
-                        </ul>
-                    </div>
-                    <div class="product-list" id="productList">
-                        <div class="row" id="productRow">
-                            <!-- productBox Here -->
-                        </div>
-                    </div>
-                    <div class="filter-control" id="pageBox">
-                        <ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="product-shop spad">
+		<div class="container">
+			<div class="row" id="productMainRow">
+				<div class="col-lg-12 order-1 order-lg-2">
+					<h3>更多此賣家作品</h3>
+					<div class="filter-control" id="filterControl">
+						<ul>
+							<li class="active" id="userProductAll">ALL</li>
+							<!-- add product main Here -->
+						</ul>
+					</div>
+					<div class="product-list" id="productList">
+						<div class="row" id="productRow">
+							<!-- productBox Here -->
+						</div>
+					</div>
+					<div class="filter-control" id="pageBox">
+						<ul>
 
-                        </ul>
-                        <div id="totalElements">
+						</ul>
+						<div id="totalElements"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="blog-details spad">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="blog-details-inner">
+						<div class="tag-share">
+							<div class="details-tag">
+								<ul>
+									<li><i class="fa fa-tags"></i></li>
+									<li>Travel</li>
+									<li>Beauty</li>
+									<li>Fashion</li>
+								</ul>
+							</div>
+							<div class="blog-share">
+								<span>Share:</span>
+								<div class="social-links">
+									<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
+										class="fa fa-twitter"></i></a> <a href="#"><i
+										class="fa fa-google-plus"></i></a> <a href="#"><i
+										class="fa fa-instagram"></i></a> <a href="#"><i
+										class="fa fa-youtube-play"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="blog-post">
+							<div class="row">
+								<div class="col-lg-5 col-md-6">
+									<a href="#" class="prev-blog">
+										<div class="pb-pic">
+											<i class="ti-arrow-left"></i> <img
+												src="img/blog/prev-blog.png" alt="">
+										</div>
+										<div class="pb-text">
+											<span>Previous Post:</span>
+											<h5>The Personality Trait That Makes People Happier</h5>
+										</div>
+									</a>
+								</div>
+								<div class="col-lg-5 offset-lg-2 col-md-6">
+									<a href="#" class="next-blog">
+										<div class="nb-pic">
+											<img src="img/blog/next-blog.png" alt=""> <i
+												class="ti-arrow-right"></i>
+										</div>
+										<div class="nb-text">
+											<span>Next Post:</span>
+											<h5>The Personality Trait That Makes People Happier</h5>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="leave-comment">
+							<h4>Leave A Comment</h4>
+							<form action="#" class="comment-form">
+								<div class="row">
+									<div class="col-lg-6">
+										<input type="text" placeholder="Name">
+									</div>
+									<div class="col-lg-6">
+										<input type="text" placeholder="Email">
+									</div>
+									<div class="col-lg-12">
+										<textarea placeholder="Messages"></textarea>
+										<button type="submit" class="site-btn">Send message</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Blog Details Section End -->
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>    
-    <section class="blog-details spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="blog-details-inner">
-                        <div class="tag-share">
-                            <div class="details-tag">
-                                <ul>
-                                    <li><i class="fa fa-tags"></i></li>
-                                    <li>Travel</li>
-                                    <li>Beauty</li>
-                                    <li>Fashion</li>
-                                </ul>
-                            </div>
-                            <div class="blog-share">
-                                <span>Share:</span>
-                                <div class="social-links">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-google-plus"></i></a>
-                                    <a href="#"><i class="fa fa-instagram"></i></a>
-                                    <a href="#"><i class="fa fa-youtube-play"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="blog-post">
-                            <div class="row">
-                                <div class="col-lg-5 col-md-6">
-                                    <a href="#" class="prev-blog">
-                                        <div class="pb-pic">
-                                            <i class="ti-arrow-left"></i>
-                                            <img src="img/blog/prev-blog.png" alt="">
-                                        </div>
-                                        <div class="pb-text">
-                                            <span>Previous Post:</span>
-                                            <h5>The Personality Trait That Makes People Happier</h5>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-lg-5 offset-lg-2 col-md-6">
-                                    <a href="#" class="next-blog">
-                                        <div class="nb-pic">
-                                            <img src="img/blog/next-blog.png" alt="">
-                                            <i class="ti-arrow-right"></i>
-                                        </div>
-                                        <div class="nb-text">
-                                            <span>Next Post:</span>
-                                            <h5>The Personality Trait That Makes People Happier</h5>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="leave-comment">
-                            <h4>Leave A Comment</h4>
-                            <form action="#" class="comment-form">
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <input type="text" placeholder="Name">
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <input type="text" placeholder="Email">
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <textarea placeholder="Messages"></textarea>
-                                        <button type="submit" class="site-btn">Send message</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Blog Details Section End -->
+	<!-- Partner Logo Section Begin -->
+	<div class="partner-logo">
+		<div class="container">
+			<div class="logo-carousel owl-carousel">
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-1.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-2.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-3.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-4.png" alt="">
+					</div>
+				</div>
+				<div class="logo-item">
+					<div class="tablecell-inner">
+						<img src="img/logo-carousel/logo-5.png" alt="">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 
-    <!-- Partner Logo Section Begin -->
-    <div class="partner-logo">
-        <div class="container">
-            <div class="logo-carousel owl-carousel">
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-1.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-2.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-3.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-4.png" alt="">
-                    </div>
-                </div>
-                <div class="logo-item">
-                    <div class="tablecell-inner">
-                        <img src="img/logo-carousel/logo-5.png" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Partner Logo Section End -->
 
-    <!-- Footer Section Begin -->
-    <footer class="footer-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="footer-left">
-                        <div class="footer-logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
-                        </div>
-                        <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello.colorlib@gmail.com</li>
-                        </ul>
-                        <div class="footer-social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-2 offset-lg-1">
-                    <div class="footer-widget">
-                        <h5>Information</h5>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Checkout</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Serivius</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-2">
-                    <div class="footer-widget">
-                        <h5>My Account</h5>
-                        <ul>
-                            <li><a href="#">My Account</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Shopping Cart</a></li>
-                            <li><a href="#">Shop</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="newslatter-item">
-                        <h5>Join Our Newsletter Now</h5>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#" class="subscribe-form">
-                            <input type="text" placeholder="Enter Your Mail">
-                            <button type="button">Subscribe</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright-reserved">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="copyright-text">
-                            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                        </div>
-                        <div class="payment-pic">
-                            <img src="img/payment-method.png" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
 
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.countdown.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery.zoom.min.js"></script>
-    <script src="js/jquery.dd.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
+	<!-- Partner Logo Section End -->
+
+<!-- Footer Section Begin -->
+	<footer class="footer-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="footer-left">
+						<div class="footer-logo">
+							<a href="#"><img src="img/footer-logo.png" alt=""></a>
+						</div>
+						<ul>
+							<li>地址: 80147高雄市前金區中正四路211號8號樓之1</li>
+							<li>電話: 07 969 9885</li>
+							<li>電子信箱: vintage@gmail.com</li>
+						</ul>
+						<div class="footer-social">
+							<a href="https://facebook.com"><i class="fa fa-facebook"></i></a>
+							<a href="https://instagram.com"><i class="fa fa-instagram"></i></a>
+							<a href="https://twitter.com"><i class="fa fa-twitter"></i></a> <a
+								href="https://www.pinterest.com"><i class="fa fa-pinterest"></i></a>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-2 offset-lg-1">
+					<div class="footer-widget">
+						<h5>資訊</h5>
+						<ul>
+							<li><a href="#">關於我們</a></li>
+							<li><a href="#">首頁</a></li>
+							<!-- 							<li><a href="#">Contact</a></li> -->
+							<li><a href="#">Q&A</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-2">
+					<div class="footer-widget">
+						<h5>我的帳戶</h5>
+						<ul>
+							<li><a href="#">個人帳戶</a></li>
+							<!-- 							<li><a href="#">Contact</a></li> -->
+							<li><a href="#">購物車</a></li>
+							<li><a href="#">商城</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-4">
+					<div class="newslatter-item">
+						<h5>現在就加入我們的電子報！</h5>
+						<p>獲取最新最即時的商品資訊</p>
+						<form action="#" class="subscribe-form">
+							<input type="text" placeholder="輸入您的電子信箱">
+							<button type="button">訂閱</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="copyright-reserved">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="copyright-text">
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+							Copyright &copy;
+							<script>
+								document.write(new Date().getFullYear());
+							</script>
+							All rights reserved | This template is made with <i
+								class="fa fa-heart-o" aria-hidden="true"></i> by <a
+								href="https://colorlib.com" target="_blank">Colorlib</a>
+							<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+						</div>
+						<div class="payment-pic">
+							<img src="img/payment-method.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Footer Section End -->
+
+
+	<!-- Js Plugins -->
+	<script src="js/jquery-3.3.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/jquery.countdown.min.js"></script>
+	<script src="js/jquery.nice-select.min.js"></script>
+	<script src="js/jquery.zoom.min.js"></script>
+	<script src="js/jquery.dd.min.js"></script>
+	<script src="js/jquery.slicknav.js"></script>
+	<script src="js/owl.carousel.min.js"></script>
+	<script src="js/main.js"></script>
 </body>
 
 </html>

@@ -7,7 +7,7 @@
 <meta name="keywords" content="Fashi, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Fashi | Template</title>
+<title>Fashi | Product</title>
 
 <!-- Google Font -->
 <link
@@ -25,10 +25,49 @@
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 
+<!-- 聊天室的css跟js跟cdn -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css" />
+<link rel="stylesheet" href="css/chat-style.css" />
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+	integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+	crossorigin="anonymous"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.0/sockjs.min.js"
+	integrity="sha512-5yJ548VSnLflcRxWNqVWYeQZnby8D8fJTmYRLyvs445j1XmzR8cnWi85lcHx3CUEeAX+GrK3TqTfzOO6LKDpdw=="
+	crossorigin="anonymous"></script>
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"
+	integrity="sha512-iKDtgDyTHjAitUDdLljGhenhPwrbBfqTKWO1mkhSFH3A7blITC9MhYon6SjnMhp4o0rADGw9yAC6EW4t5a4K3g=="
+	crossorigin="anonymous"></script>
+<!-- 聊天室的css跟js跟cdn -->
+
 <script src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
     	$(function(){
-    		
+    		var userEmail = $("#userPageControl").html();
+    		var cUrl = "panUserControlPage?email=";
+    		$("#userPageControl").click(function(){
+    			$(this).attr("href",cUrl+userEmail);
+    		});
+    		var mUrl = "panAllPageMainLink?pMain=";
+    		$(".testActive a").click(function(){
+    			var allPageMainValue = $(this).html();
+    			$(this).attr("href",mUrl+allPageMainValue);
+    		});
+
+    		$("#textSelectFormSearch").click(function(){
+    			fUrl = "panAllPageFormLink?pName=";
+    			var allPageFormValue = $("#textSelectFormInput").val();
+    			if(allPageFormValue == ""){}
+    			else{
+    				window.location.href=fUrl+allPageFormValue;
+    			}
+    		});
             var productId = parseInt($("#secretProductId").html());
             var productData = {"pId":productId};
             $.ajax({
@@ -51,7 +90,7 @@
                             <div class="product-thumbs">
                             </div>`
                         );
-                        $("#productDetails").append(
+                        $("#productDetails").prepend(
                             `<div class="product-details">
                                 <div class="pd-title">
                                     <span><a href="panUserPage?email=${v.email}">${v.userName}</a></span>
@@ -76,12 +115,10 @@
                                         <label for="sm-size">${v.pSize}</label>
                                     </div>
                                 </div>
-                                <div class="quantity">
-                                    <div class="pro-qty">
-                                        <input type="text" value="1">
-                                    </div>
-                                    <a href="#" class="primary-btn pd-cart">Add To Cart</a>
-                                </div>
+                            </div>`
+                        );
+                        $("#productDetails").append(
+                            `<div class="product-details">
                                 <ul class="pd-tags">
                                     <li><span>CATEGORIES</span>: ${v.pMain}</li>
                                     <li><span>TAGS</span>: ${v.pMain},${v.pDetail}</li>
@@ -142,6 +179,9 @@
                                 </tr>
                             </table>`
                         );
+                        $("#secretProductName").html(`${v.pName}`);
+                        $("#secretPrice").html(`${v.price}`);
+                        $("#secretPhoto").html(`${v.cPhoto}`);
                     });
                 },
                 error:function(msg){
@@ -208,8 +248,14 @@
                 console.log(responesList);
                 //雙層foreach出來
                 $.each(responesList, function(index, item){
+                	
                 	console.log(item.leaveMsgList);
+                	console.log("長度"+item.leaveMsgList.length);
+                	var allStarLv =0;
+                	
                   $.each(item.leaveMsgList,function(i,v){
+                	                 	  
+                	  allStarLv += v.starLv ;
                 	  
                     $("#show_leave_mag").append(
                       `<div class="co-item">
@@ -225,25 +271,274 @@
                             </div>                                      
                         </div>`)
                   });
+                  
+                  var avgStarLv = allStarLv / item.leaveMsgList.length ;
+                  var mathavgStarLv = Math.round(avgStarLv);
+                  console.log("平均星數"+mathavgStarLv);
+                  
+                  $("#avgStarLv").append(`${show_star_icon(mathavgStarLv)} </br>`);
+                  $("#msgNums").append(`( ${item.leaveMsgList.length} )`);
+                          
+                  
                 });         
               },
               error: function (jqXHR, textStatus, errorThrown) {
                 console.log(textStatus);
               },
             });
+   
+            /*
+            ---------------------------------------------------------
+            ShoppingCart
+            */
+            // 註冊方法搜尋此使用者購物車裏的商品數量
+            var loginUser = $("#loginInfo").html();
+            var userData = {"email":loginUser};
+            function update(){
+            	$("#shoppingQuantity").html("");
+                $.ajax({
+                    url:"panfindShoppingProductQuantity",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(response){
+                        $("#shoppingQuantity").html(response);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            };
             
+            function updatePrice(){
+            	$("#selectTotal").html("");
+                $.ajax({
+                    url:"panSelectShoppingCartPrice",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(result){
+                        $("#selectTotal").html(result);
+                    },
+                    error:function(msg){
+                        concole.log(msg);
+                    }
+                });
+            };
             
+            function updateShoppingCart(){
+            	$("#shoppingList").html("");
+                $.ajax({
+                    url:"panSelectShoppingCart",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(response){
+                        $.each(response,function(i,v){
+                            $("#shoppingList").append(
+                                `<tr>
+                                    <td style="display: none;">${v.cartId}</td>													
+	                                <td class="si-pic"><img src="img/products/${v.cPhoto}"											
+                                        alt=""></td>												
+	                                <td class="si-text">												
+	                                	<div class="product-selected">														
+                                            <p>$${v.price} x ${v.amount}</p>														
+                                            <h6>${v.pName}</h6>									
+	                                	</div>										
+	                                </td>											
+	                                <td class="si-close"><a href="#">X</a></td>									
+                                </tr>`
+                            );
+                        }); 
+                    },
+                    error:function(msg){
+                        concole.log(msg);
+                    }
+                });
+            };
+            // 頁面載入時尋此使用者購物車裏的商品數量
+            update();
+			updateShoppingCart();
+			updatePrice();
+            // 點選數量加入購物車
+            $("#shoppingCart").click(function(e){
+                e.preventDefault();
+                var productId = $("#secretProductId").html();
+                var productName = $("#secretProductName").html();
+                var productPrice = $("#secretPrice").html();
+                var amount = $("#amount").val();
+                var productPhoto = $("#secretPhoto").html();
+                var shoppingData = {"email":loginUser,"pId":productId,"pName":productName,"price":productPrice,"amount":amount,"cPhoto":productPhoto};
+                $.ajax({
+                    url:"addshoppingCart",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(shoppingData),
+                    success:function(resultMsg){
+                        var jsonMsg = $.parseJSON(resultMsg);
+                        alert(jsonMsg);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+                update();
+                updateShoppingCart();
+                updatePrice();
+            });
 
-         
+            
+            // 刪除購物車裡的物品
+            $("#shoppingList tr .si-close").on("click","a",function(e){
+            	e.preventDefault();
+                $(this).closest("tr").remove();
+                var cartId = $("td").first().html();
+                var cartData = {"cartId":cartId};
+                $.ajax({
+                    url:"panDeleteShoppingProduct",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(cartData),
+                    success:function(result){
+                        var jsonMsg = $.parseJSON(result);
+                        alert(jsonMsg);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+                update();
+                updateShoppingCart();
+                updatePrice();
+            });
     	});
     
+//////////////////////聊天室的JS        //////////////////////////////
+    	var stompClient = null;
+
+    		//載入完瀏覽器後  呼叫connect（），開啟雙通道
+    		$(function() {
+    			connect();
+    			
+    		});
+
+    		//強制關閉瀏覽器  呼叫websocket.close（）,進行正常關閉
+    		window.onunload = function() {
+    			disconnect();
+    		};
+
+    		//開啟雙通道
+    		function connect() {
+    			var socket = new SockJS(
+    					"http://localhost:8080/Vintage/endpointOyzc"); //連線SockJS的endpoint名稱為"endpointOyzc"
+    			stompClient = Stomp.over(socket); //使用STMOP子協議的WebSocket客戶端
+    			stompClient.connect({}, function(frame) {
+    				//連線WebSocket服務端
+    				console.log("Connected:" + frame);
+    			});
+    		}
+
+    		//關閉雙通道
+    		function disconnect() {
+    			if (stompClient != null) {
+    				stompClient.disconnect();
+    			}
+    			console.log("Disconnected");
+    		}
+
+//     		//選擇傳送給誰的時候觸發連線伺服器
+    		function sendAloneUser() {
+    			stompQueue();
+    		}
+    		
+    		//列隊（一對一）
+
+    		function stompQueue() {
+    			var userId = $("#loginInfo").html();//抓userName (登入者名稱)
+    			alert("監聽:" + userId);
+    			//通過stompClient.subscribe訂閱/topic/getResponse 目標(destination)傳送的訊息（佇列接收資訊）		
+    			stompClient.subscribe("/user/" + userId + "/alone/getResponse",
+    							function(response) {
+    								var message = JSON.parse(response.body);
+    								$("#chat-area")
+    										.append(
+    												`<div class="income-msg"><img src="img/person.jpg" class="avatar" alt="" /><span class="msg">${message.chatValue}</span></div>`);
+    							});
+    		}
+
+    		//單獨發
+    		function sendAloneMessage() {		
+    			var postValue = {}; //陣列存放訊息
+    			var chatValue = $("#input-area"); //聊天輸入框的值
+
+    			var userName = $("#loginInfo").html();		//抓登入者(發送者)
+
+    			var sendToId = sendToFakeUser();		//抓接收者(沒辦法先寫死吧) abi跟lin 去DEMO
+    			
+    			var response = $("#chat-area"); //訊息顯示框
+    			var userPic = $("#user-pic"); //使用者頭像
+    			postValue.name = userName;
+    			postValue.chatValue = chatValue.val();
+    			postValue.userId = sendToId; //JSON物件 postValue = {發送者,訊息,接收者}
+    			if (userName == 1 || userName == null) {
+    				alert("請選擇你是誰！");
+    				return;
+    			}
+    			if (sendToId == 1 || sendToId == null) {
+    				alert("請選擇你要發給誰！");
+    				return;
+    			}
+    			if (chatValue == "" || chatValue == null) {
+    				alert("不能傳送空訊息！");
+    				return;
+    			}
+    			stompClient.send("/aloneRequest", {}, JSON.stringify(postValue));
+    			response
+    					.append(`<div class="out-msg"><span class="my-msg">${postValue.chatValue}</span><img src="img/me.jpg" class="avatar"></div>`);
+
+    			chatValue.val("");
+    		}
+    		
+    		//賣家頁面一個 [聊天] 按鈕 -> 跳出對話框
+
+    		$(function() {
+    			$("#sendToWho").click(function() {
+    				$(".chat-popup").addClass("show");
+    				stompQueue();
+    			});
+    		});
+    		
+    		//假的發話對象
+    	
+    		
+    		function sendToFakeUser(){
+    			var getLoginUser = $("#loginInfo").html();
+    			var fakeUser="";
+    			if(getLoginUser == "abi@gmail.com"){
+    				fakeUser = "lin@gmail.com"
+    			}
+    			if(getLoginUser == "lin@gmail.com"){
+    				fakeUser ="abi@gmail.com"
+    			}
+    			return fakeUser;
+    		}
+    	        
+    		// //////////////////////        聊天室的JS        //////////////////////////////
+    	        
     </script>
 </head>
 
 <body>
-	<span th:text="${user}" style="display: none;" id="loginInfo"></span>
-	<span id="secretProductId" th:text="${secretProductId}"
-		style="display: none;"></span>
+    <span th:text="${user}" style="display: none;" id="loginInfo"></span>
+	<span id="secretProductId" th:text="${secretProductId}" style="display: none;"></span>
+    <span id="secretProductName" style="display: none;"></span>
+    <span id="secretPrice" style="display: none;"></span>
+    <span id="secretPhoto" style="display: none;"></span>
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -255,9 +550,10 @@
 			<div class="container">
 				<div class="ht-left"></div>
 				<div class="ht-right">
-					<a href="loginPage" class="login-panel" th:text="Login"><i
-						class="fa fa-user"></i></a> <a href="logout" class="login-panel"
-						th:text="Logout" style="display: none"><i class="fa fa-user"></i></a>
+					<a href="logout" class="login-panel" th:text="Logout"><i
+						class="fa fa-user"></i></a> <a href="loginPage" class="login-panel"
+						th:text="Login"><i class="fa fa-user"></i></a>
+
 
 					<div class="top-social">
 						<div class="mail-service">
@@ -281,57 +577,39 @@
 					</div>
 					<div class="col-lg-7 col-md-7">
 						<div class="advanced-search">
-							<button type="button" class="category-btn"></button>
+							<button type="button" class="category-btn">所　有　分　類　</button>
 							<div class="input-group">
-								<input type="text" placeholder="老鐵，關注蛤?">
-								<button type="button">
+								<input type="text" id="textSelectFormInput" placeholder="您在搜尋什麼商品嗎?">
+								<button type="button" class="ml-5" id="textSelectFormSearch">
 									<i class="ti-search"></i>
 								</button>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 text-right col-md-3">
+					<div class="col-lg-3 text-right col-md-3">`
 						<ul class="nav-right">
 
 							<li class="cart-icon"><a href="#"> <i
-									class="icon_bag_alt"></i> <span>3</span>
+									class="icon_bag_alt"></i> 
+                                    <span id="shoppingQuantity">
+                                        <!-- shoppingQuantity Here -->
+                                    </span>
 							</a>
 								<div class="cart-hover">
-									<div class="select-items">
-										<table>
-											<tbody>
-												<tr>
-													<td class="si-pic"><img src="img/select-product-1.jpg"
-														alt=""></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
-												<tr>
-													<td class="si-pic"><img src="img/select-product-2.jpg"
-														alt=""></td>
-													<td class="si-text">
-														<div class="product-selected">
-															<p>$60.00 x 1</p>
-															<h6>Kabino Bedside Table</h6>
-														</div>
-													</td>
-													<td class="si-close"><i class="ti-close"></i></td>
-												</tr>
+									<div class="select-items" style="height: 210px;overflow: auto;">
+										<table> 
+											<tbody id="shoppingList">
+                                                <!-- ShoppingList Here -->
 											</tbody>
 										</table>
 									</div>
 									<div class="select-total">
-										<span>total:</span>
-										<h5>$120.00</h5>
+										<span>總共:</span>
+										<h5 id="selectTotal"><!-- selectTotal Here --></h5>
 									</div>
 									<div class="select-button">
-										<a href="#" class="primary-btn view-card">VIEW CARD</a> <a
-											href="#" class="primary-btn checkout-btn">CHECK OUT</a>
+										<a href="shoppingCart" class="primary-btn view-card">購　物　車</a> <a
+											href="checkOut" class="primary-btn checkout-btn">結　　　帳</a>
 									</div>
 								</div></li>
 							<li class="cart-price">$150.00</li>
@@ -348,7 +626,7 @@
 						<ul class="depart-hover">
 							<li class="testActive"><a href="#">飾品</a></li>
 							<li class="testActive"><a href="#">服飾</a></li>
-							<li class="testActive"><a href="#">居家生活</a></li>
+							<li class="testActive"><a href="#">生活</a></li>
 							<li class="testActive"><a href="#">玩具</a></li>
 							<li class="testActive"><a href="#">藝術</a></li>
 							<li class="testActive"><a href="#">經典</a></li>
@@ -357,10 +635,10 @@
 				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
-						<li class="active"><a href="index">首頁</a></li>
-						<li><a href="shopPage">商城</a></li>
-						<li><a href="blog">博客</a></li>
-						<li><a href="contact">活動</a></li>
+						<li class="active"><a href="index">首　頁</a></li>
+						<li class="active"><a href="shopPage">商　城</a></li>
+						<li><a href="blog">部落格</a></li>
+						<li><a href="Activity">活　動</a></li>
 						<li><a href="faq">問與答</a></li>
 
 					</ul>
@@ -502,15 +780,22 @@
 				</div>
 				<div class="col-lg-9">
 					<div class="row">
-						<div class="col-lg-6" id="productImg">
-							<!-- productImg Here -->
-						</div>
-						<div class="col-lg-6" id="productDetails">
-							<div class="product-details">
-								<!-- product-details Here -->
-							</div>
-						</div>
-					</div>
+                        <div class="col-lg-6" id="productImg">
+                            <!-- productImg Here -->
+                        </div>
+                        <div class="col-lg-6" id="productDetails">
+                              <!-- product-details Here -->
+                            <div class="product-details">
+                                <div class="quantity">
+                                    <div class="pro-qty">
+                                        <input type="text" id="amount" value="1">
+                                    </div>
+                                    <a href="#" class="primary-btn pd-cart" id="shoppingCart">Add To Cart</a>
+                                </div>
+                            </div>
+                            <!-- product-details Here -->
+                        </div>
+                    </div>
 					<div class="product-tab">
 						<div class="tab-item">
 							<ul class="nav" role="tablist">
@@ -519,7 +804,8 @@
 								<li><a data-toggle="tab" href="#tab-2" role="tab">SPECIFICATIONS</a>
 								</li>
 								<li><a data-toggle="tab" href="#tab-3" role="tab">Customer
-										Reviews (02)</a></li>
+										Reviews<span id="msgNums"></span>
+								</a></li>
 							</ul>
 						</div>
 						<div class="tab-item-content">
@@ -536,40 +822,46 @@
 								</div>
 								<div class="tab-pane fade" id="tab-3" role="tabpanel">
 									<div class="customer-review-option">
-										<h4>2 Comments</h4>
+
+										<div class="at-rating" id="avgStarLv"></div>
+
+										<button type="button" class="btn btn-outline-warning mb-3"
+											id="sendToWho">與賣家聊天</button>
+
+										<h4>Comments</h4>
 										<div class="comment-option">
-											<div class="co-item">
-												<div class="avatar-pic">
-													<img src="img/product-single/avatar-1.png" alt="">
-												</div>
-												<div class="avatar-text">
-													<div class="at-rating">
-														<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-															class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-															class="fa fa-star-o"></i>
-													</div>
-													<h5>
-														Brandon Kelley <span>27 Aug 2019</span>
-													</h5>
-													<div class="at-reply">Nice !</div>
-												</div>
-											</div>
-											<div class="co-item">
-												<div class="avatar-pic">
-													<img src="img/product-single/avatar-2.png" alt="">
-												</div>
-												<div class="avatar-text">
-													<div class="at-rating">
-														<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-															class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-															class="fa fa-star-o"></i>
-													</div>
-													<h5>
-														Roy Banks <span>27 Aug 2019</span>
-													</h5>
-													<div class="at-reply">Nice !</div>
-												</div>
-											</div>
+											<!-- 											<div class="co-item"> -->
+											<!-- 												<div class="avatar-pic"> -->
+											<!-- 													<img src="img/product-single/avatar-1.png" alt=""> -->
+											<!-- 												</div> -->
+											<!-- 												<div class="avatar-text"> -->
+											<!-- 													<div class="at-rating"> -->
+											<!-- 														<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i -->
+											<!-- 															class="fa fa-star"></i> <i class="fa fa-star"></i> <i -->
+											<!-- 															class="fa fa-star-o"></i> -->
+											<!-- 													</div> -->
+											<!-- 													<h5> -->
+											<!-- 														Brandon Kelley <span>27-09-2019</span> -->
+											<!-- 													</h5> -->
+											<!-- 													<div class="at-reply">Nice !</div> -->
+											<!-- 												</div> -->
+											<!-- 											</div> -->
+											<!-- 											<div class="co-item"> -->
+											<!-- 												<div class="avatar-pic"> -->
+											<!-- 													<img src="img/product-single/avatar-2.png" alt=""> -->
+											<!-- 												</div> -->
+											<!-- 												<div class="avatar-text"> -->
+											<!-- 													<div class="at-rating"> -->
+											<!-- 														<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i -->
+											<!-- 															class="fa fa-star"></i> <i class="fa fa-star"></i> <i -->
+											<!-- 															class="fa fa-star-o"></i> -->
+											<!-- 													</div> -->
+											<!-- 													<h5> -->
+											<!-- 														Roy Banks <span>27-12-2019</span> -->
+											<!-- 													</h5> -->
+											<!-- 													<div class="at-reply">Nice !</div> -->
+											<!-- 												</div> -->
+											<!-- 											</div> -->
 
 											<!-- 留言顯示div-->
 											<div id="show_leave_mag"></div>
@@ -577,9 +869,8 @@
 										<div class="personal-rating">
 											<h6>Your Ratind</h6>
 											<div class="rating h3" id="starLv">
-												<i class="fa fa-star-o" id="star1"></i> <i
-													class="fa fa-star-o" id="star2"></i> <i
-													class="fa fa-star-o" id="star3"></i> <i
+												<i class="fa fa-star" id="star1"></i> <i class="fa fa-star"
+													id="star2"></i> <i class="fa fa-star" id="star3"></i> <i
 													class="fa fa-star-o" id="star4"></i> <i
 													class="fa fa-star-o" id="star5"></i>
 											</div>
@@ -738,6 +1029,19 @@
                            		 pId: product_id,
                           		 userPic: user_pic,
                           };
+                          if(star_lv_sel == null || star_lv_sel == ""){
+                        	  alert("請選擇給予星數!");
+                        	  return ;
+                          }
+                          if(leave_content == null  || leave_content == ""){
+                        	  alert("請輸入評價留言!");
+                        	  return ;
+                          }
+                          if(leave_name == null  || leave_name == ""){
+                        	  alert("請輸入留言暱稱!");
+                        	  return ;
+                          }
+                          
                           $.ajax({
                             url:
                               "http://localhost:8080/Vintage/api/leaveMsg/msgAdd",
@@ -747,18 +1051,15 @@
                             data: JSON.stringify(send_leave_msg),
                             success: function (data) {
                               console.log(data);
-                              $("#show_leave_mag").append(`
-                                      <div class="co-item">
+                              $("#show_leave_mag").append(` <div class="co-item">
                               <div class="avatar-pic">
-                                  <img src="img/product-single/${
-                                    data.userPic
-                                  }" alt="">
+                                  <img src="img/product-single/${data.userPic}" alt="">
                               </div>
                               <div class="avatar-text">
                                   <div class="at-rating">
                                       ${show_star_icon(data.starLv)}
                                   </div>
-                                  <h5>${data.userName}<span>${
+                                  <h5>${data.userName }<span>${
                                 data.leaveMsgTime
                               }</span></h5>
                                   <div class="at-reply">${
@@ -771,6 +1072,10 @@
                               console.log(textStatus);
                             },
                           });
+                          //留言完初始化
+                          $("#leave_name").val("");
+                          $("#leave_content").val("");
+                   
                         });
                       </script>
 
@@ -940,48 +1245,47 @@
 							<a href="#"><img src="img/footer-logo.png" alt=""></a>
 						</div>
 						<ul>
-							<li>Address: 60-49 Road 11378 New York</li>
-							<li>Phone: +65 11.188.888</li>
-							<li>Email: hello.colorlib@gmail.com</li>
+							<li>地址: 80147高雄市前金區中正四路211號8號樓之1</li>
+							<li>電話: 07 969 9885</li>
+							<li>電子信箱: vintage@gmail.com</li>
 						</ul>
 						<div class="footer-social">
-							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-								class="fa fa-instagram"></i></a> <a href="#"><i
-								class="fa fa-twitter"></i></a> <a href="#"><i
-								class="fa fa-pinterest"></i></a>
+								<a href="https://facebook.com"><i class="fa fa-facebook"></i></a>
+							<a href="https://instagram.com"><i class="fa fa-instagram"></i></a>
+							<a href="https://twitter.com"><i class="fa fa-twitter"></i></a> <a
+								href="https://www.pinterest.com"><i class="fa fa-pinterest"></i></a>
 						</div>
 					</div>
 				</div>
 				<div class="col-lg-2 offset-lg-1">
 					<div class="footer-widget">
-						<h5>Information</h5>
+						<h5>資訊</h5>
 						<ul>
-							<li><a href="#">About Us</a></li>
-							<li><a href="#">Checkout</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">Serivius</a></li>
+							<li><a href="#">關於我們</a></li>
+							<li><a href="#">首頁</a></li>
+							<!-- 							<li><a href="#">Contact</a></li> -->
+							<li><a href="#">Q&A</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-2">
 					<div class="footer-widget">
-						<h5>My Account</h5>
+						<h5>我的帳戶</h5>
 						<ul>
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">Shopping Cart</a></li>
-							<li><a href="#">Shop</a></li>
+							<li><a href="#">個人帳戶</a></li>
+							<!-- 							<li><a href="#">Contact</a></li> -->
+							<li><a href="#">購物車</a></li>
+							<li><a href="#">商城</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="newslatter-item">
-						<h5>Join Our Newsletter Now</h5>
-						<p>Get E-mail updates about our latest shop and special
-							offers.</p>
+						<h5>現在就加入我們的電子報！</h5>
+						<p>獲取最新最即時的商品資訊</p>
 						<form action="#" class="subscribe-form">
-							<input type="text" placeholder="Enter Your Mail">
-							<button type="button">Subscribe</button>
+							<input type="text" placeholder="輸入您的電子信箱">
+							<button type="button">訂閱</button>
 						</form>
 					</div>
 				</div>
@@ -1007,6 +1311,38 @@
 				</div>
 			</div>
 		</div>
+
+		<!--     聊天對話框div -->
+		<section class="chat-section">
+			<button class="chat-btn">
+				<i class="material-icons"> comment </i>
+			</button>
+
+			<div class="chat-popup">
+				<div class="badge">N</div>
+				<div class="chat-area" id="chat-area">
+					<div class="income-msg">
+						<!-- 						<img src="img/person.jpg" class="avatar" alt="" /> <span -->
+						<!-- 							class="msg"> Hi, How </span> -->
+					</div>
+				</div>
+
+				<div class="input-area">
+					<input type="text" id="input-area" class="chat-input" />
+					<button id="emoji-btn">&#127773;</button>
+					<button class="chat-submit" onclick="sendAloneMessage()">
+						<i class="material-icons"> send</i>
+					</button>
+				</div>
+			</div>
+		</section>
+
+		<!-- 聊天室的css跟js跟cdn -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@3.1.1/dist/index.min.js"></script>
+		<script src="js/chat.js"></script>
+		<!-- 聊天室的css跟js跟cdn -->
+
 	</footer>
 	<!-- Footer Section End -->
 

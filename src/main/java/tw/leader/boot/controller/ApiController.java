@@ -19,6 +19,8 @@ import tw.leader.boot.domain.ApiResultMsg;
 import tw.leader.boot.domain.GoodsCategory;
 import tw.leader.boot.domain.Productb;
 import tw.leader.boot.service.ProductServiceb;
+import tw.leader.dao.UserRepository;
+import tw.leader.po.User;
 
 /*
  * ALL REST API 
@@ -29,6 +31,9 @@ public class ApiController {
 
 	@Autowired
 	private ProductServiceb productService;
+
+	@Autowired
+	private UserRepository uRepo;
 
 	@GetMapping(value = "/categorys", produces = "application/json;charset=utf-8")
 	public List<GoodsCategory> getAllGoodsCategorys() {
@@ -61,13 +66,14 @@ public class ApiController {
 	public Productb getProduct(@PathVariable("pid") int productpId) {
 		return productService.getProduct(productpId);
 	}
-	
-	@PostMapping(path="/saveproduct",produces="application/json;charset=utf-8",consumes="multipart/form-data")
-	public ApiResultMsg saveProduct(@RequestParam("cPhoto") MultipartFile ppic,HttpServletRequest request) {
-		ApiResultMsg msg=new ApiResultMsg();
-		try
-		{
-			Productb product=new Productb();
+
+	@PostMapping(path = "/saveproduct", produces = "application/json;charset=utf-8", consumes = "multipart/form-data")
+	public ApiResultMsg saveProduct(@RequestParam("cPhoto") MultipartFile ppic, HttpServletRequest request) {
+		ApiResultMsg msg = new ApiResultMsg();
+		User uBean = uRepo.findByEmail(request.getParameter("email"));
+		String userName = uBean.getUserName();
+		try {
+			Productb product = new Productb();
 			product.setpId(tryparseToInt(request.getParameter("pId")));
 			product.setpName(request.getParameter("pName"));
 			product.setpMain(request.getParameter("pMain"));
@@ -78,40 +84,61 @@ public class ApiController {
 			product.setDescription(request.getParameter("description"));
 			product.setsDescription(request.getParameter("sDescription"));
 			product.setEmail(request.getParameter("email"));
-			product.setUserName(request.getParameter("userName"));
+			product.setUserName(userName);
 			product.setCategoryId(tryparseToInt(request.getParameter("categoryId")));
 			product.setLastEditTime(new Date());
-			
-			if(product.getpId()<=0) {
+
+			if (product.getpId() <= 0) {
 				productService.insertProduct(product, ppic);
 			} else {
 				productService.updateProduct(product, ppic);
 			}
-			
+
 			msg.setCode(0);
 			msg.setMsg("上傳成功！");
 			msg.setData(product);
-			
-		}catch (Exception e) {
+
+		} catch (Exception e) {
 			msg.setCode(101);
 			msg.setMsg("上傳失敗：" + e.getMessage());
 		}
-		
+
 		return msg;
-		
+
 	}
+
+	/*
+	 * @PostMapping(path="/updateproduct",produces="application/json;charset=utf-8",
+	 * consumes="multipart/form-data") public ApiResultMsg
+	 * updateProduct(@RequestParam("cPhoto"), @RequestParam("pName"),@RequestParam(
+	 * "pMain"),@RequestParam("pDetail"),@RequestParam("price"),@RequestParam(
+	 * "invantory"),
+	 * 
+	 * @RequestParam("pSize"),@RequestParam("sDescription"),@RequestParam("email"),@
+	 * RequestParam("userName"),
+	 * 
+	 * @RequestParam("categoryId"),@RequestParam("lastEditBy"),@RequestParam(
+	 * "categoryName"),getdate()) throws IllegalStateException, IOException,
+	 * ParseException{ edao.update(empid, empaccount, emppassword, empname, title);
+	 * return goemployee(m,eeaccount); productService.updateProduct(product,
+	 * uploadProductcPhoto);
+	 */
+	
+	
+	
+	
 	
 	@GetMapping(path="/delproduct/{pId}",produces="application/json;charset=utf-8")
-    public ApiResultMsg deleteProduct(@PathVariable("pId") int productpId) {
-        productService.deleteProduct(productpId);
-        ApiResultMsg msg=new ApiResultMsg();
-        msg.setCode(0);
-        msg.setMsg("删除商品成功！");
-        
-        return msg;
-    }
-	
-	
+
+	public ApiResultMsg deleteProduct(@PathVariable("pId") int productpId) {
+		productService.deleteProduct(productpId);
+		ApiResultMsg msg = new ApiResultMsg();
+		msg.setCode(0);
+		msg.setMsg("删除商品成功！");
+
+		return msg;
+	}
+
 	private int tryparseToInt(String str) {
 		try {
 			return Integer.parseInt(str);

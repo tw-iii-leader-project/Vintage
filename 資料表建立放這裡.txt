@@ -96,3 +96,27 @@ orderTime  datetime not null
 );
 
 -------------pan ShoppingOrder data
+
+-------------BTLiao Product data
+cCREATE TABLE [dbo].[Product](
+	[pId] [int] IDENTITY(1,1) NOT NULL,
+	[pName] [nvarchar](50) NULL,
+	[pMain] [nvarchar](50) NULL,
+	[pDetail] [nvarchar](50) NULL,
+	[price] [int] NOT NULL,
+	[invantory] [int] NULL,
+	[pSize] [nvarchar](10) NULL,
+	[description] [nvarchar](max) NULL,
+	[sDescription] [nvarchar](max) NULL,
+	[cPhoto] [nvarchar](max) NULL,
+	[email] [nvarchar](50) NULL,
+	[userName] [nvarchar](50) NULL,
+	[categoryId] [int] NULL,
+	[lastEditBy] [nvarchar](20) NULL,
+	[lastEditTime] [datetime] NULL,
+	[categoryName] [nvarchar](50) NULL,
+	[sellerName] [nvarchar](50) NULL,
+	);
+	-------------BTLiao Product data
+
+

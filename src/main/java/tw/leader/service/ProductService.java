@@ -35,4 +35,10 @@ public interface ProductService {
 
 	public String getAllProductPageMessages() throws Exception;
 	public String getAllProductPageMessagesByMain(String pMain) throws Exception;
+	
+	/*
+	 * --------------------------------------------------------------
+	 * 		IndexAndProduct
+	 * */
+	public String findIndexProduct() throws Exception;
 }

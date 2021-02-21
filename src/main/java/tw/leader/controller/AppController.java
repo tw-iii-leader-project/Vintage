@@ -169,7 +169,7 @@ public class AppController {
 		uRepo.save(user);
 		
 
-		String uploadDir = "C:\\Users\\iii\\git\\Vintage219\\src\\main\\resources\\static\\img\\userPic";
+		String uploadDir = "C:\\Users\\Administrator\\git\\VintageFinal\\src\\main\\resources\\static\\img\\userPic";
 
 		Path uploadPath = Paths.get(uploadDir);
 
@@ -187,6 +187,35 @@ public class AppController {
 		
 		return "update_success";
 	}
+	
+	/*
+	 * -----------------------------------------
+	 * 		AdvFindUserDetail
+	 * */
+	
+	@PostMapping(value="/panAdvFindUser")
+	@ResponseBody
+	public String advFindUser(@RequestBody UserResp userData) throws Exception {
+		String email = userData.getEmail();
+		List<User> uList = fDao.findAllDataByEmail(email);
+		String uJson = objectMapper.writeValueAsString(uList);
+		return uJson;
+	}
+	
+	/*
+	 * -----------------------------------------------------------------
+	 * 		IndexFindUserDetail
+	 * */
+	
+	@PostMapping(value="/panFindIndexUser")
+	@ResponseBody
+	public String findIndexUser() throws Exception {
+			List<User> uList = fDao.findIndexUser();
+		String uJson = objectMapper.writeValueAsString(uList);
+		return uJson;
+	}
+	
+	
 		
 	public String GetCurrentUserAccount() {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();

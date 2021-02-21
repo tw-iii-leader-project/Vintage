@@ -264,6 +264,18 @@ public class ProductSelectController {
 		// this method is for getting current user account which has login.
 	}
 	
+	
+	/*
+	 * ------------------------------------------------------------
+	 * 		IndexAndProductPage
+	 * */
+	
+	@PostMapping(value="/panIndexProduct")
+	@ResponseBody
+	public String findIndexProduct() throws Exception {
+		return pService.findIndexProduct();
+	}
+	
 	/*-------------------------------------------------------------
 	 * Test controller*/
 	

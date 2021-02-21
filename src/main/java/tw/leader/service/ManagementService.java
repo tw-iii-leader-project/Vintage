@@ -8,7 +8,7 @@ public interface ManagementService {
 	
 	public String getAllUser() throws Exception;
 	
-	public String getAllUserP(int page) throws Exception;
+//	public String getAllUserP(int page) throws Exception;
 	
 	public String getUserById(int userId) throws Exception;
 	

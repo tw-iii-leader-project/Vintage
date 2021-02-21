@@ -277,6 +277,19 @@ public class ProductServiceImpl implements ProductService {
 		System.out.println(pJson);
 		return pJson;
 	}
+	
+	/*
+	 * +--------------------------------------------------------------
+	 * 		IndexAndProduct
+	 * */
+	
+	@Override
+	public String findIndexProduct() throws Exception {
+		List<Product> pList = pSDao.findIndexProduct();
+		String pJson = objectMapper.writeValueAsString(pList);
+		String response = pJson;
+		return response;
+	}
 		
 	/*
 	 * -----------------------------------------------------------

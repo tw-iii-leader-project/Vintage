@@ -20,93 +20,96 @@ public class SimpleJumpController {
 	private UserRepository uRepo;
 
 
-	@GetMapping("/index")
+	@GetMapping(value="/index")
 	public String ViewHomePage(Model m) {
 		String user = GetCurrentUserAccount();
+		User u = uRepo.findByEmail(user);
+		String roles = u.getRoles();
 		m.addAttribute("user", user);
+		m.addAttribute("roles", roles);
 		return "index";
 	}
 
-	@GetMapping("/shopPage")
+	@GetMapping(value="/shopPage")
 	public String fashiShopPage(Model m) {
 		String user = GetCurrentUserAccount();
 		m.addAttribute("user", user);
 		return "shop";
 	}
 
-	@GetMapping("/product")
+	@GetMapping(value="/product")
 	public String productPage(Model m) {
 		String user = GetCurrentUserAccount();
 		m.addAttribute("user", user);
 		return "product";
 	}
 
-	@GetMapping("/blog")
+	@GetMapping(value="/blog")
 	public String blogPage(Model m) {
 		String user = GetCurrentUserAccount();
 		m.addAttribute("user", user);
 		return "blog";
 	}
 
-	@GetMapping("/blogDetails")
+	@GetMapping(value="/blogDetails")
 	public String blogDetailsPage(Model m) {
 		String user = GetCurrentUserAccount();
 		m.addAttribute("user", user);
 		return "blog-details";
 	}
 
-	@GetMapping("/checkOut")
+	@GetMapping(value="/checkOut")
 	public String checkOutPage(Model m) {
 		String user = GetCurrentUserAccount();
 		m.addAttribute("user", user);
 		return "check-out";
 	}
 
-	@GetMapping("/contact")
+	@GetMapping(value="/contact")
 	public String contactPage(Model m) {
 		String user = GetCurrentUserAccount();
 		m.addAttribute("user", user);
 		return "contact";
 	}
 
-	@GetMapping("/faq")
+	@GetMapping(value="/faq")
 	public String faqPage(Model m) {
 		String user = GetCurrentUserAccount();
 		m.addAttribute("user", user);
 		return "faq";
 	}
 
-	@GetMapping("/shoppingCart")
+	@GetMapping(value="/shoppingCart")
 	public String shoppingCartPage(Model m) {
 		String user = GetCurrentUserAccount();
 		m.addAttribute("user", user);
 		return "shopping-cart";
 	}
 
-	@GetMapping("/uploader")
+	@GetMapping(value="/uploader")
 	public String uploaderPage() {
 		return "uploader";
 	}
 
-	@GetMapping("/registerNow")
+	@GetMapping(value="/registerNow")
 	public String toRegister(Model m) {
 		m.addAttribute("users", new User());
 		return "register3";
 	}
 
-	@GetMapping("/forgetPassword")
+	@GetMapping(value="/forgetPassword")
 	public String forgetPassword() {
 		return "resetPassword";
 	}
 
-	@GetMapping("/loginPage")
+	@GetMapping(value="/loginPage")
 	public String viewLoginPage(Model m) {
 		String user = GetCurrentUserAccount();
 		m.addAttribute("user", user);
 		return "login3";
 	}
 
-	@GetMapping("/toHomePage")
+	@GetMapping(value="/toHomePage")
 	public String viewHomePage(Model m) {
 		String user = GetCurrentUserAccount();
 		User u = uRepo.findByEmail(user);
@@ -120,22 +123,26 @@ public class SimpleJumpController {
 			return "login";
 		}
 		return "index";		
-		
+	}
+	
+	@GetMapping(value="/logoutToHomePage")
+	public String logoutPage() {
+		return "index";
 	}
 
-	@GetMapping("/personalInfo")
+	@GetMapping(value="/personalInfo")
 	public String viewPersonalInfo() {
 		return "personalInfo";
 	}
 
-	@GetMapping("/toUserInfoDetail")
+	@GetMapping(value="/toUserInfoDetail")
 	public String toUserInfoDetail(Model m) {
 		String user = GetCurrentUserAccount();
 		m.addAttribute("user", user);
 		return "userInfoDetail";
 	}
 
-	@GetMapping("/Activity")
+	@GetMapping(value="/Activity")
 	public String viewActivityPage(Model m) {
 //		String user = GetCurrentUserAccount();
 //		m.addAttribute("user", user);

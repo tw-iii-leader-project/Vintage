@@ -117,6 +117,18 @@ CREATE TABLE [dbo].[Product](
 	[categoryName] [nvarchar](50) NULL,
 	[sellerName] [nvarchar](50) NULL,
 	);
+	
+CREATE TABLE [dbo].[TA_TestGoodsCategory](
+    [id] [int] IDENTITY(1,1) NOT NULL,
+    [categoryName] [nvarchar](20) NOT NULL,
+    [goodsCount] [int] NULL,
+    [serialNo] [int] NOT NULL,
+    [lastEditBy] [nvarchar](20) NULL,
+    [lastEditTime] [datetime] NULL,
+    );
+	
+		INSERT INTO TA_TestGoodsCategory ([categoryName],[serialNo]) VALUES ('生活類', 1);
+		
 	-------------BTLiao Product data
 
 

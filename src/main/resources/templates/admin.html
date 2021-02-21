@@ -125,7 +125,7 @@ table tr>* {
 						</div>
 					</div>
 					<div class="col-lg-3 text-right col-md-3">
-						
+
 						<ul class="nav-right">
 
 							<li class="cart-icon"><a href="#"> <i
@@ -148,8 +148,8 @@ table tr>* {
 										</h5>
 									</div>
 									<div class="select-button">
-										<a href="shoppingCart" class="primary-btn view-card">加入購物車</a> <a
-											href="checkOut" class="primary-btn checkout-btn">前往結帳</a>
+										<a href="shoppingCart" class="primary-btn view-card">加入購物車</a>
+										<a href="checkOut" class="primary-btn checkout-btn">前往結帳</a>
 									</div>
 								</div></li>
 							<li class="cart-price"></li>
@@ -261,7 +261,7 @@ table tr>* {
 										<td><input style="width: 70px" class="form-control"
 											type="text" v-model="editproduct.pName"></td>
 										<td><select v-model="editproduct.pMain" type="selected"
-											class="form-control" style="width: 150px">
+											class="form-control" style="width: 90px">
 												<option disabled="disabled">請選擇商品類別</option>
 												<option>飾品</option>
 												<option>服飾</option>
@@ -271,7 +271,7 @@ table tr>* {
 												<option>經典</option>
 										</select></td>
 										<td><textarea v-model="editproduct.pDetail"
-												class="form-control" style="width: 200px"></textarea></td>
+												class="form-control" style="width: 120px"></textarea></td>
 										<td><input type="text" v-model="editproduct.price"
 											style="width: 70px" class="form-control"></td>
 										<td><input type="text" v-model="editproduct.invantory"
@@ -279,11 +279,11 @@ table tr>* {
 										<td><input type="text" v-model="editproduct.pSize"
 											style="width: 70px" class="form-control"></td>
 										<td><textarea v-model="editproduct.description"
-												style="width: 200px" class="form-control"></textarea></td>
+												style="width: 120px" class="form-control"></textarea></td>
 										<td><textarea v-model="editproduct.sDescription"
-												style="width: 200px" class="form-control"></textarea></td>
+												style="width: 120px" class="form-control"></textarea></td>
 										<td><img v-bind:src="editproduct.cPhoto" class="ppic">
-											 <input class="upload" type="file" id="ppicfile"
+											<input class="upload" type="file" id="ppicfile"
 											@change="selectimg($event.target)"
 											accept="image/png,image/gif,image/jpeg"></td>
 										<td>{{editproduct.email}}</td>
@@ -350,7 +350,8 @@ table tr>* {
 										},
 										created : function() {
 											this.$http
-													.get('/Vintage/api/categorys')
+													.get(
+															'/Vintage/api/categorys')
 													.then(
 															function(res) {
 																this.categorys = res.body;

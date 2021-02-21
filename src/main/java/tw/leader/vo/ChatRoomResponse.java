@@ -5,6 +5,15 @@ public class ChatRoomResponse {
 	private String userId;
 	private String name;
 	private String chatValue;
+	private String userPic;
+
+	public String getUserPic() {
+		return userPic;
+	}
+
+	public void setUserPic(String userPic) {
+		this.userPic = userPic;
+	}
 
 	public String getUserId() {
 		return userId;

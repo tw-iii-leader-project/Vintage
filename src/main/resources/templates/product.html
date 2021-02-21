@@ -468,7 +468,7 @@
     								var message = JSON.parse(response.body);
     								$("#chat-area")
     										.append(
-    												`<div class="income-msg"><img src="img/puipui02.png" class="avatar" alt="" /><span class="msg">${message.chatValue}</span></div>`);
+    												`<div class="income-msg"><img src="img/${message.userPic}" class="avatar" alt="" /><span class="msg">${message.chatValue}</span></div>`);
     							});
     		}
 
@@ -482,10 +482,11 @@
     			var sendToId = sendToFakeUser();		//抓接收者(沒辦法先寫死吧) abi跟lin 去DEMO
     			
     			var response = $("#chat-area"); //訊息顯示框
-    			var userPic = $("#user-pic"); //使用者頭像
+    			var userPic = $("#user-pic").val(); //使用者頭像
     			postValue.name = userName;
     			postValue.chatValue = chatValue.val();
-    			postValue.userId = sendToId; //JSON物件 postValue = {發送者,訊息,接收者}
+    			postValue.userPic=userPic;
+    			postValue.userId = sendToId; 		//JSON物件 postValue = {發送者,訊息,接收者}
     			if (userName == 1 || userName == null) {
     				alert("請選擇你是誰！");
     				return;
@@ -500,7 +501,7 @@
     			}
     			stompClient.send("/aloneRequest", {}, JSON.stringify(postValue));
     			response
-    					.append(`<div class="out-msg"><span class="my-msg">${postValue.chatValue}</span><img src="img/puipui01.png" class="avatar"></div>`);
+    					.append(`<div class="out-msg"><span class="my-msg">${postValue.chatValue}</span><img src="img/${postValue.userPic}" class="avatar"></div>`);
 
     			chatValue.val("");
     		}
@@ -528,6 +529,29 @@
     			}
     			return fakeUser;
     		}
+    		
+    		//用email去撈userPic
+    		
+    		$(function(){
+    			var userEmail = $("#loginInfo").html();
+    			var sendUserEmail = {"email":userEmail};
+    			$.ajax({
+                    url:
+                      "http://localhost:8080/Vintage/api/gotUserPic",
+                    method: "POST",
+                    dataType: "json",
+                    contentType: "application/json; charset=UTF-8",
+                    data: JSON.stringify(sendUserEmail),
+                    success: function (data) {
+                      console.log(data.userPic);
+                      $("#user-pic").val(data.userPic);
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                      console.log(textStatus);
+                    },
+                  });
+    			
+    		});
     	        
     		// //////////////////////        聊天室的JS        //////////////////////////////
     	        
@@ -535,7 +559,12 @@
 </head>
 
 <body>
+
+	<input type="hidden" id="user-pic" value="">
 	<span th:text="${user}" style="display: none;" id="loginInfo"></span>
+	<script>
+	
+	</script>
 
 	<span id="secretProductId" th:text="${secretProductId}"
 		style="display: none;"></span>
@@ -874,7 +903,7 @@
 											<div id="show_leave_mag"></div>
 										</div>
 										<div class="personal-rating">
-											<h6>選擇顆星</h6>
+											<h6>給予星數</h6>
 											<div class="rating h3" id="starLv">
 												<i class="fa fa-star" id="star1"></i> <i class="fa fa-star"
 													id="star2"></i> <i class="fa fa-star" id="star3"></i> <i

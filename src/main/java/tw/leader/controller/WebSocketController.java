@@ -29,6 +29,7 @@ public class WebSocketController {
 		ChatRoomResponse response = new ChatRoomResponse();
 		response.setName(chatRoomRequest.getName());
 		response.setChatValue(chatRoomRequest.getChatValue());
+		response.setUserPic(chatRoomRequest.getUserPic());
 		return response;
 	}
 
@@ -42,6 +43,7 @@ public class WebSocketController {
 		ChatRoomResponse response = new ChatRoomResponse();
 		response.setName(chatRoomRequest.getName());
 		response.setChatValue(chatRoomRequest.getChatValue());
+		response.setUserPic(chatRoomRequest.getUserPic());
 		this.template.convertAndSendToUser(chatRoomRequest.getUserId() + "", "/alone/getResponse", response);
 		return response;
 	}

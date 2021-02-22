@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,12 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import tw.leader.dao.FindUserInfoDao;
 import tw.leader.dao.UserRepository;
 import tw.leader.dao.userArticleDao;
 import tw.leader.po.User;
 import tw.leader.po.userArticle;
 import tw.leader.service.userArticleService;
+import tw.leader.vo.UserResp;
 import tw.leader.vo.userArticleResp;
 
 @Controller
@@ -39,6 +43,9 @@ public class blogController {
 	
 	@Autowired
 	private FindUserInfoDao fDao;
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	@PostMapping(value = "/userPicUpdate")
 	public String userInfoUpdate(
@@ -84,7 +91,7 @@ public class blogController {
 		
 		userArticle saveUser = aRepo.save(user);
 				
-		String uploadDir = "C:\\Users\\iii\\git\\VintagePanFinal\\src\\main\\resources\\static\\img\\userArticlePic";
+		String uploadDir = "C:\\Users\\iii\\git\\Vintage222\\src\\main\\resources\\static\\img\\userArticlePic";
 		
 		String fileNameMain = StringUtils.cleanPath(mainMultipartFile.getOriginalFilename());
 		fileNameMain = user.getArticleId() + fileNameMain;
@@ -129,6 +136,24 @@ public class blogController {
 	public String selectIndexBlog() throws Exception {
 		return uAService.findIndexBlog();
 	}
+	
+	//blogPicPresent
+	
+	@PostMapping(value="/blogPicPresent")
+	@ResponseBody
+	public String selectUserInfoUser(@RequestBody UserResp userData) throws Exception {
+		String email = userData.getEmail();
+		
+		
+		List<userArticle> aList = aRepo.selectUserArticle(email);
+				
+				
+		String uJson = objectMapper.writeValueAsString(aList);
+		System.out.println(uJson);
+		return uJson;
+	}
+	
+	//blogPicPresent
 	
 	public String GetCurrentUserAccount() {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();

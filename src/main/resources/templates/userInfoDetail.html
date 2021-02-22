@@ -27,6 +27,12 @@
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+	integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 
 <script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
 <script src="js/jquery-3.3.1.min.js"></script>
@@ -108,8 +114,10 @@
                 	contentType:"application/json;charset=utf-8",
                     data:JSON.stringify(articleData),
                     success:function(result){
-                        var sMsg = JSON.parse(result);
-                        console.log(sMsg);
+                        Swal.fire({
+							icon : 'info',
+							title : result,
+						});
                     },
                     error:function(msg){
                         console.log(msg);
@@ -127,8 +135,10 @@
                 	contentType:"application/json;charset=utf-8",
                     data:JSON.stringify(articleData),
                     success:function(result){
-                        var sMsg = JSON.parse(result);
-                        alert(sMsg);
+                        Swal.fire({
+							icon : 'info',
+							title : result,
+						});
                     },
                     error:function(msg){
                         console.log(msg);
@@ -137,13 +147,19 @@
             });
 
             $("#saveAndOut").click(function(){
-            	alert("確定要儲存&離開嗎?");
-                $("#essay1Save").trigger("click");
-                $("#essay2Save").trigger("click");
-                history.go(-1);
-            });
-
-        });
+				Swal.fire({
+  					title: 'Do you want to save the changes?',
+					showCancelButton: true,
+					confirmButtonText: `Save`,
+				})
+				.then((result) => {
+  					if (result.isConfirmed) {
+						$("#essay1Save").trigger("click");
+                		$("#essay2Save").trigger("click");
+                		history.go(-1);
+					}
+            	});
+        	});
         
         $(document).ready(function () {
         	

@@ -75,7 +75,7 @@ public class AdvManagementController {
 			throw new IOException("Could not save upload file" + fileName); 
 		}
 		
-		return "update_success";
+		return "AdvertisementManagement";
 	}
 	
 	@PostMapping("/advForm2")
@@ -120,7 +120,7 @@ public class AdvManagementController {
 			throw new IOException("Could not save upload file" + fileName); 
 		}
 		
-		return "update_success";
+		return "AdvertisementManagement";
 	}
 	
 	@PostMapping("/advForm3")
@@ -164,7 +164,7 @@ public class AdvManagementController {
 			throw new IOException("Could not save upload file" + fileName); 
 		}
 		
-		return "update_success";
+		return "AdvertisementManagement";
 	}
 	
 	@PostMapping(value="/panSelectAdvMain1")

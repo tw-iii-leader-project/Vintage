@@ -59,7 +59,7 @@ public class AdvManagementController {
 		
 		aDao.save(adv);
 		// C:\SpringBoot\eclipse\Workspace\Vintageyo.zip_expanded\Vintage\src\main\resources\static\img
-		String uploadDir = "C:\\Users\\iii\\git\\VintagePanFinal\\src\\main\\resources\\static\\img\\advManagement";
+		String uploadDir = "C:\\Try\\Git\\VintagePanFinal\\src\\main\\resources\\static\\img\\advManagement";
 
 		Path uploadPath = Paths.get(uploadDir);
 
@@ -104,7 +104,7 @@ public class AdvManagementController {
 		
 		aDao.save(adv);
 		
-		String uploadDir = "C:\\Users\\iii\\git\\VintagePanFinal\\src\\main\\resources\\static\\img\\advManagement";
+		String uploadDir = "C:\\Try\\Git\\VintagePanFinal\\src\\main\\resources\\static\\img\\advManagement";
 
 		Path uploadPath = Paths.get(uploadDir);
 
@@ -148,7 +148,7 @@ public class AdvManagementController {
 		
 		aDao.save(adv);
 		
-		String uploadDir = "C:\\Users\\iii\\git\\VintagePanFinal\\src\\main\\resources\\static\\img\\advManagement";
+		String uploadDir = "C:\\Try\\Git\\VintagePanFinal\\src\\main\\resources\\static\\img\\advManagement";
 
 		Path uploadPath = Paths.get(uploadDir);
 

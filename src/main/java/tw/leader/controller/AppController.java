@@ -152,12 +152,13 @@ public class AppController {
 			) throws IOException{
 		String currentUser = GetCurrentUserAccount();
 		String newRole = "ROLES_SELLER";
+		System.out.println(currentUser);
 		User user = uRepo.findByEmail(currentUser);
 		
 //		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		fileName = user.getUserId() + fileName;
 		
+		fileName = user.getUserId() + fileName;
 		user.setUserPic(fileName);
 		
 		user.setEmail(currentUser);
@@ -169,7 +170,7 @@ public class AppController {
 		uRepo.save(user);
 		
 
-		String uploadDir = "C:\\Users\\iii\\git\\VintagePanFinal\\src\\main\\resources\\static\\img\\userPic";
+		String uploadDir = "C:\\Try\\Git\\VintagePanFinal\\src\\main\\resources\\static\\img\\userPic";
 
 		Path uploadPath = Paths.get(uploadDir);
 
@@ -185,7 +186,7 @@ public class AppController {
 			throw new IOException("Could not save upload file" + fileName); 
 		}
 		
-		return "update_success";
+		return "userInfoDetail";
 	}
 	
 	/*

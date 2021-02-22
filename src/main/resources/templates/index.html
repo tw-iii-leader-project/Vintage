@@ -68,7 +68,7 @@
 		// AdvMain1
 		var advMainEmail = null;
 		$.ajax({
-			async:false,
+			async:false;
 			url:"panSelectAdvMain1",
 			type:"POST",
 			dataType:"json",
@@ -238,148 +238,173 @@
 				IndexUserDetail
 		*/
 
+
+		$.ajax({
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					$("#indexUserBox").append(`
+						<div class="insta-item set-bg data-setbg="img/userPic/${v.userPic}">
+							<div class="inside-text">
+								<i class="ti-instagram"></i>
+								<h5>
+									<a href="panUserPage?email=${v.email}">colorlib_Collection</a>
+								</h5>
+							</div>
+						</div>
+					`);
+
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
 		// User1
-		$.ajax({
-			url:"panFindIndexUser",
-			type:"POST",
-			dataType:"json",
-			contentType:"application/json;charset=utf-8",
-			success:function(response){
-				$.each(response,function(i,v){
-					var userPic = v.userPic;
-					var uPic = "url('img/userPic/"+userPic+"')";
-					var email = v.email;
-					var uEmail = "panUserPage?email="+email;
-					$("#indexUser1").css({"backgroundImage": uPic});
-					$("#indexUserEmail1").attr("href",uEmail);
-				});
-			},
-			error:function(msg){
-				console.log(msg);
-			}
-		});
-		$("#indexUser1").addClass("insta-item");
-		$("#indexUser1").addClass("set-bg");
+		// $.ajax({
+		// 	url:"panFindIndexUser",
+		// 	type:"POST",
+		// 	dataType:"json",
+		// 	contentType:"application/json;charset=utf-8",
+		// 	success:function(response){
+		// 		$.each(response,function(i,v){
+		// 			var userPic = v.userPic;
+		// 			var uPic = "url('img/userPic/"+userPic+"')";
+		// 			var email = v.email;
+		// 			var uEmail = "panUserPage?email="+email;
+		// 			$("#indexUser1").css({"backgroundImage": uPic});
+		// 			$("#indexUserEmail1").attr("href",uEmail);
+		// 		});
+		// 	},
+		// 	error:function(msg){
+		// 		console.log(msg);
+		// 	}
+		// });
+		// $("#indexUser1").addClass("insta-item");
+		// $("#indexUser1").addClass("set-bg");
 
-		// User2
+		// // User2
 
-		$.ajax({
-			url:"panFindIndexUser",
-			type:"POST",
-			dataType:"json",
-			contentType:"application/json;charset=utf-8",
-			success:function(response){
-				$.each(response,function(i,v){
-					var userPic = v.userPic;
-					var uPic = "url('img/userPic/"+userPic+"')";
-					var email = v.email;
-					var uEmail = "panUserPage?email="+email;
-					$("#indexUser2").css({"backgroundImage": uPic});
-					$("#indexUserEmail2").attr("href",uEmail);
-				});
-			},
-			error:function(msg){
-				console.log(msg);
-			}
-		});
-		$("#indexUser2").addClass("insta-item");
-		$("#indexUser2").addClass("set-bg");
+		// $.ajax({
+		// 	url:"panFindIndexUser",
+		// 	type:"POST",
+		// 	dataType:"json",
+		// 	contentType:"application/json;charset=utf-8",
+		// 	success:function(response){
+		// 		$.each(response,function(i,v){
+		// 			var userPic = v.userPic;
+		// 			var uPic = "url('img/userPic/"+userPic+"')";
+		// 			var email = v.email;
+		// 			var uEmail = "panUserPage?email="+email;
+		// 			$("#indexUser2").css({"backgroundImage": uPic});
+		// 			$("#indexUserEmail2").attr("href",uEmail);
+		// 		});
+		// 	},
+		// 	error:function(msg){
+		// 		console.log(msg);
+		// 	}
+		// });
+		// $("#indexUser2").addClass("insta-item");
+		// $("#indexUser2").addClass("set-bg");
 		
-		// User3
+		// // User3
 		
-		$.ajax({
-			url:"panFindIndexUser",
-			type:"POST",
-			dataType:"json",
-			contentType:"application/json;charset=utf-8",
-			success:function(response){
-				$.each(response,function(i,v){
-					var userPic = v.userPic;
-					var uPic = "url('img/userPic/"+userPic+"')";
-					var email = v.email;
-					var uEmail = "panUserPage?email="+email;
-					$("#indexUser3").css({"backgroundImage": uPic});
-					$("#indexUserEmail3").attr("href",uEmail);
-				});
-			},
-			error:function(msg){
-				console.log(msg);
-			}
-		});
-		$("#indexUser3").addClass("insta-item");
-		$("#indexUser3").addClass("set-bg");
+		// $.ajax({
+		// 	url:"panFindIndexUser",
+		// 	type:"POST",
+		// 	dataType:"json",
+		// 	contentType:"application/json;charset=utf-8",
+		// 	success:function(response){
+		// 		$.each(response,function(i,v){
+		// 			var userPic = v.userPic;
+		// 			var uPic = "url('img/userPic/"+userPic+"')";
+		// 			var email = v.email;
+		// 			var uEmail = "panUserPage?email="+email;
+		// 			$("#indexUser3").css({"backgroundImage": uPic});
+		// 			$("#indexUserEmail3").attr("href",uEmail);
+		// 		});
+		// 	},
+		// 	error:function(msg){
+		// 		console.log(msg);
+		// 	}
+		// });
+		// $("#indexUser3").addClass("insta-item");
+		// $("#indexUser3").addClass("set-bg");
 		
-		// User4
+		// // User4
 
-		$.ajax({
-			url:"panFindIndexUser",
-			type:"POST",
-			dataType:"json",
-			contentType:"application/json;charset=utf-8",
-			success:function(response){
-				$.each(response,function(i,v){
-					var userPic = v.userPic;
-					var uPic = "url('img/userPic/"+userPic+"')";
-					var email = v.email;
-					var uEmail = "panUserPage?email="+email;
-					$("#indexUser4").css({"backgroundImage": uPic});
-					$("#indexUserEmail4").attr("href",uEmail);
-				});
-			},
-			error:function(msg){
-				console.log(msg);
-			}
-		});
-		$("#indexUser4").addClass("insta-item");
-		$("#indexUser4").addClass("set-bg");
+		// $.ajax({
+		// 	url:"panFindIndexUser",
+		// 	type:"POST",
+		// 	dataType:"json",
+		// 	contentType:"application/json;charset=utf-8",
+		// 	success:function(response){
+		// 		$.each(response,function(i,v){
+		// 			var userPic = v.userPic;
+		// 			var uPic = "url('img/userPic/"+userPic+"')";
+		// 			var email = v.email;
+		// 			var uEmail = "panUserPage?email="+email;
+		// 			$("#indexUser4").css({"backgroundImage": uPic});
+		// 			$("#indexUserEmail4").attr("href",uEmail);
+		// 		});
+		// 	},
+		// 	error:function(msg){
+		// 		console.log(msg);
+		// 	}
+		// });
+		// $("#indexUser4").addClass("insta-item");
+		// $("#indexUser4").addClass("set-bg");
 		
-		// User5
+		// // User5
 
-		$.ajax({
-			url:"panFindIndexUser",
-			type:"POST",
-			dataType:"json",
-			contentType:"application/json;charset=utf-8",
-			success:function(response){
-				$.each(response,function(i,v){
-					var userPic = v.userPic;
-					var uPic = "url('img/userPic/"+userPic+"')";
-					var email = v.email;
-					var uEmail = "panUserPage?email="+email;
-					$("#indexUser5").css({"backgroundImage": uPic});
-					$("#indexUserEmail5").attr("href",uEmail);
-				});
-			},
-			error:function(msg){
-				console.log(msg);
-			}
-		});
-		$("#indexUser5").addClass("insta-item");
-		$("#indexUser5").addClass("set-bg");
+		// $.ajax({
+		// 	url:"panFindIndexUser",
+		// 	type:"POST",
+		// 	dataType:"json",
+		// 	contentType:"application/json;charset=utf-8",
+		// 	success:function(response){
+		// 		$.each(response,function(i,v){
+		// 			var userPic = v.userPic;
+		// 			var uPic = "url('img/userPic/"+userPic+"')";
+		// 			var email = v.email;
+		// 			var uEmail = "panUserPage?email="+email;
+		// 			$("#indexUser5").css({"backgroundImage": uPic});
+		// 			$("#indexUserEmail5").attr("href",uEmail);
+		// 		});
+		// 	},
+		// 	error:function(msg){
+		// 		console.log(msg);
+		// 	}
+		// });
+		// $("#indexUser5").addClass("insta-item");
+		// $("#indexUser5").addClass("set-bg");
 		
-		// User6
+		// // User6
 
-		$.ajax({
-			url:"panFindIndexUser",
-			type:"POST",
-			dataType:"json",
-			contentType:"application/json;charset=utf-8",
-			success:function(response){
-				$.each(response,function(i,v){
-					var userPic = v.userPic;
-					var uPic = "url('img/userPic/"+userPic+"')";
-					var email = v.email;
-					var uEmail = "panUserPage?email="+email;
-					$("#indexUser6").css({"backgroundImage": uPic});
-					$("#indexUserEmail6").attr("href",uEmail);
-				});
-			},
-			error:function(msg){
-				console.log(msg);
-			}
-		});
-		$("#indexUser6").addClass("insta-item");
-		$("#indexUser6").addClass("set-bg");
+		// $.ajax({
+		// 	url:"panFindIndexUser",
+		// 	type:"POST",
+		// 	dataType:"json",
+		// 	contentType:"application/json;charset=utf-8",
+		// 	success:function(response){
+		// 		$.each(response,function(i,v){
+		// 			var userPic = v.userPic;
+		// 			var uPic = "url('img/userPic/"+userPic+"')";
+		// 			var email = v.email;
+		// 			var uEmail = "panUserPage?email="+email;
+		// 			$("#indexUser6").css({"backgroundImage": uPic});
+		// 			$("#indexUserEmail6").attr("href",uEmail);
+		// 		});
+		// 	},
+		// 	error:function(msg){
+		// 		console.log(msg);
+		// 	}
+		// });
+		// $("#indexUser6").addClass("insta-item");
+		// $("#indexUser6").addClass("set-bg");
 
 
 
@@ -870,54 +895,7 @@
 
 	<!-- Instagram Section Begin -->
 	<div class="instagram-photo mt-5" id="indexUserBox">
-		<div id="indexUser1">
-			<div class="inside-text">
-				<i class="ti-instagram"></i>
-				<h5>
-					<a id="indexUserEmail1" href="#">colorlib_Collection</a>
-				</h5>
-			</div>
-		</div>
-		<div id="indexUser2">
-			<div class="inside-text">
-				<i class="ti-instagram"></i>
-				<h5>
-					<a id="indexUserEmail2" href="#">colorlib_Collection</a>
-				</h5>
-			</div>
-		</div>
-		<div id="indexUser3">
-			<div class="inside-text">
-				<i class="ti-instagram"></i>
-				<h5>
-					<a id="indexUserEmail3" href="#">colorlib_Collection</a>
-				</h5>
-			</div>
-		</div>
-		<div id="indexUser4">
-			<div class="inside-text">
-				<i class="ti-instagram"></i>
-				<h5>
-					<a id="indexUserEmail4" href="#">colorlib_Collection</a>
-				</h5>
-			</div>
-		</div>
-		<div id="indexUser5">
-			<div class="inside-text">
-				<i class="ti-instagram"></i>
-				<h5>
-					<a id="indexUserEmail5" href="#">colorlib_Collection</a>
-				</h5>
-			</div>
-		</div>
-		<div id="indexUser6">
-			<div class="inside-text">
-				<i class="ti-instagram"></i>
-				<h5>
-					<a id="indexUserEmail6" href="#">colorlib_Collection</a>
-				</h5>
-			</div>
-		</div>
+		<!-- IndexUser Here -->
 	</div>
 	<!-- Instagram Section End -->
 

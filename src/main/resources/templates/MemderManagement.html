@@ -370,7 +370,6 @@
                     $(this).addClass("button1");
                     var userId = $(this).val();
                     var userData = {"userId":userId};
-                    $(this).html("");
                     $(this).html("解除");
                     $.ajax({
                         url:"panSetUserAuthority",
@@ -390,7 +389,6 @@
                     $(this).removeClass("button1");
                     var userId = $(this).val();
                     var userData = {"userId":userId};
-                    $(this).html("");
                     $(this).html("停權");
                     $.ajax({
                         url:"panSetUserAuthority",
@@ -459,7 +457,6 @@
                         <li><a href="panUserManagement">管理首頁</a></li>
                         <li class="active"><a href="panMember">會員權限管理</a></li>
                         <li><a href="panAdvertisement">廣告</a></li>
-                        <li><a href="panContact">活動</a></li>
                     </ul>
                 </nav>
                 <div id="mobile-menu-wrap"></div>

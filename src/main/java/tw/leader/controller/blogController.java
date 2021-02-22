@@ -91,7 +91,7 @@ public class blogController {
 		
 		userArticle saveUser = aRepo.save(user);
 				
-		String uploadDir = "C:\\Users\\iii\\git\\Vintage222\\src\\main\\resources\\static\\img\\userArticlePic";
+		String uploadDir = "C:\\Try\\Git\\VintagePanFinal\\src\\main\\resources\\static\\img\\userArticlePic";
 		
 		String fileNameMain = StringUtils.cleanPath(mainMultipartFile.getOriginalFilename());
 		fileNameMain = user.getArticleId() + fileNameMain;
@@ -106,7 +106,7 @@ public class blogController {
 			FileUploadUtil.saveFile(uploadDir, extraMultipart, fileName);
 		}
 		
-		return "updatePic_success";
+		return "userInfoDetail";
 	}
 	
 	/*

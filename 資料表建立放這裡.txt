@@ -120,3 +120,16 @@ CREATE TABLE [dbo].[Product](
 	-------------BTLiao Product data
 
 
+--------------pan AdvMain data
+
+create table AdvMain(
+	MainId int not null primary key identity(1,1),
+	Seat int not null,
+	Title nvarchar(max),
+	Content nvarchar(max),
+	email nvarchar(max),
+	Activity nvarchar(max)
+);
+
+--------------pan AdvMain data
+

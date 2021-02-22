@@ -217,6 +217,7 @@ public class ProductSelectController {
 	public String selectProductByMainAndName(@RequestBody ProductResp userData) throws Exception {
 		String email = userData.getEmail();
 		String pMain = userData.getpMain();
+		System.out.println("userEmail"+email);
 		return pService.getProductByMainAndName(email,pMain);
 	}
 	

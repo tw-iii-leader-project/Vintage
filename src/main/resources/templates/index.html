@@ -33,11 +33,11 @@
 			$(".top-social").append(
 				`<a class=" fa fa-envelope" href="toUserManagement">後台管理系統</a>`);
 		}
-		var userEmail = $("#userPageControl").html();
-		var cUrl = "panUserControlPage?email=";
-		$("#userPageControl").click(function(){
-			$(this).attr("href",cUrl+userEmail);
-		});
+		// var userEmail = $("#userPageControl").html();
+		// var cUrl = "panUserControlPage?email=";
+		// $("#userPageControl").click(function(){
+		// 	$(this).attr("href",cUrl+userEmail);
+		// });
 		var mUrl = "panAllPageMainLink?pMain=";
 		$(".testActive a").click(function(){
 			var allPageMainValue = $(this).html();
@@ -610,7 +610,7 @@
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#"
+							<a class=" fa fa-envelope" id="userPageControl" href="blogDetails"
 								th:text="${user}"></a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 

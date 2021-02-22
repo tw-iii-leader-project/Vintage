@@ -166,6 +166,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public String getProductByMainAndName(String email,String pMain) throws Exception {
 		int page = 0;
+		System.out.println(email+pMain+"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		List<Product> pList = pSDao.selectProductByMainAndName(email,pMain,page);
 		String pJson = objectMapper.writeValueAsString(pList);
 		String response = pJson;

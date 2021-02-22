@@ -7,7 +7,7 @@
 <meta name="keywords" content="Fashi, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Fashi | Blog-details</title>
+<title>Vintage | Blog-details</title>
 
 <!-- Google Font -->
 <link
@@ -260,7 +260,6 @@
                 $("#pageBox ul").html("");
                 $("#totalElements").html("");
                 userMainValue = $(this).html();
-                var userEmail = $("#secretUserEmail").html();
                 var userData = {"pMain":userMainValue,"email":userEmail};
                 $.ajax({
 			        async:true,
@@ -382,7 +381,6 @@
                 $("#productList #productRow").html("");
                 $("#pageBox ul").html("");
                 $("#totalElements").html("");
-                var userEmail = $("#secretUserEmail").html();
 		        var userData = {"email":userEmail};
 		        $.ajax({
 			        async:true,
@@ -394,14 +392,13 @@
                     success:function(pageData){
                         $.each(pageData,function(i,v){
                             var pages = parseInt(v.totalPages);
+                            var total = v.totalElements;
                             for(n=1;n<=pages;n++){
                                 $("#pageBox ul").append(
                                     `<li class="productAllPage">${n}</li>`
                                 );
                             };
-                            $("#totalElements").append(
-                                `<span>${v.totalElements}</span>`
-                            );
+                            $("#totalElements").html(total);
                         });
                         $("#pageBox ul li").first().addClass("active");
                     },
@@ -807,7 +804,7 @@
 						<ul>
 
 						</ul>
-						<div id="totalElements"></div>
+						<div class="mt-3" style="font-size: 15px;">Total : <span id="totalElements"></span></div>
 					</div>
 				</div>
 			</div>

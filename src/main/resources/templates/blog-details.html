@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -58,7 +58,7 @@
                     success:function(response){
                         $.each(response,function(i,v){
                             $("#userDetailBox").append(
-                                `<div class="pb-pic col-lg-4 col-md-4">
+                                `<div class="pb-pic col-lg-12 col-md-4">
                                     <img class="set-bg" src="img/userPic/${v.userPic}" alt="">
                                 </div>
                                 <div class="pb-text ml-5">
@@ -79,6 +79,41 @@
                         console.log(msg);
                     }
                 });
+
+                //部落格照片顯示
+                $.ajax({
+                    url: "blogPicPresent",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify(userInfoData),
+                    success: function (response) {
+                        $.each(response, function (i, v) {
+                            $("#blogPicPrimary").append(
+                                `<img src="img/userArticlePic/${v.userPicMain}" alt="" style="weight:250px">`
+                            );
+
+                            $("#blogPicSecondary").append(
+
+                                `<div class="row">
+                                    <div class="col-sm-4">
+                                        <img src="img/userArticlePic/${v.userPic1}" alt="">
+								    </div>
+                                    <div class="col-sm-4">
+                                         <img src="img/userArticlePic/${v.userPic2}" alt="">
+								    </div>
+                                    <div class="col-sm-4">
+                                         <img src="img/userArticlePic/${v.userPic3}" alt="">
+								    </div>
+                                </div>`
+                               
+                            );
+                        });
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
             }
             else{
                 userEmail = pageEmail;
@@ -92,7 +127,7 @@
                     success:function(response){
                         $.each(response,function(i,v){
                             $("#userDetailBox").append(
-                                `<div class="pb-pic col-lg-4 col-md-4">
+                                `<div class="pb-pic col-lg-12 col-md-4">
                                     <img class="set-bg" src="img/userPic/${v.userPic}" alt="">
                                 </div>
                                 <div class="pb-text ml-5">
@@ -109,6 +144,41 @@
                         console.log(msg);
                     }
                 });
+
+                //部落格照片顯示
+                $.ajax({
+                    url: "blogPicPresent",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json;charset=utf-8",
+                    data: JSON.stringify(userInfoData),
+                    success: function (response) {
+                        $.each(response, function (i, v) {
+                            $("#blogPicPrimary").append(
+                                `<img src="img/userArticlePic/${v.userPicMain}" alt="">`
+                            );
+
+                            $("#blogPicSecondary").append(
+
+                                `<div class="row">
+                                    <div class="col-sm-4">
+                                        <img src="img/userArticlePic/${v.userPic1}" alt="">
+								    </div>
+                                    <div class="col-sm-4">
+                                         <img src="img/userArticlePic/${v.userPic2}" alt="">
+								    </div>
+                                    <div class="col-sm-4">
+                                         <img src="img/userArticlePic/${v.userPic3}" alt="">
+								    </div>
+                                </div>`
+                            );
+                        });
+                    },
+                    error: function (msg) {
+                        console.log(msg);
+                    }
+                });
+
             }
 
             // 取得賣家全部商品筆數與總頁數
@@ -753,8 +823,8 @@
 				<div class="col-lg-12">
 					<div class="blog-details-inner">
 						<div class="blog-detail-title">
-							<div class="blog-large-pic">
-								<img src="img/blog/blog-detail.jpg" alt="">
+							<div class="blog-large-pic" id="blogPicPrimary">
+								
 							</div>
 						</div>
 						<div class="posted-by" id="userDetailBox">
@@ -763,17 +833,9 @@
 						<div id="userDescription">
                             <!-- 文章1 -->
                         </div>
-						<div class="blog-more">
+						<div class="blog-more" id="blogPicSecondary">
 							<div class="row">
-								<div class="col-sm-4">
-									<img src="img/blog/blog-detail-1.jpg" alt="">
-								</div>
-								<div class="col-sm-4">
-									<img src="img/blog/blog-detail-2.jpg" alt="">
-								</div>
-								<div class="col-sm-4">
-									<img src="img/blog/blog-detail-3.jpg" alt="">
-								</div>
+								
 							</div>
 						</div>
                         <div id="userArticle">

@@ -88,6 +88,10 @@ img {
 	max-width: 100%;
 }
 
+.userPicImg{
+	width:300px;
+}
+
 input:focus,
 select:focus,
 button:focus,
@@ -3734,7 +3738,7 @@ ol {
 
 .faq-accordin .card-heading a:after,
 .faq-accordin .card-heading>a.active[aria-expanded=false]:after {
-	content: "�";
+	content: "嚙踐遢";
 	font-family: "FontAwesome";
 	font-size: 14px;
 	color: #404040;
@@ -3751,7 +3755,7 @@ ol {
 
 .faq-accordin .card-heading a[aria-expanded=true]:after,
 .faq-accordin .card-heading>a.active:after {
-	content: "�";
+	content: "嚙踐遝";
 	font-family: "FontAwesome";
 	float: left;
 	font-size: 13px;

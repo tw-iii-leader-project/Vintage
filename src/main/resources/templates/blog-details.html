@@ -58,16 +58,17 @@
                     success:function(response){
                         $.each(response,function(i,v){
                             $("#userDetailBox").append(
-                                `<div class="pb-pic">
-                                    <img src="img/userPic/${v.userPic}" alt="">
+                                `<div class="pb-pic col-lg-4 col-md-4">
+                                    <img class="set-bg" src="img/userPic/${v.userPic}" alt="">
                                 </div>
-                                <div class="pb-text">
+                                <div class="pb-text ml-5">
                                     <a href="#">
                                         <h5>${v.userName}</h5>
                                     </a>
                                     <p>生日 : ${v.birthday}</p>
                                     <p>電話 : ${v.phone}</p>
                                     <p>性別 : ${v.gender}</p>
+                                    <div class="col-md-3"></div>
                                     <a href="toUserInfoDetail">更改基本資料</a>
                                     <a href="admin">商品管理後台</a>
                                 </div>`
@@ -91,10 +92,10 @@
                     success:function(response){
                         $.each(response,function(i,v){
                             $("#userDetailBox").append(
-                                `<div class="pb-pic">
-                                    <img src="img/userPic/${v.userPic}" alt="">
+                                `<div class="pb-pic col-lg-4 col-md-4">
+                                    <img class="set-bg" src="img/userPic/${v.userPic}" alt="">
                                 </div>
-                                <div class="pb-text">
+                                <div class="pb-text ml-5">
                                     <a href="#">
                                         <h5>${v.userName}</h5>
                                     </a>
@@ -667,11 +668,11 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo ml-5">
-							<a href="index"> <img src="img/VintageLogo8888.png" alt="">
+							<a href="index"> <img style="width:110px;" src="img/VintageLogo8888.png" alt="">
 							</a>
 						</div>
 					</div>
-					<div class="col-lg-7 col-md-7 mt-4">
+					<div class="col-lg-7 col-md-7 mt-5">
 						<div class="advanced-search">
 							<button type="button" class="category-btn">關 鍵 字 搜 尋</button>
 							<div class="input-group">
@@ -758,10 +759,6 @@
 							<div class="blog-large-pic">
 								<img src="img/blog/blog-detail.jpg" alt="">
 							</div>
-							<h2>The Personality Trait That Makes People Happier</h2>
-							<p>
-								travel <span>- May 19, 2019</span>
-							</p>
 						</div>
 						<div class="posted-by" id="userDetailBox">
 							<!-- 使用者的基本資料 Here -->

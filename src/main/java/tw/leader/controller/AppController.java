@@ -169,7 +169,7 @@ public class AppController {
 		uRepo.save(user);
 		
 
-		String uploadDir = "C:\\Users\\Administrator\\git\\VintageFinal\\src\\main\\resources\\static\\img\\userPic";
+		String uploadDir = "C:\\Try\\Git\\VintagePanFinal\\src\\main\\resources\\static\\img\\userPic";
 
 		Path uploadPath = Paths.get(uploadDir);
 

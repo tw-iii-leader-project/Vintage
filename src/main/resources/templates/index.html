@@ -239,7 +239,7 @@
 			success:function(response){
 				$.each(response,function(i,v){
 					var userPic = v.userPic;
-					var uPic = "url('img/"+userPic+"')";
+					var uPic = "url('img/userPic/"+userPic+"')";
 					var email = v.email;
 					var uEmail = "panUserPage?email="+email;
 					$("#indexUser1").css({"backgroundImage": uPic});
@@ -255,14 +255,123 @@
 
 		// User2
 
+		$.ajax({
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					$("#indexUser2").css({"backgroundImage": uPic});
+					$("#indexUserEmail2").attr("href",uEmail);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#indexUser2").addClass("insta-item");
+		$("#indexUser2").addClass("set-bg");
+		
 		// User3
-
+		
+		$.ajax({
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					$("#indexUser3").css({"backgroundImage": uPic});
+					$("#indexUserEmail3").attr("href",uEmail);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#indexUser3").addClass("insta-item");
+		$("#indexUser3").addClass("set-bg");
+		
 		// User4
 
+		$.ajax({
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					$("#indexUser4").css({"backgroundImage": uPic});
+					$("#indexUserEmail4").attr("href",uEmail);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#indexUser4").addClass("insta-item");
+		$("#indexUser4").addClass("set-bg");
+		
 		// User5
 
+		$.ajax({
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					$("#indexUser5").css({"backgroundImage": uPic});
+					$("#indexUserEmail5").attr("href",uEmail);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#indexUser5").addClass("insta-item");
+		$("#indexUser5").addClass("set-bg");
+		
 		// User6
 
+		$.ajax({
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					$("#indexUser6").css({"backgroundImage": uPic});
+					$("#indexUserEmail6").attr("href",uEmail);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#indexUser6").addClass("insta-item");
+		$("#indexUser6").addClass("set-bg");
 
 
 
@@ -280,7 +389,7 @@
 					$("#indexBlogBox").append(
 						`<div class="col-lg-4 col-md-6">
 							<div class="single-latest-blog">
-								<img src="img/blog/${v.userPicMain}" alt="">
+								<img src="img/userArticlePic/${v.userPicMain}" alt="">
 								<div class="latest-text">
 									<a href="panUserPage?email=${v.email}">
 										<h4>${v.userName}</h4>
@@ -515,11 +624,11 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo ml-5">
-							<a href="index"> <img src="img/VintageLogo8888.png" alt="">
+							<a href="index"> <img style="width:110px;" src="img/VintageLogo8888.png" alt="">
 							</a>
 						</div>
 					</div>
-					<div class="col-lg-7 col-md-7 mt-4">
+					<div class="col-lg-7 col-md-7 mt-5">
 						<div class="advanced-search">
 							<button type="button" class="category-btn">關 鍵 字 搜 尋</button>
 							<div class="input-group">
@@ -603,14 +712,14 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-5">
-							<h1 class="testTitle"></h1>
-							<p class="testContext"></p>
-							<a href="#" class="primary-btn">Shop Now</a>
+							<h1 class="testTitle">Welcome to Vintage</h1>
+							<p class="testContext">Enjoy new life do whatever you want free creation can be found here</p>
+							<a href="shop" class="primary-btn">Shop Now</a>
 						</div>
 					</div>
 					<div class="off-card">
 						<h2>
-							Sale <span>50%</span>
+							Find
 						</h2>
 					</div>
 				</div>
@@ -619,16 +728,10 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-5">
-							<h1 class="testTitle2"></h1>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-								sed do eiusmod tempor incididunt ut labore et dolore</p>
-							<a href="#" class="primary-btn">Shop Now</a>
+							<h1 class="testTitle2">Welcome to Vintage</h1>
+							<p>Enjoy new life do whatever you want free creation can be found here</p>
+							<a href="shop" class="primary-btn">Shop Now</a>
 						</div>
-					</div>
-					<div class="off-card">
-						<h2>
-							Sale <span>50%</span>
-						</h2>
 					</div>
 				</div>
 			</div>
@@ -758,43 +861,43 @@
 				</h5>
 			</div>
 		</div>
-		<div class="insta-item set-bg" data-setbg="img/insta-2.jpg">
+		<div id="indexUser2">
 			<div class="inside-text">
 				<i class="ti-instagram"></i>
 				<h5>
-					<a href="#">colorlib_Collection</a>
+					<a id="indexUserEmail2" href="#">colorlib_Collection</a>
 				</h5>
 			</div>
 		</div>
-		<div class="insta-item set-bg" data-setbg="img/insta-3.jpg">
+		<div id="indexUser3">
 			<div class="inside-text">
 				<i class="ti-instagram"></i>
 				<h5>
-					<a href="#">colorlib_Collection</a>
+					<a id="indexUserEmail3" href="#">colorlib_Collection</a>
 				</h5>
 			</div>
 		</div>
-		<div class="insta-item set-bg" data-setbg="img/insta-4.jpg">
+		<div id="indexUser4">
 			<div class="inside-text">
 				<i class="ti-instagram"></i>
 				<h5>
-					<a href="#">colorlib_Collection</a>
+					<a id="indexUserEmail4" href="#">colorlib_Collection</a>
 				</h5>
 			</div>
 		</div>
-		<div class="insta-item set-bg" data-setbg="img/insta-5.jpg">
+		<div id="indexUser5">
 			<div class="inside-text">
 				<i class="ti-instagram"></i>
 				<h5>
-					<a href="#">colorlib_Collection</a>
+					<a id="indexUserEmail5" href="#">colorlib_Collection</a>
 				</h5>
 			</div>
 		</div>
-		<div class="insta-item set-bg" data-setbg="img/insta-6.jpg">
+		<div id="indexUser6">
 			<div class="inside-text">
 				<i class="ti-instagram"></i>
 				<h5>
-					<a href="#">colorlib_Collection</a>
+					<a id="indexUserEmail6" href="#">colorlib_Collection</a>
 				</h5>
 			</div>
 		</div>

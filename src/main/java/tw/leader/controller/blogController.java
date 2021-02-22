@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import tw.leader.dao.FindUserInfoDao;
 import tw.leader.dao.UserRepository;
 import tw.leader.dao.userArticleDao;
 import tw.leader.po.User;
@@ -36,6 +37,9 @@ public class blogController {
 	@Autowired
 	private userArticleService uAService;
 	
+	@Autowired
+	private FindUserInfoDao fDao;
+	
 	@PostMapping(value = "/userPicUpdate")
 	public String userInfoUpdate(
 			@RequestParam("mainImage") MultipartFile mainMultipartFile,
@@ -43,10 +47,14 @@ public class blogController {
 			) throws IOException{
 		String currentUser = GetCurrentUserAccount();
 		userArticle user = aRepo.findByEmail(currentUser);
+		User userInfo = fDao.findUserData(currentUser);
+		String userName = userInfo.getUserName();
 		
 		if (user == null) {
 			user = new userArticle();
 			user.setEmail(currentUser);
+			user.setUserName(userName);
+			aRepo.save(user);
 		}
 		
 		String mainImageName = StringUtils.cleanPath(mainMultipartFile.getOriginalFilename());
@@ -76,7 +84,7 @@ public class blogController {
 		
 		userArticle saveUser = aRepo.save(user);
 				
-		String uploadDir = "C:\\Users\\iii\\git\\Vintage219\\src\\main\\resources\\static\\img\\userArticlePic";
+		String uploadDir = "C:\\Try\\Git\\VintagePanFinal\\src\\main\\resources\\static\\img\\userArticlePic";
 		
 		String fileNameMain = StringUtils.cleanPath(mainMultipartFile.getOriginalFilename());
 		fileNameMain = user.getArticleId() + fileNameMain;

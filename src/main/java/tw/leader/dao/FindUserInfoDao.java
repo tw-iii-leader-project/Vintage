@@ -20,11 +20,14 @@ public interface FindUserInfoDao extends JpaRepository<User,Long>  {
 	@Query(value="select count(*) from userInfo",nativeQuery = true)
 	int selectTotalUser();
 	
-//	@Query(value="select * from userInfo order by userId offset (?1)*12 rows fetch next 12 rows only",nativeQuery = true)
-//	List<User> findAllUser(int page);
+	@Query(value="select * from userInfo order by userId offset (?1)*12 rows fetch next 12 rows only",nativeQuery = true)
+	List<User> findAllUser(int page);
 	
-	@Query(value="select * from userInfo",nativeQuery = true)
-	List<User> findAllUser();
+	@Query(value="select * from userInfo where email = ?1",nativeQuery = true)
+	User findUserData(String email);
+	
+//	@Query(value="select * from userInfo",nativeQuery = true)
+//	List<User> findAllUser();
 	
 	@Query(value="select * from userInfo where userName like %?1%",nativeQuery = true)
 	List<User> findUserByName(String userName);
@@ -50,7 +53,8 @@ public interface FindUserInfoDao extends JpaRepository<User,Long>  {
 	 * 		IndexUserDetail
 	 * */
 	
-	@Query(value="select * from userInfo ORDER BY RAND() LIMIT 1",nativeQuery = true)
+	@Query(value="select Top 1* from userInfo ORDER BY RAND()",nativeQuery = true)
 	List<User> findIndexUser();
 	// select * from userInfo ORDER BY RAND() LIMIT 6;
+	//  select Top 1* from userInfo ORDER BY RAND();
 }

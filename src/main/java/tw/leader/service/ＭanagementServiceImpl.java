@@ -44,31 +44,31 @@ public class ＭanagementServiceImpl implements ManagementService{
 		return pJson;
 	}
 	
-//	@Override
-//	public String getAllUser() throws Exception {
-//		int page = 0;
-//		List<User> uList = fDao.findAllUser(page);
-//		String uJson = objectMapper.writeValueAsString(uList);
-//		System.out.println(uJson);
-//		return uJson;
-//	}
-	
 	@Override
 	public String getAllUser() throws Exception {
-		List<User> uList = fDao.findAllUser();
+		int page = 0;
+		List<User> uList = fDao.findAllUser(page);
 		String uJson = objectMapper.writeValueAsString(uList);
 		System.out.println(uJson);
 		return uJson;
 	}
 	
 //	@Override
-//	public String getAllUserP(int page) throws Exception {
-//		int rPage = page-1;
-//		List<User> uList = fDao.findAllUser(rPage);
+//	public String getAllUser() throws Exception {
+//		List<User> uList = fDao.findAllUser();
 //		String uJson = objectMapper.writeValueAsString(uList);
 //		System.out.println(uJson);
 //		return uJson;
 //	}
+	
+	@Override
+	public String getAllUserP(int page) throws Exception {
+		int rPage = page-1;
+		List<User> uList = fDao.findAllUser(rPage);
+		String uJson = objectMapper.writeValueAsString(uList);
+		System.out.println(uJson);
+		return uJson;
+	}
 	
 	@Override
 	public String getUserByName(String userName) throws Exception {

@@ -36,7 +36,7 @@ public interface userArticleDao extends JpaRepository<userArticle, Integer> {
 	
 	
 	// IndexBlog
-	@Query(value="select * from userArticle order by articleId DESC Limit 3",nativeQuery = true)
+	@Query(value="select Top 3* from userArticle order by articleId DESC",nativeQuery = true)
 	List<userArticle> findIndexBlog();
 	// SQL Server => select Top 3* from userArticle order by articleId DESC;
 	// MySQL => select * from userArticle order by articleId DESC Limit 3;

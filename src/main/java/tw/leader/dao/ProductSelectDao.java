@@ -70,8 +70,9 @@ public interface ProductSelectDao extends JpaRepository<Product,Integer> {
 	 * 		IndexAndProduct
 	 * */
 	
-	@Query(value="select * from product ORDER BY RAND() LIMIT 4",nativeQuery = true)
+	@Query(value="select Top 4* from product ORDER BY RAND()",nativeQuery = true)
 	List<Product> findIndexProduct();
+	// select Top 4* from product ORDER BY RAND();
 	
 	
 	/*------------------------------------------------------

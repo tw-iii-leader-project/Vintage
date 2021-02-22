@@ -25,11 +25,6 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
 	$(function() {
-		var userEmail = $("#userPageControl").html();
-		var cUrl = "panUserControlPage?email=";
-		$("#userPageControl").click(function(){
-			$(this).attr("href",cUrl+userEmail);
-		});
 		var mUrl = "panAllPageMainLink?pMain=";
 		$(".testActive a").click(function(){
 			var allPageMainValue = $(this).html();
@@ -61,7 +56,7 @@
                         `<div class="col-lg-6 col-sm-6">
                             <div class="blog-item">
                                 <div class="bi-pic">
-                                    <img src="img/blog/${v.userPicMain}" alt="">
+                                    <img src="img/userArticlePic/${v.userPicMain}" alt="">
                                 </div>
                                 <div class="bi-text">
                                     <a href="panUserPage?email=${v.email}">
@@ -88,7 +83,7 @@
                     $(".recent-blog").append(
                         `<a href="panUserPage?email=${v.email}" class="rb-item">
                             <div class="rb-pic">
-                                <img src="img/blog/${v.userPicMain}" alt="">
+                                <img src="img/userArticlePic/${v.userPicMain}" alt="">
                             </div>
                             <div class="rb-text">
                                 <h6>${v.userName}</h6>
@@ -129,7 +124,7 @@
                                 `<div class="col-lg-6 col-sm-6">
                                     <div class="blog-item">
                                         <div class="bi-pic">
-                                            <img src="img/blog/${v.userPicMain}" alt="">
+                                            <img src="img/userArticlePic/${v.userPicMain}" alt="">
                                         </div>
                                         <div class="bi-text">
                                             <a href="panUserPage?email=${v.email}">
@@ -301,7 +296,7 @@
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#"
+							<a class=" fa fa-envelope" id="userPageControl" href="blogDetails"
 								th:text="${user}"></a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 

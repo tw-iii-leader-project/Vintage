@@ -121,7 +121,7 @@ public class SimpleJumpController {
 		
 		if (roles.equals("ROLES_DISABLED")) {
 			m.addAttribute("msg", "您已遭到停權，請洽詢Vintage以獲得更多資訊");
-			return "login";
+			return "login3";
 		}
 		return "index";		
 	}

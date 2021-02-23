@@ -157,9 +157,12 @@ public class AppController {
 		
 //		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		
-		fileName = user.getUserId() + fileName;
-		user.setUserPic(fileName);
+		if(fileName == "") {
+		}
+		else {
+			fileName = user.getUserId() + fileName;
+			user.setUserPic(fileName);
+		}
 		
 		user.setEmail(currentUser);
 		user.setBirthday(userBirthday);
@@ -186,7 +189,7 @@ public class AppController {
 			throw new IOException("Could not save upload file" + fileName); 
 		}
 		
-		return "userInfoDetail";
+		return "login3";
 	}
 	
 	/*

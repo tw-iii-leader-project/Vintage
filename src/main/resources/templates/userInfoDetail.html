@@ -27,6 +27,12 @@
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+	integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+	crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
 
@@ -34,10 +40,6 @@
     <script type="text/javascript">
         $(function(){
         	var userEmail = $("#loginInfo").html();
-        	var cUrl = "panUserControlPage?email=";
-    		$("#userPageControl").click(function(){
-    			$(this).attr("href",cUrl+userEmail);
-    		});
     		var mUrl = "panAllPageMainLink?pMain=";
     		$(".testActive a").click(function(){
     			var allPageMainValue = $(this).html();
@@ -100,6 +102,11 @@
             });
 
             $("#essay1Save").click(function(){
+            	Swal.fire({
+					icon : 'info',
+					title : '儲存成功',
+				});
+
                 var essayData = CKEDITOR.instances.essay1.getData();
                 var articleData = {"email":email,"description":essayData};
                 $.ajax({
@@ -118,6 +125,11 @@
             });
 
             $("#essay2Save").click(function(){
+            	Swal.fire({
+					icon : 'info',
+					title : '儲存成功',
+				});
+
                 var essayData = CKEDITOR.instances.essay2.getData();
                 var articleData = {"email":email,"articleContext":essayData};
                 $.ajax({
@@ -229,7 +241,7 @@
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#"
+							<a class=" fa fa-envelope" id="userPageControl" href="blogDetails"
 								th:text="${user}"></a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 

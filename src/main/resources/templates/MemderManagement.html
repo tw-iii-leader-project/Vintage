@@ -25,6 +25,7 @@
     
     <script src="js/jquery-3.3.1.min.js"></script>
     <style type="text/css">
+    
     .button1 {
     display: inline-block;
     text-align: center;
@@ -36,9 +37,6 @@
     background: -webkit-gradient(linear, left top, left bottom, from(#ffaa69), to(#992727));
     background: -moz-linear-gradient(top, #ffaa69, #992727);
     background: linear-gradient(to bottom, #ffaa69, #992727);
-    -webkit-box-shadow: #ff5e5e 0px 0px 40px 0px;
-    -moz-box-shadow: #ff5e5e 0px 0px 40px 0px;
-    box-shadow: #ff5e5e 0px 0px 40px 0px;
     text-shadow: #591717 1px 1px 1px;
     font: normal normal bold 18px courier new;
     color: #fefff7;
@@ -58,6 +56,38 @@
     background: -webkit-gradient(linear, left top, left bottom, from(#99663f), to(#982727));
     background: -moz-linear-gradient(top, #99663f, #982727);
     background: linear-gradient(to bottom, #99663f, #982727);
+}
+
+.buttonX {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 24px;
+    border: 0px solid #767676;
+    border-radius: 8px;
+    background: #c0c0c0;
+    background: -webkit-gradient(linear, left top, left bottom, from(#c0c0c0), to(#767676));
+    background: -moz-linear-gradient(top, #c0c0c0, #767676);
+    background: linear-gradient(to bottom, #c0c0c0, #767676);
+    font: normal normal bold 15px verdana;
+    color: #ffffff;
+    text-decoration: none;
+}
+.buttonX:hover,
+.buttonX:focus {
+    border: 0px solid #949494;
+    background: #e6e6e6;
+    background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#8e8e8e));
+    background: -moz-linear-gradient(top, #e6e6e6, #8e8e8e);
+    background: linear-gradient(to bottom, #e6e6e6, #8e8e8e);
+    color: #ffffff;
+    text-decoration: none;
+}
+.buttonX:active {
+    background: #767676;
+    background: -webkit-gradient(linear, left top, left bottom, from(#767676), to(#767676));
+    background: -moz-linear-gradient(top, #767676, #767676);
+    background: linear-gradient(to bottom, #767676, #767676);
 }
     </style>
     <script type="text/javascript">
@@ -100,13 +130,14 @@
                                     <td class="cart-title">
                                     	<h5>${v.userName}</h5>
                                     </td>
-                                    <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                    <td class="cart-pic" style="height: 150px; overflow: auto;"><img src="img/userPic/${v.userPic}" alt=""></td>
                                     <td class="p-price">${v.email}</td>
-                                    <td class="total-price">${v.userPhone}</td>
-                                    <td class="p-price">${v.userBirthday}</td>
+                                    <td class="total-price">${v.phone}</td>
+                                    <td class="p-price">${v.birthday}</td>
                                     <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
                         	    </tr>`
                 		    );
+                            $(".userAuthority").addClass("buttonX");
                             
                             
                         }
@@ -119,13 +150,12 @@
                                     </td>
                                     <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
                                     <td class="p-price">${v.email}</td>
-                                    <td class="total-price">${v.userPhone}</td>
-                                    <td class="p-price">${v.userBirthday}</td>
+                                    <td class="total-price">${v.phone}</td>
+                                    <td class="p-price">${v.birthday}</td>
                                     <td class="close-td"><button class="userAuthority" value="${v.userId}">解除</button></td>
                         	    </tr>`
                 		    );
                             $(".userAuthority").addClass("button1");
-                            $(".userAuthority").css("background-color:#a3a3c2");
                         }
                         else{};
                 		        
@@ -160,11 +190,12 @@
                                             </td>
                                             <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
                                             <td class="p-price">${v.email}</td>
-                                            <td class="total-price">${v.userPhone}</td>
-                                            <td class="p-price">${v.userBirthday}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
                                             <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
                                 	    </tr>`
                 		            );
+                                    $(".userAuthority").addClass("buttonX");
                                 }
                                 else if(userRoles == "ROLES_DISABLED"){
                                     $("#userTable #userTr").append(
@@ -175,8 +206,8 @@
                                             </td>
                                             <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
                                             <td class="p-price">${v.email}</td>
-                                            <td class="total-price">${v.userPhone}</td>
-                                            <td class="p-price">${v.userBirthday}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
                                             <td class="close-td"><button class="userAuthority" value="${v.userId}">解除</button></td>
                                 	    </tr>`
                 		            );
@@ -217,11 +248,13 @@
                                             </td>
                                             <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
                                             <td class="p-price">${v.email}</td>
-                                            <td class="total-price">${v.userPhone}</td>
-                                            <td class="p-price">${v.userBirthday}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
                                             <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
                                 	    </tr>`
+                                    	
                 		            );
+                                    $(".userAuthority").addClass("buttonX");
                                 }
                                 else if(userRoles == "ROLES_DISABLED"){
                                     $("#userTable #userTr").append(
@@ -232,8 +265,8 @@
                                             </td>
                                             <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
                                             <td class="p-price">${v.email}</td>
-                                            <td class="total-price">${v.userPhone}</td>
-                                            <td class="p-price">${v.userBirthday}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
                                             <td class="close-td"><button class="userAuthority" value="${v.userId}">解除</button></td>
                                 	    </tr>`
                 		            );
@@ -270,11 +303,13 @@
                                             </td>
                                             <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
                                             <td class="p-price">${v.email}</td>
-                                            <td class="total-price">${v.userPhone}</td>
-                                            <td class="p-price">${v.userBirthday}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
                                             <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
                                 	    </tr>`
+                                    	
                 		            );
+                                    $(".userAuthority").addClass("buttonX");
                                 }
                                 else if(userRoles == "ROLES_DISABLED"){
                                     $("#userTable #userTr").append(
@@ -285,8 +320,8 @@
                                             </td>
                                             <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
                                             <td class="p-price">${v.email}</td>
-                                            <td class="total-price">${v.userPhone}</td>
-                                            <td class="p-price">${v.userBirthday}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
                                             <td class="close-td"><button class="userAuthority" value="${v.userId}">解除</button></td>
                                 	    </tr>`
                 		            );
@@ -323,11 +358,13 @@
                                             </td>
                                             <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
                                             <td class="p-price">${v.email}</td>
-                                            <td class="total-price">${v.userPhone}</td>
-                                            <td class="p-price">${v.userBirthday}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
                                             <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
                                 	    </tr>`
+                                    	
                 		            );
+                                    $(".userAuthority").addClass("buttonX");
                                 }
                                 else if(userRoles == "ROLES_DISABLED"){
                                     $("#userTable #userTr").append(
@@ -338,8 +375,8 @@
                                             </td>
                                             <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
                                             <td class="p-price">${v.email}</td>
-                                            <td class="total-price">${v.userPhone}</td>
-                                            <td class="p-price">${v.userBirthday}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
                                             <td class="close-td"><button class="userAuthority" value="${v.userId}">解除</button></td>
                                 	    </tr>`
                 		            );
@@ -366,7 +403,7 @@
 
             $("#userTable #userTr").on("click",".userAuthority",function(){
                 if($(this).html() == "停權"){
-                    $(this).removeClass();
+                    $(this).removeClass("buttonX");
                     $(this).addClass("button1");
                     var userId = $(this).val();
                     var userData = {"userId":userId};
@@ -387,6 +424,7 @@
                 }
                 else{
                     $(this).removeClass("button1");
+                    $(this).addClass("buttonX");
                     var userId = $(this).val();
                     var userData = {"userId":userId};
                     $(this).html("停權");

@@ -150,10 +150,10 @@ public class SimpleJumpController {
 		return "Activity";
 	}
 
-	@GetMapping("/test")
-	public String testPage() {
-		return "adminTest";
-	}
+//	@GetMapping("/test")
+//	public String testPage() {
+//		return "adminTest";
+//	}
 	
 	@GetMapping(value="/toUserManagement")
 	public String goToUserManagementPage(Model m) {
@@ -176,5 +176,9 @@ public class SimpleJumpController {
 		// this method is for getting current user account which has login.
 	}
 	
+	@GetMapping("/test")
+	public String testPage() {
+		return "test";
+	}
 
 }

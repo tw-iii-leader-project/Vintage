@@ -53,8 +53,9 @@ public interface FindUserInfoDao extends JpaRepository<User,Long>  {
 	 * 		IndexUserDetail
 	 * */
 	
-	@Query(value="select Top 6* from userInfo where roles = 'ROLES_SELLER' ORDER BY RAND();",nativeQuery = true)
+	@Query(value="select Top 1* from userInfo where roles = 'ROLES_SELLER' ORDER BY NEWID();",nativeQuery = true)
 	List<User> findIndexUser();
 	// select * from userInfo ORDER BY RAND() LIMIT 6;
 	//  select Top 1* from userInfo ORDER BY RAND();
+	
 }

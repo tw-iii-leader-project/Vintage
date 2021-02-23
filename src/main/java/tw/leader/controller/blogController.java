@@ -11,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,7 +51,7 @@ public class blogController {
 	@PostMapping(value = "/userPicUpdate")
 	public String userInfoUpdate(
 			@RequestParam("mainImage") MultipartFile mainMultipartFile,
-			@RequestParam("extraImage") MultipartFile[] extraMultipartFiles
+			@RequestParam("extraImage") MultipartFile[] extraMultipartFiles,Model m
 			) throws IOException{
 		String currentUser = GetCurrentUserAccount();
 		userArticle user = aRepo.findByEmail(currentUser);
@@ -106,7 +107,9 @@ public class blogController {
 			FileUploadUtil.saveFile(uploadDir, extraMultipart, fileName);
 		}
 		
-		return "userInfoDetail";
+		String loginUser = GetCurrentUserAccount();
+		m.addAttribute("user", loginUser);
+		return "blog-details";
 	}
 	
 	/*

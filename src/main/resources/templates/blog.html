@@ -54,16 +54,19 @@
                 $.each(response,function(i,v){
                     $("#showBlogBox #showBlogRow").append(
                         `<div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="img/userArticlePic/${v.userPicMain}" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="panUserPage?email=${v.email}">
-                                        <h4>${v.userName}</h4>
-                                    </a>
-                                </div>
-                            </div>
+                            <div class="single-latest-blog">
+								<img src="img/userArticlePic/${v.userPicMain}" alt="">
+								<div class="latest-text" style="overflow: hidden;
+												text-overflow: ellipsis;
+												display: -webkit-box;
+												-webkit-line-clamp: 3;
+												-webkit-box-orient: vertical;">		
+									<a href="panUserPage?email=${v.email}">
+										<h4>${v.userName}</h4>
+									</a>
+									<p style="font-size: 20px;">${v.description}</p>
+								</div>
+							</div>
                         </div>`
                     );
                 });
@@ -119,28 +122,33 @@
                                 </div>`
                             );
                         }
-                        $.each(response,function(i,v){
-                            $("#showBlogBox #showBlogRow").append(
-                                `<div class="col-lg-6 col-sm-6">
-                                    <div class="blog-item">
-                                        <div class="bi-pic">
-                                            <img src="img/userArticlePic/${v.userPicMain}" alt="">
-                                        </div>
-                                        <div class="bi-text">
-                                            <a href="panUserPage?email=${v.email}">
-                                                <h4>${v.userName}</h4>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>`
-                            );
-                        });
+                        else{
+                            $.each(response,function(i,v){
+                                $("#showBlogBox #showBlogRow").append(
+                                    `<div class="col-lg-6 col-sm-6">
+                                        <div class="single-latest-blog">
+						    		        <img src="img/userArticlePic/${v.userPicMain}" alt="">
+						    		        <div class="latest-text" style="overflow: hidden;
+						    		        				text-overflow: ellipsis;
+						    		        				display: -webkit-box;
+						    		        				-webkit-line-clamp: 6;
+						    		        				-webkit-box-orient: vertical;">		
+						    		        	<a href="panUserPage?email=${v.email}">
+						    		        		<h4>${v.userName}</h4>
+						    		        	</a>
+						    		        	<p style="font-size: 20px;">${v.description}</p>
+						    		        </div>
+						    	        </div>
+                                    </div>`
+                                );
+                            });
+                        }
                     },
                     error:function(msg){
                         console.log(msg);
                     }
 		        });
-            }
+            };
         });
 		
 		/*

@@ -116,9 +116,9 @@ public class MemberManagement {
 	@ResponseBody
 	public String setUserAuthority(@RequestBody UserResp userData) {
 		int userId = userData.getUserId();
-		UserResp uBean = mService.getUserAuthorityResult(userId);
-		String result = uBean.getMessage();
-		return result;
+		UserResp result = mService.getUserAuthorityResult(userId);
+		String msg = result.getMessage();
+		return msg;
 	}
 	
 	public String GetCurrentUserAccount() {

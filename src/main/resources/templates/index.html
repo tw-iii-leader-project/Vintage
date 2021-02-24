@@ -432,16 +432,16 @@
 					$("#indexBlogBox").append(
 						`<div class="col-lg-4 col-md-2">
 							<div class="single-latest-blog">
-								<img src="img/userArticlePic/${v.userPicMain}" alt="">
-								<div class="latest-text" style="overflow: hidden;
-												text-overflow: ellipsis;
-												display: -webkit-box;
-												-webkit-line-clamp: 6;
-												-webkit-box-orient: vertical;">		
+								<img src="img/userArticlePic/${v.userPicMain}" style="height:220px;">
+								<div class="latest-text" style="
+									overflow: hidden;
+									height:400px;
+								background-image: linear-gradient(rgba(255,255,255,0),rgba(255,255,255,1));
+									">		
 									<a href="panUserPage?email=${v.email}">
 										<h4>${v.userName}</h4>
 									</a>
-									<p style="font-size: 20px;">${v.description}</p>
+									<p>${v.description}</p>
 								</div>
 							</div>
 						</div>`
@@ -789,7 +789,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<div class="section-title">
-				<h2>From The Product</h2>
+				<h2>今 日 新 品</h2>
 			</div>
 		</div>
 	</div>
@@ -804,6 +804,16 @@
 	</div>
 	<!-- Banner Section End -->
 	
+	<hr class="style-four" style="margin-top: 100px;"/>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="section-title">
+				<h2>今 日 推 薦 商 品</h2>
+			</div>
+		</div>
+	</div>
+	
 	<!-- Women Banner Section Begin -->
 	<section class="man-banner spad">
 		<div class="container-fluid">
@@ -816,7 +826,7 @@
 				<div class="col-lg-8 mx-2">
 					<div id="advMainImg1">
 						<h2 id="title1"></h2>
-						<p id="content1"></p>
+						<h3 id="content1"></h3>
 						<a id="email1" href="#">Discover More</a>
 						<div class="off-card">
 							<h4>
@@ -830,7 +840,7 @@
 				<div class="col-lg-8 mx-2 mt-5">
 					<div id="advMainImg2">
 						<h2 id="title2"></h2>
-						<p id="content2"></p>
+						<h3 id="content2"></h3>
 						<a id="email2" href="#">Discover More</a>
 						<div class="off-card">
 							<h4>
@@ -854,7 +864,7 @@
 				<div class="col-lg-8 mx-2 mt-5">
 					<div id="advMainImg3">
 						<h2 id="title3"></h2>
-						<p id="content3"></p>
+						<h3 id="content3"></h3>
 						<a id="email3" href="#">Discover More</a>
 						<div class="off-card">
 							<h4>
@@ -868,43 +878,15 @@
 	</section>
 	<!-- Women Banner Section End -->
 
-	<!-- Deal Of The Week Section Begin-->
-	<section class="deal-of-week set-bg spad" data-setbg="img/time-bg.jpg">
-		<div class="container">
-			<div class="col-lg-6 text-center">
-				<div class="section-title">
-					<h2>Deal Of The Week</h2>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br />
-						do ipsum dolor sit amet, consectetur adipisicing elit
-					</p>
-					<div class="product-price">
-						$35.00 <span>/ HanBag</span>
-					</div>
-				</div>
-				<div class="countdown-timer" id="countdown">
-					<div class="cd-item">
-						<span>56</span>
-						<p>Days</p>
-					</div>
-					<div class="cd-item">
-						<span>12</span>
-						<p>Hrs</p>
-					</div>
-					<div class="cd-item">
-						<span>40</span>
-						<p>Mins</p>
-					</div>
-					<div class="cd-item">
-						<span>52</span>
-						<p>Secs</p>
-					</div>
-				</div>
-				<a href="#" class="primary-btn">Shop Now</a>
+	<hr class="style-four" style="margin-top: 100px;"/>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="section-title">
+				<h2>其 他 藝 術 工 作 者 們</h2>
 			</div>
 		</div>
-	</section>
-	<!-- Deal Of The Week Section End -->
+	</div>
 
 	<!-- Instagram Section Begin -->
 	<div class="instagram-photo mt-5" id="indexUserBox">
@@ -966,7 +948,7 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="section-title">
-						<h2>From The Blog</h2>
+						<h2>今 日 最 新 文 章</h2>
 					</div>
 				</div>
 			</div>
@@ -1055,7 +1037,7 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#"><img src="img/footer-logo.png" alt=""></a>
+							<a href="#"><img src="img/VintageLogo8888.png" alt=""></a>
 						</div>
 						<ul>
 							<li>地址: 80147高雄市前金區中正四路211號8號樓之1</li>

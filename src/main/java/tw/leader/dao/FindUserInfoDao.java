@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
@@ -43,6 +44,9 @@ public interface FindUserInfoDao extends JpaRepository<User,Long>  {
 	 * --------------------------------------------------------------------------
 	 * 		
 	 * */
+	@Query(value="select * from userInfo where userId = ?1",nativeQuery = true)
+	List<User> findUserByIdUp(int userId);
+	
 	@Query(value="update userInfo set roles = ?1 where userId = ?2",nativeQuery = true)
 	UserResp upDateUserRoles(String roles,int userId);
 	// update userInfo set roles = 'ROLES_123' where userId = 2;

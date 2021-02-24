@@ -26,7 +26,7 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <style type="text/css">
     
-    .button1 {
+.button1 {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
@@ -130,14 +130,14 @@
                                     <td class="cart-title">
                                     	<h5>${v.userName}</h5>
                                     </td>
-                                    <td class="cart-pic" style="height: 150px; overflow: auto;"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                    <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                     <td class="p-price">${v.email}</td>
                                     <td class="total-price">${v.phone}</td>
                                     <td class="p-price">${v.birthday}</td>
-                                    <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
+                                    <td class="close-td"><button class="userAuthorityX" value="${v.userId}">停權</button></td>
                         	    </tr>`
                 		    );
-                            $(".userAuthority").addClass("buttonX");
+                            $(".userAuthorityX").addClass("buttonX");
                             
                             
                         }
@@ -148,7 +148,7 @@
                                     <td class="cart-title">
                                     	<h5>${v.userName}</h5>
                                     </td>
-                                    <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                    <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                     <td class="p-price">${v.email}</td>
                                     <td class="total-price">${v.phone}</td>
                                     <td class="p-price">${v.birthday}</td>
@@ -188,14 +188,14 @@
                                             <td class="cart-title">
                                             	<h5>${v.userName}</h5>
                                             </td>
-                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                             <td class="p-price">${v.email}</td>
                                             <td class="total-price">${v.phone}</td>
                                             <td class="p-price">${v.birthday}</td>
-                                            <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
+                                            <td class="close-td"><button class="userAuthorityX" value="${v.userId}">停權</button></td>
                                 	    </tr>`
                 		            );
-                                    $(".userAuthority").addClass("buttonX");
+                                    $(".userAuthorityX").addClass("buttonX");
                                 }
                                 else if(userRoles == "ROLES_DISABLED"){
                                     $("#userTable #userTr").append(
@@ -204,7 +204,7 @@
                                             <td class="cart-title">
                                             	<h5>${v.userName}</h5>
                                             </td>
-                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                             <td class="p-price">${v.email}</td>
                                             <td class="total-price">${v.phone}</td>
                                             <td class="p-price">${v.birthday}</td>
@@ -246,15 +246,15 @@
                                             <td class="cart-title">
                                             	<h5>${v.userName}</h5>
                                             </td>
-                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                             <td class="p-price">${v.email}</td>
                                             <td class="total-price">${v.phone}</td>
                                             <td class="p-price">${v.birthday}</td>
-                                            <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
+                                            <td class="close-td"><button class="userAuthorityX" value="${v.userId}">停權</button></td>
                                 	    </tr>`
                                     	
                 		            );
-                                    $(".userAuthority").addClass("buttonX");
+                                    $(".userAuthorityX").addClass("buttonX");
                                 }
                                 else if(userRoles == "ROLES_DISABLED"){
                                     $("#userTable #userTr").append(
@@ -263,7 +263,7 @@
                                             <td class="cart-title">
                                             	<h5>${v.userName}</h5>
                                             </td>
-                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                             <td class="p-price">${v.email}</td>
                                             <td class="total-price">${v.phone}</td>
                                             <td class="p-price">${v.birthday}</td>
@@ -301,15 +301,15 @@
                                             <td class="cart-title">
                                             	<h5>${v.userName}</h5>
                                             </td>
-                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                             <td class="p-price">${v.email}</td>
                                             <td class="total-price">${v.phone}</td>
                                             <td class="p-price">${v.birthday}</td>
-                                            <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
+                                            <td class="close-td"><button class="userAuthorityX" value="${v.userId}">停權</button></td>
                                 	    </tr>`
                                     	
                 		            );
-                                    $(".userAuthority").addClass("buttonX");
+                                    $(".userAuthorityX").addClass("buttonX");
                                 }
                                 else if(userRoles == "ROLES_DISABLED"){
                                     $("#userTable #userTr").append(
@@ -318,7 +318,7 @@
                                             <td class="cart-title">
                                             	<h5>${v.userName}</h5>
                                             </td>
-                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                             <td class="p-price">${v.email}</td>
                                             <td class="total-price">${v.phone}</td>
                                             <td class="p-price">${v.birthday}</td>
@@ -356,15 +356,15 @@
                                             <td class="cart-title">
                                             	<h5>${v.userName}</h5>
                                             </td>
-                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                             <td class="p-price">${v.email}</td>
                                             <td class="total-price">${v.phone}</td>
                                             <td class="p-price">${v.birthday}</td>
-                                            <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
+                                            <td class="close-td"><button class="userAuthorityX" value="${v.userId}">停權</button></td>
                                 	    </tr>`
                                     	
                 		            );
-                                    $(".userAuthority").addClass("buttonX");
+                                    $(".userAuthorityX").addClass("buttonX");
                                 }
                                 else if(userRoles == "ROLES_DISABLED"){
                                     $("#userTable #userTr").append(
@@ -373,7 +373,7 @@
                                             <td class="cart-title">
                                             	<h5>${v.userName}</h5>
                                             </td>
-                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                             <td class="p-price">${v.email}</td>
                                             <td class="total-price">${v.phone}</td>
                                             <td class="p-price">${v.birthday}</td>
@@ -401,49 +401,48 @@
 
 
 
+            $("#userTable #userTr").on("click",".userAuthorityX",function(){
+            	$(this).removeClass("buttonX");
+                $(this).addClass("button1");
+                var userId = $(this).val();
+                var userData = {"userId":userId};
+                $(this).html("解除");
+                $.ajax({
+                    url:"panSetUserAuthority",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(result){
+                        console.log(result);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            });
             $("#userTable #userTr").on("click",".userAuthority",function(){
-                if($(this).html() == "停權"){
-                    $(this).removeClass("buttonX");
-                    $(this).addClass("button1");
-                    var userId = $(this).val();
-                    var userData = {"userId":userId};
-                    $(this).html("解除");
-                    $.ajax({
-                        url:"panSetUserAuthority",
-                        type:"POST",
-                        dataType:"json",
-                        contentType:"application/json;charset=utf-8",
-                        data:JSON.stringify(userData),
-                        success:function(result){
-                            console.log(result);
-                        },
-                        error:function(msg){
-                            console.log(msg);
-                        }
-                    });
-                }
-                else{
-                    $(this).removeClass("button1");
-                    $(this).addClass("buttonX");
-                    var userId = $(this).val();
-                    var userData = {"userId":userId};
-                    $(this).html("停權");
-                    $.ajax({
-                        url:"panSetUserAuthority",
-                        type:"POST",
-                        dataType:"json",
-                        contentType:"application/json;charset=utf-8",
-                        data:JSON.stringify(userData),
-                        success:function(result){
-                            console.log(result);
-                        },
-                        error:function(msg){
-                            console.log(msg);
-                        }
-                    });
-                }
+            	$(this).removeClass("button1");
+                $(this).addClass("buttonX");
+                var userId = $(this).val();
+                var userData = {"userId":userId};
+                $(this).html("停權");
+                $.ajax({
+                    url:"panSetUserAuthority",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(result){
+                        console.log(result);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
                 
             });
+                
 
     	});
     </script>
@@ -609,7 +608,7 @@
                 <div class="col-lg-3">
                     <div class="footer-left">
                         <div class="footer-logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                            <a href="#"><img src="img/VintageLogo8888.png" alt=""></a>
                         </div>
                         <ul>
                             <li>Address: 60-49 Road 11378 New York</li>

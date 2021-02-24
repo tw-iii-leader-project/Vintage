@@ -55,16 +55,16 @@
                     $("#showBlogBox #showBlogRow").append(
                         `<div class="col-lg-6 col-sm-6">
                             <div class="single-latest-blog">
-								<img src="img/userArticlePic/${v.userPicMain}" alt="">
-								<div class="latest-text" style="overflow: hidden;
-												text-overflow: ellipsis;
-												display: -webkit-box;
-												-webkit-line-clamp: 3;
-												-webkit-box-orient: vertical;">		
+								<img src="img/userArticlePic/${v.userPicMain}" style="height:220px;">
+								<div class="latest-text" style="
+									overflow: hidden;
+									height:300px;
+								background-image: linear-gradient(rgba(255,255,255,0),rgba(255,255,255,1));
+									">		
 									<a href="panUserPage?email=${v.email}">
 										<h4>${v.userName}</h4>
 									</a>
-									<p style="font-size: 20px;">${v.description}</p>
+									<p>${v.description}</p>
 								</div>
 							</div>
                         </div>`
@@ -483,7 +483,7 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#"><img src="img/footer-logo.png" alt=""></a>
+							<a href="#"><img src="img/VintageLogo8888.png" alt=""></a>
 						</div>
 						<ul>
 							<li>地址: 80147高雄市前金區中正四路211號8號樓之1</li>

@@ -24,6 +24,14 @@
 <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
+
+<style type="text/css">
+	hr.style-four {
+    height: 12px;
+    border: 0;
+    box-shadow: inset 0 12px 12px -12px rgba(0,0,0,0.5);
+}
+</style>
 <script src="js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 	$(function() {
@@ -33,11 +41,11 @@
 			$(".top-social").append(
 				`<a class=" fa fa-envelope" href="toUserManagement">後台管理系統</a>`);
 		}
-		var userEmail = $("#userPageControl").html();
-		var cUrl = "panUserControlPage?email=";
-		$("#userPageControl").click(function(){
-			$(this).attr("href",cUrl+userEmail);
-		});
+		// var userEmail = $("#userPageControl").html();
+		// var cUrl = "panUserControlPage?email=";
+		// $("#userPageControl").click(function(){
+		// 	$(this).attr("href",cUrl+userEmail);
+		// });
 		var mUrl = "panAllPageMainLink?pMain=";
 		$(".testActive a").click(function(){
 			var allPageMainValue = $(this).html();
@@ -53,9 +61,441 @@
 			}
 		});
 		
+		/*
+		--------------------------------------------------------------------------------
+			AdvMain
+		*/
+		// AdvMain1
+		var advMainEmail = null;
+		$.ajax({
+			async:false,
+			url:"panSelectAdvMain1",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var photo = v.aPhoto;
+					var aPhoto = "url('img/advManagement/"+photo+"')";
+					var title = v.title;
+					var content = v.content;
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					var activity = v.activity;
+					$("#advMainImg1").css({"backgroundImage": aPhoto});
+					$("#title1").html(title);
+					$("#content1").html(content);
+					$("#email1").attr("href",uEmail);
+					$("#activity1").html(activity);
+					advMainEmail = email;
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#content1").css({"color":"#ffffff"});
+		$("#advMainImg1").addClass("product-large");
+		$("#advMainImg1").addClass("set-bg");
+		var userData = {"email":advMainEmail};
+		$.ajax({
+			url:"panAdvFindUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			data:JSON.stringify(userData),
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var userName = v.userName;
+					$("#advUserImg1").css({"backgroundImage": uPic});
+					$("#advUserName1").html(userName);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#advUserImg1").addClass("product-large");
+		$("#advUserImg1").addClass("set-bg");
+		
+		// AdvMain2
+		var advMainEmail2 = null;
+		$.ajax({
+			async:false,
+			url:"panSelectAdvMain2",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var photo = v.aPhoto;
+					var aPhoto = "url('img/advManagement/"+photo+"')";
+					var title = v.title;
+					var content = v.content;
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					var activity = v.activity;
+					$("#advMainImg2").css({"backgroundImage": aPhoto});
+					$("#title2").html(title);
+					$("#content2").html(content);
+					$("#email2").attr("href",uEmail);
+					$("#activity2").html(activity);
+					advMainEmail2 = email;
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#content2").css({"color":"#ffffff"});
+		$("#advMainImg2").addClass("product-large");
+		$("#advMainImg2").addClass("set-bg");
+		var userData2 = {"email":advMainEmail2};
+		$.ajax({
+			url:"panAdvFindUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			data:JSON.stringify(userData2),
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var userName = v.userName;
+					$("#advUserImg2").css({"backgroundImage": uPic});
+					$("#advUserName2").html(userName);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#advUserImg2").addClass("product-large");
+		$("#advUserImg2").addClass("set-bg");
+		
+		// AdvMain3
+		var advMainEmail3 = null;
+		$.ajax({
+			async:false,
+			url:"panSelectAdvMain3",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var photo = v.aPhoto;
+					var aPhoto = "url('img/advManagement/"+photo+"')";
+					var title = v.title;
+					var content = v.content;
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					var activity = v.activity;
+					$("#advMainImg3").css({"backgroundImage": aPhoto});
+					$("#title3").html(title);
+					$("#content3").html(content);
+					$("#email3").attr("href",uEmail);
+					$("#activity3").html(activity);
+					advMainEmail3 = email;
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#content3").css({"color":"#ffffff"});
+		$("#advMainImg3").addClass("product-large");
+		$("#advMainImg3").addClass("set-bg");
+		var userData3 = {"email":advMainEmail3};
+		$.ajax({
+			url:"panAdvFindUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			data:JSON.stringify(userData3),
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var userName = v.userName;
+					$("#advUserImg3").css({"backgroundImage": uPic});
+					$("#advUserName3").html(userName);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#advUserImg3").addClass("product-large");
+		$("#advUserImg3").addClass("set-bg");
 
+
+
+		/*
+		----------------------------------------------------------------------------------------------------
+
+				IndexUserDetail
+		*/
+
+
+// 		$.ajax({
+// 			url:"panFindIndexUser",
+// 			type:"POST",
+// 			dataType:"json",
+// 			contentType:"application/json;charset=utf-8",
+// 			success:function(response){
+// 				$.each(response,function(i,v){
+// 					var userPic = v.userPic;
+// 					$("#indexUserBox").append(`
+// 						<div>
+// 							<div class="inside-text">
+// 								<i class="ti-instagram"></i>
+// 								<h5>
+// 									<a href="panUserPage?email=${v.email}">colorlib_Collection</a>
+// 								</h5>
+// 							</div>
+// 						</div>
+// 					`);
+// 					var uPic = "url('img/userPic/"+userPic+"')";
+// 					$("#indexUserBox > div").css({"backgroundImage": uPic});
+// 					$("#indexUserBox > div").addClass("set-bg");
+// 					$("#indexUserBox > div").addClass("insta-item");
+// 				});
+// 			},
+// 			error:function(msg){
+// 				console.log(msg);
+// 			}
+// 		});
+		// User1
+		$.ajax({
+			async:false,
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					$("#indexUser1").css({"backgroundImage": uPic});
+					$("#indexUserEmail1").attr("href",uEmail);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#indexUser1").addClass("insta-item");
+		$("#indexUser1").addClass("set-bg");
+
+		// User2
+
+		$.ajax({
+			async:false,
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					$("#indexUser2").css({"backgroundImage": uPic});
+					$("#indexUserEmail2").attr("href",uEmail);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#indexUser2").addClass("insta-item");
+		$("#indexUser2").addClass("set-bg");
+		
+		// User3
+		
+		$.ajax({
+			async:false,
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					$("#indexUser3").css({"backgroundImage": uPic});
+					$("#indexUserEmail3").attr("href",uEmail);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#indexUser3").addClass("insta-item");
+		$("#indexUser3").addClass("set-bg");
+		
+		// User4
+
+		$.ajax({
+			async:false,
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					$("#indexUser4").css({"backgroundImage": uPic});
+					$("#indexUserEmail4").attr("href",uEmail);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#indexUser4").addClass("insta-item");
+		$("#indexUser4").addClass("set-bg");
+		
+		// User5
+
+		$.ajax({
+			async:false,
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					$("#indexUser5").css({"backgroundImage": uPic});
+					$("#indexUserEmail5").attr("href",uEmail);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#indexUser5").addClass("insta-item");
+		$("#indexUser5").addClass("set-bg");
+		
+		// User6
+
+		$.ajax({
+			async:false,
+			url:"panFindIndexUser",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					var userPic = v.userPic;
+					var uPic = "url('img/userPic/"+userPic+"')";
+					var email = v.email;
+					var uEmail = "panUserPage?email="+email;
+					$("#indexUser6").css({"backgroundImage": uPic});
+					$("#indexUserEmail6").attr("href",uEmail);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+		$("#indexUser6").addClass("insta-item");
+		$("#indexUser6").addClass("set-bg");
+
+
+
+		/*
+		---------------------------------------------------------------------------------------------------
+				IndexBlogDetail
+		*/
+		$.ajax({
+			url:"panFindIndexBlog",
+			type:"POST",
+			dataType:"json",
+			contentType:"application/json;charset=utf-8",
+			success:function(response){
+				$.each(response,function(i,v){
+					$("#indexBlogBox").append(
+						`<div class="col-lg-4 col-md-2">
+							<div class="single-latest-blog">
+								<img src="img/userArticlePic/${v.userPicMain}" style="height:220px;">
+								<div class="latest-text" style="
+									overflow: hidden;
+									height:400px;
+								background-image: linear-gradient(rgba(255,255,255,0),rgba(255,255,255,1));
+									">		
+									<a href="panUserPage?email=${v.email}">
+										<h4>${v.userName}</h4>
+									</a>
+									<p>${v.description}</p>
+								</div>
+							</div>
+						</div>`
+					);
+				});
+			},
+			error:function(msg){
+				console.log(msg);
+			}
+		});
+
+		/*
+		----------------------------------------------------------------------------------------------------
+				indexProduct
+		*/
+		$.ajax({
+        	url:"panIndexProduct",
+        	type:"POST",
+        	dataType:"json",
+        	contentType:"application/json;charset=utf-8;",
+        	success:function(response){
+        		console.log(response);
+        		$.each(response,function(i,v){
+        			$("#indexProductBox").append(
+        			`<div class="col-lg-3 col-sm-6">
+                     	<div class="product-item">
+                        	<div class="pi-pic">
+                            	<img src="${v.cPhoto}" style="display:block; margin:auto;">
+                                    <ul>
+                                        <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                        <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+                                        <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                    </ul>
+                            </div>
+                            <div class="pi-text">
+                            	<div class="catagory-name">${v.pMain}</div>
+                                    <a href="panProductPage?id=${v.pId}">
+                                        <h5>${v.pName}</h5>
+                                    </a>
+                                    <div class="product-price">
+                                        ${v.price}
+                                    </div>
+                            </div>
+                        </div>
+                    </div>`
+        			);
+        		})
+        	},
+        	error:function(msg){
+        		alert("ajax異常:"+msg);
+        	}
+        });
         /*
-        ---------------------------------------------------------
+        ---------------------------------------------------------------------------------------------------
         ShoppingCart
         */
         // 註冊方法搜尋此使用者購物車裏的商品數量
@@ -184,8 +624,6 @@
             updatePrice();
         });
 
-		$(".testTitle").html("Black friday");
-		$(".testTitle2").html("Blue friday");
 
 		
 	});
@@ -218,7 +656,7 @@
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#"
+							<a class=" fa fa-envelope" id="userPageControl" href="blogDetails"
 								th:text="${user}"></a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 
@@ -232,11 +670,11 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo ml-5">
-							<a href="index"> <img src="img/VintageLogo8888.png" alt="">
+							<a href="index"> <img style="width:110px;" src="img/VintageLogo8888.png" alt="">
 							</a>
 						</div>
 					</div>
-					<div class="col-lg-7 col-md-7 mt-4">
+					<div class="col-lg-7 col-md-7 mt-5">
 						<div class="advanced-search">
 							<button type="button" class="category-btn">關 鍵 字 搜 尋</button>
 							<div class="input-group">
@@ -320,14 +758,14 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-5">
-							<h1 class="testTitle"></h1>
-							<p class="testContext"></p>
-							<a href="#" class="primary-btn">Shop Now</a>
+							<h1 class="testTitle">Welcome to Vintage</h1>
+							<p class="testContext">Enjoy new life do whatever you want free creation can be found here</p>
+							<a href="shop" class="primary-btn">Shop Now</a>
 						</div>
 					</div>
 					<div class="off-card">
 						<h2>
-							Sale <span>50%</span>
+							Find
 						</h2>
 					</div>
 				</div>
@@ -336,163 +774,102 @@
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-5">
-							<h1 class="testTitle2"></h1>
-							<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-								sed do eiusmod tempor incididunt ut labore et dolore</p>
-							<a href="#" class="primary-btn">Shop Now</a>
+							<h1 class="testTitle2">Welcome to Vintage</h1>
+							<p>Enjoy new life do whatever you want free creation can be found here</p>
+							<a href="shop" class="primary-btn">Shop Now</a>
 						</div>
-					</div>
-					<div class="off-card">
-						<h2>
-							Sale <span>50%</span>
-						</h2>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 	<!-- Hero Section End -->
+	<hr class="style-four" style="margin-top: 100px;"/>
+
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="section-title">
+				<h2>今 日 新 品</h2>
+			</div>
+		</div>
+	</div>
 
 	<!-- Banner Section Begin -->
 	<div class="banner-section spad">
 		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="single-banner">
-						<img src="img/banner-1.jpg" alt="">
-						<div class="inner-text">
-							<h4>Men’s</h4>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="single-banner">
-						<img src="img/banner-2.jpg" alt="">
-						<div class="inner-text">
-							<h4>Women’s</h4>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="single-banner">
-						<img src="img/banner-3.jpg" alt="">
-						<div class="inner-text">
-							<h4>Kid’s</h4>
-						</div>
-					</div>
-				</div>
+			<div class="row" id="indexProductBox">
+				<!-- indexProduct Here -->
 			</div>
 		</div>
 	</div>
 	<!-- Banner Section End -->
+	
+	<hr class="style-four" style="margin-top: 100px;"/>
 
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="section-title">
+				<h2>今 日 推 薦 商 品</h2>
+			</div>
+		</div>
+	</div>
+	
 	<!-- Women Banner Section Begin -->
-	<section class="women-banner spad">
+	<section class="man-banner spad">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-lg-3">
-					<div class="product-large set-bg"
-						data-setbg="img/products/women-large.jpg">
-						<h2>Women’s</h2>
-						<a href="#">Discover More</a>
+				<div class="col-lg-3 mx-2">
+					<div id="advUserImg1">
+						<h2 id="advUserName1"></h2>
 					</div>
 				</div>
-				<div class="col-lg-8 offset-lg-1">
-					<div class="filter-control">
-						<ul>
-							<li class="active">Clothings</li>
-							<li>HandBag</li>
-							<li>Shoes</li>
-							<li>Accessories</li>
-						</ul>
+				<div class="col-lg-8 mx-2">
+					<div id="advMainImg1">
+						<h2 id="title1"></h2>
+						<h3 id="content1"></h3>
+						<a id="email1" href="#">Discover More</a>
+						<div class="off-card">
+							<h4>
+								<span id="activity1"></span>
+							</h4>
+						</div>
 					</div>
-					<div class="product-slider owl-carousel">
-						<div class="product-item">
-							<div class="pi-pic">
-								<img src="img/products/women-1.jpg" alt="">
-								<div class="sale">Sale</div>
-								<div class="icon">
-									<i class="icon_heart_alt"></i>
-								</div>
-								<ul>
-									<li class="w-icon active"><a href="#"><i
-											class="icon_bag_alt"></i></a></li>
-									<li class="quick-view"><a href="#">+ Quick View</a></li>
-									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-								</ul>
-							</div>
-							<div class="pi-text">
-								<div class="catagory-name">Coat</div>
-								<a href="#">
-									<h5>Pure Pineapple</h5>
-								</a>
-								<div class="product-price">
-									$14.00 <span>$35.00</span>
-								</div>
-							</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-8 mx-2 mt-5">
+					<div id="advMainImg2">
+						<h2 id="title2"></h2>
+						<h3 id="content2"></h3>
+						<a id="email2" href="#">Discover More</a>
+						<div class="off-card">
+							<h4>
+								<span id="activity2"></span>
+							</h4>
 						</div>
-						<div class="product-item">
-							<div class="pi-pic">
-								<img src="img/products/women-2.jpg" alt="">
-								<div class="icon">
-									<i class="icon_heart_alt"></i>
-								</div>
-								<ul>
-									<li class="w-icon active"><a href="#"><i
-											class="icon_bag_alt"></i></a></li>
-									<li class="quick-view"><a href="#">+ Quick View</a></li>
-									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-								</ul>
-							</div>
-							<div class="pi-text">
-								<div class="catagory-name">Shoes</div>
-								<a href="#">
-									<h5>Guangzhou sweater</h5>
-								</a>
-								<div class="product-price">$13.00</div>
-							</div>
-						</div>
-						<div class="product-item">
-							<div class="pi-pic">
-								<img src="img/products/women-3.jpg" alt="">
-								<div class="icon">
-									<i class="icon_heart_alt"></i>
-								</div>
-								<ul>
-									<li class="w-icon active"><a href="#"><i
-											class="icon_bag_alt"></i></a></li>
-									<li class="quick-view"><a href="#">+ Quick View</a></li>
-									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-								</ul>
-							</div>
-							<div class="pi-text">
-								<div class="catagory-name">Towel</div>
-								<a href="#">
-									<h5>Pure Pineapple</h5>
-								</a>
-								<div class="product-price">$34.00</div>
-							</div>
-						</div>
-						<div class="product-item">
-							<div class="pi-pic">
-								<img src="img/products/women-4.jpg" alt="">
-								<div class="icon">
-									<i class="icon_heart_alt"></i>
-								</div>
-								<ul>
-									<li class="w-icon active"><a href="#"><i
-											class="icon_bag_alt"></i></a></li>
-									<li class="quick-view"><a href="#">+ Quick View</a></li>
-									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-								</ul>
-							</div>
-							<div class="pi-text">
-								<div class="catagory-name">Towel</div>
-								<a href="#">
-									<h5>Converse Shoes</h5>
-								</a>
-								<div class="product-price">$34.00</div>
-							</div>
+					</div>
+				</div>
+				<div class="col-lg-3 mx-2 mt-5">
+					<div id="advUserImg2">
+						<h2 id="advUserName2"></h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-3 mx-2 mt-5">
+					<div id="advUserImg3">
+						<h2 id="advUserName3"></h2>
+					</div>
+				</div>
+				<div class="col-lg-8 mx-2 mt-5">
+					<div id="advMainImg3">
+						<h2 id="title3"></h2>
+						<h3 id="content3"></h3>
+						<a id="email3" href="#">Discover More</a>
+						<div class="off-card">
+							<h4>
+								<span id="activity3"></span>
+							</h4>
 						</div>
 					</div>
 				</div>
@@ -501,206 +878,64 @@
 	</section>
 	<!-- Women Banner Section End -->
 
-	<!-- Deal Of The Week Section Begin-->
-	<section class="deal-of-week set-bg spad" data-setbg="img/time-bg.jpg">
-		<div class="container">
-			<div class="col-lg-6 text-center">
-				<div class="section-title">
-					<h2>Deal Of The Week</h2>
-					<p>
-						Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed<br />
-						do ipsum dolor sit amet, consectetur adipisicing elit
-					</p>
-					<div class="product-price">
-						$35.00 <span>/ HanBag</span>
-					</div>
-				</div>
-				<div class="countdown-timer" id="countdown">
-					<div class="cd-item">
-						<span>56</span>
-						<p>Days</p>
-					</div>
-					<div class="cd-item">
-						<span>12</span>
-						<p>Hrs</p>
-					</div>
-					<div class="cd-item">
-						<span>40</span>
-						<p>Mins</p>
-					</div>
-					<div class="cd-item">
-						<span>52</span>
-						<p>Secs</p>
-					</div>
-				</div>
-				<a href="#" class="primary-btn">Shop Now</a>
-			</div>
-		</div>
-	</section>
-	<!-- Deal Of The Week Section End -->
+	<hr class="style-four" style="margin-top: 100px;"/>
 
-	<!-- Man Banner Section Begin -->
-	<section class="man-banner spad">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-8">
-					<div class="filter-control">
-						<ul>
-							<li class="active">Clothings</li>
-							<li>HandBag</li>
-							<li>Shoes</li>
-							<li>Accessories</li>
-						</ul>
-					</div>
-					<div class="product-slider owl-carousel">
-						<div class="product-item">
-							<div class="pi-pic">
-								<img src="img/products/man-1.jpg" alt="">
-								<div class="sale">Sale</div>
-								<div class="icon">
-									<i class="icon_heart_alt"></i>
-								</div>
-								<ul>
-									<li class="w-icon active"><a href="#"><i
-											class="icon_bag_alt"></i></a></li>
-									<li class="quick-view"><a href="#">+ Quick View</a></li>
-									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-								</ul>
-							</div>
-							<div class="pi-text">
-								<div class="catagory-name">Coat</div>
-								<a href="#">
-									<h5>Pure Pineapple</h5>
-								</a>
-								<div class="product-price">
-									$14.00 <span>$35.00</span>
-								</div>
-							</div>
-						</div>
-						<div class="product-item">
-							<div class="pi-pic">
-								<img src="img/products/man-2.jpg" alt="">
-								<div class="icon">
-									<i class="icon_heart_alt"></i>
-								</div>
-								<ul>
-									<li class="w-icon active"><a href="#"><i
-											class="icon_bag_alt"></i></a></li>
-									<li class="quick-view"><a href="#">+ Quick View</a></li>
-									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-								</ul>
-							</div>
-							<div class="pi-text">
-								<div class="catagory-name">Shoes</div>
-								<a href="#">
-									<h5>Guangzhou sweater</h5>
-								</a>
-								<div class="product-price">$13.00</div>
-							</div>
-						</div>
-						<div class="product-item">
-							<div class="pi-pic">
-								<img src="img/products/man-3.jpg" alt="">
-								<div class="icon">
-									<i class="icon_heart_alt"></i>
-								</div>
-								<ul>
-									<li class="w-icon active"><a href="#"><i
-											class="icon_bag_alt"></i></a></li>
-									<li class="quick-view"><a href="#">+ Quick View</a></li>
-									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-								</ul>
-							</div>
-							<div class="pi-text">
-								<div class="catagory-name">Towel</div>
-								<a href="#">
-									<h5>Pure Pineapple</h5>
-								</a>
-								<div class="product-price">$34.00</div>
-							</div>
-						</div>
-						<div class="product-item">
-							<div class="pi-pic">
-								<img src="img/products/man-4.jpg" alt="">
-								<div class="icon">
-									<i class="icon_heart_alt"></i>
-								</div>
-								<ul>
-									<li class="w-icon active"><a href="#"><i
-											class="icon_bag_alt"></i></a></li>
-									<li class="quick-view"><a href="#">+ Quick View</a></li>
-									<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-								</ul>
-							</div>
-							<div class="pi-text">
-								<div class="catagory-name">Towel</div>
-								<a href="#">
-									<h5>Converse Shoes</h5>
-								</a>
-								<div class="product-price">$34.00</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 offset-lg-1">
-					<div class="product-large set-bg m-large"
-						data-setbg="img/products/man-large.jpg">
-						<h2>Men’s</h2>
-						<a href="#">Discover More</a>
-					</div>
-				</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="section-title">
+				<h2>其 他 藝 術 工 作 者 們</h2>
 			</div>
 		</div>
-	</section>
-	<!-- Man Banner Section End -->
+	</div>
 
 	<!-- Instagram Section Begin -->
-	<div class="instagram-photo">
-		<div class="insta-item set-bg" data-setbg="img/insta-1.jpg">
+	<div class="instagram-photo mt-5" id="indexUserBox">
+		<!-- IndexUser Here -->
+		<div id="indexUser1">
 			<div class="inside-text">
 				<i class="ti-instagram"></i>
 				<h5>
-					<a href="#">colorlib_Collection</a>
+					<a id="indexUserEmail1" href="#">colorlib_Collection</a>
 				</h5>
 			</div>
 		</div>
-		<div class="insta-item set-bg" data-setbg="img/insta-2.jpg">
+		<div id="indexUser2">
 			<div class="inside-text">
 				<i class="ti-instagram"></i>
 				<h5>
-					<a href="#">colorlib_Collection</a>
+					<a id="indexUserEmail2" href="#">colorlib_Collection</a>
 				</h5>
 			</div>
 		</div>
-		<div class="insta-item set-bg" data-setbg="img/insta-3.jpg">
+		<div id="indexUser3">
 			<div class="inside-text">
 				<i class="ti-instagram"></i>
 				<h5>
-					<a href="#">colorlib_Collection</a>
+					<a id="indexUserEmail3" href="#">colorlib_Collection</a>
 				</h5>
 			</div>
 		</div>
-		<div class="insta-item set-bg" data-setbg="img/insta-4.jpg">
+		<div id="indexUser4">
 			<div class="inside-text">
 				<i class="ti-instagram"></i>
 				<h5>
-					<a href="#">colorlib_Collection</a>
+					<a id="indexUserEmail4" href="#">colorlib_Collection</a>
 				</h5>
 			</div>
 		</div>
-		<div class="insta-item set-bg" data-setbg="img/insta-5.jpg">
+		<div id="indexUser5">
 			<div class="inside-text">
 				<i class="ti-instagram"></i>
 				<h5>
-					<a href="#">colorlib_Collection</a>
+					<a id="indexUserEmail5" href="#">colorlib_Collection</a>
 				</h5>
 			</div>
 		</div>
-		<div class="insta-item set-bg" data-setbg="img/insta-6.jpg">
+		<div id="indexUser6">
 			<div class="inside-text">
 				<i class="ti-instagram"></i>
 				<h5>
-					<a href="#">colorlib_Collection</a>
+					<a id="indexUserEmail6" href="#">colorlib_Collection</a>
 				</h5>
 			</div>
 		</div>
@@ -713,71 +948,12 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="section-title">
-						<h2>From The Blog</h2>
+						<h2>今 日 最 新 文 章</h2>
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-blog">
-						<img src="img/latest-1.jpg" alt="">
-						<div class="latest-text">
-							<div class="tag-list">
-								<div class="tag-item">
-									<i class="fa fa-calendar-o"></i> May 4,2019
-								</div>
-								<div class="tag-item">
-									<i class="fa fa-comment-o"></i> 5
-								</div>
-							</div>
-							<a href="#">
-								<h4>The Best Street Style From London Fashion Week</h4>
-							</a>
-							<p>Sed quia non numquam modi tempora indunt ut labore et
-								dolore magnam aliquam quaerat</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-blog">
-						<img src="img/latest-2.jpg" alt="">
-						<div class="latest-text">
-							<div class="tag-list">
-								<div class="tag-item">
-									<i class="fa fa-calendar-o"></i> May 4,2019
-								</div>
-								<div class="tag-item">
-									<i class="fa fa-comment-o"></i> 5
-								</div>
-							</div>
-							<a href="#">
-								<h4>Vogue's Ultimate Guide To Autumn/Winter 2019 Shoes</h4>
-							</a>
-							<p>Sed quia non numquam modi tempora indunt ut labore et
-								dolore magnam aliquam quaerat</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6">
-					<div class="single-latest-blog">
-						<img src="img/latest-3.jpg" alt="">
-						<div class="latest-text">
-							<div class="tag-list">
-								<div class="tag-item">
-									<i class="fa fa-calendar-o"></i> May 4,2019
-								</div>
-								<div class="tag-item">
-									<i class="fa fa-comment-o"></i> 5
-								</div>
-							</div>
-							<a href="#">
-								<h4>How To Brighten Your Wardrobe With A Dash Of Lime</h4>
-							</a>
-							<p>Sed quia non numquam modi tempora indunt ut labore et
-								dolore magnam aliquam quaerat</p>
-						</div>
-					</div>
-				</div>
+			<div class="row" id="indexBlogBox">
+					<!-- IndexBlog Here -->
 			</div>
 			<div class="benefit-items">
 				<div class="row">
@@ -861,7 +1037,7 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#"><img src="img/footer-logo.png" alt=""></a>
+							<a href="#"><img src="img/VintageLogo8888.png" alt=""></a>
 						</div>
 						<ul>
 							<li>地址: 80147高雄市前金區中正四路211號8號樓之1</li>

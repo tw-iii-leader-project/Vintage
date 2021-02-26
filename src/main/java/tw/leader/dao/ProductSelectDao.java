@@ -65,7 +65,14 @@ public interface ProductSelectDao extends JpaRepository<Product,Integer> {
 	List<Product> selectProductByMainAndName(String email,String pMain,int page);
 	//select * from product where p_main = '玩具' and user_acc = 'gawrgura';
 	
+	/*
+	 * ---------------------------------------------------------------------
+	 * 		IndexAndProduct
+	 * */
 	
+	@Query(value="select Top 4* from product ORDER BY RAND()",nativeQuery = true)
+	List<Product> findIndexProduct();
+	// select Top 4* from product ORDER BY RAND();
 	
 	
 	/*------------------------------------------------------

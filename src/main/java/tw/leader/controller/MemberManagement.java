@@ -3,12 +3,16 @@ package tw.leader.controller;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import tw.leader.dao.UserRepository;
+import tw.leader.po.User;
 import tw.leader.service.ManagementService;
 import tw.leader.vo.UserResp;
 
@@ -18,23 +22,50 @@ public class MemberManagement {
 	@Autowired
 	private ManagementService mService;
 	
+	@Autowired
+	private UserRepository uRepo;
+	
 	@GetMapping("/panUserManagement")
-	public String toManagementPage() {
+	public String toManagementPage(Model m) {
+		String user = GetCurrentUserAccount();
+		User u = uRepo.findByEmail(user);
+		String roles = u.getRoles();
+		
+		m.addAttribute("user", user);
+		m.addAttribute("roles", roles);
 		return "UserManagement";
 	}
 	
 	@GetMapping("/panMember")
-	public String toMemberManagementPage() {
+	public String toMemberManagementPage(Model m) {
+		String user = GetCurrentUserAccount();
+		User u = uRepo.findByEmail(user);
+		String roles = u.getRoles();
+		
+		m.addAttribute("user", user);
+		m.addAttribute("roles", roles);
 		return "MemderManagement";
 	}
 	
 	@GetMapping("/panAdvertisement")
-	public String toAdvertisementManagementPage() {
+	public String toAdvertisementManagementPage(Model m) {
+		String user = GetCurrentUserAccount();
+		User u = uRepo.findByEmail(user);
+		String roles = u.getRoles();
+		
+		m.addAttribute("user", user);
+		m.addAttribute("roles", roles);
 		return "AdvertisementManagement";
 	}
 	
 	@GetMapping("/panContact")
-	public String toContactManagementPage() {
+	public String toContactManagementPage(Model m) {
+		String user = GetCurrentUserAccount();
+		User u = uRepo.findByEmail(user);
+		String roles = u.getRoles();
+		
+		m.addAttribute("user", user);
+		m.addAttribute("roles", roles);
 		return "ContactManagement";
 	}
 	
@@ -85,8 +116,14 @@ public class MemberManagement {
 	@ResponseBody
 	public String setUserAuthority(@RequestBody UserResp userData) {
 		int userId = userData.getUserId();
-		UserResp uBean = mService.getUserAuthorityResult(userId);
-		String result = uBean.getMessage();
-		return result;
+		UserResp result = mService.getUserAuthorityResult(userId);
+		String msg = result.getMessage();
+		return msg;
+	}
+	
+	public String GetCurrentUserAccount() {
+		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+		return userName;
+		// this method is for getting current user account which has login.
 	}
 }

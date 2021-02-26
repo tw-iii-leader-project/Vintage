@@ -22,4 +22,23 @@ public interface userArticleDao extends JpaRepository<userArticle, Integer> {
 	@Query("SELECT u FROM userArticle AS u WHERE u.email = ?1")
 	userArticle findByEmail(String email);
 	
+	
+	/*
+	 * --------------------------------------------------
+	 * 		BlogPage
+	 * */
+	
+	@Query(value="select * from userArticle order by articleId DESC",nativeQuery = true)
+	List<userArticle> findAllBlog();
+	
+	@Query(value="select * from userArticle where userName like %?1% order by articleId DESC",nativeQuery = true)
+	List<userArticle> findBlogByName(String userName);
+	
+	
+	// IndexBlog
+	@Query(value="select Top 3* from userArticle order by articleId DESC",nativeQuery = true)
+	List<userArticle> findIndexBlog();
+	// SQL Server => select Top 3* from userArticle order by articleId DESC;
+	// MySQL => select * from userArticle order by articleId DESC Limit 3;
+	
 }

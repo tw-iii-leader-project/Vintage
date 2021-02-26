@@ -217,6 +217,7 @@ public class ProductSelectController {
 	public String selectProductByMainAndName(@RequestBody ProductResp userData) throws Exception {
 		String email = userData.getEmail();
 		String pMain = userData.getpMain();
+		System.out.println("userEmail"+email);
 		return pService.getProductByMainAndName(email,pMain);
 	}
 	
@@ -262,6 +263,18 @@ public class ProductSelectController {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 		return userName;
 		// this method is for getting current user account which has login.
+	}
+	
+	
+	/*
+	 * ------------------------------------------------------------
+	 * 		IndexAndProductPage
+	 * */
+	
+	@PostMapping(value="/panIndexProduct")
+	@ResponseBody
+	public String findIndexProduct() throws Exception {
+		return pService.findIndexProduct();
 	}
 	
 	/*-------------------------------------------------------------

@@ -18,6 +18,9 @@ public class AdvMain {
 	@Column(name="seat")
 	private int Seat;
 	
+	@Column(name="aPhoto")
+	private String aPhoto;
+	
 	@Column(name="title")
 	private String Title;
 	
@@ -77,6 +80,16 @@ public class AdvMain {
 	public void setActivity(String activity) {
 		Activity = activity;
 	}
+
+	public String getaPhoto() {
+		return aPhoto;
+	}
+
+	public void setaPhoto(String aPhoto) {
+		this.aPhoto = aPhoto;
+	}
+	
+	
 	
 	
 }

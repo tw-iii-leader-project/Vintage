@@ -82,7 +82,7 @@
                     $.each(response,function(i,v){
                         $("#productImg").append(
                             `<div class="product-pic-zoom">
-                                <img class="product-big-img" src="img/products/${v.cPhoto}" alt="">
+                                <img class="product-big-img" src="${v.cPhoto}" alt="">
                                 <div class="zoom-icon">
                                     <i class="fa fa-search-plus"></i>
                                 </div>
@@ -416,6 +416,44 @@
                 update();
                 updateShoppingCart();
                 updatePrice();
+            });
+            
+            $.ajax({
+            	url:"panIndexProduct",
+            	type:"POST",
+            	dataType:"json",
+            	contentType:"application/json;charset=utf-8;",
+            	success:function(response){
+            		console.log(response);
+            		$.each(response,function(i,v){
+            			$("#productOtherBox").append(
+            			`<div class="col-lg-3 col-sm-6">
+                         	<div class="product-item">
+                            	<div class="pi-pic">
+                                	<img src="${v.cPhoto}" alt="">
+                                        <ul>
+                                            <li class="w-icon active"><a href="#"><i class="icon_bag_alt"></i></a></li>
+                                            <li class="quick-view"><a href="panProductPage?id=${v.pId}">+ Quick View</a></li>
+                                            <li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
+                                        </ul>
+                                </div>
+                                <div class="pi-text">
+                                	<div class="catagory-name">${v.pMain}</div>
+                                        <a href="panProductPage?id=${v.pId}">
+                                            <h5>${v.pName}</h5>
+                                        </a>
+                                        <div class="product-price">
+                                            ${v.price}
+                                        </div>
+                                </div>
+                            </div>
+                        </div>`
+            			);
+            		})
+            	},
+            	error:function(msg){
+            		alert("ajax異常:"+msg);
+            	}
             });
     	});
     
@@ -1136,102 +1174,8 @@
 					</div>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-lg-3 col-sm-6">
-					<div class="product-item">
-						<div class="pi-pic">
-							<img src="img/products/women-1.jpg" alt="">
-							<div class="sale">Sale</div>
-							<div class="icon">
-								<i class="icon_heart_alt"></i>
-							</div>
-							<ul>
-								<li class="w-icon active"><a href="#"><i
-										class="icon_bag_alt"></i></a></li>
-								<li class="quick-view"><a href="#">+ Quick View</a></li>
-								<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-							</ul>
-						</div>
-						<div class="pi-text">
-							<div class="catagory-name">Coat</div>
-							<a href="#">
-								<h5>Pure Pineapple</h5>
-							</a>
-							<div class="product-price">
-								$14.00 <span>$35.00</span>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<div class="product-item">
-						<div class="pi-pic">
-							<img src="img/products/women-2.jpg" alt="">
-							<div class="icon">
-								<i class="icon_heart_alt"></i>
-							</div>
-							<ul>
-								<li class="w-icon active"><a href="#"><i
-										class="icon_bag_alt"></i></a></li>
-								<li class="quick-view"><a href="#">+ Quick View</a></li>
-								<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-							</ul>
-						</div>
-						<div class="pi-text">
-							<div class="catagory-name">Shoes</div>
-							<a href="#">
-								<h5>Guangzhou sweater</h5>
-							</a>
-							<div class="product-price">$13.00</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<div class="product-item">
-						<div class="pi-pic">
-							<img src="img/products/women-3.jpg" alt="">
-							<div class="icon">
-								<i class="icon_heart_alt"></i>
-							</div>
-							<ul>
-								<li class="w-icon active"><a href="#"><i
-										class="icon_bag_alt"></i></a></li>
-								<li class="quick-view"><a href="#">+ Quick View</a></li>
-								<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-							</ul>
-						</div>
-						<div class="pi-text">
-							<div class="catagory-name">Towel</div>
-							<a href="#">
-								<h5>Pure Pineapple</h5>
-							</a>
-							<div class="product-price">$34.00</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-3 col-sm-6">
-					<div class="product-item">
-						<div class="pi-pic">
-							<img src="img/products/women-4.jpg" alt="">
-							<div class="icon">
-								<i class="icon_heart_alt"></i>
-							</div>
-							<ul>
-								<li class="w-icon active"><a href="#"><i
-										class="icon_bag_alt"></i></a></li>
-								<li class="quick-view"><a href="#">+ Quick View</a></li>
-								<li class="w-icon"><a href="#"><i class="fa fa-random"></i></a></li>
-							</ul>
-						</div>
-						<div class="pi-text">
-							<div class="catagory-name">Towel</div>
-							<a href="#">
-								<h5>Converse Shoes</h5>
-							</a>
-							<div class="product-price">$34.00</div>
-						</div>
-					</div>
-				</div>
+			<div class="row" id="productOtherBox">
+				<!-- productOther Here -->
 			</div>
 		</div>
 	</div>
@@ -1278,7 +1222,7 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#"><img src="img/footer-logo.png" alt=""></a>
+							<a href="#"><img src="img/VintageLogo8888.png" alt=""></a>
 						</div>
 						<ul>
 							<li>地址: 80147高雄市前金區中正四路211號8號樓之1</li>

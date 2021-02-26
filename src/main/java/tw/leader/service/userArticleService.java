@@ -10,4 +10,21 @@ public interface userArticleService {
 	public userArticleResp insertDescription(String email,String description);
 	
 	public userArticleResp insertArticle(String email,String articleContext);
+	
+	/*
+	 * --------------------------------------
+	 * 		BlogPage
+	 * */
+	public String findAllBlog() throws Exception;
+	
+	public String findBlogByName(String userName) throws Exception;
+	
+	
+	/*
+	 * ----------------------------------------
+	 * 
+	 * 		indexBlog
+	 * */
+	
+	public String findIndexBlog() throws Exception;
 }

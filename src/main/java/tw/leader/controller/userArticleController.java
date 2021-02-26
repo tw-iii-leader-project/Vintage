@@ -34,6 +34,7 @@ public class userArticleController {
 		
 		userArticleResp result = uAService.insertDescription(email, description);
 		String message = result.getMessage();
+		System.out.println(message);
 		return message;
 	}
 	

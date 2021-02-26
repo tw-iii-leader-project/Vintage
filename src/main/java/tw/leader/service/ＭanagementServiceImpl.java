@@ -96,20 +96,22 @@ public class ＭanagementServiceImpl implements ManagementService{
 	
 	@Override
 	public UserResp getUserAuthorityResult(int userId) {
-		List<User> uList = fDao.findUserById(userId);
+		System.out.println(userId+"xxxxxxxxxxIDxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
+		List<User> uList = fDao.findUserByIdUp(userId);
 		String roles = null;
 		for(User uBean : uList) {
 			roles = uBean.getRoles();
 			
 		}
-		System.out.println(roles);
+		System.out.println(roles+"xxxxxxxxxxxxROLESxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		if(roles.equals("ROLES_SELLER")) {
 			String newRoles = "ROLES_DISABLED";
 			UserResp result = fDao.upDateUserRoles(newRoles, userId);
 			result.setMessage("此帳戶已停權");
 			return result;
+			
 		}
-		if(roles.equals("ROLES_DISABLED")) {
+		else if(roles.equals("ROLES_DISABLED")) {
 			String newRoles = "ROLES_SELLER";
 			UserResp result = fDao.upDateUserRoles(newRoles, userId);
 			result.setMessage("此帳戶權限已重啟");

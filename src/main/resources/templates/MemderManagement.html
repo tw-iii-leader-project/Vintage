@@ -24,6 +24,72 @@
     <link rel="stylesheet" href="css/style.css" type="text/css">
     
     <script src="js/jquery-3.3.1.min.js"></script>
+    <style type="text/css">
+    
+.button1 {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 24px;
+    border: 1px solid #a12727;
+    border-radius: 8px;
+    background: #ffaa69;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffaa69), to(#992727));
+    background: -moz-linear-gradient(top, #ffaa69, #992727);
+    background: linear-gradient(to bottom, #ffaa69, #992727);
+    text-shadow: #591717 1px 1px 1px;
+    font: normal normal bold 18px courier new;
+    color: #fefff7;
+    text-decoration: none;
+}
+.button1:hover,
+.button1:focus {
+    background: #ffcc7e;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ffcc7e), to(#b62f2f));
+    background: -moz-linear-gradient(top, #ffcc7e, #b62f2f);
+    background: linear-gradient(to bottom, #ffcc7e, #b62f2f);
+    color: #fefff7;
+    text-decoration: none;
+}
+.button1:active {
+    background: #99663f;
+    background: -webkit-gradient(linear, left top, left bottom, from(#99663f), to(#982727));
+    background: -moz-linear-gradient(top, #99663f, #982727);
+    background: linear-gradient(to bottom, #99663f, #982727);
+}
+
+.buttonX {
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px 24px;
+    border: 0px solid #767676;
+    border-radius: 8px;
+    background: #c0c0c0;
+    background: -webkit-gradient(linear, left top, left bottom, from(#c0c0c0), to(#767676));
+    background: -moz-linear-gradient(top, #c0c0c0, #767676);
+    background: linear-gradient(to bottom, #c0c0c0, #767676);
+    font: normal normal bold 15px verdana;
+    color: #ffffff;
+    text-decoration: none;
+}
+.buttonX:hover,
+.buttonX:focus {
+    border: 0px solid #949494;
+    background: #e6e6e6;
+    background: -webkit-gradient(linear, left top, left bottom, from(#e6e6e6), to(#8e8e8e));
+    background: -moz-linear-gradient(top, #e6e6e6, #8e8e8e);
+    background: linear-gradient(to bottom, #e6e6e6, #8e8e8e);
+    color: #ffffff;
+    text-decoration: none;
+}
+.buttonX:active {
+    background: #767676;
+    background: -webkit-gradient(linear, left top, left bottom, from(#767676), to(#767676));
+    background: -moz-linear-gradient(top, #767676, #767676);
+    background: linear-gradient(to bottom, #767676, #767676);
+}
+    </style>
     <script type="text/javascript">
     	$(function(){
     		$.ajax({
@@ -35,14 +101,13 @@
                 success:function(pageData){
                     $.each(pageData,function(i,v){
                         var pages = parseInt(v.totalPages);
+                        var total = v.totalElements;
                         for(n=1;n<=pages;n++){
                             $("#pageBox ul").append(
                                 `<li class="pageLi">${n}</li>`
                             );
                         };
-                        $("#totalUser").append(
-                            `<span>${v.totalUser}</span>`
-                        );
+                        $("#totalElements").html(total);
                     });
                     $("#pageBox ul li").first().addClass("active");
                 },
@@ -57,19 +122,43 @@
 		        contentType:"application/json;charset=utf-8",
                 success:function(response){
                 	$.each(response,function(i,v){
-                		$("#userTable #userTr").append(
-                			`<tr>
-                                <td class="cart-title">${v.userId}</td>
-                                <td class="cart-title">
-                                	<h5>${v.userName}</h5>
-                                </td>
-                                <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
-                                <td class="p-price">${v.email}</td>
-                                <td class="total-price">${v.userPhone}</td>
-                                <td class="p-price">${v.userBirthday}</td>
-                                <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
-                        	</tr>`
-                		);
+                        var userRoles = v.roles;
+                        if(userRoles == "ROLES_SELLER"){
+                            $("#userTable #userTr").append(
+                			    `<tr>
+                                    <td class="userIdClass">${v.userId}</td>
+                                    <td class="cart-title">
+                                    	<h5>${v.userName}</h5>
+                                    </td>
+                                    <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
+                                    <td class="p-price">${v.email}</td>
+                                    <td class="total-price">${v.phone}</td>
+                                    <td class="p-price">${v.birthday}</td>
+                                    <td class="close-td"><button class="userAuthorityX" value="${v.userId}">停權</button></td>
+                        	    </tr>`
+                		    );
+                            $(".userAuthorityX").addClass("buttonX");
+                            
+                            
+                        }
+                        else if(userRoles == "ROLES_DISABLED"){
+                            $("#userTable #userTr").append(
+                			    `<tr>
+                                    <td class="userIdClass">${v.userId}</td>
+                                    <td class="cart-title">
+                                    	<h5>${v.userName}</h5>
+                                    </td>
+                                    <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
+                                    <td class="p-price">${v.email}</td>
+                                    <td class="total-price">${v.phone}</td>
+                                    <td class="p-price">${v.birthday}</td>
+                                    <td class="close-td"><button class="userAuthority" value="${v.userId}">解除</button></td>
+                        	    </tr>`
+                		    );
+                            $(".userAuthority").addClass("button1");
+                        }
+                        else{};
+                		        
                 	});
                 },
                 error:function(msg){
@@ -91,20 +180,42 @@
 		            data:JSON.stringify(pageData),
                     success:function(response){
                         $.each(response,function(i,v){
-                        	$("#userTable #userTr").append(
-                        		`<tr>
-                                	<td class="cart-title">${v.userId}</td>
-                                	<td class="cart-title">
-                                		<h5>${v.userName}</h5>
-                                	</td>
-                                	<td class="cart-pic"><img src="img/${v.userPic}" alt=""></td>
-                                	<td class="p-price">${v.email}</td>
-                                	<td class="total-price">${v.userPhone}</td>
-                                	<td class="p-price">${v.userBirthday}</td>
-                                	<td class="close-td"><button value="停權"></button></td>
-                        		</tr>`	
-                        	);
-            			});
+                                var userRoles = v.roles;
+                                if(userRoles == "ROLES_SELLER"){
+                                    $("#userTable #userTr").append(
+                		        	    `<tr>
+                                            <td class="userIdClass">${v.userId}</td>
+                                            <td class="cart-title">
+                                            	<h5>${v.userName}</h5>
+                                            </td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
+                                            <td class="p-price">${v.email}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
+                                            <td class="close-td"><button class="userAuthorityX" value="${v.userId}">停權</button></td>
+                                	    </tr>`
+                		            );
+                                    $(".userAuthorityX").addClass("buttonX");
+                                }
+                                else if(userRoles == "ROLES_DISABLED"){
+                                    $("#userTable #userTr").append(
+                		        	    `<tr>
+                                            <td class="userIdClass">${v.userId}</td>
+                                            <td class="cart-title">
+                                            	<h5>${v.userName}</h5>
+                                            </td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
+                                            <td class="p-price">${v.email}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
+                                            <td class="close-td"><button class="userAuthority" value="${v.userId}">解除</button></td>
+                                	    </tr>`
+                		            );
+                                    $(".userAuthority").addClass("button1");
+                                }
+                                else{};
+                		        
+                	        });
             		},
             		error:function(msg){
             			console.log(msg);
@@ -127,19 +238,42 @@
                         data:JSON.stringify(userData),
                         success:function(response){
                             $.each(response,function(i,v){
-                		        $("#userTable #userTr").append(
-                		        	`<tr>
-                                        <td class="cart-title">${v.userId}</td>
-                                        <td class="cart-title">
-                                        	<h5>${v.userName}</h5>
-                                        </td>
-                                        <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
-                                        <td class="p-price">${v.email}</td>
-                                        <td class="total-price">${v.userPhone}</td>
-                                        <td class="p-price">${v.userBirthday}</td>
-                                        <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
-                                	</tr>`
-                		        );
+                                var userRoles = v.roles;
+                                if(userRoles == "ROLES_SELLER"){
+                                    $("#userTable #userTr").append(
+                		        	    `<tr>
+                                            <td class="userIdClass">${v.userId}</td>
+                                            <td class="cart-title">
+                                            	<h5>${v.userName}</h5>
+                                            </td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
+                                            <td class="p-price">${v.email}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
+                                            <td class="close-td"><button class="userAuthorityX" value="${v.userId}">停權</button></td>
+                                	    </tr>`
+                                    	
+                		            );
+                                    $(".userAuthorityX").addClass("buttonX");
+                                }
+                                else if(userRoles == "ROLES_DISABLED"){
+                                    $("#userTable #userTr").append(
+                		        	    `<tr>
+                                            <td class="userIdClass">${v.userId}</td>
+                                            <td class="cart-title">
+                                            	<h5>${v.userName}</h5>
+                                            </td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
+                                            <td class="p-price">${v.email}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
+                                            <td class="close-td"><button class="userAuthority" value="${v.userId}">解除</button></td>
+                                	    </tr>`
+                		            );
+                                    $(".userAuthority").addClass("button1");
+                                }
+                                else{};
+                		        
                 	        });
                         },
                         error:function(msg){
@@ -159,19 +293,42 @@
                         data:JSON.stringify(userData),
                         success:function(response){
                             $.each(response,function(i,v){
-                		        $("#userTable #userTr").append(
-                		        	`<tr>
-                                        <td class="cart-title">${v.userId}</td>
-                                        <td class="cart-title">
-                                        	<h5>${v.userName}</h5>
-                                        </td>
-                                        <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
-                                        <td class="p-price">${v.email}</td>
-                                        <td class="total-price">${v.userPhone}</td>
-                                        <td class="p-price">${v.userBirthday}</td>
-                                        <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
-                                	</tr>`
-                		        );
+                                var userRoles = v.roles;
+                                if(userRoles == "ROLES_SELLER"){
+                                    $("#userTable #userTr").append(
+                		        	    `<tr>
+                                            <td class="userIdClass">${v.userId}</td>
+                                            <td class="cart-title">
+                                            	<h5>${v.userName}</h5>
+                                            </td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
+                                            <td class="p-price">${v.email}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
+                                            <td class="close-td"><button class="userAuthorityX" value="${v.userId}">停權</button></td>
+                                	    </tr>`
+                                    	
+                		            );
+                                    $(".userAuthorityX").addClass("buttonX");
+                                }
+                                else if(userRoles == "ROLES_DISABLED"){
+                                    $("#userTable #userTr").append(
+                		        	    `<tr>
+                                            <td class="userIdClass">${v.userId}</td>
+                                            <td class="cart-title">
+                                            	<h5>${v.userName}</h5>
+                                            </td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
+                                            <td class="p-price">${v.email}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
+                                            <td class="close-td"><button class="userAuthority" value="${v.userId}">解除</button></td>
+                                	    </tr>`
+                		            );
+                                    $(".userAuthority").addClass("button1");
+                                }
+                                else{};
+                		        
                 	        });
                         },
                         error:function(msg){
@@ -199,13 +356,15 @@
                                             <td class="cart-title">
                                             	<h5>${v.userName}</h5>
                                             </td>
-                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                             <td class="p-price">${v.email}</td>
-                                            <td class="total-price">${v.userPhone}</td>
-                                            <td class="p-price">${v.userBirthday}</td>
-                                            <td class="close-td"><button class="userAuthority" value="${v.userId}">停權</button></td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
+                                            <td class="close-td"><button class="userAuthorityX" value="${v.userId}">停權</button></td>
                                 	    </tr>`
+                                    	
                 		            );
+                                    $(".userAuthorityX").addClass("buttonX");
                                 }
                                 else if(userRoles == "ROLES_DISABLED"){
                                     $("#userTable #userTr").append(
@@ -214,14 +373,16 @@
                                             <td class="cart-title">
                                             	<h5>${v.userName}</h5>
                                             </td>
-                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" alt=""></td>
+                                            <td class="cart-pic"><img src="img/userPic/${v.userPic}" style="height: 150px; overflow: auto;"></td>
                                             <td class="p-price">${v.email}</td>
-                                            <td class="total-price">${v.userPhone}</td>
-                                            <td class="p-price">${v.userBirthday}</td>
+                                            <td class="total-price">${v.phone}</td>
+                                            <td class="p-price">${v.birthday}</td>
                                             <td class="close-td"><button class="userAuthority" value="${v.userId}">解除</button></td>
                                 	    </tr>`
                 		            );
+                                    $(".userAuthority").addClass("button1");
                                 }
+                                else{};
                 		        
                 	        });
                         },
@@ -240,45 +401,48 @@
 
 
 
+            $("#userTable #userTr").on("click",".userAuthorityX",function(){
+            	$(this).removeClass("buttonX");
+                $(this).addClass("button1");
+                var userId = $(this).val();
+                var userData = {"userId":userId};
+                $(this).html("解除");
+                $.ajax({
+                    url:"panSetUserAuthority",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(result){
+                        console.log(result);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
+            });
             $("#userTable #userTr").on("click",".userAuthority",function(){
-                if($(this).html() == '停權'){
-                    var userId = $(this).val();
-                    var userData = {"userId":userId};
-                    $(this).html("解除");
-                    $.ajax({
-                        url:"panSetUserAuthority",
-                        type:"POST",
-                        dataType:"json",
-                        contentType:"application/json;charset=utf-8",
-                        data:JSON.stringify(userData),
-                        success:function(result){
-                            console.log(result);
-                        },
-                        error:function(msg){
-                            console.log(msg);
-                        }
-                    });
-                }
-                else{
-                    var userId = $(this).val();
-                    var userData = {"userId":userId};
-                    $(this).html("停權");
-                    $.ajax({
-                        url:"panSetUserAuthority",
-                        type:"POST",
-                        dataType:"json",
-                        contentType:"application/json;charset=utf-8",
-                        data:JSON.stringify(userData),
-                        success:function(result){
-                            console.log(result);
-                        },
-                        error:function(msg){
-                            console.log(msg);
-                        }
-                    });
-                }
+            	$(this).removeClass("button1");
+                $(this).addClass("buttonX");
+                var userId = $(this).val();
+                var userData = {"userId":userId};
+                $(this).html("停權");
+                $.ajax({
+                    url:"panSetUserAuthority",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(result){
+                        console.log(result);
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+                });
                 
             });
+                
 
     	});
     </script>
@@ -292,111 +456,50 @@
     </div>
 
 <!-- Header Section Begin -->
-	<header class="header-section">
-		<div class="header-top">
-			<div class="container">
-				<div class="ht-left"></div>
-				<div class="ht-right">
-					<a href="logout" class="login-panel" th:text="Logout"><i
-						class="fa fa-user"></i></a> <a href="loginPage" class="login-panel"
-						th:text="Login"><i class="fa fa-user"></i></a>
+    <header class="header-section">
+        <div class="header-top">
+            <div class="container">
+                <div class="ht-left"></div>
+                <div class="ht-right">
+                    <a href="loginPage" class="login-panel" th:text="Login"><i
+                        class="fa fa-user"></i></a> <a href="logout" class="login-panel"
+                        th:text="Logout" style="display: none"><i class="fa fa-user"></i></a>   
 
+                    <div class="top-social">
+                        <div class="mail-service">
+                            <a class=" fa fa-envelope" href="panUserManagement">後台管理系統</a>
+                            <!-- 進入使用者個人資料的頁面(賣家頁面) --> 
 
-					<div class="top-social">
-						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#"
-								th:text="${user}"></a>
-							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="inner-header">
-				<div class="row">
-					<div class="col-lg-2 col-md-2">
-						<div class="logo ml-5">
-							<a href="index"> <img src="img/VintageLogo8888.png" alt="">
-							</a>
-						</div>
-					</div>
-					<div class="col-lg-7 col-md-7 mt-4">
-						<div class="advanced-search">
-							<button type="button" class="category-btn">關 鍵 字 搜 尋</button>
-							<div class="input-group">
-								<input type="text" id="textSelectFormInput"
-									placeholder="您在搜尋什麼商品嗎?">
-								<button type="button" class="ml-5" id="textSelectFormSearch">
-									<i class="ti-search"></i>
-								</button>
-							</div>
-						</div>
-					</div>
-					<div class="col-lg-3 text-right col-md-3">
-						
-						<ul class="nav-right">
-
-							<li class="cart-icon"><a href="#"> <i
-									class="icon_bag_alt"></i> <span id="shoppingQuantity"> <!-- shoppingQuantity Here -->
-								</span>
-							</a>
-								<div class="cart-hover">
-									<div class="select-items"
-										style="height: 210px; overflow: auto;">
-										<table>
-											<tbody id="shoppingList">
-												<!-- ShoppingList Here -->
-											</tbody>
-										</table>
-									</div>
-									<div class="select-total">
-										<span>總共:</span>
-										<h5 id="selectTotal">
-											<!-- selectTotal Here -->
-										</h5>
-									</div>
-									<div class="select-button">
-										<a href="shoppingCart" class="primary-btn view-card">加入購物車</a> <a
-											href="checkOut" class="primary-btn checkout-btn">前往結帳</a>
-									</div>
-								</div></li>
-							<li class="cart-price"></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="nav-item">
-			<div class="container">
-				<div class="nav-depart">
-					<div class="depart-btn">
-						<i class="ti-menu"></i> <span>所有選項</span>
-						<ul class="depart-hover">
-							<li class="testActive"><a href="#">飾品</a></li>
-							<li class="testActive"><a href="#">服飾</a></li>
-							<li class="testActive"><a href="#">生活</a></li>
-							<li class="testActive"><a href="#">玩具</a></li>
-							<li class="testActive"><a href="#">藝術</a></li>
-							<li class="testActive"><a href="#">經典</a></li>
-						</ul>
-					</div>
-				</div>
-				<nav class="nav-menu mobile-menu">
-					<ul>
-						<li><a href="index">首 頁</a></li>
-						<li><a href="shopPage">商 城</a></li>
-						<li><a href="blog">部落格</a></li>
-						<li><a href="Activity">活 動</a></li>
-						<li><a href="faq">問與答</a></li>
-
-					</ul>
-				</nav>
-				<div id="mobile-menu-wrap"></div>
-			</div>
-		</div>
-	</header>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="inner-header">
+                <div class="row">
+                    <div class="col-lg-2 col-md-2">
+                        <div class="logo">
+                            <a href="index"> <img style="width:110px;" src="img/VintageLogo8888.png" alt="">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-item">
+            <div class="container">
+                <nav class="nav-menu mobile-menu">
+                    <ul>
+                        <li><a href="panUserManagement">管理首頁</a></li>
+                        <li class="active"><a href="panMember">會員權限管理</a></li>
+                        <li><a href="panAdvertisement">廣告</a></li>
+                    </ul>
+                </nav>
+                <div id="mobile-menu-wrap"></div>
+            </div>
+        </div>
+    </header>
 	<!-- Header End -->
 
     <!-- Breadcrumb Section Begin -->
@@ -405,8 +508,8 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-text product-more">
-                        <a href="liaoIndex"><i class="fa fa-home"></i> Home</a>
-                        <a href="liaoShop">UserManagement</a>
+                        <a href="index"><i class="fa fa-home"></i> Home</a>
+                        <a href="panUserManagement">UserManagement</a>
                         <span>MemderManagement</span>
                     </div>
                 </div>
@@ -505,7 +608,7 @@
                 <div class="col-lg-3">
                     <div class="footer-left">
                         <div class="footer-logo">
-                            <a href="#"><img src="img/footer-logo.png" alt=""></a>
+                            <a href="#"><img src="img/VintageLogo8888.png" alt=""></a>
                         </div>
                         <ul>
                             <li>Address: 60-49 Road 11378 New York</li>

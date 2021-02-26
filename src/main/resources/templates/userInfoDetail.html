@@ -9,7 +9,7 @@
 <meta name="keywords" content="Fashi, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Fashi | UserInfoDetail</title>
+<title>Vintage | UserInfoDetail</title>
 
 <!-- Google Font -->
 <link
@@ -27,16 +27,19 @@
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+	integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+	crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <script src="//cdn.ckeditor.com/4.16.0/standard/ckeditor.js"></script>
+
 <script src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
         $(function(){
         	var userEmail = $("#loginInfo").html();
-        	var cUrl = "panUserControlPage?email=";
-    		$("#userPageControl").click(function(){
-    			$(this).attr("href",cUrl+userEmail);
-    		});
     		var mUrl = "panAllPageMainLink?pMain=";
     		$(".testActive a").click(function(){
     			var allPageMainValue = $(this).html();
@@ -63,7 +66,7 @@
                     $.each(response,function(i,v){
                         var essay = v.description;
                         if(essay == null || essay == ""){
-                            $("#essay1").val('寫點什麼吧!!!');
+                            $("#essay1").val("寫點什麼吧!!!");
                         }
                         else{
                             $("#essay1").val(essay);
@@ -85,7 +88,7 @@
                     $.each(response,function(i,v){
                         var essay = v.articleContext;
                         if(essay == null || essay == ""){
-                            $("#essay2").val('寫點什麼吧!!!');
+                            $("#essay2").val("寫點什麼吧!!!");
                         }
                         else{
                             $("#essay2").val(essay);
@@ -99,6 +102,11 @@
             });
 
             $("#essay1Save").click(function(){
+            	Swal.fire({
+					icon : 'info',
+					title : '儲存成功',
+				});
+
                 var essayData = CKEDITOR.instances.essay1.getData();
                 var articleData = {"email":email,"description":essayData};
                 $.ajax({
@@ -108,8 +116,7 @@
                 	contentType:"application/json;charset=utf-8",
                     data:JSON.stringify(articleData),
                     success:function(result){
-                        var sMsg = JSON.parse(result);
-                        console.log(sMsg);
+                    	console.log(result);   
                     },
                     error:function(msg){
                         console.log(msg);
@@ -118,6 +125,11 @@
             });
 
             $("#essay2Save").click(function(){
+            	Swal.fire({
+					icon : 'info',
+					title : '儲存成功',
+				});
+
                 var essayData = CKEDITOR.instances.essay2.getData();
                 var articleData = {"email":email,"articleContext":essayData};
                 $.ajax({
@@ -127,8 +139,7 @@
                 	contentType:"application/json;charset=utf-8",
                     data:JSON.stringify(articleData),
                     success:function(result){
-                        var sMsg = JSON.parse(result);
-                        alert(sMsg);
+                        console.log(result);
                     },
                     error:function(msg){
                         console.log(msg);
@@ -137,14 +148,20 @@
             });
 
             $("#saveAndOut").click(function(){
-            	alert("確定要儲存&離開嗎?");
-                $("#essay1Save").trigger("click");
-                $("#essay2Save").trigger("click");
-                history.go(-1);
-            });
-
+				Swal.fire({
+  					title: '確定要儲存&離開嗎?',
+					showCancelButton: true,
+					confirmButtonText: `Save`,
+				})
+				.then((result) => {
+  					if (result.isConfirmed) {
+						$("#essay1Save").trigger("click");
+                		$("#essay2Save").trigger("click");
+                		window.location.href = "blogDetails";
+					}
+            	});
+        	});
         });
-        
         $(document).ready(function () {
         	
         	$("#mainImage").change(function () {
@@ -224,7 +241,7 @@
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#"
+							<a class=" fa fa-envelope" id="userPageControl" href="blogDetails"
 								th:text="${user}"></a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 
@@ -238,11 +255,11 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo ml-5">
-							<a href="index"> <img src="img/VintageLogo8888.png" alt="">
+							<a href="index"> <img style="width:110px;" src="img/VintageLogo8888.png" alt="">
 							</a>
 						</div>
 					</div>
-					<div class="col-lg-7 col-md-7 mt-4">
+					<div class="col-lg-7 col-md-7 mt-5">
 						<div class="advanced-search">
 							<button type="button" class="category-btn">關 鍵 字 搜 尋</button>
 							<div class="input-group">
@@ -307,7 +324,7 @@
 					<ul>
 						<li><a href="index">首 頁</a></li>
 						<li><a href="shopPage">商 城</a></li>
-						<li><a href="blog">部落格</a></li>
+						<li class="active"><a href="blog">部落格</a></li>
 						<li><a href="Activity">活 動</a></li>
 						<li><a href="faq">問與答</a></li>
 
@@ -351,11 +368,13 @@
 									name="userPhone" id="userPhone" required length="10">
 							</div>
 
-							<div class="group-input">
-								<label for="gender">Gender</label> 
+							<div>
+								<label for="gender">Gender</label>
+								<div > 
 								<input type="radio" name="gender" id="gender" value="MAN" th:text="男">
 								<input type="radio" name="gender" id="gender" value="WOMEN" th:text="女">
 								<input type="radio" name="gender" id="gender" value="PRIVATE" th:text="不公開">
+								</div>
 							</div>
 							
 							<div>
@@ -436,9 +455,6 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="blog-details-inner">
-                        <div class="blog-detail-title">
-                            <div>封面大圖</div>
-                        </div>
                         <div class="posted-by" id="userDetailBox">
 
                         </div>
@@ -454,9 +470,6 @@
                                 CKEDITOR.replace( 'essay1' );
                             </script>
                         </form>
-                        <div>圖片1</div>
-                        <div>圖片2</div>
-                        <div>圖片3</div>
                         <h3 style="margin: 30px;">分享故事</h3>
                         <form style="margin: 30px;">
                             <textarea name="essay2" id="essay2" rows="10" cols="80">
@@ -519,7 +532,7 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#"><img src="img/footer-logo.png" alt=""></a>
+							<a href="#"><img src="img/VintageLogo8888.png" alt=""></a>
 						</div>
 						<ul>
 							<li>地址: 80147高雄市前金區中正四路211號8號樓之1</li>

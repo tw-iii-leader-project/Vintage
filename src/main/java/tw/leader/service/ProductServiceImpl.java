@@ -166,6 +166,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public String getProductByMainAndName(String email,String pMain) throws Exception {
 		int page = 0;
+		System.out.println(email+pMain+"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
 		List<Product> pList = pSDao.selectProductByMainAndName(email,pMain,page);
 		String pJson = objectMapper.writeValueAsString(pList);
 		String response = pJson;
@@ -276,6 +277,19 @@ public class ProductServiceImpl implements ProductService {
 		String pJson = objectMapper.writeValueAsString(pageData);
 		System.out.println(pJson);
 		return pJson;
+	}
+	
+	/*
+	 * +--------------------------------------------------------------
+	 * 		IndexAndProduct
+	 * */
+	
+	@Override
+	public String findIndexProduct() throws Exception {
+		List<Product> pList = pSDao.findIndexProduct();
+		String pJson = objectMapper.writeValueAsString(pList);
+		String response = pJson;
+		return response;
 	}
 		
 	/*

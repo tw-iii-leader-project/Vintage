@@ -8,7 +8,7 @@
 <meta name="keywords" content="Fashi, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>Fashi | Template</title>
+<title>Vintage | Login</title>
 
 <!-- Google Font -->
 <link
@@ -26,14 +26,16 @@
 <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+	integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <script src="js/jquery-3.3.1.min.js"></script>
+
 <script type="text/javascript">
 	$(function() {
-		var userEmail = $("#userPageControl").html();
-		var cUrl = "panUserControlPage?email=";
-		$("#userPageControl").click(function(){
-			$(this).attr("href",cUrl+userEmail);
-		});
 		var mUrl = "panAllPageMainLink?pMain=";
 		$(".testActive a").click(function(){
 			var allPageMainValue = $(this).html();
@@ -48,12 +50,21 @@
 				window.location.href=fUrl+allPageFormValue;
 			}
 		});
+		var msg = $("#loginMsg").html();
+		if(msg != ""){
+			Swal.fire({
+				icon : 'error',
+				title : msg,
+			})
+		}
+		else{};
 	});
 </script>
 </head>
 
 <body>
 <p th:value="${user}" type="hidden" id="loginInfo"></p>
+<p th:text="${msgA}" style="display: none;" id="loginMsg"></p>
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -72,7 +83,7 @@
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#"
+							<a class=" fa fa-envelope" id="userPageControl" href="blogDetails"
 								th:text="${user}"></a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 
@@ -86,11 +97,11 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo ml-5">
-							<a href="index"> <img src="img/VintageLogo8888.png" alt="">
+							<a href="index"> <img style="width:110px;" src="img/VintageLogo8888.png" alt="">
 							</a>
 						</div>
 					</div>
-					<div class="col-lg-7 col-md-7 mt-4">
+					<div class="col-lg-7 col-md-7 mt-5">
 						<div class="advanced-search">
 							<button type="button" class="category-btn">關 鍵 字 搜 尋</button>
 							<div class="input-group">
@@ -261,7 +272,7 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#"><img src="img/footer-logo.png" alt=""></a>
+							<a href="#"><img src="img/VintageLogo8888.png" alt=""></a>
 						</div>
 						<ul>
 							<li>地址: 80147高雄市前金區中正四路211號8號樓之1</li>

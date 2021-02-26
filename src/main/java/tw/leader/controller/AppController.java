@@ -152,13 +152,17 @@ public class AppController {
 			) throws IOException{
 		String currentUser = GetCurrentUserAccount();
 		String newRole = "ROLES_SELLER";
+		System.out.println(currentUser);
 		User user = uRepo.findByEmail(currentUser);
 		
 //		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
 		String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-		fileName = user.getUserId() + fileName;
-		
-		user.setUserPic(fileName);
+		if(fileName == "") {
+		}
+		else {
+			fileName = user.getUserId() + fileName;
+			user.setUserPic(fileName);
+		}
 		
 		user.setEmail(currentUser);
 		user.setBirthday(userBirthday);
@@ -169,7 +173,7 @@ public class AppController {
 		uRepo.save(user);
 		
 
-		String uploadDir = "C:\\Users\\iii\\git\\Vintage219\\src\\main\\resources\\static\\img\\userPic";
+		String uploadDir = "C:\\Users\\iii\\git\\Vintage223\\src\\main\\resources\\static\\img\\userPic";
 
 		Path uploadPath = Paths.get(uploadDir);
 
@@ -185,8 +189,37 @@ public class AppController {
 			throw new IOException("Could not save upload file" + fileName); 
 		}
 		
-		return "update_success";
+		return "login3";
 	}
+	
+	/*
+	 * -----------------------------------------
+	 * 		AdvFindUserDetail
+	 * */
+	
+	@PostMapping(value="/panAdvFindUser")
+	@ResponseBody
+	public String advFindUser(@RequestBody UserResp userData) throws Exception {
+		String email = userData.getEmail();
+		List<User> uList = fDao.findAllDataByEmail(email);
+		String uJson = objectMapper.writeValueAsString(uList);
+		return uJson;
+	}
+	
+	/*
+	 * -----------------------------------------------------------------
+	 * 		IndexFindUserDetail
+	 * */
+	
+	@PostMapping(value="/panFindIndexUser")
+	@ResponseBody
+	public String findIndexUser() throws Exception {
+			List<User> uList = fDao.findIndexUser();
+		String uJson = objectMapper.writeValueAsString(uList);
+		return uJson;
+	}
+	
+	
 		
 	public String GetCurrentUserAccount() {
 		String userName = SecurityContextHolder.getContext().getAuthentication().getName();

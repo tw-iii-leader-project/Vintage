@@ -7,7 +7,7 @@
     <meta name="keywords" content="Fashi, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Fashi | Template</title>
+    <title>Vintage | Blog</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css?family=Muli:300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -25,11 +25,6 @@
     <script src="js/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
 	$(function() {
-		var userEmail = $("#userPageControl").html();
-		var cUrl = "panUserControlPage?email=";
-		$("#userPageControl").click(function(){
-			$(this).attr("href",cUrl+userEmail);
-		});
 		var mUrl = "panAllPageMainLink?pMain=";
 		$(".testActive a").click(function(){
 			var allPageMainValue = $(this).html();
@@ -44,6 +39,117 @@
 				window.location.href=fUrl+allPageFormValue;
 			}
 		});
+		
+		/*
+		--------------------------------------------------------
+			載入全部部落客內容
+		*/
+		
+		$.ajax({
+			url:"panSelectAllBlog",
+            type:"POST",
+            dataType:"json",
+            contentType:"application/json;charset=utf-8",
+            success:function(response){
+                $.each(response,function(i,v){
+                    $("#showBlogBox #showBlogRow").append(
+                        `<div class="col-lg-6 col-sm-6">
+                            <div class="single-latest-blog">
+								<img src="img/userArticlePic/${v.userPicMain}" style="height:220px;">
+								<div class="latest-text" style="
+									overflow: hidden;
+									height:300px;
+								background-image: linear-gradient(rgba(255,255,255,0),rgba(255,255,255,1));
+									">		
+									<a href="panUserPage?email=${v.email}">
+										<h4>${v.userName}</h4>
+									</a>
+									<p>${v.description}</p>
+								</div>
+							</div>
+                        </div>`
+                    );
+                });
+            },
+            error:function(msg){
+                console.log(msg);
+            }
+		});
+
+        $.ajax({
+			url:"panSelectAllBlog",
+            type:"POST",
+            dataType:"json",
+            contentType:"application/json;charset=utf-8",
+            success:function(response){
+                $.each(response,function(i,v){
+                    $(".recent-blog").append(
+                        `<a href="panUserPage?email=${v.email}" class="rb-item">
+                            <div class="rb-pic">
+                                <img src="img/userArticlePic/${v.userPicMain}" alt="">
+                            </div>
+                            <div class="rb-text">
+                                <h6>${v.userName}</h6>
+                            </div>
+                        </a>`
+                    );
+                });
+            },
+            error:function(msg){
+                console.log(msg);
+            }
+		});
+
+
+        $("#searchSubmit").click(function(){
+            var userName = $("#searchInput").val();
+            if(userName == ""){}
+            else{
+                $("#showBlogBox #showBlogRow").html("");
+                var userData = {"userName":userName};
+                $.ajax({
+			        url:"panSelectBlogByName",
+                    type:"POST",
+                    dataType:"json",
+                    contentType:"application/json;charset=utf-8",
+                    data:JSON.stringify(userData),
+                    success:function(response){
+                        if(response == ""){
+                            $("#showBlogBox #showBlogRow").append(
+                                `<div>
+                                    <img src="img/data-Not-found/dataNotFound.jpeg">
+                                    <h4>沒有找到你要內容 இдஇ</h4>
+                                </div>`
+                            );
+                        }
+                        else{
+                            $.each(response,function(i,v){
+                                $("#showBlogBox #showBlogRow").append(
+                                    `<div class="col-lg-6 col-sm-6">
+                                        <div class="single-latest-blog">
+						    		        <img src="img/userArticlePic/${v.userPicMain}" alt="">
+						    		        <div class="latest-text" style="overflow: hidden;
+						    		        				text-overflow: ellipsis;
+						    		        				display: -webkit-box;
+						    		        				-webkit-line-clamp: 6;
+						    		        				-webkit-box-orient: vertical;">		
+						    		        	<a href="panUserPage?email=${v.email}">
+						    		        		<h4>${v.userName}</h4>
+						    		        	</a>
+						    		        	<p style="font-size: 20px;">${v.description}</p>
+						    		        </div>
+						    	        </div>
+                                    </div>`
+                                );
+                            });
+                        }
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }
+		        });
+            };
+        });
 		
 		/*
         ---------------------------------------------------------
@@ -99,7 +205,7 @@
                         $("#shoppingList").append(
                             `<tr>
                                 <td style="display: none;">${v.cartId}</td>													
-                                <td class="si-pic"><img src="${v.cPhoto}"											
+                                <td class="si-pic"><img src="img/products/${v.cPhoto}"											
                                     alt=""></td>												
                                 <td class="si-text">												
                                 	<div class="product-selected">														
@@ -198,7 +304,7 @@
 
 					<div class="top-social">
 						<div class="mail-service">
-							<a class=" fa fa-envelope" id="userPageControl" href="#"
+							<a class=" fa fa-envelope" id="userPageControl" href="blogDetails"
 								th:text="${user}"></a>
 							<!-- 進入使用者個人資料的頁面(賣家頁面) -->
 
@@ -212,51 +318,48 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo ml-5">
-							<a href="index"> <img src="img/VintageLogo8888.png" alt="">
+							<a href="index"> <img style="width:110px;" src="img/VintageLogo8888.png" alt="">
 							</a>
 						</div>
 					</div>
-					<div class="col-lg-7 col-md-7 mt-4">
+					<div class="col-lg-7 col-md-7 mt-5">
 						<div class="advanced-search">
-							<button type="button" class="category-btn">關 鍵 字 搜 尋</button>
+							<button type="button" class="category-btn">所　有　分　類　</button>
 							<div class="input-group">
-								<input type="text" id="textSelectFormInput"
-									placeholder="您在搜尋什麼商品嗎?">
+								<input type="text" id="textSelectFormInput" placeholder="您在搜尋什麼商品嗎?">
 								<button type="button" class="ml-5" id="textSelectFormSearch">
 									<i class="ti-search"></i>
 								</button>
 							</div>
 						</div>
 					</div>
-					<div class="col-lg-3 text-right col-md-3">
-						`
+					<div class="col-lg-3 text-right col-md-3">`
 						<ul class="nav-right">
 
 							<li class="cart-icon"><a href="#"> <i
-									class="icon_bag_alt"></i> <span id="shoppingQuantity"> <!-- shoppingQuantity Here -->
-								</span>
+									class="icon_bag_alt"></i> 
+                                    <span id="shoppingQuantity">
+                                        <!-- shoppingQuantity Here -->
+                                    </span>
 							</a>
 								<div class="cart-hover">
-									<div class="select-items"
-										style="height: 210px; overflow: auto;">
-										<table>
+									<div class="select-items" style="height: 210px;overflow: auto;">
+										<table> 
 											<tbody id="shoppingList">
-												<!-- ShoppingList Here -->
+                                                <!-- ShoppingList Here -->
 											</tbody>
 										</table>
 									</div>
 									<div class="select-total">
 										<span>總共:</span>
-										<h5 id="selectTotal">
-											<!-- selectTotal Here -->
-										</h5>
+										<h5 id="selectTotal"><!-- selectTotal Here --></h5>
 									</div>
 									<div class="select-button">
-										<a href="shoppingCart" class="primary-btn view-card">加入購物車</a> <a
-											href="checkOut" class="primary-btn checkout-btn">前往結帳</a>
+										<a href="shoppingCart" class="primary-btn view-card">購　物　車</a> <a
+											href="checkOut" class="primary-btn checkout-btn">結　　　帳</a>
 									</div>
 								</div></li>
-							<li class="cart-price"></li>
+							<li class="cart-price">$150.00</li>
 						</ul>
 					</div>
 				</div>
@@ -279,10 +382,10 @@
 				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
-						<li><a href="index">首 頁</a></li>
-						<li><a href="shopPage">商 城</a></li>
+						<li><a href="index">首　頁</a></li>
+						<li><a href="shopPage">商　城</a></li>
 						<li class="active"><a href="blog">部落格</a></li>
-						<li><a href="Activity">活 動</a></li>
+						<li><a href="Activity">活　動</a></li>
 						<li><a href="faq">問與答</a></li>
 
 					</ul>
@@ -316,163 +419,22 @@
                     <div class="blog-sidebar">
                         <div class="search-form">
                             <h4>Search</h4>
-                            <form action="#">
-                                <input type="text" placeholder="Search . . .  ">
-                                <button type="submit"><i class="fa fa-search"></i></button>
+                            <form>
+                                <input type="text" placeholder="Search . . .  " id="searchInput">
+                                <button type="button" id="searchSubmit"><i class="fa fa-search"></i></button>
                             </form>
-                        </div>
-                        <div class="blog-catagory">
-                            <h4>Categories</h4>
-                            <ul>
-                                <li><a href="#">Fashion</a></li>
-                                <li><a href="#">Travel</a></li>
-                                <li><a href="#">Picnic</a></li>
-                                <li><a href="#">Model</a></li>
-                            </ul>
                         </div>
                         <div class="recent-post">
                             <h4>Recent Post</h4>
                             <div class="recent-blog">
-                                <a href="#" class="rb-item">
-                                    <div class="rb-pic">
-                                        <img src="img/blog/recent-1.jpg" alt="">
-                                    </div>
-                                    <div class="rb-text">
-                                        <h6>The Personality Trait That Makes...</h6>
-                                        <p>Fashion <span>- May 19, 2019</span></p>
-                                    </div>
-                                </a>
-                                <a href="#" class="rb-item">
-                                    <div class="rb-pic">
-                                        <img src="img/blog/recent-2.jpg" alt="">
-                                    </div>
-                                    <div class="rb-text">
-                                        <h6>The Personality Trait That Makes...</h6>
-                                        <p>Fashion <span>- May 19, 2019</span></p>
-                                    </div>
-                                </a>
-                                <a href="#" class="rb-item">
-                                    <div class="rb-pic">
-                                        <img src="img/blog/recent-3.jpg" alt="">
-                                    </div>
-                                    <div class="rb-text">
-                                        <h6>The Personality Trait That Makes...</h6>
-                                        <p>Fashion <span>- May 19, 2019</span></p>
-                                    </div>
-                                </a>
-                                <a href="#" class="rb-item">
-                                    <div class="rb-pic">
-                                        <img src="img/blog/recent-4.jpg" alt="">
-                                    </div>
-                                    <div class="rb-text">
-                                        <h6>The Personality Trait That Makes...</h6>
-                                        <p>Fashion <span>- May 19, 2019</span></p>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="blog-tags">
-                            <h4>Product Tags</h4>
-                            <div class="tag-item">
-                                <a href="#">Towel</a>
-                                <a href="#">Shoes</a>
-                                <a href="#">Coat</a>
-                                <a href="#">Dresses</a>
-                                <a href="#">Trousers</a>
-                                <a href="#">Men's hats</a>
-                                <a href="#">Backpack</a>
+                                <!-- recent-blog Here -->
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-9 order-1 order-lg-2">
-                    <div class="row">
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="img/blog/blog-1.jpg" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>The Personality Trait That Makes People Happier</h4>
-                                    </a>
-                                    <p>travel <span>- May 19, 2019</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="img/blog/blog-2.jpg" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>This was one of our first days in Hawaii last week.</h4>
-                                    </a>
-                                    <p>Fashion <span>- May 19, 2019</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="img/blog/blog-3.jpg" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>Last week I had my first work trip of the year to Sonoma Valley</h4>
-                                    </a>
-                                    <p>travel <span>- May 19, 2019</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="img/blog/blog-4.jpg" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>Happppppy New Year! I know I am a little late on this post</h4>
-                                    </a>
-                                    <p>Fashion <span>- May 19, 2019</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="img/blog/blog-5.jpg" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>Absolue collection. The Lancome team has been one…</h4>
-                                    </a>
-                                    <p>Model <span>- May 19, 2019</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-sm-6">
-                            <div class="blog-item">
-                                <div class="bi-pic">
-                                    <img src="img/blog/blog-6.jpg" alt="">
-                                </div>
-                                <div class="bi-text">
-                                    <a href="./blog-details.html">
-                                        <h4>Writing has always been kind of therapeutic for me</h4>
-                                    </a>
-                                    <p>Fashion <span>- May 19, 2019</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="loading-more">
-                                <i class="icon_loading"></i>
-                                <a href="#">
-                                    Loading More
-                                </a>
-                            </div>
-                        </div>
+                <div class="col-lg-9 order-1 order-lg-2" id="showBlogBox">
+                    <div class="row" id="showBlogRow">
+                        <!-- Blog Here -->
                     </div>
                 </div>
             </div>
@@ -521,7 +483,7 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#"><img src="img/footer-logo.png" alt=""></a>
+							<a href="#"><img src="img/VintageLogo8888.png" alt=""></a>
 						</div>
 						<ul>
 							<li>地址: 80147高雄市前金區中正四路211號8號樓之1</li>

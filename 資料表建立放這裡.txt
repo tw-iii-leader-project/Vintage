@@ -1,103 +1,102 @@
----------abi leaveMsg data
-
-create table leaveMsg(
-msgId int IDENTITY(1,1) not null primary key,
-pId int not null,
-email nvarchar(50) not null,
-userName nvarchar(50) not null,
-userPic nvarchar(max),
-starLv int,
-leaveMsgContent nvarchar(max) not null,
-leaveMsgTime datetime not null
-)
-
----------abi leaveMsg data
-
-
-
----------bobby userInfo data
-
-create table userInfo(
-userId int IDENTITY(1,1) not null primary key,
-email nvarchar(50) not null,
-userPwd nvarchar(max) not null,
-userName nvarchar(50) not null,
-gender nvarchar(max),
-userPhone nvarchar(max),
-userBirthday nvarchar(10),
-userPic nvarchar(max),
-verificationCode varchar(64),
-enabled bit,
-createdTime nvarchar(max),
-resetPasswordToken varchar(45),
-roles nvarchar(20) not null
-)
-
----------bobby userInfo data
-
-------------pan product data (用leader的Product
-create table Product (
-	pId int not null primary key identity(1,1),
-	pName nvarchar(50) not null,
-	pMain nvarchar(50) not null,
-	pDetail nvarchar(50),
-	price int not null,
-	invantory int not null,
-    pSize nvarchar(10),
-	description nvarchar(max),
-	sDescription nvarchar(max),
-    cPhoto nvarchar(max),
-	email nvarchar(50) not null,
-    userName nvarchar(50)
-);
-------------pan product data
-
-
-------------pan Article data
-
-create Table userArticle(
-articleId int not null primary key identity(1,1),
-email nvarchar(80),
-description nvarchar(max),
-articleContext nvarchar(max),
-userName nvarchar(max),
-userPicMain nvarchar(max),
-userPic1 nvarchar(max),
-userPic2 nvarchar(max),
-userPic3 nvarchar(max)
-);
-
-------------pan Article data
-
-
--------------pan ShoppingCart data
-
-create table shoppingCart(
-cartId int primary key identity(1,1),
-email nvarchar(max),
-pId int not null, 
-pName nvarchar(50)not null,
-price int not null,
-amount int not null,
-cPhoto nvarchar(max)
-);
-
--------------pan ShoppingCart data
-
-
--------------pan ShoppingOrder data
-
-create table shoppingOrder(
-orderId int primary key identity(1,1),
-email nvarchar(max)not null,
-memo nvarchar(max)not null,
-totalPrice int not null,
-orderTime  datetime not null
-);
-
--------------pan ShoppingOrder data
-
--------------BTLiao Product data
+USE [Vintage]
+GO
+/****** Object:  Table [dbo].[add_to_cart]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[add_to_cart](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[product_id] [int] NOT NULL,
+	[qty] [int] NOT NULL,
+	[price] [int] NOT NULL,
+	[added_date] [date] NULL,
+	[user_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[AdvMain]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AdvMain](
+	[MainId] [int] IDENTITY(1,1) NOT NULL,
+	[Seat] [int] NOT NULL,
+	[Title] [nvarchar](max) NULL,
+	[aPhoto] [nvarchar](max) NULL,
+	[Content] [nvarchar](max) NULL,
+	[email] [nvarchar](max) NULL,
+	[Activity] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[MainId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[category]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[category](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [nvarchar](50) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[checkout_cart]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[checkout_cart](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[product_id] [int] NULL,
+	[qty] [int] NULL,
+	[price] [int] NULL,
+	[order_date] [datetime] NULL,
+	[user_id] [int] NULL,
+	[order_id] [int] NULL,
+	[payment_type] [varchar](10) NULL,
+	[delivery_address] [text] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[leaveMsg]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[leaveMsg](
+	[msgId] [int] IDENTITY(1,1) NOT NULL,
+	[pId] [int] NOT NULL,
+	[email] [nvarchar](50) NOT NULL,
+	[userName] [nvarchar](50) NOT NULL,
+	[userPic] [nvarchar](max) NULL,
+	[starLv] [int] NULL,
+	[leaveMsgContent] [nvarchar](max) NOT NULL,
+	[leaveMsgTime] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[msgId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE TABLE [dbo].[Product](
 	[pId] [int] IDENTITY(1,1) NOT NULL,
 	[pName] [nvarchar](50) NULL,
@@ -115,20 +114,456 @@ CREATE TABLE [dbo].[Product](
 	[lastEditBy] [nvarchar](20) NULL,
 	[lastEditTime] [datetime] NULL,
 	[categoryName] [nvarchar](50) NULL,
-	[sellerName] [nvarchar](50) NULL,
-	);
-	
+	[sellerName] [nvarchar](50) NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[shoppingCart]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[shoppingCart](
+	[cartId] [int] IDENTITY(1,1) NOT NULL,
+	[email] [nvarchar](max) NULL,
+	[pId] [int] NOT NULL,
+	[pName] [nvarchar](50) NOT NULL,
+	[price] [int] NOT NULL,
+	[amount] [int] NOT NULL,
+	[cPhoto] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[cartId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[shoppingOrder]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[shoppingOrder](
+	[orderId] [int] IDENTITY(1,1) NOT NULL,
+	[email] [nvarchar](max) NOT NULL,
+	[memo] [nvarchar](max) NOT NULL,
+	[totalPrice] [int] NOT NULL,
+	[orderTime] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[orderId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TA_TestGoods]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TA_TestGoods](
+	[pId] [int] IDENTITY(1,1) NOT NULL,
+	[pName] [nvarchar](50) NULL,
+	[cPhoto] [nchar](100) NULL,
+	[price] [decimal](18, 2) NOT NULL,
+	[description] [nvarchar](max) NULL,
+	[categoryId] [int] NOT NULL,
+	[userName] [nvarchar](20) NULL,
+	[lastEditTime] [datetime] NULL
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TA_TestGoodsCategory]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
 CREATE TABLE [dbo].[TA_TestGoodsCategory](
-    [id] [int] IDENTITY(1,1) NOT NULL,
-    [categoryName] [nvarchar](20) NOT NULL,
-    [goodsCount] [int] NULL,
-    [serialNo] [int] NOT NULL,
-    [lastEditBy] [nvarchar](20) NULL,
-    [lastEditTime] [datetime] NULL,
-    );
-	
-		INSERT INTO TA_TestGoodsCategory ([categoryName],[serialNo]) VALUES ('生活類', 1);
-		
-	-------------BTLiao Product data
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[categoryName] [nvarchar](20) NOT NULL,
+	[goodsCount] [int] NULL,
+	[serialNo] [int] NOT NULL,
+	[lastEditBy] [nvarchar](20) NULL,
+	[lastEditTime] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TA_TestShoppingCart]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TA_TestShoppingCart](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[shopper] [nvarchar](20) NOT NULL,
+	[goodsId] [int] NOT NULL,
+	[qty] [int] NOT NULL,
+	[addedTime] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TA_TestShoppingOrder]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TA_TestShoppingOrder](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[shopper] [nvarchar](20) NOT NULL,
+	[totalQty] [int] NOT NULL,
+	[totalPrice] [decimal](18, 2) NOT NULL,
+	[isCompleted] [bit] NOT NULL,
+	[createBy] [nvarchar](20) NULL,
+	[createTime] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TA_TestShoppingOrderDetail]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TA_TestShoppingOrderDetail](
+	[id] [int] IDENTITY(1,1) NOT NULL,
+	[shoppingOrderId] [int] NOT NULL,
+	[goodsId] [int] NOT NULL,
+	[qty] [int] NOT NULL,
+	[totalPrice] [decimal](18, 2) NOT NULL,
+	[createBy] [nvarchar](20) NULL,
+	[createTime] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[TA_TestShopUser]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[TA_TestShopUser](
+	[userId] [varchar](20) NOT NULL,
+	[passwordHash] [nvarchar](100) NOT NULL,
+	[nickName] [nvarchar](10) NOT NULL,
+	[depositAmount] [decimal](18, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[userId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[userArticle]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[userArticle](
+	[articleId] [int] IDENTITY(1,1) NOT NULL,
+	[email] [nvarchar](80) NULL,
+	[description] [nvarchar](max) NULL,
+	[articleContext] [nvarchar](max) NULL,
+	[userName] [nvarchar](max) NULL,
+	[userPicMain] [nvarchar](max) NULL,
+	[userPic1] [nvarchar](max) NULL,
+	[userPic2] [nvarchar](max) NULL,
+	[userPic3] [nvarchar](max) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[articleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[userInfo]    Script Date: 2021/2/23 下午 01:07:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[userInfo](
+	[userId] [int] IDENTITY(1,1) NOT NULL,
+	[email] [nvarchar](50) NOT NULL,
+	[userPwd] [nvarchar](max) NOT NULL,
+	[userName] [nvarchar](50) NOT NULL,
+	[gender] [nvarchar](max) NULL,
+	[userPhone] [nvarchar](max) NULL,
+	[userBirthday] [nvarchar](10) NULL,
+	[userPic] [nvarchar](max) NULL,
+	[verificationCode] [varchar](64) NULL,
+	[enabled] [bit] NULL,
+	[createdTime] [nvarchar](max) NULL,
+	[resetPasswordToken] [varchar](45) NULL,
+	[roles] [nvarchar](20) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[userId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+SET IDENTITY_INSERT [dbo].[add_to_cart] ON 
+
+INSERT [dbo].[add_to_cart] ([id], [product_id], [qty], [price], [added_date], [user_id]) VALUES (1, 2, 1, 150, NULL, 2)
+INSERT [dbo].[add_to_cart] ([id], [product_id], [qty], [price], [added_date], [user_id]) VALUES (2, 2, 1, 150, NULL, 2)
+SET IDENTITY_INSERT [dbo].[add_to_cart] OFF
+GO
+SET IDENTITY_INSERT [dbo].[AdvMain] ON 
+
+INSERT [dbo].[AdvMain] ([MainId], [Seat], [Title], [aPhoto], [Content], [email], [Activity]) VALUES (1, 1, N'生活美學', N'1il_794xN.2861566235_qc90.jpg', N'今生金飾以獨家設計的原創作品為宗旨，打造最適合消費者的時尚飾品', N'asilvester60740@gmail.com', N'')
+INSERT [dbo].[AdvMain] ([MainId], [Seat], [Title], [aPhoto], [Content], [email], [Activity]) VALUES (2, 2, N'Vintage', N'2knit-869221_1280.jpg', N'我們的時尚珠寶採用異材質打造出獨特的造型，
+現代感十足。在流行趨勢中我們一直走在時代的前端，引領潮流風尚。', N'virtual123@gmail.com', N'')
+INSERT [dbo].[AdvMain] ([MainId], [Seat], [Title], [aPhoto], [Content], [email], [Activity]) VALUES (3, 3, N'今生承諾，金飾有愛', N'3bust-5524961_1280.jpg', N'璀璨、經典、完美、華麗。今生金飾的產品不僅傳遞愛，更有敏銳的時尚潮流觸覺，體現了深刻的生活感悟。璀璨的黃金飾品打造女人高貴華美的形象', N'virtual8877@gmail.com', N'')
+SET IDENTITY_INSERT [dbo].[AdvMain] OFF
+GO
+SET IDENTITY_INSERT [dbo].[category] ON 
+
+INSERT [dbo].[category] ([id], [name]) VALUES (1, N'A')
+INSERT [dbo].[category] ([id], [name]) VALUES (2, N'B')
+INSERT [dbo].[category] ([id], [name]) VALUES (3, N'c')
+INSERT [dbo].[category] ([id], [name]) VALUES (4, N'D')
+INSERT [dbo].[category] ([id], [name]) VALUES (5, N'E')
+SET IDENTITY_INSERT [dbo].[category] OFF
+GO
+SET IDENTITY_INSERT [dbo].[checkout_cart] ON 
+
+INSERT [dbo].[checkout_cart] ([id], [product_id], [qty], [price], [order_date], [user_id], [order_id], [payment_type], [delivery_address]) VALUES (10, 2, 6, 9150, CAST(N'2020-01-28T21:52:18.000' AS DateTime), 1, 21144, N'ONLINE', N'test adding.')
+INSERT [dbo].[checkout_cart] ([id], [product_id], [qty], [price], [order_date], [user_id], [order_id], [payment_type], [delivery_address]) VALUES (11, 1, 1, 9150, CAST(N'2020-01-28T21:52:18.000' AS DateTime), 1, 21144, N'ONLINE', N'test adding.')
+INSERT [dbo].[checkout_cart] ([id], [product_id], [qty], [price], [order_date], [user_id], [order_id], [payment_type], [delivery_address]) VALUES (12, 2, 1, 18000, CAST(N'2020-04-04T23:07:52.000' AS DateTime), 1, 27393, N'ONLINE', N'delivery address')
+INSERT [dbo].[checkout_cart] ([id], [product_id], [qty], [price], [order_date], [user_id], [order_id], [payment_type], [delivery_address]) VALUES (13, 4, 3, 18000, CAST(N'2020-04-04T23:07:52.000' AS DateTime), 1, 27393, N'ONLINE', N'delivery address')
+INSERT [dbo].[checkout_cart] ([id], [product_id], [qty], [price], [order_date], [user_id], [order_id], [payment_type], [delivery_address]) VALUES (14, 1, 1, 150, CAST(N'2020-04-04T23:08:55.000' AS DateTime), 1, 20865, N'ONLINE', N'tsting.')
+INSERT [dbo].[checkout_cart] ([id], [product_id], [qty], [price], [order_date], [user_id], [order_id], [payment_type], [delivery_address]) VALUES (15, 1, 1, 1650, CAST(N'2020-04-04T23:34:04.000' AS DateTime), 1, 16909, N'ONLINE', N'testing address ')
+INSERT [dbo].[checkout_cart] ([id], [product_id], [qty], [price], [order_date], [user_id], [order_id], [payment_type], [delivery_address]) VALUES (16, 2, 1, 1650, CAST(N'2020-04-04T23:34:04.000' AS DateTime), 1, 16909, N'ONLINE', N'testing address ')
+SET IDENTITY_INSERT [dbo].[checkout_cart] OFF
+GO
+SET IDENTITY_INSERT [dbo].[leaveMsg] ON 
+
+INSERT [dbo].[leaveMsg] ([msgId], [pId], [email], [userName], [userPic], [starLv], [leaveMsgContent], [leaveMsgTime]) VALUES (1, 97, N'asilvester60740@gmail.com', N'廖柏同', N'ab.png', 5, N'e04', CAST(N'2021-02-19T14:56:20.153' AS DateTime))
+INSERT [dbo].[leaveMsg] ([msgId], [pId], [email], [userName], [userPic], [starLv], [leaveMsgContent], [leaveMsgTime]) VALUES (2, 110, N'asilvester60740@gmail.com', N'B.T. Liao', N'ab.png', 4, N'Good!!!!', CAST(N'2021-02-20T23:59:42.550' AS DateTime))
+SET IDENTITY_INSERT [dbo].[leaveMsg] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Product] ON 
+
+INSERT [dbo].[Product] ([pId], [pName], [pMain], [pDetail], [price], [invantory], [pSize], [description], [sDescription], [cPhoto], [email], [userName], [categoryId], [lastEditBy], [lastEditTime], [categoryName], [sellerName]) VALUES (1, N'手工花朵', N'生活', N'null', 300, 50, N'null', N'null', N'null', N'uploadimgs/39d46475-da2c-4015-8bcb-ed4cad34fd93.jpg', N'asilvester60740@gmail.com', N'royskaleidoscopes', 1, NULL, CAST(N'2021-02-23T04:22:24.990' AS DateTime), NULL, NULL)
+INSERT [dbo].[Product] ([pId], [pName], [pMain], [pDetail], [price], [invantory], [pSize], [description], [sDescription], [cPhoto], [email], [userName], [categoryId], [lastEditBy], [lastEditTime], [categoryName], [sellerName]) VALUES (2, N'乾燥花', N'生活', N'null', 200, 50, N'null', N'null', N'null', N'uploadimgs/3e587d39-fbd9-4566-bc40-d125337405aa.jpg', N'asilvester60740@gmail.com', N'royskaleidoscopes', 1, NULL, CAST(N'2021-02-23T04:28:12.827' AS DateTime), NULL, NULL)
+INSERT [dbo].[Product] ([pId], [pName], [pMain], [pDetail], [price], [invantory], [pSize], [description], [sDescription], [cPhoto], [email], [userName], [categoryId], [lastEditBy], [lastEditTime], [categoryName], [sellerName]) VALUES (3, N'手飾', N'飾品', N'null', 3000, 1, N'all', N'null', N'null', N'uploadimgs/e8d92d8a-28c5-4eec-9c3d-3765cdd3dcaf.jpg', N'asilvester60740@gmail.com', N'royskaleidoscopes', 1, NULL, CAST(N'2021-02-23T04:29:05.180' AS DateTime), NULL, NULL)
+INSERT [dbo].[Product] ([pId], [pName], [pMain], [pDetail], [price], [invantory], [pSize], [description], [sDescription], [cPhoto], [email], [userName], [categoryId], [lastEditBy], [lastEditTime], [categoryName], [sellerName]) VALUES (4, N'原木萬花筒', N'玩具', N'null', 4000, 1, N'null', N'null', N'null', N'uploadimgs/fccd4ea6-4f67-4428-91ae-a3b50eae7385.jpg', N'asilvester60740@gmail.com', N'royskaleidoscopes', 1, NULL, CAST(N'2021-02-23T04:29:57.733' AS DateTime), NULL, NULL)
+INSERT [dbo].[Product] ([pId], [pName], [pMain], [pDetail], [price], [invantory], [pSize], [description], [sDescription], [cPhoto], [email], [userName], [categoryId], [lastEditBy], [lastEditTime], [categoryName], [sellerName]) VALUES (5, N'手工肥皂', N'生活', N'null', 400, 20, N'null', N'null', N'null', N'uploadimgs/35106229-f9dc-4f01-95bd-bdca9d05e079.jpg', N'asilvester60740@gmail.com', N'royskaleidoscopes', 1, NULL, CAST(N'2021-02-23T04:31:00.293' AS DateTime), NULL, NULL)
+INSERT [dbo].[Product] ([pId], [pName], [pMain], [pDetail], [price], [invantory], [pSize], [description], [sDescription], [cPhoto], [email], [userName], [categoryId], [lastEditBy], [lastEditTime], [categoryName], [sellerName]) VALUES (6, N'琉璃杯', N'藝術', N'null', 10200, 5, N'null', N'null', N'null', N'uploadimgs/d8984e28-e8e1-4305-b1a2-1521a1aca31e.png', N'virtual1596@gmail.com', N'Clean Bandit', 1, NULL, CAST(N'2021-02-23T04:32:24.503' AS DateTime), NULL, NULL)
+INSERT [dbo].[Product] ([pId], [pName], [pMain], [pDetail], [price], [invantory], [pSize], [description], [sDescription], [cPhoto], [email], [userName], [categoryId], [lastEditBy], [lastEditTime], [categoryName], [sellerName]) VALUES (7, N'鑲金杯', N'生活', N'null', 21000, 5, N'null', N'null', N'null', N'uploadimgs/4c9dea50-d73a-43f4-ac77-a0a964a0dc91.jpg', N'virtual1596@gmail.com', N'Clean Bandit', 1, NULL, CAST(N'2021-02-23T04:33:19.407' AS DateTime), NULL, NULL)
+INSERT [dbo].[Product] ([pId], [pName], [pMain], [pDetail], [price], [invantory], [pSize], [description], [sDescription], [cPhoto], [email], [userName], [categoryId], [lastEditBy], [lastEditTime], [categoryName], [sellerName]) VALUES (8, N'萊卡', N'經典', N'null', 25000, 1, N'null', N'null', N'null', N'uploadimgs/160ae333-c4db-45ab-b179-32256bf294ff.jpg', N'virtual1596@gmail.com', N'Clean Bandit', 1, NULL, CAST(N'2021-02-23T04:33:58.830' AS DateTime), NULL, NULL)
+INSERT [dbo].[Product] ([pId], [pName], [pMain], [pDetail], [price], [invantory], [pSize], [description], [sDescription], [cPhoto], [email], [userName], [categoryId], [lastEditBy], [lastEditTime], [categoryName], [sellerName]) VALUES (9, N'(代售)手工木櫃', N'生活', N'null', 9000, 1, N'null', N'null', N'null', N'uploadimgs/083ada34-95ce-49b5-889b-9b5e8a9a7f8a.jpg', N'virtual1596@gmail.com', N'Clean Bandit', 1, NULL, CAST(N'2021-02-23T04:35:45.247' AS DateTime), NULL, NULL)
+SET IDENTITY_INSERT [dbo].[Product] OFF
+GO
+SET IDENTITY_INSERT [dbo].[shoppingCart] ON 
+
+INSERT [dbo].[shoppingCart] ([cartId], [email], [pId], [pName], [price], [amount], [cPhoto]) VALUES (1, N'asilvester60740@gmail.com', 89, N'牛肉麵', 56, 1, N'uploadimgs/5ee5197d-b611-4f0a-98d0-1d5fe5779175.jpg')
+INSERT [dbo].[shoppingCart] ([cartId], [email], [pId], [pName], [price], [amount], [cPhoto]) VALUES (2, N'anonymousUser', 94, N'一', 56, 1, N'uploadimgs/9702fd5b-8783-41e3-a201-063459238eec.png')
+INSERT [dbo].[shoppingCart] ([cartId], [email], [pId], [pName], [price], [amount], [cPhoto]) VALUES (3, N'asilvester60740@gmail.com', 97, N'純銀吊飾', 299, 1, N'uploadimgs/265d157c-8633-489f-800b-12ad1d4ba3c3.jpg')
+INSERT [dbo].[shoppingCart] ([cartId], [email], [pId], [pName], [price], [amount], [cPhoto]) VALUES (4, N'anonymousUser', 172, N'null', -1, 1, N'uploadimgs/c227f5cb-c9bf-4ea0-afc8-861bfb806a36.jpg')
+INSERT [dbo].[shoppingCart] ([cartId], [email], [pId], [pName], [price], [amount], [cPhoto]) VALUES (5, N'anonymousUser', 175, N'null', -1, 4, N'uploadimgs/6e39c8c2-e6fd-446a-9ca7-3eacd12c12d4.jpg')
+SET IDENTITY_INSERT [dbo].[shoppingCart] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TA_TestGoods] ON 
+
+INSERT [dbo].[TA_TestGoods] ([pId], [pName], [cPhoto], [price], [description], [categoryId], [userName], [lastEditTime]) VALUES (1, N'123', N'uploadimgs/e1f3d63b-75f9-4760-bbd4-da500a388761.png                                                 ', CAST(123.00 AS Decimal(18, 2)), N'123', 2, N'leader', CAST(N'2021-02-09T14:13:05.790' AS DateTime))
+INSERT [dbo].[TA_TestGoods] ([pId], [pName], [cPhoto], [price], [description], [categoryId], [userName], [lastEditTime]) VALUES (2, N'eee', N'uploadimgs/b7532fdb-04ca-4e94-b8c6-d67457604fc4.png                                                 ', CAST(22.00 AS Decimal(18, 2)), N'222', 1, N'leader', CAST(N'2021-02-09T14:32:17.473' AS DateTime))
+INSERT [dbo].[TA_TestGoods] ([pId], [pName], [cPhoto], [price], [description], [categoryId], [userName], [lastEditTime]) VALUES (3, N'3423', N'uploadimgs/7b9c8134-e8ac-4530-9759-01d36dc55a48.png                                                 ', CAST(32423.00 AS Decimal(18, 2)), N'4234', 1, N'leader', CAST(N'2021-02-09T14:34:30.707' AS DateTime))
+INSERT [dbo].[TA_TestGoods] ([pId], [pName], [cPhoto], [price], [description], [categoryId], [userName], [lastEditTime]) VALUES (4, N'123', N'uploadimgs/62011184-9d5d-4cda-bd52-3a8f5ee2eef8.png                                                 ', CAST(123.00 AS Decimal(18, 2)), N'123', 2, N'leader', CAST(N'2021-02-09T15:42:20.447' AS DateTime))
+INSERT [dbo].[TA_TestGoods] ([pId], [pName], [cPhoto], [price], [description], [categoryId], [userName], [lastEditTime]) VALUES (5, N'123', N'uploadimgs/e2bd115a-b83a-44e9-a30e-8a1101597d38.png                                                 ', CAST(123.00 AS Decimal(18, 2)), N'123', 2, N'leader', CAST(N'2021-02-09T16:47:43.350' AS DateTime))
+SET IDENTITY_INSERT [dbo].[TA_TestGoods] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TA_TestGoodsCategory] ON 
+
+INSERT [dbo].[TA_TestGoodsCategory] ([id], [categoryName], [goodsCount], [serialNo], [lastEditBy], [lastEditTime]) VALUES (1, N'生活用品', 134, 0, NULL, CAST(N'2021-02-23T04:35:45.253' AS DateTime))
+INSERT [dbo].[TA_TestGoodsCategory] ([id], [categoryName], [goodsCount], [serialNo], [lastEditBy], [lastEditTime]) VALUES (2, N'廣宣品', 17, 0, NULL, CAST(N'2021-02-17T09:21:55.490' AS DateTime))
+SET IDENTITY_INSERT [dbo].[TA_TestGoodsCategory] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TA_TestShoppingOrder] ON 
+
+INSERT [dbo].[TA_TestShoppingOrder] ([id], [shopper], [totalQty], [totalPrice], [isCompleted], [createBy], [createTime]) VALUES (1, N'leader', 65, CAST(18500.00 AS Decimal(18, 2)), 1, N'leader', CAST(N'2021-02-01T11:21:52.720' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrder] ([id], [shopper], [totalQty], [totalPrice], [isCompleted], [createBy], [createTime]) VALUES (2, N'leader', 300, CAST(90000.00 AS Decimal(18, 2)), 0, N'leader', CAST(N'2021-02-01T11:23:35.783' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrder] ([id], [shopper], [totalQty], [totalPrice], [isCompleted], [createBy], [createTime]) VALUES (3, N'leader', 559090, CAST(68663535.00 AS Decimal(18, 2)), 1, N'leader', CAST(N'2021-02-01T12:02:27.157' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrder] ([id], [shopper], [totalQty], [totalPrice], [isCompleted], [createBy], [createTime]) VALUES (4, N'leader', 123, CAST(15129.00 AS Decimal(18, 2)), 1, N'leader', CAST(N'2021-02-01T15:52:36.187' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrder] ([id], [shopper], [totalQty], [totalPrice], [isCompleted], [createBy], [createTime]) VALUES (5, N'leader', 12, CAST(276.00 AS Decimal(18, 2)), 1, N'leader', CAST(N'2021-02-02T12:02:49.580' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrder] ([id], [shopper], [totalQty], [totalPrice], [isCompleted], [createBy], [createTime]) VALUES (6, N'leader', 55, CAST(0.00 AS Decimal(18, 2)), 1, N'leader', CAST(N'2021-02-04T10:09:31.800' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrder] ([id], [shopper], [totalQty], [totalPrice], [isCompleted], [createBy], [createTime]) VALUES (7, N'leader', 1, CAST(123.00 AS Decimal(18, 2)), 1, N'leader', CAST(N'2021-02-06T21:28:43.567' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrder] ([id], [shopper], [totalQty], [totalPrice], [isCompleted], [createBy], [createTime]) VALUES (8, N'leader', 12, CAST(2142.00 AS Decimal(18, 2)), 1, N'leader', CAST(N'2021-02-08T11:25:14.663' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrder] ([id], [shopper], [totalQty], [totalPrice], [isCompleted], [createBy], [createTime]) VALUES (9, N'leader', 2, CAST(912.00 AS Decimal(18, 2)), 1, N'leader', CAST(N'2021-02-08T11:25:25.040' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrder] ([id], [shopper], [totalQty], [totalPrice], [isCompleted], [createBy], [createTime]) VALUES (10, N'leader', 90, CAST(41040.00 AS Decimal(18, 2)), 1, N'leader', CAST(N'2021-02-08T14:11:42.973' AS DateTime))
+SET IDENTITY_INSERT [dbo].[TA_TestShoppingOrder] OFF
+GO
+SET IDENTITY_INSERT [dbo].[TA_TestShoppingOrderDetail] ON 
+
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (1, 1, 25, 5, CAST(500.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-01T11:21:52.720' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (2, 1, 26, 60, CAST(18000.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-01T11:21:52.720' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (3, 2, 26, 300, CAST(90000.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-01T11:23:35.783' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (4, 3, 27, 554545, CAST(68209035.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-01T12:02:27.157' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (5, 3, 25, 4545, CAST(454500.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-01T12:02:27.157' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (6, 4, 29, 123, CAST(15129.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-01T15:52:36.187' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (7, 5, 28, 12, CAST(276.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-02T12:02:49.580' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (8, 6, 32, 55, CAST(0.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-04T10:09:31.800' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (9, 7, 58, 1, CAST(123.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-06T21:28:43.567' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (10, 8, 1, 10, CAST(1230.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-08T11:25:14.663' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (11, 8, 2, 2, CAST(912.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-08T11:25:14.663' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (12, 9, 2, 2, CAST(912.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-08T11:25:25.040' AS DateTime))
+INSERT [dbo].[TA_TestShoppingOrderDetail] ([id], [shoppingOrderId], [goodsId], [qty], [totalPrice], [createBy], [createTime]) VALUES (13, 10, 4, 90, CAST(41040.00 AS Decimal(18, 2)), N'leader', CAST(N'2021-02-08T14:11:42.973' AS DateTime))
+SET IDENTITY_INSERT [dbo].[TA_TestShoppingOrderDetail] OFF
+GO
+INSERT [dbo].[TA_TestShopUser] ([userId], [passwordHash], [nickName], [depositAmount]) VALUES (N'1', N'leader123', N'nigger', CAST(300.00 AS Decimal(18, 2)))
+INSERT [dbo].[TA_TestShopUser] ([userId], [passwordHash], [nickName], [depositAmount]) VALUES (N'2', N'nigger', N'black shit', CAST(10000.00 AS Decimal(18, 2)))
+GO
+SET IDENTITY_INSERT [dbo].[userArticle] ON 
+
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (4, N'virtual456@gmail.com', N'<h2>Native to countries in Europe, Africa, and Asia lavender is part of the mint family.</h2>
+
+<p>While purple is the color of royalty, and pink the color of youth, lavender is femininity all grown up. It represents refinement, grace, and elegance. Lavender holds a sacred place in nature, and with its violet flowers is often considered the most delicate and precious. The fragrance from the oils of the lavender plant is believed to help promote calmness and wellness. It&#39;s also said to help reduce stress, anxiety, and possibly even mild pain. They can be used in a variety of aromatherapy products including soaps and candles! Magically lavender can add quite a bit to spells including protection and health benefits. In parts of Italy lavender is used to ward from protection of the evil eye.</p>
+
+<div style="background:#eeeeee; border:1px solid #cccccc; padding:5px 10px">Lavender can also be used in the house to ward against fleas and moths.</div>
+', NULL, N'Clean Bandit', N'4workshop-4524838_1280.jpg', N'4accessory-219353_640.jpg', N'4woman-5893942_1280.jpg', N'4black-3950334_1280.jpg')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (5, N'virtual123@gmail.com', N'<p>芳朱的藝術魅力正在於此：古董文物也可以變身為時尚飾品！<br />
+她把古董文物靈魂之美帶到現代民眾之家，解了收藏愛好者之渴，<br />
+還了現代時尚人的願，也在文物界人士眼前發出璀璨之光。</p>
+', N'<h2>芳朱的藝術魅力正在於此：古董文物也可以變身為時尚飾品！<br />
+她把古董文物靈魂之美帶到現代民眾之家，解了收藏愛好者之渴，<br />
+還了現代時尚人的願，也在文物界人士眼前發出璀璨之光。</h2>
+', N'Taylor Swift', N'5bust-5524961_1280.jpg', N'5', N'5', N'5')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (6, N'virtual1596@gmail.com', N'<h2><strong>卷文化&nbsp; 耘珠藝&nbsp; 冶金石藝術為綱&nbsp; 國寶文化為體以一顆自由的心&nbsp; 源古創今</strong></h2>
+
+<h3><br />
+<strong>她是林芳朱<br />
+一個致力於東方美學的文化<br />
+一件件作品都是一篇篇的史詩<br />
+陪同佩戴的人&nbsp; 訴說著作品背後的文化歷史&nbsp; 美麗故事</strong></h3>
+', N'<p>對她的作品，真是充滿了「驚豔」的感覺。是何等敏銳的色感！是何等細緻的心思！是何等創新的結構！<br />
+而這一切，又是何等的自然天成！這位藝術家擁有一雙與眾不同的慧眼，能夠看到那深藏在許多不同材質之中的<br />
+呼應與關聯，才能設計出我們想像不到的搭配。<br />
+一如超現實主義所讚嘆的那樣<br />
+一在出人意表的邂逅裡，得到前所未有的狂喜。</p>
+
+<p><br />
+<strong>──席慕容（知名作家、詩人、畫家）</strong></p>
+', N'Rita Ora', N'6il_794xN.2861566235_qc90.jpg', N'6knit-869221_1280.jpg', N'6knitting-1614283_1280.jpg', N'6')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (7, N'virtual8877@gmail.com', N'<h3>Classic Kaleidoscope, Dark Brass Kaleidoscope, Gift Idea - The traditional Kaleidoscope is made with techniques originating from the invention of the kaleidoscope in 1817. At one end of the apparatus</h3>
+', N'<p>寫點什麼吧!!!</p>
+', N'Alan Walker', N'7screw-4929711_1280.jpg', N'7dock-5539524_1280.jpg', N'7agriculture-3732476_1280.jpg', N'7bust-5524961_1280.jpg')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (8, N'virtual789@gmail.com', N'<h1>當我們雕完了一件作品，從緊張的工作中解放出來，</h1>
+
+<p>看到自己親手製作的作品，有如孕育生命的誕生，會有一種成功和收穫的快感，細細品味似經歷一次死與生的過程，這便是創造的魅力，但是真正感受到它的這種無窮魅力，但要真正感受到它的這種無窮魅力，需多雕多練，</p>
+
+<p>多琢磨，熟能生巧，才能形成自己的藝術語言和風格。</p>
+', N'<p>當我們雕完了一件作品，從緊張的工作中解放出來，看到自己親手製作的作品，有如孕育生命的誕生，會有一種成功和收穫的快感，細細品味似經歷一次死與生的過程，這便是創造的魅力，但是真正感受到它的這種無窮魅力，但要真正感受到它的這種無窮魅力，需多雕多練，多琢磨，熟能生巧，才能形成自己的藝術語言和風格。</p>
+', N'林家嘉', N'8abstract-1867935_1280.jpg', N'8w_w_nightstand_p00_v1_0612.jpg', N'8il_794xN.1797073977_c85p.jpg', N'8')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (9, N'asilvester60740@gmail.com', N'<h2>在珠寶種類的愛好、線材質感和顏色搭配、</h2>
+
+<p>以及形制造型各方面的選擇，<br />
+都呈現出她在審美上的訓練和文化上的素養；也可以說<br />
+藉由作品我們便可以讀出作者的心意和技術功力。</p>
+
+<h3 style="color:#aaaaaa;font-style:italic;">真的粉棒</h3>
+', N'<h3 style="color:#aaaaaa; font-style:italic">芳朱的藝術魅力正在於此：古董文物也可以變身為時尚飾品！</h3>
+
+<p><br />
+她把古董文物靈魂之美帶到現代民眾之家，解了收藏愛好者之渴，<br />
+還了現代時尚人的願，也在文物界人士眼前發出璀璨之光。</p>
+', N'royskaleidoscopes', N'9person-731457_1280.jpg', N'9bowl-169435_1280.jpg', N'9abstract-1867935_1280.jpg', N'9girl-5662898_1280.jpg')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (10, N'bsilvester60740@gmail.com', N'<h1>芳朱的藝術魅力正在於此：古董文物也可以變身為時尚飾品！</h1>
+
+<p><br />
+她把古董文物靈魂之美帶到現代民眾之家，解了收藏愛好者之渴，<br />
+還了現代時尚人的願，也在文物界人士眼前發出璀璨之光。</p>
+', N'<h2>芳朱的藝術魅力正在於此：古董文物也可以變身為時尚飾品！<br />
+她把古董文物靈魂之美帶到現代民眾之家，解了收藏愛好者之渴，<br />
+還了現代時尚人的願，也在文物界人士眼前發出璀璨之光。</h2>
+', N'聶小倩', N'10agriculture-3732476_1280.jpg', N'10bowl-169435_1280.jpg', N'10bust-5524961_1280.jpg', N'10girl-5679419_1280 (1).jpg')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (11, N'virtual4936@gmail.com', N'<h1>We encourage you to do your research before ingesting any herb.</h1>
+
+<p>This is especially true if you are taking any medications, as many herbs interact with specific types of medications (St. Johns Wort and Antidepressants for example, causes serotonin syndrome, which can be fatal). Always consult your doctor before trying to treat, diagnose, or cure any medical condition, as they know what is best specifically for you.</p>
+', N'<p>Handmade resin hair accessories with beautiful pressed flower petals. So dainty and gorgeous,&nbsp;</p>
+
+<p>these hair clips are perfect to complete any outfit. An amazing gift or treat for yourself!! Completely customisable xxx</p>
+', N'The Chainsmokers', N'11woman-5893942_1280.jpg', N'11woman-5950348_1280.jpg', N'11il_794xN.1797073977_c85p.jpg', N'11il_794xN.2003723999_f1mt.jpg')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (12, N'virtual1122@gmail.com', N'<p>Handmade resin hair accessories with beautiful pressed flower petals. So dainty and gorgeous,</p>
+
+<p>these hair clips are perfect to complete any outfit. An amazing gift or treat for yourself!! Completely customisable xxx</p>
+', N'<p>&nbsp;</p>
+
+<h3 style="color:#aaaaaa;font-style:italic;">Chagall style modern Jewish art original figurative acrylic painting on canvas by Elena Kotliarker.</h3>
+
+<p><br />
+ABOUT THIS PAINTING<br />
+This artwork is an expression of unequivocal Jewish art, conveying the duality of life through the duality of colors, red and blue, both revealing a powerful chromaticity and inspiring to ascendance by fine upward brush movements</p>
+', N'阿比', N'12dock-5539524_1280.jpg', N'12brush-96240_1280.jpg', N'12bowl-169435_1280.jpg', N'12il_794xN.2041267786_5086.jpg')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (13, N'virtual5566@gmail.com', N'<p><big><strong>5566</strong>，簡稱<strong>56</strong>，是</big><a href="https://zh.wikipedia.org/wiki/%E5%8F%B0%E7%81%A3">臺灣</a><a href="https://zh.wikipedia.org/wiki/%E5%96%AC%E5%82%91%E7%AB%8B%E5%A8%9B%E6%A8%82">喬傑立娛</a><a href="https://zh.wikipedia.org/wiki/%E5%96%AC%E5%82%91%E7%AB%8B%E5%A8%9B%E6%A8%82">樂</a><big>旗下的<a href="https://zh.wikipedia.org/wiki/%E7%94%B7%E5%AD%90%E5%9C%98%E9%AB%94">男子團體</a>，</big></p>
+
+<p><big>於2002年1月21日出道。5566名稱原意為期許團內六位成員於演藝界的六大領域（唱片、主持、戲劇、電影、廣告、舞臺）皆有收穫與發展。成軍時期團員為<a href="https://zh.wikipedia.org/wiki/%E5%AD%AB%E5%8D%94%E5%BF%97">孫協志</a>、<a href="https://zh.wikipedia.org/wiki/%E7%8E%8B%E4%BB%81%E7%94%AB">王仁甫</a>、<a href="https://zh.wikipedia.org/wiki/%E7%8E%8B%E5%B0%91%E5%81%89">王少偉</a>、<a href="https://zh.wikipedia.org/wiki/%E8%A8%B1%E5%AD%9F%E5%93%B2">許孟哲</a>、<a href="https://zh.wikipedia.org/wiki/%E5%BD%AD%E5%BA%B7%E8%82%B2">彭康育</a>、<a href="https://zh.wikipedia.org/w/index.php?title=%E6%9B%BE%E7%91%8B%E8%BF%AA&amp;action=edit&amp;redlink=1">曾瑋迪</a>&nbsp;(於成軍不久後以個人理由退出)。<a href="https://zh.wikipedia.org/wiki/5566#cite_note-1">[1]</a><a href="https://zh.wikipedia.org/wiki/5566#cite_note-2">[2]</a>團名由來才改為「5位團員，6大領域」。<a href="https://zh.wikipedia.org/wiki/%E5%BD%AD%E5%BA%B7%E8%82%B2">彭康育</a>於2003年因上節目時表演導致舊傷復發退團，但團名並無因此改變。</big></p>
+
+<p><big>收入與知名度成正比，5566全方位發展鼎盛時期曾一年總收入破4億。</big></p>
+
+<p><big>該團體活躍於2002年至2009年期間，目前單飛不解散，5566五人有4家不同公司。<a href="https://zh.wikipedia.org/wiki/%E5%BD%AD%E5%BA%B7%E8%82%B2">彭康育</a>舊傷復發退出該團，於2006年成立大國翼星娛樂經紀公司、後成立量能文創；<a href="https://zh.wikipedia.org/wiki/%E5%AD%AB%E5%8D%94%E5%BF%97">孫協志</a>成立不動心娛樂事業有限公司；<a href="https://zh.wikipedia.org/wiki/%E7%8E%8B%E4%BB%81%E7%94%AB">王仁甫</a>與妻子<a href="https://zh.wikipedia.org/wiki/%E5%AD%A3%E8%8A%B9">季芹</a>一同投入民宿事業，並與<a href="https://zh.wikipedia.org/wiki/%E8%A8%B1%E5%AD%9F%E5%93%B2">許孟哲</a>一起轉投星恆娛樂；<a href="https://zh.wikipedia.org/wiki/%E7%8E%8B%E5%B0%91%E5%81%89">王少偉</a>2013年至今為自由藝人。</big></p>
+', NULL, N'56不能亡', N'13bust-5524961_1280.jpg', N'13woman-5584374_1280.jpg', N'13screw-4929711_1280.jpg', N'13bird-932704_1280.jpg')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (14, N'virtual2266@gmail.com', N'<h1>Hello,Please spend few minutes to read this.</h1>
+
+<p><br />
+I want you to know that the effect pictures are for reference only, and the picture reality show can reflect the overall effect of handmade painting. Only print painting can be the same as the display. As for hand-drawn paintings, it is impossible to be exactly the same as the display drawings. Each painting is unique. I hope you can understand that our painter&#39;s hand can&#39;t be like a machine, but we try our best to maintain the artistic beauty of the picture. Every stroke shows our efforts. I want you to know that we are trying our best to provide quality customer service. It&#39;s not easy for us, but we will try our best all the time.</p>
+', NULL, N'The Weekend', N'14woman-5584374_1280.jpg', N'14', N'14', N'14')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (15, N'virtual776@gmail.com', N'<h1>During the years on the sea (circumnavigation 2009 - 2015) I had the chance to study so many different cultures,</h1>
+
+<p>learning their way of living and the luck to make friends with so many different people. I feel it just natural, maybe ineluctable, that my paintings changed from abstract art to human faces.<br />
+<br />
+I&#39;m a fulltime freelance artist since 2003, you can find my work in galleries, exhibitions, art fairs and in collections all over the world.<br />
+Here you will find selected high-quality works of art, usually sold at galleries, exhibitions and art fairs.</p>
+', NULL, N'Ed Sheeran', N'15mountains-5796973_1280.jpg', N'15', N'15', N'15')
+INSERT [dbo].[userArticle] ([articleId], [email], [description], [articleContext], [userName], [userPicMain], [userPic1], [userPic2], [userPic3]) VALUES (18, N'flywingzero@gmail.com', N'<h2>在漫漫的人生修持裏，很難做到的是在不平中能心平，在不滿中能知滿，</h2>
+
+<p>在不足中能知足；能心平，能知滿，能知足，自然平安無病、健康長壽，廣結佛緣而皆大歡喜。</p>
+
+<p>然而，對一個充滿創作狂熱和強烈使命感的藝術家而言，有些時候，不平心能轉化為意念訴求的沈潛；永不自滿能推進不斷創思的動力；知不足而求其圓滿，更能在百折千回裏成就精業，雕刻家吳卿就是一個很好的例子，他的作品細膩、精湛、深沈、有容而耐人尋味，感受他寫實作品中的精妙功夫，如同詩偈所言：「千錘百鍊出深山，烈火焚燒莫等閒，粉身碎骨都無怨，留得清白在人間。」他用雕刻藝術留下了雋永。</p>
+', N'<p>寫點什麼吧!!!</p>
+', N'Pan Huang', N'18agriculture-3732476_1280.jpg', N'18abstract-1867935_1280.jpg', N'18bowl-169435_1280.jpg', N'18il_794xN.2861566235_qc90.jpg')
+SET IDENTITY_INSERT [dbo].[userArticle] OFF
+GO
+SET IDENTITY_INSERT [dbo].[userInfo] ON 
+
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (1, N'silvester60740@gmail.com', N'$2a$10$gIKwWlqhGYDOKgsQzVhE3ulAEYFh9NAquMZhWF.e8JDslDJQnMQvG', N'asilvester60740', N'MAN', N'0999885642', N'2021-02-04', N'1man-4568761_1280.jpg', N'ZQsCOv7Gb2EHMEnc2mkkAUZoaZ6rBe2jby79Xy3pwYWQH3bx4MQ189hdEJXWnULp', 1, N'2021-02-22 23:08:33.7010000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (2, N'bsilvester60740@gmail.com', N'$2a$10$HDpR/tKqUIA6oGbCJ1griudirDAlE5w3e92OPQKaLBQmOaECJXQYO', N'聶小倩', N'WOMEN', N'0933388884', N'2021-02-11', N'2photographer-5149664_1280.jpg', N'X7AUQIdwBNhtrRvklGZ4PKHfhIHg71hloibiLztmjt0rn1HQQlgSNd6ZLhW20WBE', 1, N'2021-02-22 23:09:20.9790000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (3, N'asilvester60740@gmail.com', N'$2a$10$kv8Y7a8Yfp2y3STg5YmqM.4Lw6Bz4tQhbUlJy2loCue9sJVZAvTz2', N'royskaleidoscopes', N'WOMEN', N'0999999999', N'2007-10-17', N'3photographer-5149664_1280.jpg', N'm4JMeU37oET72snvAtsgXSiSPiLPWvMbnQXFssp8Nvd3qqglndL0v9ZV6HvPcKcp', 1, N'2021-02-22 23:11:33.0460000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (4, N'flywingzero@gmail.com', N'$2a$10$ILrMzeYsGEgDQE2kdeIcGeFSbfV7.MGi0prjISsK6lD7c85InydLO', N'Pan Huang', N'MAN', N'0988771596', N'2021-02-12', N'4portrait-814633_1280.jpg', N'o2TazD59VGMrsoavrhwEIw8CH8BLhwfQq7rHkWhUnratGDJEYZiBa7cWGOZeEeCw', 1, N'2021-02-22 23:12:24.5850000', NULL, N'ROLES_DISABLED')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (5, N'virtual123@gmail.com', N'$2a$10$dXp8A2fl9sfIt2KvicKQu.MFDDnf/WM7XvoKg9l8etEw.eI2cO8fi', N'Taylor Swift', N'WOMEN', N'0999999999', N'1998-03-18', N'5portrait-2365560_1280.jpg', N'co4KuiyLVhbwTJycP4K62MGUj68nMDtrbi9lcnb8rj7PirPKRBk9qhYkIw7AK3Vl', 1, N'2021-02-22 23:13:58.1430000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (6, N'virtual456@gmail.com', N'$2a$10$fY6fdH/MYQgY2ArVg0QM9uqS2vsJex6znJKlwx/oXlK9YrqyV5yWm', N'陳小雞', N'PRIVATE', N'0955664895', N'1994-10-13', N'6bird-932704_1280.jpg', N'Y8KkpWLpLf4rtjUWWfuiEWyDNxEk0vHT4DsD9DDBRiC3m44ZQvGI208YuiAin2kG', 1, N'2021-02-22 23:14:49.3580000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (7, N'virtual789@gmail.com', N'$2a$10$c8hSi4KOL/vaJZ80MyNM0epczBquAtkiS9zklZqYmaGQ21tvJiXWq', N'林家嘉', N'MAN', N'0999999999', N'2021-02-09', N'7man-4711375_1280.jpg', N'8IAC9GL9YfJWnRU53GHEe0FX0Ea2NpAKTGbweQZ5gz7oLCEYWVZ0s9kBadoeMSmE', 1, N'2021-02-22 23:15:30.9270000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (8, N'virtual1596@gmail.com', N'$2a$10$uIKY8CiXUph3c9GHrfO1FeukZ.mAbKwUACBJYLSkgf0qi5/hW2a4G', N'Clean Bandit', N'WOMEN', N'0988771596', N'1996-06-19', N'8portrait-2365560_1280.jpg', N'z1ZHslLxFc634pAULR75357vMgz0fX6P2wIV6ikK48cMO2YUqTEN8CwRVdfA6uzD', 1, N'2021-02-22 23:16:36.5980000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (9, N'virtual8877@gmail.com', N'$2a$10$Q1WsmvZQ/uiTWKq9NamFZu9f29a7xAi9216LxAQy03hxtN1XuXJse', N'Alan Walker', N'MAN', N'0933388884', N'1991-02-05', N'9portrait-814633_1280.jpg', N'qgtsnmTX5UuH7N5BAAKURCs8xKO3yDMLGFHGTzVSSxce9Wgxji5M5AmCkdt8yPaz', 1, N'2021-02-22 23:19:48.3040000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (10, N'virtual1122@gmail.com', N'$2a$10$a0R1l21uIpXselGOhVO9TecDZxrEX/RdpLLUmvlECg/VJHQn3U/mG', N'阿比', N'MAN', N'0925367896', N'1993-07-21', N'10woman-5630886_640.jpg', N'bhs2a3GyN6EZAJh8tvHcxwDBzeJedemcKbKC1CHNV1idGTVaXeXnFOqi6EoM0aNE', 1, N'2021-02-22 23:21:24.5810000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (11, N'virtual5566@gmail.com', N'$2a$10$Hd732c2QyMgxICBmGMCIDu7TP0WReXYmvTjGdmlpRUgdfHf1Qu.Ry', N'56不能亡', N'MAN', N'0955664895', N'1980-07-09', N'11male-5922911_1280.jpg', N'BS8FQ5MwqSH9rSoAWV9IasVBtqFB86eumIa0PztCr9yBOFvxWeJkdiT1C49C2nsw', 1, N'2021-02-22 23:22:07.8760000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (12, N'virtual4936@gmail.com', N'$2a$10$RvIwxZovHTBmNWgTwVJI3OdTpk/ujknz25eYIE7Q1IvncQb4cM.XC', N'The Chainsmokers', N'MAN', N'0999885642', N'1975-07-09', N'12man-5886719_1280.jpg', N'fsT368SSxLhTbRSRX3s9jePIhf5suqKa0UAiKXnFdPulvsvs7t6xF9RcNcbV8aYM', 1, N'2021-02-22 23:23:58.0690000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (13, N'virtual2266@gmail.com', N'$2a$10$g1PbxdHK6iXQNfLuApl1QeR6GADFxLSxtF4LFzJoXv.1Hoc4GhH4i', N'The Weekend', N'MAN', N'0999885642', N'1986-07-09', N'13woman-5573135_1280.jpg', N'KL08x0zp4Hvmhzc5d0ZJyH47Je95OR7uffCIKtzLhusGq7ThQkx0FdwGgwSphAhT', 1, N'2021-02-22 23:25:32.8450000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (14, N'virtual753@gmail.com', N'$2a$10$HZSNhg8VxBqGyefxazKlgeLnLSo7EcE3b3mH0co5FgKAdSKL8R/kq', N'卍_煞氣a忠哥_卍', N'MAN', N'0933388884', N'2021-02-11', NULL, N'6MwK3IxN4gO38tgISYqOY9RdebDPDPSzY6nGTg8UPSg26p6E8wUS9TVRHc2UbrBM', 1, N'2021-02-22 23:29:10.0870000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (15, N'virtual5959@gmail.com', N'$2a$10$YgWZSvzl5i0xxUPrBm0dcOG2fc3xuO8UmyVJW7PVnaFqQEgHXt7/G', N'Clean Bandit', N'WOMEN', N'0955664895', N'1991-06-11', N'15girl-5662898_1280.jpg', N'GZc6qGXTbVxgmtm6nyK2NXVaVUbqPmrxPirsEdVaAmEE8OACEEIiqvhvDidBv3Gn', 1, N'2021-02-22 23:30:51.3520000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (16, N'virtual776@gmail.com', N'$2a$10$tv/F9vaWKXfp4IXdkJ7bfulRQ2RCp0LLBDbHXZOXAvCH3bIP1wt92', N'Ed Sheeran', N'WOMEN', N'0999885642', N'2000-07-23', N'16woman-5975243_640.jpg', N'3CvkYkJoSckzcFUmoV9SOtE1ycESDFWE2ISDCA1FlrxB5fwt7uxmOPEkFXVOoSUc', 1, N'2021-02-22 23:31:57.0480000', NULL, N'ROLES_SELLER')
+INSERT [dbo].[userInfo] ([userId], [email], [userPwd], [userName], [gender], [userPhone], [userBirthday], [userPic], [verificationCode], [enabled], [createdTime], [resetPasswordToken], [roles]) VALUES (17, N'vintageLeader9527@gmail.com', N'$2a$10$JJyzFNToiXbYx8DiX8Ao8unYnNt0wh5On70fELYbyrlL70TO9Z0P2', N'VintageManagement', NULL, NULL, NULL, NULL, N'G2eD5zHsW5JjmgnhdJvqLg9A4D7dMY59aoy8XmYHAFMWXgM6UQFDeh2s2TAEXi1T', 1, N'2021-02-22 23:33:06.0420000', NULL, N'ROLES_ADMIN')
+SET IDENTITY_INSERT [dbo].[userInfo] OFF
+GO
+ALTER TABLE [dbo].[TA_TestGoodsCategory] ADD  DEFAULT ((1)) FOR [serialNo]
+GO
+ALTER TABLE [dbo].[TA_TestGoodsCategory] ADD  DEFAULT (getdate()) FOR [lastEditTime]
+GO
+ALTER TABLE [dbo].[TA_TestShoppingCart] ADD  DEFAULT ((1)) FOR [qty]
+GO
+ALTER TABLE [dbo].[TA_TestShoppingCart] ADD  DEFAULT (getdate()) FOR [addedTime]
+GO
+ALTER TABLE [dbo].[TA_TestShoppingOrder] ADD  DEFAULT ((0)) FOR [isCompleted]
+GO
+ALTER TABLE [dbo].[TA_TestShoppingOrder] ADD  DEFAULT (getdate()) FOR [createTime]
+GO
+ALTER TABLE [dbo].[TA_TestShoppingOrderDetail] ADD  DEFAULT ((1)) FOR [qty]
+GO
+ALTER TABLE [dbo].[TA_TestShoppingOrderDetail] ADD  DEFAULT (getdate()) FOR [createTime]
+GO
+ALTER TABLE [dbo].[checkout_cart]  WITH CHECK ADD CHECK  (([payment_type]='ONLINE' OR [payment_type]='COD'))
+GO
+
 
 
